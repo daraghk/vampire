@@ -1,0 +1,45 @@
+# Ignore generated clausified problems
+docs/
+clausified_examples/
+examples/
+demo/
+output/
+test_out/
+test_variants/
+*_clausified.p
+*_clausified.tptp
+*_clausified.smt2
+
+# Ignore generated variants
+variants/
+*_base.tptp
+*_variant*.tptp
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Environment variables and secrets
+.env
+.env.*
+*.key
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing artifacts
+*.log
+test_output/
+
