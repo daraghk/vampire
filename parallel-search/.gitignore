@@ -1,7 +1,5 @@
 # Ignore generated clausified problems
-docs/
 clausified_examples/
-examples/
 demo/
 output/
 test_out/
