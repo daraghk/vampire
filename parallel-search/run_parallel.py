@@ -254,9 +254,15 @@ def run_parallel_evaluation(
     if len(verified_variants) == 0:
         logger.info("")
         logger.info("No variants with verified seeds found.")
-        logger.info("Skipping parallel execution (nothing to compare against original).")
+        logger.info(
+            "Skipping parallel execution (nothing to compare against original)."
+        )
         logger.info("=" * 80)
-        return {"results": [], "statistics": {"total_runs": 0, "proved": 0, "timeout": 0, "unknown": 0}, "proved": []}
+        return {
+            "results": [],
+            "statistics": {"total_runs": 0, "proved": 0, "timeout": 0, "unknown": 0},
+            "proved": [],
+        }
 
     logger.info(f"Timeout: {timeout}s per run")
     logger.info("")
