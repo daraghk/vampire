@@ -9,6 +9,7 @@ This directory contains work on parallelizing Vampire via semantically entailed 
 - **`base_clause_set_constructor.py`** - BaseClauseSetConstructor class for B_i selection
 - **`seed_clause_set_constructor.py`** - SeedClauseGenerator class for S_i generation (requires `openai` package)
 - **`entailment_checker.py`** - EntailmentChecker class for verifying C₀ ⊨ s (where s is an LLM-generated seed clause)
+- **`run_parallel.py`** - Parallel Vampire execution module for running C₀ and verified variants
 - **`tptp_parsing_utils.py`** - Shared TFF parsing utilities (quantifier/parentheses handling)
 - **`logging_utils.py`** - Logging utilities
 - **`examples/`** - Example TPTP problems
@@ -51,6 +52,12 @@ python3 main.py examples/group_theory.tptp --generate-seeds 5 --domain-hint "gro
 
 # Generate seeds with entailment checking (verifies C₀ ⊨ s)
 python3 main.py examples/group_theory.tptp --generate-seeds 5 --check-entailment
+
+# Full workflow: generate, verify, and run Vampire in parallel
+python3 main.py examples/group_theory.tptp --generate-seeds 5 --check-entailment --run-vampire
+
+# Run Vampire with custom timeout (default 60s)
+python3 main.py examples/PLA046_1.p -n 5 --run-vampire --vampire-timeout 120
 ```
 
 **Output structure**:
@@ -60,10 +67,16 @@ output/
     ├── {timestamp}_{problem}.log      # Single log file (HH:MM timestamps)
     ├── clausified/                    # Clausified problems (TFF/typed clause form)
     │   └── {problem}_clausified.tptp
-    └── variants/                      # Generated clause set variants (C_i = B_i ∪ S_i)
-        ├── variant_0.tptp
-        ├── variant_1.tptp
-        └── ...
+    ├── variants/                      # Generated clause set variants (C_i = B_i ∪ S_i)
+    │   ├── variant_0.tptp
+    │   ├── variant_1.tptp
+    │   └── ...
+    └── results/                       # Vampire execution results (only if --run-vampire used and verified variants exist)
+        ├── original.out               # Vampire output for original problem
+        ├── variant_0.out              # Vampire output for variant_0
+        ├── variant_1.out              # Vampire output for variant_1
+        ├── ...
+        └── summary.json               # Execution summary with statistics
 ```
 
 Each run creates a timestamped directory containing everything: the log file and all artifacts.
@@ -71,7 +84,7 @@ Log timestamps show only HH:MM since the date is in the directory name.
 
 ## Workflow
 
-The workflow performs up to four main steps:
+The workflow performs up to five main steps:
 
 1. **Clausification**: Convert the input problem to TFF using Vampire's `--mode tclausify`
    - Produces TFF (Typed First-order Form) output with quantified clauses
@@ -90,6 +103,12 @@ The workflow performs up to four main steps:
    - Adds seed clause s with conjecture role
    - Only verified seeds (proved by Vampire) are added to variants
    - Ensures soundness: UNSAT(C_i) ⟹ UNSAT(C₀)
+5. **Parallel Execution** (optional, requires `--run-vampire`): Run Vampire in parallel on:
+   - The original clausified problem (C₀)
+   - All variants with at least one verified seed clause
+   - Skipped entirely if no variants have verified seeds (no point comparing original alone)
+   - Captures execution time, exit status, and full Vampire output
+   - Generates summary with statistics and identifies which runs proved the problem
 
 Each variant C_i = B_i ∪ S_i is saved as a separate TPTP file ready for parallel proof search.
 
@@ -137,8 +156,9 @@ The parallel search strategy works as follows:
 - ✅ Native Vampire conjecture handling (cleaner than manual clause negation)
 - ✅ Variant file generation (C_i = B_i ∪ S_i written to TPTP files)
 - ✅ Structured logging with timestamped outputs
-- ⏳ Parallel execution framework (launching multiple Vampire instances)
-- ⏳ Evaluation on TPTP benchmark problems
+- ✅ Parallel execution framework (running C₀ + variants with verified seeds via `run_parallel.py`)
+- ✅ Results capture (execution time, status, full Vampire output, JSON summary)
+- ⏳ Large-scale evaluation on TPTP benchmark problems
 
 ## References
 

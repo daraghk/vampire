@@ -7,6 +7,8 @@ This script orchestrates the complete workflow:
 3. Optionally generate seed clauses S_i using LLM (--generate-seeds)
 4. Optionally verify entailment C₀ ⊨ s using Vampire (--check-entailment)
 5. Write complete variants C_i = B_i ∪ S_i
+6. Optionally run Vampire in parallel on C₀ and variants with verified seeds
+   (--run-vampire, skipped if no verified variants exist)
 
 Each problem gets its own timestamped directory with a dedicated log file.
 
@@ -15,19 +17,25 @@ Output structure (single problem):
     ├── {timestamp}_{problem}.log
     ├── clausified/
     │   └── {problem}_clausified.tptp
-    └── variants/
-        └── variant_{i}.tptp
+    ├── variants/
+    │   └── variant_{i}.tptp
+    └── results/ (if --run-vampire used and verified variants exist)
+        ├── original.out
+        ├── variant_{i}.out
+        └── summary.json
 
 Output structure (multiple problems):
     output/
     ├── {timestamp}_{problem1}/
     │   ├── {timestamp}_{problem1}.log
     │   ├── clausified/
-    │   └── variants/
+    │   ├── variants/
+    │   └── results/ (if --run-vampire used and verified variants exist)
     ├── {timestamp}_{problem2}/
     │   ├── {timestamp}_{problem2}.log
     │   ├── clausified/
-    │   └── variants/
+    │   ├── variants/
+    │   └── results/ (if --run-vampire used and verified variants exist)
     └── ...
 
 Usage:
@@ -49,6 +57,12 @@ Examples:
     # Generate seeds with entailment checking (verifies C_0 ⊨ s)
     python main.py examples/group_theory.tptp --generate-seeds 5 --check-entailment
 
+    # Full workflow: generate variants, check entailment, and run Vampire
+    python main.py examples/group_theory.tptp --generate-seeds 5 --check-entailment --run-vampire
+
+    # Run Vampire with custom timeout and workers
+    python main.py examples/ --generate-seeds 3 --run-vampire --vampire-timeout 120 --max-workers 8
+
     # Recursive processing
     python main.py examples/ -r -n 5
 """
@@ -62,6 +76,7 @@ from clausify_problems import VampireClausifier
 from base_clause_set_constructor import BaseClauseSetConstructor
 from entailment_checker import EntailmentChecker
 from logging_utils import setup_logger
+from run_parallel import run_parallel_evaluation
 
 
 def write_variant_clause_set(clauses, output_path, problem_name, num_clauses):
@@ -303,11 +318,17 @@ def construct_variant(
 
 
 def process_problem(problem_path, base_output_dir, args):
-    """Clausify a problem and construct C_i variants (C_i = B_i ∪ S_i).
+    """Process a single problem through the complete parallel search workflow.
 
     Each problem gets its own timestamped output directory and log file.
-    Creates base clause sets B_i using the selected strategy, optionally
-    generates seed clauses S_i using LLM, and writes complete variants.
+    
+    Workflow steps:
+    1. Clausify problem (convert to TFF using Vampire's tclausify mode)
+    2. Construct base clause sets B_i using selected strategy
+    3. Optionally generate seed clauses S_i using LLM (--generate-seeds)
+    4. Optionally verify entailment C₀ ⊨ s (--check-entailment)
+    5. Write complete variants C_i = B_i ∪ S_i
+    6. Optionally run Vampire in parallel (--run-vampire, skipped if no verified variants)
 
     Args:
         problem_path: Path to the problem file.
@@ -357,6 +378,17 @@ def process_problem(problem_path, base_output_dir, args):
     logger.info(f"COMPLETED: {problem_path.name}")
     logger.info(f"Generated {args.num_variants} variant(s)")
     logger.info("=" * 80)
+
+    # Run Vampire in parallel (optional)
+    if args.run_vampire:
+        run_parallel_evaluation(
+            problem_output,
+            logger,
+            vampire_binary=args.vampire,
+            timeout=args.vampire_timeout,
+            max_workers=args.max_workers,
+        )
+
     return True
 
 
@@ -364,8 +396,9 @@ def main():
     """Main entry point for the parallel search workflow.
 
     Orchestrates clausification, base clause set construction (B_i),
-    optional seed clause generation (S_i), and variant writing (C_i = B_i ∪ S_i).
-    Each problem gets its own timestamped directory with log and artifacts.
+    optional seed clause generation (S_i), variant writing (C_i = B_i ∪ S_i),
+    and optional parallel Vampire execution. Each problem gets its own
+    timestamped directory with log and artifacts.
     """
     parser = argparse.ArgumentParser(description="Parallel Vampire search workflow")
     parser.add_argument("path", type=Path, help="Problem file or directory")
@@ -401,6 +434,23 @@ def main():
         type=int,
         default=10,
         help="Timeout for each entailment check in seconds (default: 10)",
+    )
+    parser.add_argument(
+        "--run-vampire",
+        action="store_true",
+        help="Run Vampire in parallel on original problem and variants with verified seeds",
+    )
+    parser.add_argument(
+        "--vampire-timeout",
+        type=int,
+        default=60,
+        help="Timeout for Vampire execution in seconds (default: 60)",
+    )
+    parser.add_argument(
+        "--max-workers",
+        type=int,
+        default=None,
+        help="Max parallel workers for Vampire execution (default: auto-detect from CPU count)",
     )
 
     args = parser.parse_args()

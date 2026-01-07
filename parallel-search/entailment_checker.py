@@ -169,8 +169,8 @@ class EntailmentChecker:
     def _run_vampire(self, problem_file: Path) -> str:
         """Run Vampire on a problem and return the result.
 
-        Executes Vampire in CASC mode with the configured timeout and
-        interprets the output to determine if the conjecture is proved.
+        Executes Vampire with default mode and the configured timeout to
+        determine if the conjecture is proved.
 
         Args:
             problem_file: Path to TPTP problem file with hypothesis clauses
@@ -186,8 +186,6 @@ class EntailmentChecker:
             cmd = [
                 self.vampire_binary,
                 str(problem_file),
-                "--mode",
-                "casc",
             ]
 
             self.logger.debug(f"  Running Vampire: {' '.join(cmd)}")
