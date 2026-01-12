@@ -101,7 +101,7 @@ def run_vampire(
         problem_file: Path to TPTP problem file.
         output_file: Path to save Vampire output.
         vampire_binary: Path to Vampire executable.
-        timeout: Timeout in seconds (None for no timeout).
+        timeout: Timeout in seconds passed to Vampire via -t flag (None for no timeout).
         logger: Logger instance.
         name: Name for logging (e.g., "original", "variant_0").
 
@@ -118,11 +118,21 @@ def run_vampire(
     logger.info(f"  Starting Vampire: {name}")
 
     try:
+        # Build command with timeout flag for Vampire
+        cmd = [vampire_binary, str(problem_file)]
+        if timeout:
+            cmd.extend(["-t", str(timeout)])
+
+        logger.debug(f"    Command: {' '.join(cmd)}")
+
+        # Use slightly longer subprocess timeout as backup
+        subprocess_timeout = timeout + 5 if timeout else None
+
         result = subprocess.run(
-            [vampire_binary, str(problem_file)],
+            cmd + ["--mode", "casc"],
             capture_output=True,
             text=True,
-            timeout=timeout,
+            timeout=subprocess_timeout,
         )
 
         elapsed = time.time() - start_time

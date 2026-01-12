@@ -24,6 +24,7 @@ This directory contains work on parallelizing Vampire via semantically entailed 
 **Optional (for seed generation):**
 - `openai` package: `pip install openai>=1.0.0`
 - OpenAI API key (set `OPENAI_API_KEY` environment variable)
+- Default LLM model: `o4-mini` (configurable via `--llm-model` flag)
 
 The workflow functions without the `openai` package but seed generation will be disabled.
 
@@ -49,6 +50,9 @@ python3 main.py examples/group_theory.tptp -n 3 --generate-seeds 5
 
 # Generate seeds with domain hint
 python3 main.py examples/group_theory.tptp --generate-seeds 5 --domain-hint "group theory"
+
+# Generate seeds with specific LLM model
+python3 main.py examples/group_theory.tptp --generate-seeds 5 --llm-model gpt-4o
 
 # Generate seeds with entailment checking (verifies C₀ ⊨ s)
 python3 main.py examples/group_theory.tptp --generate-seeds 5 --check-entailment
@@ -97,7 +101,8 @@ The workflow performs up to five main steps:
 3. **Seed Clause Generation (S_i)** (optional): Use LLM to generate helpful lemmas for each variant
    - Seeds are problem-specific and based on variant context
    - Each seed includes an explanation and confidence score
-4. **Entailment Checking** (optional): Verify each seed clause using Vampire
+4. **Entailment Checking** (optional): Verify each seed clause using Vampire in parallel
+   - All seed clauses for a variant are checked in parallel for performance
    - Checks C₀ ⊨ s by proving s as a conjecture from C₀
    - Converts C₀'s negated_conjecture clauses to hypothesis role
    - Adds seed clause s with conjecture role
@@ -152,6 +157,7 @@ The parallel search strategy works as follows:
 - ✅ Shared TPTP parsing utilities (`tptp_parsing_utils.py` for quantifier/parentheses handling)
 - ✅ LLM interface for seed clause suggestions (S_i generation via `seed_clause_set_constructor.py`)
 - ✅ TFF seed generation (LLM generates TFF clauses with type information)
+- ✅ Parallel entailment checking (all seed clauses checked in parallel for performance)
 - ✅ Entailment checking via conjecture proving (C_0 ⊨ s verification using `entailment_checker.py`)
 - ✅ Native Vampire conjecture handling (cleaner than manual clause negation)
 - ✅ Variant file generation (C_i = B_i ∪ S_i written to TPTP files)

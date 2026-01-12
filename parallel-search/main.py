@@ -5,7 +5,7 @@ This script orchestrates the complete workflow:
 1. Clausify problems (convert to TFF using Vampire's tclausify mode)
 2. Construct base clause sets B_i using various selection strategies
 3. Optionally generate seed clauses S_i using LLM (--generate-seeds)
-4. Optionally verify entailment C₀ ⊨ s using Vampire (--check-entailment)
+4. Optionally verify entailment C₀ ⊨ s using Vampire in parallel (--check-entailment)
 5. Write complete variants C_i = B_i ∪ S_i
 6. Optionally run Vampire in parallel on C₀ and variants with verified seeds
    (--run-vampire, skipped if no verified variants exist)
@@ -54,6 +54,9 @@ Examples:
     # Generate seeds with domain hint
     python main.py examples/group_theory.tptp --generate-seeds 5 --domain-hint "group theory"
 
+    # Generate seeds with specific LLM model
+    python main.py examples/group_theory.tptp --generate-seeds 5 --llm-model gpt-4o
+
     # Generate seeds with entailment checking (verifies C_0 ⊨ s)
     python main.py examples/group_theory.tptp --generate-seeds 5 --check-entailment
 
@@ -68,7 +71,9 @@ Examples:
 """
 
 import argparse
+import os
 import sys
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
 
@@ -77,6 +82,62 @@ from base_clause_set_constructor import BaseClauseSetConstructor
 from entailment_checker import EntailmentChecker
 from logging_utils import setup_logger
 from run_parallel import run_parallel_evaluation
+
+
+def check_seed_entailment(
+    seed_index: int,
+    seed_content: str,
+    clausified_path: Path,
+    vampire_binary: str,
+    timeout: int,
+) -> tuple:
+    """Check entailment for a single seed clause (for parallel execution).
+
+    This function is designed to be run in parallel. It creates its own
+    EntailmentChecker instance to avoid sharing state between processes.
+    
+    Captures DEBUG logs from the subprocess for later replay in main process.
+
+    Args:
+        seed_index: Index of the seed (for result ordering).
+        seed_content: The seed clause content in TPTP format.
+        clausified_path: Path to the clausified problem file.
+        vampire_binary: Path to Vampire executable.
+        timeout: Timeout for entailment check in seconds.
+
+    Returns:
+        Tuple of (seed_index, is_entailed, debug_logs) where debug_logs is a list
+        of debug messages captured from the subprocess.
+    """
+    import logging
+    import io
+
+    # Create a logger that captures DEBUG logs in memory
+    logger = logging.getLogger(f"entailment_{seed_index}")
+    logger.setLevel(logging.DEBUG)
+    logger.handlers.clear()
+    
+    # StringIO handler to capture logs
+    log_capture = io.StringIO()
+    handler = logging.StreamHandler(log_capture)
+    handler.setLevel(logging.DEBUG)
+    formatter = logging.Formatter("%(message)s")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+
+    try:
+        checker = EntailmentChecker(logger, vampire_binary=vampire_binary, timeout=timeout)
+        is_entailed = checker.check_entailment(clausified_path, seed_content)
+        
+        # Get captured logs
+        debug_logs = log_capture.getvalue().strip().split('\n') if log_capture.getvalue().strip() else []
+        
+        return (seed_index, is_entailed, debug_logs)
+    except Exception as e:
+        # Capture the exception info
+        error_msg = f"Exception in subprocess: {str(e)}"
+        debug_logs = [error_msg]
+        return (seed_index, False, debug_logs)
 
 
 def write_variant_clause_set(clauses, output_path, problem_name, num_clauses):
@@ -175,9 +236,9 @@ def initialize_seed_generator(logger, args):
     try:
         from seed_clause_set_constructor import SeedClauseGenerator
 
-        seed_generator = SeedClauseGenerator(logger)
+        seed_generator = SeedClauseGenerator(logger, model=args.llm_model)
         logger.info(
-            f"LLM seed generation enabled: {args.generate_seeds} seeds per variant"
+            f"LLM seed generation enabled: {args.generate_seeds} seeds per variant (model: {args.llm_model})"
         )
         return seed_generator
     except ImportError as e:
@@ -202,6 +263,9 @@ def construct_variant(
     logger,
 ):
     """Construct a single variant C_i = B_i ∪ S_i.
+
+    If entailment checking is enabled, all seed clauses are checked in parallel
+    using ProcessPoolExecutor. Results are collected and logged in order.
 
     Args:
         variant_index: Index of this variant.
@@ -249,16 +313,56 @@ def construct_variant(
             domain_hint=args.domain_hint,
         )
 
-        # Initialize entailment checker if requested
-        entailment_checker = None
+        # Run entailment checks in parallel if requested
+        entailment_results = {}  # seed_index -> is_entailed
+        entailment_debug_logs = {}  # seed_index -> list of debug messages
         if args.check_entailment:
-            entailment_checker = EntailmentChecker(
-                logger, vampire_binary=args.vampire, timeout=args.entailment_timeout
-            )
             logger.info(
                 f"  Entailment checking enabled (timeout: {args.entailment_timeout}s)"
             )
+            logger.info(f"  Running {len(seeds)} entailment checks in parallel...")
 
+            # Limit workers to avoid resource exhaustion
+            max_workers = min(os.cpu_count() or 4, len(seeds), 8)  # Cap at 8 workers
+            
+            # Submit all entailment checks in parallel
+            with ProcessPoolExecutor(max_workers=max_workers) as executor:
+                futures = {
+                    executor.submit(
+                        check_seed_entailment,
+                        j,
+                        seed.content,
+                        clausified,
+                        args.vampire,
+                        args.entailment_timeout,
+                    ): j
+                    for j, seed in enumerate(seeds)
+                }
+
+                # Collect results as they complete
+                completed = 0
+                for future in as_completed(futures):
+                    expected_idx = futures[future]
+                    try:
+                        returned_idx, is_entailed, debug_logs = future.result()
+                        # Sanity check: returned index should match expected
+                        assert returned_idx == expected_idx, f"Index mismatch: {returned_idx} != {expected_idx}"
+                        entailment_results[returned_idx] = is_entailed
+                        entailment_debug_logs[returned_idx] = debug_logs
+                        completed += 1
+                        if len(seeds) > 5:  # Only show progress for many seeds
+                            logger.info(f"  Progress: {completed}/{len(seeds)} checks completed")
+                    except Exception as e:
+                        logger.warning(
+                            f"  Entailment check for seed {expected_idx} raised exception: {e}"
+                        )
+                        entailment_results[expected_idx] = False
+                        entailment_debug_logs[expected_idx] = [f"Exception: {e}"]
+                        completed += 1
+
+            logger.info(f"  All entailment checks completed ({completed}/{len(seeds)})")
+
+        # Process seeds in order and log results
         verified_count = 0
         failed_count = 0
 
@@ -270,11 +374,16 @@ def construct_variant(
             logger.info(f"    Reason: {seed.description}")
             logger.info(f"    Confidence: {seed.confidence:.2f}")
 
-            # Check entailment if requested
-            if entailment_checker:
-                is_entailed = entailment_checker.check_entailment(
-                    clausified, seed.content
-                )
+            # Check entailment result if entailment checking was enabled
+            if args.check_entailment:
+                is_entailed = entailment_results.get(j, False)
+                
+                # Replay debug logs from subprocess
+                debug_logs = entailment_debug_logs.get(j, [])
+                for log_line in debug_logs:
+                    if log_line.strip():  # Skip empty lines
+                        logger.debug(log_line)
+                
                 if is_entailed:
                     logger.info(f"    ✓ Entailment verified (C_0 ⊨ s)")
                     verified_count += 1
@@ -292,7 +401,7 @@ def construct_variant(
 
             logger.info("")  # Blank line after each seed
 
-        if entailment_checker:
+        if args.check_entailment:
             logger.info(
                 f"  Entailment results: {verified_count} verified, {failed_count} failed"
             )
@@ -326,7 +435,7 @@ def process_problem(problem_path, base_output_dir, args):
     1. Clausify problem (convert to TFF using Vampire's tclausify mode)
     2. Construct base clause sets B_i using selected strategy
     3. Optionally generate seed clauses S_i using LLM (--generate-seeds)
-    4. Optionally verify entailment C₀ ⊨ s (--check-entailment)
+    4. Optionally verify entailment C₀ ⊨ s in parallel (--check-entailment)
     5. Write complete variants C_i = B_i ∪ S_i
     6. Optionally run Vampire in parallel (--run-vampire, skipped if no verified variants)
 
@@ -396,9 +505,9 @@ def main():
     """Main entry point for the parallel search workflow.
 
     Orchestrates clausification, base clause set construction (B_i),
-    optional seed clause generation (S_i), variant writing (C_i = B_i ∪ S_i),
-    and optional parallel Vampire execution. Each problem gets its own
-    timestamped directory with log and artifacts.
+    optional seed clause generation (S_i), parallel entailment checking,
+    variant writing (C_i = B_i ∪ S_i), and optional parallel Vampire execution.
+    Each problem gets its own timestamped directory with log and artifacts.
     """
     parser = argparse.ArgumentParser(description="Parallel Vampire search workflow")
     parser.add_argument("path", type=Path, help="Problem file or directory")
@@ -423,6 +532,12 @@ def main():
         "--domain-hint",
         type=str,
         help="Domain hint for seed generation (e.g., 'group theory', 'arithmetic')",
+    )
+    parser.add_argument(
+        "--llm-model",
+        type=str,
+        default="o4-mini",
+        help="OpenAI model to use for seed generation (default: o4-mini)",
     )
     parser.add_argument(
         "--check-entailment",

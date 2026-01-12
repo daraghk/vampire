@@ -241,23 +241,48 @@ class SeedClauseGenerator:
         clauses_sample = "\n".join(base_clauses)
 
         prompt = f"""
-I have a theorem proving problem with the following context:
+I need help generating useful lemmas for a theorem proving problem.
 
+## Problem Context
 {problem_context}
 {domain_line}
-Here are some of the clauses in the problem:
 
+## Sample Clauses
 {clauses_sample}
 
-Please suggest {num_seeds} helpful lemmas or intermediate clauses that could aid in proving the conjecture.
-These should be:
-1. Small and focused (ideally unit clauses or simple binary clauses)
-2. Logically plausible given the problem domain
-3. Potentially useful bridge steps in the proof
+## Task
+Generate {num_seeds} lemmas or intermediate clauses that could help prove the conjecture. These lemmas should serve as strategic stepping stones in the proof.
 
-Provide clauses in TPTP TFF (Typed First-order Form) format: tff(name, axiom, formula).
-Include type quantifiers where appropriate (e.g., ![X: $int]: ... for integer variables).
-For roles, use 'axiom' for general lemmas or 'lemma' for derived facts.
+## Requirements
+
+**Content Quality:**
+- Focus on lemmas that bridge gaps between existing axioms and the conjecture
+- Prioritize general properties, symmetries, or transitivity rules relevant to the domain
+- Consider lemmas that simplify complex expressions or establish useful equivalences
+- Ensure logical consistency with the given clauses
+
+**Format Specifications:**
+- Use TPTP TFF (Typed First-order Form) syntax: `tff(name, role, formula).`
+- Role should be `axiom` for general principles or `lemma` for derived facts
+- Include explicit type quantifiers (e.g., `![X: $int]: ...` for integers)
+- Prefer simple forms: unit clauses or binary clauses when possible
+- Use descriptive names that indicate the lemma's purpose
+- Note: User-defined predicates/functions have no `$` prefix; built-in TPTP symbols like `$int`, `$real` do
+
+## Output Format
+For each lemma, provide:
+1. The TFF clause
+2. A brief 1-sentence explanation of why this lemma could be useful
+
+## Example
+
+tff(transitivity_leq, axiom, ![X: $int, Y: $int, Z: $int]: ((leq(X, Y) & leq(Y, Z)) => leq(X, Z))).
+
+Explanation: Establishes transitivity of the user-defined leq (less-than-or-equal) predicate, enabling chaining of inequalities.
+
+---
+
+Please generate the {num_seeds} lemmas now.
 """
         return prompt
 

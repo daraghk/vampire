@@ -191,7 +191,7 @@ class EntailmentChecker:
             self.logger.debug(f"  Running Vampire: {' '.join(cmd)}")
 
             result = subprocess.run(
-                cmd,
+                cmd + ["--mode", "casc"],
                 capture_output=True,
                 text=True,
                 timeout=self.timeout,
