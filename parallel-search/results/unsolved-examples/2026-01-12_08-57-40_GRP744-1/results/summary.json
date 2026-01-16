@@ -1,0 +1,32 @@
+{
+  "problem": "2026-01-12_08-57-40_GRP744-1",
+  "timestamp": "2026-01-12T08:59:42.564201",
+  "configuration": {
+    "timeout": 60,
+    "vampire_binary": "../build/vampire",
+    "total_variants": 1,
+    "variants_with_seeds": 1
+  },
+  "results": [
+    {
+      "name": "original",
+      "status": "TIMEOUT",
+      "time": 60.04061818122864,
+      "exit_code": 1,
+      "output_file": "output/2026-01-12_08-57-40_GRP744-1/results/original.out"
+    },
+    {
+      "name": "variant_0",
+      "status": "TIMEOUT",
+      "time": 60.037381410598755,
+      "exit_code": 1,
+      "output_file": "output/2026-01-12_08-57-40_GRP744-1/results/variant_0.out"
+    }
+  ],
+  "statistics": {
+    "total_runs": 2,
+    "proved": 0,
+    "timeout": 2,
+    "unknown": 0
+  }
+}

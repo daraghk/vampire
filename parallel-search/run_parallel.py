@@ -130,6 +130,7 @@ def run_vampire(
 
         result = subprocess.run(
             cmd + ["--mode", "casc"],
+            # cmd,
             capture_output=True,
             text=True,
             timeout=subprocess_timeout,

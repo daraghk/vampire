@@ -8,8 +8,8 @@ This directory contains work on parallelizing Vampire via semantically entailed 
 - **`clausify_problems.py`** - VampireClausifier class for TFF conversion (using tclausify mode)
 - **`base_clause_set_constructor.py`** - BaseClauseSetConstructor class for B_i selection
 - **`seed_clause_set_constructor.py`** - SeedClauseGenerator class for S_i generation (requires `openai` package)
-- **`entailment_checker.py`** - EntailmentChecker class for verifying C₀ ⊨ s (where s is an LLM-generated seed clause)
-- **`run_parallel.py`** - Parallel Vampire execution module for running C₀ and verified variants
+- **`entailment_checker.py`** - EntailmentChecker class for verifying C_ax ⊨ s (where C_ax is the axioms-only version with negated_conjecture removed, and s is an LLM-generated seed clause)
+- **`run_parallel.py`** - Parallel Vampire execution module for running the original problem and verified variants
 - **`tptp_parsing_utils.py`** - Shared TFF parsing utilities (quantifier/parentheses handling)
 - **`logging_utils.py`** - Logging utilities
 - **`examples/`** - Example TPTP problems
@@ -54,7 +54,7 @@ python3 main.py examples/group_theory.tptp --generate-seeds 5 --domain-hint "gro
 # Generate seeds with specific LLM model
 python3 main.py examples/group_theory.tptp --generate-seeds 5 --llm-model gpt-4o
 
-# Generate seeds with entailment checking (verifies C₀ ⊨ s)
+# Generate seeds with entailment checking (verifies C_ax ⊨ s)
 python3 main.py examples/group_theory.tptp --generate-seeds 5 --check-entailment
 
 # Full workflow: generate, verify, and run Vampire in parallel
@@ -88,34 +88,42 @@ Log timestamps show only HH:MM since the date is in the directory name.
 
 ## Workflow
 
-The workflow performs up to five main steps:
+The workflow performs up to six main steps:
+
+**Definitions:**
+- **C₀** = Full clausified problem (Axioms ∪ negated_conjectures)
+- **C_ax** = Axioms-only version (negated_conjecture formulas removed from C₀)
+
+**Steps:**
 
 1. **Clausification**: Convert the input problem to TFF using Vampire's `--mode tclausify`
-   - Produces TFF (Typed First-order Form) output with quantified clauses
+   - Produces **C₀**: TFF (Typed First-order Form) with quantified clauses including negated_conjectures
    - Preserves type information for arithmetic problems ($int, $real, etc.)
-2. **Base Clause Set Construction (B_i)**: Generate N different base clause sets using the selected strategy:
-   - `all`: Use all clauses (B_i = C_0)
-   - `random`: Randomly select a subset of clauses
-   - `priority`: Keep conjectures and unit clauses, sample others
-   - `stratified`: Divide clauses into non-overlapping strata
-3. **Seed Clause Generation (S_i)** (optional): Use LLM to generate helpful lemmas for each variant
+2. **Create C_ax**: Filter out `negated_conjecture` formulas from C₀ to create **C_ax** (axioms only)
+   - Used for base clause selection and entailment checking
+   - Avoids vacuous truth problem in entailment verification
+3. **Base Clause Set Construction (B_i)**: Generate N different base clause sets from **C_ax** using the selected strategy:
+   - `all`: Use all axioms (B_i = C_ax)
+   - `random`: Randomly select a subset of axioms
+   - `priority`: Keep unit clauses, sample others
+   - `stratified`: Divide axioms into non-overlapping strata
+4. **Seed Clause Generation (S_i)** (optional): Use LLM to generate helpful lemmas for each variant
    - Seeds are problem-specific and based on variant context
    - Each seed includes an explanation and confidence score
-4. **Entailment Checking** (optional): Verify each seed clause using Vampire in parallel
+5. **Entailment Checking** (optional): Verify each seed clause using Vampire in parallel
    - All seed clauses for a variant are checked in parallel for performance
-   - Checks C₀ ⊨ s by proving s as a conjecture from C₀
-   - Converts C₀'s negated_conjecture clauses to hypothesis role
-   - Adds seed clause s with conjecture role
+   - Checks **C_ax ⊨ s** (verifies seed follows from axioms only)
+   - This avoids vacuous truth: if C₀ is UNSAT, all seeds would trivially entail
    - Only verified seeds (proved by Vampire) are added to variants
-   - Ensures soundness: UNSAT(C_i) ⟹ UNSAT(C₀)
-5. **Parallel Execution** (optional, requires `--run-vampire`): Run Vampire in parallel on:
-   - The original clausified problem (C₀)
-   - All variants with at least one verified seed clause
+   - Ensures soundness: UNSAT(variant) ⟹ UNSAT(C₀)
+6. **Parallel Execution** (optional, requires `--run-vampire`): Run Vampire in parallel on:
+   - The original problem C₀
+   - All variants: **B_i + verified seeds + negated_conjectures**
    - Skipped entirely if no variants have verified seeds (no point comparing original alone)
    - Captures execution time, exit status, and full Vampire output
    - Generates summary with statistics and identifies which runs proved the problem
 
-Each variant C_i = B_i ∪ S_i is saved as a separate TPTP file ready for parallel proof search.
+Each variant consists of: B_i (selected axioms) + verified seeds + negated_conjectures (to prove).
 
 All operations are logged with structured output. Log timestamps show HH:MM format for
 readability (full date is in the directory name). Visual separators clearly mark each variant.
@@ -134,20 +142,24 @@ The `examples/` directory contains test problems across multiple domains:
 
 The parallel search strategy works as follows:
 
-1. **Extract C₀**: Use `--mode tclausify` to get the initial typed clause set
-2. **Generate variants**: Create alternative starting sets C₁, ..., Cₖ where each Cᵢ = Bᵢ ∪ Sᵢ
-   - Bᵢ ⊆ C₀ (base clauses)
-   - Sᵢ (seed clauses - lemmas that are entailed by C₀)
-3. **Verify entailment**: Check that C₀ ⊨ s for each seed clause s using Vampire
-4. **Run in parallel**: Launch independent Vampire instances on each certified Cᵢ
-5. **First to finish wins**: If any proves UNSAT(Cᵢ), then UNSAT(C₀) follows
+1. **Extract C₀**: Use `--mode tclausify` to get the full clausified problem (Axioms ∪ negated_conjectures)
+2. **Create C_ax**: Filter out negated_conjectures to get axioms-only version
+3. **Generate variants**: Create alternative starting sets where each variant = Bᵢ + Sᵢ + negated_conjectures
+   - Bᵢ ⊆ C_ax (base clauses selected from axioms using strategy: random, priority, stratified, etc.)
+   - Sᵢ (seed clauses - lemmas that are entailed by C_ax)
+   - negated_conjectures (the negated conjectures to prove)
+   - Variant = Bᵢ + Sᵢ + negated_conjectures
+4. **Verify entailment**: Check that **C_ax ⊨ s** for each seed clause s using Vampire
+5. **Run in parallel**: Launch independent Vampire instances on C₀ and each variant
+6. **First to finish wins**: If any proves UNSAT(variant), then UNSAT(C₀) follows
 
 ## Key Properties
 
-- **Sound by construction**: All seed clauses are verified to be entailed by C₀
+- **Sound by construction**: All seed clauses are verified to be entailed by C_ax (axioms only)
 - **Embarrassingly parallel**: No shared state between workers
 - **Semantic reachability**: Uses logical entailment rather than operational reachability
 - **Heuristic generation**: LLMs can propose seed clauses, but Vampire verifies them
+- **Avoids vacuous truth**: Entailment checked against C_ax (without negated_conjectures), not full C₀
 
 ## Current Status
 
@@ -158,11 +170,12 @@ The parallel search strategy works as follows:
 - ✅ LLM interface for seed clause suggestions (S_i generation via `seed_clause_set_constructor.py`)
 - ✅ TFF seed generation (LLM generates TFF clauses with type information)
 - ✅ Parallel entailment checking (all seed clauses checked in parallel for performance)
-- ✅ Entailment checking via conjecture proving (C_0 ⊨ s verification using `entailment_checker.py`)
+- ✅ Entailment checking via conjecture proving (C_ax ⊨ s verification using `entailment_checker.py`)
 - ✅ Native Vampire conjecture handling (cleaner than manual clause negation)
-- ✅ Variant file generation (C_i = B_i ∪ S_i written to TPTP files)
+- ✅ Axioms-only filtering (C_ax creation to avoid vacuous truth in entailment)
+- ✅ Variant file generation (B_i + verified seeds + negated_conjectures written to TPTP files)
 - ✅ Structured logging with timestamped outputs
-- ✅ Parallel execution framework (running C₀ + variants with verified seeds via `run_parallel.py`)
+- ✅ Parallel execution framework (running original problem + variants via `run_parallel.py`)
 - ✅ Results capture (execution time, status, full Vampire output, JSON summary)
 - ⏳ Large-scale evaluation on TPTP benchmark problems
 

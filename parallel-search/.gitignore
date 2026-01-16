@@ -1,7 +1,9 @@
 # Ignore generated clausified problems
 clausified_examples/
 demo/
+input/
 output/
+Problems/
 test_out/
 test_variants/
 *_clausified.p

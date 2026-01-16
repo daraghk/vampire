@@ -1,0 +1,32 @@
+{
+  "problem": "2026-01-12_10-09-47_ALG301-1",
+  "timestamp": "2026-01-12T10:11:28.285987",
+  "configuration": {
+    "timeout": 60,
+    "vampire_binary": "../build/vampire",
+    "total_variants": 1,
+    "variants_with_seeds": 1
+  },
+  "results": [
+    {
+      "name": "original",
+      "status": "TIMEOUT",
+      "time": 60.02049660682678,
+      "exit_code": 1,
+      "output_file": "output/2026-01-12_10-09-47_ALG301-1/results/original.out"
+    },
+    {
+      "name": "variant_0",
+      "status": "TIMEOUT",
+      "time": 60.021169900894165,
+      "exit_code": 1,
+      "output_file": "output/2026-01-12_10-09-47_ALG301-1/results/variant_0.out"
+    }
+  ],
+  "statistics": {
+    "total_runs": 2,
+    "proved": 0,
+    "timeout": 2,
+    "unknown": 0
+  }
+}

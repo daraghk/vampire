@@ -1,0 +1,32 @@
+{
+  "problem": "2026-01-12_10-16-34_BOO093-1",
+  "timestamp": "2026-01-12T10:19:46.325265",
+  "configuration": {
+    "timeout": 60,
+    "vampire_binary": "../build/vampire",
+    "total_variants": 1,
+    "variants_with_seeds": 1
+  },
+  "results": [
+    {
+      "name": "original",
+      "status": "TIMEOUT",
+      "time": 60.043551445007324,
+      "exit_code": 1,
+      "output_file": "output/2026-01-12_10-16-34_BOO093-1/results/original.out"
+    },
+    {
+      "name": "variant_0",
+      "status": "TIMEOUT",
+      "time": 60.042641162872314,
+      "exit_code": 1,
+      "output_file": "output/2026-01-12_10-16-34_BOO093-1/results/variant_0.out"
+    }
+  ],
+  "statistics": {
+    "total_runs": 2,
+    "proved": 0,
+    "timeout": 2,
+    "unknown": 0
+  }
+}

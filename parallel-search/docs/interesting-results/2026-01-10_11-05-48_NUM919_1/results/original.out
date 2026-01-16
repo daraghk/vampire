@@ -1,0 +1,92 @@
+% Running in auto input_syntax mode. Trying TPTP
+% % WARNING: value z3 for option sas not known
+% dis+1010_1:4_aac=none:abs=on:atotf=0.5:avsq=on:avsqc=2:avsqr=215,247:awrs=converge:awrsf=128:bsd=on:erd=off:fde=none:gve=cautious:newcnf=on:nwc=5.0:rnwc=on:sac=on:sas=z3:sp=const_min:tgt=ground:thsq=on:thsqc=64:thsqr=1,4:i=59848:si=on:rawr=on:rtra=on_0 on NUM919_1_clausified for (3000ds/59848Mi)
+% Solution written to "/tmp/vampire-proof-412175"
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for NUM919_1_clausified
+% SZS output start Proof for NUM919_1_clausified
+tff(func_def_0, type, sK0: $int).
+tff(func_def_1, type, sK1: $int > $int).
+tff(f182652,plain,(
+  $false),
+  inference(evaluation,[],[f182645])).
+tff(f182645,plain,(
+  ~$less(-1,0)),
+  inference(resolution,[],[f182612,f443])).
+tff(f443,plain,(
+  ( ! [X0 : $int,X1 : $int] : ($less($sum(X1,X0),X0) | ~$less(X1,0)) )),
+  inference(superposition,[],[f139,f17])).
+tff(f17,plain,(
+  ( ! [X0 : $int] : ($sum(X0,0) = X0) )),
+  introduced(theory_axiom_145,[])).
+tff(f139,plain,(
+  ( ! [X2 : $int,X0 : $int,X1 : $int] : ($less($sum(X2,X0),$sum(X0,X1)) | ~$less(X2,X1)) )),
+  inference(superposition,[],[f23,f15])).
+tff(f15,plain,(
+  ( ! [X0 : $int,X1 : $int] : ($sum(X0,X1) = $sum(X1,X0)) )),
+  introduced(theory_axiom_143,[])).
+tff(f23,plain,(
+  ( ! [X2 : $int,X0 : $int,X1 : $int] : ($less($sum(X0,X2),$sum(X1,X2)) | ~$less(X0,X1)) )),
+  introduced(theory_axiom_153,[])).
+tff(f182612,plain,(
+  ~$less($sum(-1,sK0),sK0)),
+  inference(duplicate_literal_removal,[],[f182505])).
+tff(f182505,plain,(
+  ~$less($sum(-1,sK0),sK0) | ~$less($sum(-1,sK0),sK0)),
+  inference(resolution,[],[f2442,f40])).
+tff(f40,plain,(
+  ( ! [X0 : $int] : ($less(sK1(X0),sK0) | ~$less(X0,sK0)) )),
+  inference(cnf_transformation,[],[f31])).
+tff(f31,plain,(
+  ! [X0 : $int] : (~$less(X0,sK0) | $less(sK1(X0),sK0))),
+  inference(rectify,[],[f13])).
+tff(f13,negated_conjecture,(
+  ! [X1 : $int] : (~$less(X1,sK0) | $less(sK1(X1),sK0))),
+  file('output/2026-01-10_11-05-48_NUM919_1/clausified/NUM919_1_clausified.p',unknown)).
+tff(f2442,plain,(
+  ( ! [X0 : $int] : (~$less(sK1($sum(-1,X0)),X0) | ~$less($sum(-1,X0),sK0)) )),
+  inference(resolution,[],[f235,f36])).
+tff(f36,plain,(
+  ( ! [X0 : $int] : ($less(X0,sK1(X0)) | ~$less(X0,sK0)) )),
+  inference(cnf_transformation,[],[f28])).
+tff(f28,plain,(
+  ! [X0 : $int] : ($less(X0,sK1(X0)) | ~$less(X0,sK0))),
+  inference(rectify,[],[f14])).
+tff(f14,negated_conjecture,(
+  ! [X1 : $int] : ($less(X1,sK1(X1)) | ~$less(X1,sK0))),
+  file('output/2026-01-10_11-05-48_NUM919_1/clausified/NUM919_1_clausified.p',unknown)).
+tff(f235,plain,(
+  ( ! [X0 : $int,X1 : $int] : (~$less($sum(-1,X0),X1) | ~$less(X1,X0)) )),
+  inference(evaluation,[],[f231])).
+tff(f231,plain,(
+  ( ! [X0 : $int,X1 : $int] : (~$less($sum($uminus(1),X0),X1) | ~$less(X1,X0)) )),
+  inference(superposition,[],[f71,f170])).
+tff(f170,plain,(
+  ( ! [X0 : $int,X1 : $int] : ($sum(X0,$sum($uminus(X0),X1)) = X1) )),
+  inference(evaluation,[],[f151])).
+tff(f151,plain,(
+  ( ! [X0 : $int,X1 : $int] : ($sum(0,X1) = $sum(X0,$sum($uminus(X0),X1))) )),
+  inference(superposition,[],[f16,f19])).
+tff(f19,plain,(
+  ( ! [X0 : $int] : (0 = $sum(X0,$uminus(X0))) )),
+  introduced(theory_axiom_148,[])).
+tff(f16,plain,(
+  ( ! [X2 : $int,X0 : $int,X1 : $int] : ($sum(X0,$sum(X1,X2)) = $sum($sum(X0,X1),X2)) )),
+  introduced(theory_axiom_144,[])).
+tff(f71,plain,(
+  ( ! [X0 : $int,X1 : $int] : (~$less(X1,$sum(1,X0)) | ~$less(X0,X1)) )),
+  inference(superposition,[],[f26,f15])).
+tff(f26,plain,(
+  ( ! [X0 : $int,X1 : $int] : (~$less(X1,$sum(X0,1)) | ~$less(X0,X1)) )),
+  introduced(theory_axiom_169,[])).
+% SZS output end Proof for NUM919_1_clausified
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 2.296 s
+% Instructions burned: 12465 (million)
+% ------------------------------
+% ------------------------------
+% Success in time 2.304 s

@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
 """Main script for parallel Vampire search workflow.
 
+Definitions:
+- C₀ = Full clausified problem (Axioms ∪ negated_conjectures)
+- C_ax = Axioms-only version (negated_conjectures removed from C₀)
+- Variant = B_i + verified seeds + negated_conjectures
+
 This script orchestrates the complete workflow:
-1. Clausify problems (convert to TFF using Vampire's tclausify mode)
-2. Construct base clause sets B_i using various selection strategies
-3. Optionally generate seed clauses S_i using LLM (--generate-seeds)
-4. Optionally verify entailment C₀ ⊨ s using Vampire in parallel (--check-entailment)
-5. Write complete variants C_i = B_i ∪ S_i
-6. Optionally run Vampire in parallel on C₀ and variants with verified seeds
+1. Clausify problems (convert to TFF using Vampire's tclausify mode) → produces C₀
+2. Create C_ax by filtering out negated_conjectures from C₀
+3. Construct base clause sets B_i from C_ax using various selection strategies
+4. Optionally generate seed clauses S_i using LLM (--generate-seeds)
+5. Optionally verify entailment C_ax ⊨ s using Vampire in parallel (--check-entailment)
+6. Write complete variants as B_i + verified seeds + negated_conjectures
+7. Optionally run Vampire in parallel on original problem and variants
    (--run-vampire, skipped if no verified variants exist)
 
 Each problem gets its own timestamped directory with a dedicated log file.
@@ -95,7 +101,7 @@ def check_seed_entailment(
 
     This function is designed to be run in parallel. It creates its own
     EntailmentChecker instance to avoid sharing state between processes.
-    
+
     Captures DEBUG logs from the subprocess for later replay in main process.
 
     Args:
@@ -116,7 +122,7 @@ def check_seed_entailment(
     logger = logging.getLogger(f"entailment_{seed_index}")
     logger.setLevel(logging.DEBUG)
     logger.handlers.clear()
-    
+
     # StringIO handler to capture logs
     log_capture = io.StringIO()
     handler = logging.StreamHandler(log_capture)
@@ -126,12 +132,18 @@ def check_seed_entailment(
     logger.addHandler(handler)
 
     try:
-        checker = EntailmentChecker(logger, vampire_binary=vampire_binary, timeout=timeout)
+        checker = EntailmentChecker(
+            logger, vampire_binary=vampire_binary, timeout=timeout
+        )
         is_entailed = checker.check_entailment(clausified_path, seed_content)
-        
+
         # Get captured logs
-        debug_logs = log_capture.getvalue().strip().split('\n') if log_capture.getvalue().strip() else []
-        
+        debug_logs = (
+            log_capture.getvalue().strip().split("\n")
+            if log_capture.getvalue().strip()
+            else []
+        )
+
         return (seed_index, is_entailed, debug_logs)
     except Exception as e:
         # Capture the exception info
@@ -182,6 +194,92 @@ def setup_problem_output(problem_path, base_output_dir):
     logger.info(f"Output directory: {problem_output}")
 
     return problem_output, logger, timestamp
+
+
+def clausified_axioms(clausified_path):
+    """Create axioms-only version (C_ax) from a clausified TPTP file (C₀).
+
+    This function filters out all formulas with the 'negated_conjecture' role,
+    creating C_ax (axioms only) for base clause selection and entailment checking.
+    This is necessary to avoid the vacuous truth problem: if C₀ (Axioms ∪ negated_conjectures)
+    is UNSAT, then any seed would be vacuously entailed. By removing negated_conjectures to
+    create C_ax, we check entailment as C_ax ⊨ s, ensuring seeds are genuine logical
+    consequences of the axioms.
+
+    Handles:
+    - Multiple negated_conjecture formulas in a single file
+    - Multi-line formulas with nested parentheses
+    - All TPTP formula types (fof, tff, cnf, thf)
+
+    Args:
+        clausified_path: Path to the full clausified file (C₀).
+
+    Returns:
+        Path to the new axioms-only file (C_ax), or None if error.
+    """
+    if not clausified_path or not clausified_path.exists():
+        return None
+
+    try:
+        with open(clausified_path, "r") as f:
+            content = f.read()
+
+        # Split into lines for processing
+        lines = content.split("\n")
+
+        filtered_lines = []
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+
+            # Check if this line starts a formula declaration
+            stripped = line.strip()
+            if stripped.startswith(("fof(", "tff(", "cnf(", "thf(")):
+                # Accumulate the complete formula (may span multiple lines)
+                formula_lines = [line]
+                paren_count = line.count("(") - line.count(")")
+                j = i + 1
+
+                # Keep reading until we have balanced parentheses and find the closing period
+                while j < len(lines) and (
+                    paren_count > 0 or not formula_lines[-1].rstrip().endswith(".")
+                ):
+                    formula_lines.append(lines[j])
+                    paren_count += lines[j].count("(") - lines[j].count(")")
+                    j += 1
+
+                # Check if this formula has negated_conjecture role
+                full_formula = "\n".join(formula_lines)
+                if (
+                    ",negated_conjecture," in full_formula
+                    or ", negated_conjecture," in full_formula
+                ):
+                    # Skip this formula (don't add to filtered_lines)
+                    i = j
+                    continue
+                else:
+                    # Keep this formula
+                    filtered_lines.extend(formula_lines)
+                    i = j
+            else:
+                # Not a formula start (comment, blank line, etc.) - keep it
+                filtered_lines.append(line)
+                i += 1
+
+        # Create new axioms-only file in the same directory
+        axioms_path = (
+            clausified_path.parent
+            / f"{clausified_path.stem}_axioms{clausified_path.suffix}"
+        )
+        with open(axioms_path, "w") as f:
+            f.write("\n".join(filtered_lines))
+
+        return axioms_path
+
+    except Exception as e:
+        # Log error but don't crash - return None to signal failure
+        print(f"Error filtering negated_conjecture from {clausified_path}: {e}")
+        return None
 
 
 def clausify_problem_file(problem_path, problem_output, args, logger):
@@ -256,23 +354,27 @@ def construct_variant(
     constructor,
     stats,
     seed_generator,
-    clausified,
+    negated_conjectures,
+    axioms_only,
     problem_path,
     problem_output,
     args,
     logger,
 ):
-    """Construct a single variant C_i = B_i ∪ S_i.
+    """Construct a single variant as B_i + verified seeds + negated_conjectures.
 
+    Base clauses B_i are selected from C_ax (axioms only) using the chosen strategy.
     If entailment checking is enabled, all seed clauses are checked in parallel
-    using ProcessPoolExecutor. Results are collected and logged in order.
+    using ProcessPoolExecutor against C_ax. Results are collected and logged in order.
+    The final variant consists of B_i + verified seeds + negated_conjectures.
 
     Args:
         variant_index: Index of this variant.
-        constructor: BaseClauseSetConstructor instance.
+        constructor: BaseClauseSetConstructor instance (operates on C_ax).
         stats: Statistics dict from constructor.
         seed_generator: SeedClauseGenerator instance or None.
-        clausified: Path to clausified problem.
+        negated_conjectures: List of negated_conjecture clauses from C₀.
+        axioms_only: Path to axioms-only file (C_ax).
         problem_path: Path to original problem.
         problem_output: Output directory for this problem.
         args: Command-line arguments.
@@ -291,7 +393,7 @@ def construct_variant(
         (len(base) / stats["total_clauses"] * 100) if stats["total_clauses"] > 0 else 0
     )
     logger.info(
-        f"  B_i = {len(base)}/{stats['total_clauses']} clauses from C_0 ({kept_pct:.1f}%)"
+        f"  B_i = {len(base)}/{stats['total_clauses']} clauses from C_ax ({kept_pct:.1f}%)"
     )
 
     # Generate seed clauses S_i if requested
@@ -324,7 +426,7 @@ def construct_variant(
 
             # Limit workers to avoid resource exhaustion
             max_workers = min(os.cpu_count() or 4, len(seeds), 8)  # Cap at 8 workers
-            
+
             # Submit all entailment checks in parallel
             with ProcessPoolExecutor(max_workers=max_workers) as executor:
                 futures = {
@@ -332,7 +434,7 @@ def construct_variant(
                         check_seed_entailment,
                         j,
                         seed.content,
-                        clausified,
+                        axioms_only,
                         args.vampire,
                         args.entailment_timeout,
                     ): j
@@ -346,12 +448,16 @@ def construct_variant(
                     try:
                         returned_idx, is_entailed, debug_logs = future.result()
                         # Sanity check: returned index should match expected
-                        assert returned_idx == expected_idx, f"Index mismatch: {returned_idx} != {expected_idx}"
+                        assert (
+                            returned_idx == expected_idx
+                        ), f"Index mismatch: {returned_idx} != {expected_idx}"
                         entailment_results[returned_idx] = is_entailed
                         entailment_debug_logs[returned_idx] = debug_logs
                         completed += 1
                         if len(seeds) > 5:  # Only show progress for many seeds
-                            logger.info(f"  Progress: {completed}/{len(seeds)} checks completed")
+                            logger.info(
+                                f"  Progress: {completed}/{len(seeds)} checks completed"
+                            )
                     except Exception as e:
                         logger.warning(
                             f"  Entailment check for seed {expected_idx} raised exception: {e}"
@@ -377,15 +483,15 @@ def construct_variant(
             # Check entailment result if entailment checking was enabled
             if args.check_entailment:
                 is_entailed = entailment_results.get(j, False)
-                
+
                 # Replay debug logs from subprocess
                 debug_logs = entailment_debug_logs.get(j, [])
                 for log_line in debug_logs:
                     if log_line.strip():  # Skip empty lines
                         logger.debug(log_line)
-                
+
                 if is_entailed:
-                    logger.info(f"    ✓ Entailment verified (C_0 ⊨ s)")
+                    logger.info(f"    ✓ Entailment verified (C_ax ⊨ s)")
                     verified_count += 1
                 else:
                     logger.warning(f"    ✗ Entailment check failed, skipping seed")
@@ -406,8 +512,9 @@ def construct_variant(
                 f"  Entailment results: {verified_count} verified, {failed_count} failed"
             )
 
-    # Combine B_i ∪ S_i to form complete variant C_i and write to file
-    complete_clause_set = base + seed_clauses
+    # Construct variant as B_i + seeds + negated_conjectures
+    # negated_conjectures passed as parameter (extracted once in process_problem)
+    complete_clause_set = base + seed_clauses + negated_conjectures
 
     output_path = problem_output / "variants" / f"variant_{variant_index}.tptp"
     write_variant_clause_set(
@@ -430,14 +537,15 @@ def process_problem(problem_path, base_output_dir, args):
     """Process a single problem through the complete parallel search workflow.
 
     Each problem gets its own timestamped output directory and log file.
-    
+
     Workflow steps:
-    1. Clausify problem (convert to TFF using Vampire's tclausify mode)
-    2. Construct base clause sets B_i using selected strategy
-    3. Optionally generate seed clauses S_i using LLM (--generate-seeds)
-    4. Optionally verify entailment C₀ ⊨ s in parallel (--check-entailment)
-    5. Write complete variants C_i = B_i ∪ S_i
-    6. Optionally run Vampire in parallel (--run-vampire, skipped if no verified variants)
+    1. Clausify problem (convert to TFF using Vampire's tclausify mode) → C₀
+    2. Create C_ax by filtering negated_conjectures from C₀
+    3. Construct base clause sets B_i from C_ax using selected strategy
+    4. Optionally generate seed clauses S_i using LLM (--generate-seeds)
+    5. Optionally verify entailment C_ax ⊨ s in parallel (--check-entailment)
+    6. Write complete variants as B_i + verified seeds + negated_conjectures
+    7. Optionally run Vampire in parallel (--run-vampire, skipped if no verified variants)
 
     Args:
         problem_path: Path to the problem file.
@@ -454,29 +562,44 @@ def process_problem(problem_path, base_output_dir, args):
 
     # Clausify the problem
     clausified = clausify_problem_file(problem_path, problem_output, args, logger)
-    if not clausified:
+
+    # Create axioms-only file
+    axioms_only = clausified_axioms(clausified)
+
+    if not clausified or not axioms_only:
         return False
 
-    # Initialize constructor and get statistics
-    constructor = BaseClauseSetConstructor(logger, clausified)
+    # Initialize constructor and get statistics from C_ax
+    # Base clauses B_i are selected from C_ax (axioms only)
+    constructor = BaseClauseSetConstructor(logger, axioms_only)
     stats = constructor.get_statistics()
 
     logger.info(
         f"Constructing {args.num_variants} variant(s) using '{args.strategy}' strategy for the base set"
     )
-    logger.info(f"Original problem: {stats['total_clauses']} clauses")
+    logger.info(f"C_ax (axioms only): {stats['total_clauses']} clauses")
+
+    # Extract negated_conjectures from C₀ once (needed for all variants)
+    from base_clause_set_constructor import ClauseRole
+    c0_constructor = BaseClauseSetConstructor(logger, clausified)
+    negated_conjectures = [
+        c for c in c0_constructor.clauses 
+        if c.role == ClauseRole.NEGATED_CONJECTURE
+    ]
+    logger.info(f"Negated conjectures: {len(negated_conjectures)} clause(s)")
 
     # Initialize seed generator if requested
     seed_generator = initialize_seed_generator(logger, args)
 
-    # Construct complete variants C_i = B_i ∪ S_i
+    # Construct complete variants: B_i + verified seeds + negated_conjectures
     for i in range(args.num_variants):
         construct_variant(
             i,
             constructor,
             stats,
             seed_generator,
-            clausified,
+            negated_conjectures,
+            axioms_only,
             problem_path,
             problem_output,
             args,

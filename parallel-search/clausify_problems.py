@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Clausification module for Parallel Vampire Search.
 
+Definitions:
+- C₀ = Full clausified problem (Axioms ∪ negated_conjectures)
+- C_ax = Axioms-only version (negated_conjectures removed from C₀)
+- Variant = B_i + verified seeds + negated_conjectures
+
 This module provides the VampireClausifier class for converting TPTP/SMT-LIB
 problems to clausified form using Vampire's --mode tclausify.
 
@@ -8,8 +13,8 @@ Uses tclausify (theory clausify) which preserves type information for arithmetic
 and other theory problems. This produces TFF output with quantified clauses
 that maintain sort information.
 
-This is the first step in the workflow: converting problems to typed clause form
-before constructing variants (C_i = B_i ∪ S_i).
+This is the first step in the workflow: converting problems to typed clause form (C₀)
+before constructing variants. Main.py then creates C_ax by filtering negated_conjectures.
 
 Used by main.py to perform the clausification step of the workflow.
 

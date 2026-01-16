@@ -1,0 +1,27 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0
+% SZS output start Proof for variant_0
+17. ! [X4 : $int] : $less(X4,$sum(X4,1)) [input(assumption)]
+18. ! [X5 : $int,X6 : $int] : ($less($sum(X6,1),X5) | 0 = $sum(X5,$uminus(X6)) | $less(X6,X5)) [input(axiom)]
+24. ~$less(X0,X0) [theory axiom 150]
+25. ~$less(X1,X2) | ~$less(X0,X1) | $less(X0,X2) [theory axiom 151]
+38. ! [X0 : $int] : $less(X0,$sum(X0,1)) [rectify 17]
+39. ! [X0 : $int,X1 : $int] : ($less($sum(X1,1),X0) | 0 = $sum(X0,$uminus(X1)) | $less(X1,X0)) [rectify 18]
+57. $less(X0,$sum(X0,1)) [cnf transformation 38]
+58. $less($sum(X1,1),X0) | 0 = $sum(X0,$uminus(X1)) | $less(X1,X0) [cnf transformation 39]
+94. $less(X0,$sum(X1,1)) | ~$less(X0,X1) [resolution 25,57]
+256. ~$less($sum(X0,1),X0) [resolution 94,24]
+270. ~$less($sum($sum(X0,1),1),X0) [resolution 256,94]
+278. ~$less($sum(2,X0),X0) [evaluation 270]
+399. 0 = $sum(1,$uminus(2)) | $less(2,1) [resolution 278,58]
+418. $false [evaluation 399]
+% SZS output end Proof for variant_0
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.006 s
+% Instructions burned: 21 (million)
+% ------------------------------
+% ------------------------------

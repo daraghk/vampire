@@ -1,0 +1,32 @@
+{
+  "problem": "2026-01-12_13-20-00_PUZ056-10.030",
+  "timestamp": "2026-01-12T13:22:16.021476",
+  "configuration": {
+    "timeout": 60,
+    "vampire_binary": "../build/vampire",
+    "total_variants": 1,
+    "variants_with_seeds": 1
+  },
+  "results": [
+    {
+      "name": "original",
+      "status": "TIMEOUT",
+      "time": 60.08104586601257,
+      "exit_code": 1,
+      "output_file": "output/2026-01-12_13-20-00_PUZ056-10.030/results/original.out"
+    },
+    {
+      "name": "variant_0",
+      "status": "TIMEOUT",
+      "time": 60.06258463859558,
+      "exit_code": 1,
+      "output_file": "output/2026-01-12_13-20-00_PUZ056-10.030/results/variant_0.out"
+    }
+  ],
+  "statistics": {
+    "total_runs": 2,
+    "proved": 0,
+    "timeout": 2,
+    "unknown": 0
+  }
+}
