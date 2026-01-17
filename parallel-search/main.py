@@ -7,7 +7,7 @@ Definitions:
 - Variant = B_i + verified seeds + negated_conjectures
 
 This script orchestrates the complete workflow:
-1. Clausify problems (convert to TFF using Vampire's tclausify mode) → produces C₀
+1. Clausify problems (convert to CNF/TFF using Vampire's clausify/tclausify mode) → produces C₀
 2. Create C_ax by filtering out negated_conjectures from C₀
 3. Construct base clause sets B_i from C_ax using various selection strategies
 4. Optionally generate seed clauses S_i using LLM (--generate-seeds)
@@ -27,6 +27,7 @@ Output structure (single problem):
     │   └── variant_{i}.tptp
     └── results/ (if --run-vampire used and verified variants exist)
         ├── original.out
+        ├── original_clausified.out
         ├── variant_{i}.out
         └── summary.json
 
@@ -63,7 +64,7 @@ Examples:
     # Generate seeds with specific LLM model
     python main.py examples/group_theory.tptp --generate-seeds 5 --llm-model gpt-4o
 
-    # Generate seeds with entailment checking (verifies C_0 ⊨ s)
+    # Generate seeds with entailment checking (verifies C_ax ⊨ s)
     python main.py examples/group_theory.tptp --generate-seeds 5 --check-entailment
 
     # Full workflow: generate variants, check entailment, and run Vampire
@@ -88,6 +89,7 @@ from base_clause_set_constructor import BaseClauseSetConstructor
 from entailment_checker import EntailmentChecker
 from logging_utils import setup_logger
 from run_parallel import run_parallel_evaluation
+from tptp_parsing_utils import parse_cnf_clause, parse_tff_clause
 
 
 def check_seed_entailment(
@@ -153,18 +155,20 @@ def check_seed_entailment(
 
 
 def write_variant_clause_set(clauses, output_path, problem_name, num_clauses):
-    """Write a complete variant clause set (C_i = B_i ∪ S_i) to a TPTP file.
+    """Write a complete variant clause set (Variant = B_i + verified seeds + negated_conjectures) to a TPTP file.
 
     Args:
         clauses: List of Clause objects to write.
         output_path: Path to output file.
         problem_name: Name of the original problem.
-        num_clauses: Total number of clauses in C_i.
+        num_clauses: Total number of clauses in the variant.
     """
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     with open(output_path, "w") as f:
-        f.write("% Generated clause set variant (C_i = B_i ∪ S_i)\n")
+        f.write(
+            "% Generated clause set variant (Variant = B_i + verified seeds + negated_conjectures)\n"
+        )
         f.write(f"% Original problem: {problem_name}\n")
         f.write(f"% Number of clauses: {num_clauses}\n\n")
 
@@ -294,12 +298,13 @@ def clausify_problem_file(problem_path, problem_output, args, logger):
     Returns:
         Path to clausified file, or None if clausification failed.
     """
-    logger.info("Clausifying...")
+    logger.info(f"Clausifying (mode: {args.clausify_mode})...")
     clausifier = VampireClausifier(
         logger,
         vampire_binary=args.vampire,
         output_dir=problem_output / "clausified",
         timeout=args.timeout,
+        mode=args.clausify_mode,
     )
 
     if not clausifier.clausify_problem(problem_path):
@@ -499,11 +504,23 @@ def construct_variant(
                     continue
 
             # Parse seed clause to add to variant
-            parsed = constructor._parse_tff_clause(seed.content)
+            # Check format and use appropriate parser
+            if seed.content.strip().startswith("tff("):
+                parsed = parse_tff_clause(seed.content, logger)
+            elif seed.content.strip().startswith("cnf("):
+                parsed = parse_cnf_clause(seed.content, logger)
+            else:
+                logger.warning(f"    Seed clause not in CNF or TFF format: {seed.content[:50]}...")
+                parsed = None
+            
             if parsed:
                 seed_clauses.append(parsed)
             else:
                 logger.warning(f"    Failed to parse seed clause, skipping")
+                # If parsing failed after entailment check passed, this is a bug
+                if args.check_entailment and is_entailed:
+                    logger.error(f"    ERROR: Entailment passed but parsing failed! This indicates a bug.")
+                    failed_count += 1
 
             logger.info("")  # Blank line after each seed
 
@@ -526,7 +543,7 @@ def construct_variant(
 
     logger.info(f"  Written to: {output_path}")
     logger.info(
-        f"  Summary: C_i = B_i ({len(base)} clauses) ∪ S_i ({len(seed_clauses)} seeds) = {len(complete_clause_set)} total clauses"
+        f"  Summary: Variant = B_i ({len(base)} clauses) + verified seeds ({len(seed_clauses)}) + negated_conjectures ({len(negated_conjectures)}) = {len(complete_clause_set)} total clauses"
     )
     logger.info("")
 
@@ -539,7 +556,7 @@ def process_problem(problem_path, base_output_dir, args):
     Each problem gets its own timestamped output directory and log file.
 
     Workflow steps:
-    1. Clausify problem (convert to TFF using Vampire's tclausify mode) → C₀
+    1. Clausify problem (convert to CNF/TFF using Vampire's clausify/tclausify mode) → C₀
     2. Create C_ax by filtering negated_conjectures from C₀
     3. Construct base clause sets B_i from C_ax using selected strategy
     4. Optionally generate seed clauses S_i using LLM (--generate-seeds)
@@ -580,11 +597,11 @@ def process_problem(problem_path, base_output_dir, args):
     logger.info(f"C_ax (axioms only): {stats['total_clauses']} clauses")
 
     # Extract negated_conjectures from C₀ once (needed for all variants)
-    from base_clause_set_constructor import ClauseRole
+    from tptp_parsing_utils import ClauseRole
+
     c0_constructor = BaseClauseSetConstructor(logger, clausified)
     negated_conjectures = [
-        c for c in c0_constructor.clauses 
-        if c.role == ClauseRole.NEGATED_CONJECTURE
+        c for c in c0_constructor.clauses if c.role == ClauseRole.NEGATED_CONJECTURE
     ]
     logger.info(f"Negated conjectures: {len(negated_conjectures)} clause(s)")
 
@@ -619,6 +636,7 @@ def process_problem(problem_path, base_output_dir, args):
             vampire_binary=args.vampire,
             timeout=args.vampire_timeout,
             max_workers=args.max_workers,
+            original_problem=problem_path,
         )
 
     return True
@@ -629,7 +647,7 @@ def main():
 
     Orchestrates clausification, base clause set construction (B_i),
     optional seed clause generation (S_i), parallel entailment checking,
-    variant writing (C_i = B_i ∪ S_i), and optional parallel Vampire execution.
+    variant writing (Variant = B_i + verified seeds + negated_conjectures), and optional parallel Vampire execution.
     Each problem gets its own timestamped directory with log and artifacts.
     """
     parser = argparse.ArgumentParser(description="Parallel Vampire search workflow")
@@ -665,7 +683,7 @@ def main():
     parser.add_argument(
         "--check-entailment",
         action="store_true",
-        help="Verify seed clauses using entailment checking (C_0 ⊨ s)",
+        help="Verify seed clauses using entailment checking (C_ax ⊨ s)",
     )
     parser.add_argument(
         "--entailment-timeout",
@@ -677,6 +695,13 @@ def main():
         "--run-vampire",
         action="store_true",
         help="Run Vampire in parallel on original problem and variants with verified seeds",
+    )
+    parser.add_argument(
+        "--clausify-mode",
+        type=str,
+        default="clausify",
+        choices=["clausify", "tclausify"],
+        help="Clausification mode: 'clausify' (CNF output, default) or 'tclausify' (TFF output, preserves types)",
     )
     parser.add_argument(
         "--vampire-timeout",

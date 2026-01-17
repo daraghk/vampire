@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 """Parallel Vampire Execution Module for Parallel Vampire Search.
 
-This module executes Vampire in parallel on the original clausified problem (C₀)
-and all variants with at least one verified seed clause. Used by main.py to
-execute the final evaluation phase of the parallel search workflow.
+This module executes Vampire in parallel on the original problem (non-clausified),
+the original clausified problem (C₀), and all variants with at least one verified
+seed clause. Used by main.py to execute the final evaluation phase of the parallel
+search workflow.
 
 The parallel execution workflow:
-1. Identify the clausified original problem (C₀)
-2. Identify all variants that have verified seed clauses (from log file)
-3. Run Vampire in parallel on:
-   - Original problem C₀
+1. Identify the original problem file (if provided)
+2. Identify the clausified original problem (C₀)
+3. Identify all variants that have verified seed clauses (from log file)
+4. Run Vampire in parallel on:
+   - Original problem (non-clausified, if provided)
+   - Original clausified problem C₀
    - All variants C_i with verified seeds
-4. Capture execution time, exit status, and full Vampire output for each run
-5. Generate summary with statistics (proved, timeout, unknown counts)
-6. Save results to results/ directory with JSON summary
+5. Capture execution time, exit status, and full Vampire output for each run
+6. Generate summary with statistics (proved, timeout, unknown counts)
+7. Save results to results/ directory with JSON summary
 
 Only variants with at least one verified seed clause are executed. This ensures
 all runs are sound: if any variant C_i is UNSAT, then C₀ is UNSAT.
@@ -39,7 +42,8 @@ Usage:
         logger=logger,
         vampire_binary="../build/vampire",
         timeout=60,
-        max_workers=None  # Auto-detect
+        max_workers=None,  # Auto-detect
+        original_problem=Path("problem.p")  # Optional: original non-clausified problem
     )
 
     # Check results
@@ -211,6 +215,7 @@ def run_parallel_evaluation(
     vampire_binary: str = "../build/vampire",
     timeout: int = 60,
     max_workers: Optional[int] = None,
+    original_problem: Optional[Path] = None,
 ) -> Dict:
     """Run Vampire in parallel on original problem and variants with verified seeds.
 
@@ -223,6 +228,8 @@ def run_parallel_evaluation(
         vampire_binary: Path to Vampire executable.
         timeout: Timeout per run in seconds.
         max_workers: Max parallel workers (None for auto-detect).
+        original_problem: Path to original problem file (non-clausified). If provided,
+            this will also be run in parallel.
 
     Returns:
         Dictionary with evaluation results containing:
@@ -238,7 +245,7 @@ def run_parallel_evaluation(
         logger.error(f"No clausified problem found in {clausified_dir}")
         return {"results": [], "statistics": {}, "proved": []}
 
-    original_problem = clausified_files[0]
+    original_clausified_problem = clausified_files[0]
 
     # Find variants
     variants_dir = problem_output_dir / "variants"
@@ -257,7 +264,9 @@ def run_parallel_evaluation(
     logger.info("=" * 80)
     logger.info("PARALLEL VAMPIRE EVALUATION")
     logger.info("=" * 80)
-    logger.info(f"Original problem: {original_problem.name}")
+    if original_problem and original_problem.exists():
+        logger.info(f"Original problem: {original_problem.name}")
+    logger.info(f"Original clausified problem: {original_clausified_problem.name}")
     logger.info(f"Total variants: {len(all_variants)}")
     logger.info(f"Variants with verified seeds: {len(verified_variants)}")
 
@@ -285,14 +294,26 @@ def run_parallel_evaluation(
     # Prepare runs
     runs = []
 
-    # Original problem
+    # Original problem (non-clausified) if provided
+    if original_problem and original_problem.exists():
+        runs.append(
+            (
+                original_problem,
+                results_dir / "original.out",
+                vampire_binary,
+                timeout,
+                "original",
+            )
+        )
+
+    # Original clausified problem
     runs.append(
         (
-            original_problem,
-            results_dir / "original.out",
+            original_clausified_problem,
+            results_dir / "original_clausified.out",
             vampire_binary,
             timeout,
-            "original",
+            "original_clausified",
         )
     )
 
@@ -333,8 +354,16 @@ def run_parallel_evaluation(
             result = future.result()
             results.append(result)
 
-    # Sort results: original first, then variants
-    results.sort(key=lambda x: (0 if x["name"] == "original" else 1, x["name"]))
+    # Sort results: original first, then original_clausified, then variants
+    def sort_key(x):
+        if x["name"] == "original":
+            return (0, x["name"])
+        elif x["name"] == "original_clausified":
+            return (1, x["name"])
+        else:
+            return (2, x["name"])
+    
+    results.sort(key=sort_key)
 
     # Generate summary
     logger.info("")

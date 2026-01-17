@@ -5,12 +5,12 @@ This directory contains work on parallelizing Vampire via semantically entailed 
 ## Contents
 
 - **`main.py`** - Main entry point for the workflow
-- **`clausify_problems.py`** - VampireClausifier class for TFF conversion (using tclausify mode)
+- **`clausify_problems.py`** - VampireClausifier class for clausification (CNF via clausify, or TFF via tclausify)
 - **`base_clause_set_constructor.py`** - BaseClauseSetConstructor class for B_i selection
 - **`seed_clause_set_constructor.py`** - SeedClauseGenerator class for S_i generation (requires `openai` package)
-- **`entailment_checker.py`** - EntailmentChecker class for verifying C_ax ⊨ s (where C_ax is the axioms-only version with negated_conjecture removed, and s is an LLM-generated seed clause)
+- **`entailment_checker.py`** - EntailmentChecker class for verifying C_ax ⊨ s (where C_ax is the axioms-only version with negated_conjectures removed, and s is an LLM-generated seed clause)
 - **`run_parallel.py`** - Parallel Vampire execution module for running the original problem and verified variants
-- **`tptp_parsing_utils.py`** - Shared TFF parsing utilities (quantifier/parentheses handling)
+- **`tptp_parsing_utils.py`** - Shared TPTP parsing utilities (CNF and TFF clause parsing, quantifier/parentheses handling)
 - **`logging_utils.py`** - Logging utilities
 - **`examples/`** - Example TPTP problems
 - **`docs/`** - Design documents
@@ -62,6 +62,9 @@ python3 main.py examples/group_theory.tptp --generate-seeds 5 --check-entailment
 
 # Run Vampire with custom timeout (default 60s)
 python3 main.py examples/PLA046_1.p -n 5 --run-vampire --vampire-timeout 120
+
+# Use TFF clausification mode (preserves types, for arithmetic problems)
+python3 main.py examples/ARI045_1.p -n 3 --clausify-mode tclausify
 ```
 
 **Output structure**:
@@ -69,14 +72,15 @@ python3 main.py examples/PLA046_1.p -n 5 --run-vampire --vampire-timeout 120
 output/
 └── {timestamp}_{problem}/             # One directory per problem per run
     ├── {timestamp}_{problem}.log      # Single log file (HH:MM timestamps)
-    ├── clausified/                    # Clausified problems (TFF/typed clause form)
+    ├── clausified/                    # Clausified problems (CNF or TFF format)
     │   └── {problem}_clausified.tptp
-    ├── variants/                      # Generated clause set variants (C_i = B_i ∪ S_i)
+    ├── variants/                      # Generated clause set variants (Variant = B_i + verified seeds + negated_conjectures)
     │   ├── variant_0.tptp
     │   ├── variant_1.tptp
     │   └── ...
     └── results/                       # Vampire execution results (only if --run-vampire used and verified variants exist)
-        ├── original.out               # Vampire output for original problem
+        ├── original.out               # Vampire output for original problem (non-clausified)
+        ├── original_clausified.out    # Vampire output for original clausified problem (C₀)
         ├── variant_0.out              # Vampire output for variant_0
         ├── variant_1.out              # Vampire output for variant_1
         ├── ...
@@ -96,9 +100,10 @@ The workflow performs up to six main steps:
 
 **Steps:**
 
-1. **Clausification**: Convert the input problem to TFF using Vampire's `--mode tclausify`
-   - Produces **C₀**: TFF (Typed First-order Form) with quantified clauses including negated_conjectures
-   - Preserves type information for arithmetic problems ($int, $real, etc.)
+1. **Clausification**: Convert the input problem to CNF (default) or TFF using Vampire's `--mode clausify` or `--mode tclausify`
+   - Default (`clausify`): Produces **C₀** in CNF format - suitable for most CNF/FOF problems
+   - Optional (`tclausify`): Produces **C₀** in TFF format - preserves type information for arithmetic problems
+   - Use `--clausify-mode tclausify` if you need type preservation
 2. **Create C_ax**: Filter out `negated_conjecture` formulas from C₀ to create **C_ax** (axioms only)
    - Used for base clause selection and entailment checking
    - Avoids vacuous truth problem in entailment verification
@@ -117,7 +122,8 @@ The workflow performs up to six main steps:
    - Only verified seeds (proved by Vampire) are added to variants
    - Ensures soundness: UNSAT(variant) ⟹ UNSAT(C₀)
 6. **Parallel Execution** (optional, requires `--run-vampire`): Run Vampire in parallel on:
-   - The original problem C₀
+   - The original problem (non-clausified)
+   - The original clausified problem (C₀)
    - All variants: **B_i + verified seeds + negated_conjectures**
    - Skipped entirely if no variants have verified seeds (no point comparing original alone)
    - Captures execution time, exit status, and full Vampire output
@@ -142,7 +148,7 @@ The `examples/` directory contains test problems across multiple domains:
 
 The parallel search strategy works as follows:
 
-1. **Extract C₀**: Use `--mode tclausify` to get the full clausified problem (Axioms ∪ negated_conjectures)
+1. **Extract C₀**: Use `--mode clausify` (default, CNF) or `--mode tclausify` (TFF) to get the full clausified problem (Axioms ∪ negated_conjectures)
 2. **Create C_ax**: Filter out negated_conjectures to get axioms-only version
 3. **Generate variants**: Create alternative starting sets where each variant = Bᵢ + Sᵢ + negated_conjectures
    - Bᵢ ⊆ C_ax (base clauses selected from axioms using strategy: random, priority, stratified, etc.)
@@ -150,7 +156,7 @@ The parallel search strategy works as follows:
    - negated_conjectures (the negated conjectures to prove)
    - Variant = Bᵢ + Sᵢ + negated_conjectures
 4. **Verify entailment**: Check that **C_ax ⊨ s** for each seed clause s using Vampire
-5. **Run in parallel**: Launch independent Vampire instances on C₀ and each variant
+5. **Run in parallel**: Launch independent Vampire instances on the original problem (non-clausified), the original clausified problem (C₀), and each variant
 6. **First to finish wins**: If any proves UNSAT(variant), then UNSAT(C₀) follows
 
 ## Key Properties
@@ -163,19 +169,19 @@ The parallel search strategy works as follows:
 
 ## Current Status
 
-- ✅ Clausification (C_0 extraction with type preservation via `tclausify`)
+- ✅ Clausification (C₀ extraction via `clausify` (CNF, default) or `tclausify` (TFF))
 - ✅ Base clause set construction (B_i selection with multiple strategies)
-- ✅ TFF format support (Typed First-order Form with quantified clauses)
+- ✅ CNF and TFF format support (configurable via `--clausify-mode`)
 - ✅ Shared TPTP parsing utilities (`tptp_parsing_utils.py` for quantifier/parentheses handling)
 - ✅ LLM interface for seed clause suggestions (S_i generation via `seed_clause_set_constructor.py`)
-- ✅ TFF seed generation (LLM generates TFF clauses with type information)
+- ✅ Seed generation (LLM generates clauses matching the clausification format)
 - ✅ Parallel entailment checking (all seed clauses checked in parallel for performance)
 - ✅ Entailment checking via conjecture proving (C_ax ⊨ s verification using `entailment_checker.py`)
 - ✅ Native Vampire conjecture handling (cleaner than manual clause negation)
 - ✅ Axioms-only filtering (C_ax creation to avoid vacuous truth in entailment)
 - ✅ Variant file generation (B_i + verified seeds + negated_conjectures written to TPTP files)
 - ✅ Structured logging with timestamped outputs
-- ✅ Parallel execution framework (running original problem + variants via `run_parallel.py`)
+- ✅ Parallel execution framework (running original problem, original clausified problem, and variants via `run_parallel.py`)
 - ✅ Results capture (execution time, status, full Vampire output, JSON summary)
 - ⏳ Large-scale evaluation on TPTP benchmark problems
 

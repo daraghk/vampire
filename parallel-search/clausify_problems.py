@@ -7,13 +7,12 @@ Definitions:
 - Variant = B_i + verified seeds + negated_conjectures
 
 This module provides the VampireClausifier class for converting TPTP/SMT-LIB
-problems to clausified form using Vampire's --mode tclausify.
+problems to clausified form using Vampire's --mode clausify or --mode tclausify.
 
-Uses tclausify (theory clausify) which preserves type information for arithmetic
-and other theory problems. This produces TFF output with quantified clauses
-that maintain sort information.
+- 'clausify' mode: Produces CNF output (default, suitable for CNF/FOF problems)
+- 'tclausify' mode: Produces TFF output (preserves type information for arithmetic)
 
-This is the first step in the workflow: converting problems to typed clause form (C₀)
+This is the first step in the workflow: converting problems to clausified form (C₀)
 before constructing variants. Main.py then creates C_ax by filtering negated_conjectures.
 
 Used by main.py to perform the clausification step of the workflow.
@@ -40,9 +39,10 @@ from typing import Optional
 class VampireClausifier:
     """Handles clausification of TPTP/SMT-LIB problems using Vampire.
 
-    This class wraps Vampire's --mode tclausify, which produces TFF output with
-    quantified clauses that preserve type/sort information. This is essential
-    for arithmetic problems and works correctly for standard FOL problems too.
+    Supports two clausification modes:
+    - 'clausify': Produces CNF (Clause Normal Form) output - suitable for most problems
+    - 'tclausify': Produces TFF (Typed First-order Form) output - preserves type information
+      for arithmetic problems but converts everything to TFF format
     """
 
     def __init__(
@@ -51,6 +51,7 @@ class VampireClausifier:
         vampire_binary: str = "../build/vampire",
         output_dir: Optional[Path] = None,
         timeout: int = 60,
+        mode: str = "clausify",
     ):
         """Initialize the clausifier.
 
@@ -60,11 +61,16 @@ class VampireClausifier:
             output_dir: Directory to save clausified outputs. If None, saves
                 alongside original files with '_clausified' suffix.
             timeout: Timeout in seconds for each problem.
+            mode: Clausification mode: 'clausify' (CNF output) or 'tclausify' (TFF output).
+                Default is 'clausify' for compatibility with CNF/FOF problems.
         """
         self.logger = logger
         self.vampire_binary = vampire_binary
         self.output_dir = output_dir
         self.timeout = timeout
+        self.mode = mode
+        if mode not in ["clausify", "tclausify"]:
+            raise ValueError(f"Invalid clausification mode: {mode}. Must be 'clausify' or 'tclausify'")
         self.stats = {"success": 0, "error": 0, "timeout": 0, "skipped": 0}
 
     def is_problem_file(self, path: Path) -> bool:
@@ -100,9 +106,10 @@ class VampireClausifier:
             )
 
         try:
-            # Run vampire --mode tclausify (preserves type information)
+            # Run vampire in the specified clausification mode
+            # 'clausify' produces CNF output, 'tclausify' produces TFF output (preserves types)
             result = subprocess.run(
-                [self.vampire_binary, "--mode", "tclausify", str(problem_path)],
+                [self.vampire_binary, "--mode", self.mode, str(problem_path)],
                 capture_output=True,
                 text=True,
                 timeout=self.timeout,

@@ -111,7 +111,7 @@ class SeedClauseGenerator:
                         "properties": {
                             "clause": {
                                 "type": "string",
-                                "description": "The clause in TPTP TFF format (e.g., 'tff(lemma1, axiom, ![X: $int]: p(X)).')",
+                                "description": "The clause in TPTP CNF or TFF format (e.g., 'cnf(lemma1, axiom, p(X) | q(Y)).' or 'tff(lemma1, axiom, ![X: $int]: p(X)).')",
                             },
                             "explanation": {
                                 "type": "string",
@@ -178,8 +178,17 @@ class SeedClauseGenerator:
         """
         self.logger.info(f"  Requesting {num_seeds} seed clauses from {self.model}")
 
+        # Detect format from base clauses (CNF or TFF)
+        clause_format = "TFF"  # default
+        if base_clauses:
+            first_clause = base_clauses[0].strip()
+            if first_clause.startswith("cnf("):
+                clause_format = "CNF"
+            elif first_clause.startswith("tff("):
+                clause_format = "TFF"
+
         prompt = self._build_prompt(
-            problem_context, base_clauses, num_seeds, domain_hint
+            problem_context, base_clauses, num_seeds, domain_hint, clause_format
         )
 
         # Log the full prompt being sent
@@ -197,8 +206,9 @@ class SeedClauseGenerator:
                         "role": "system",
                         "content": (
                             "You are an expert in automated theorem proving and first-order logic. "
-                            "Your task is to suggest helpful lemmas and intermediate clauses that are "
-                            "logical consequences of the given axioms. Provide clauses in TPTP TFF format with type quantifiers."
+                            f"Your task is to suggest helpful lemmas and intermediate clauses that are "
+                            f"logical consequences of the given axioms. Provide clauses in TPTP {clause_format} format. "
+                            f"If {clause_format} is TFF, use type quantifiers. If {clause_format} is CNF, use disjunctive clauses."
                         ),
                     },
                     {"role": "user", "content": prompt},
@@ -231,6 +241,7 @@ class SeedClauseGenerator:
         base_clauses: List[str],
         num_seeds: int,
         domain_hint: Optional[str] = None,
+        clause_format: str = "TFF",
     ) -> str:
         """Build the prompt for seed clause generation.
 
@@ -269,21 +280,22 @@ Generate {num_seeds} lemmas or intermediate clauses that are logical consequence
 - Ensure logical consistency with the given clauses
 
 **Format Specifications:**
-- Use TPTP TFF (Typed First-order Form) syntax: `tff(name, role, formula).`
+- Use TPTP {clause_format} syntax: `{clause_format.lower()}(name, role, clause).`
 - Role should be `axiom` for general principles or `lemma` for derived facts
-- Include explicit type quantifiers (e.g., `![X: $int]: ...` for integers)
+- Match the format of the sample clauses above
+{f"- If using TFF format: Include explicit type quantifiers (e.g., `![X: $int]: ...` for integers)" if clause_format == "TFF" else ""}
+{f"- If using CNF format: Use disjunctive form (e.g., `p(X) | ~q(Y) | r(Z)`) - clauses are disjunctions of literals separated by `|`" if clause_format == "CNF" else ""}
 - Prefer simple forms: unit clauses or binary clauses when possible
 - Use descriptive names that indicate the lemma's purpose
 - Note: User-defined predicates/functions have no `$` prefix; built-in TPTP symbols like `$int`, `$real` do
 
 ## Output Format
 For each lemma, provide:
-1. The TFF clause
+1. The {clause_format} clause
 2. A brief 1-sentence explanation of why this lemma could be useful
 
 ## Example
-
-tff(transitivity_leq, axiom, ![X: $int, Y: $int, Z: $int]: ((leq(X, Y) & leq(Y, Z)) => leq(X, Z))).
+{f"tff(transitivity_leq, axiom, ![X: $int, Y: $int, Z: $int]: ((leq(X, Y) & leq(Y, Z)) => leq(X, Z)))." if clause_format == "TFF" else "cnf(transitivity_leq, axiom, ~leq(X, Y) | ~leq(Y, Z) | leq(X, Z))."}
 
 Explanation: Establishes transitivity of the user-defined leq (less-than-or-equal) predicate, enabling chaining of inequalities.
 

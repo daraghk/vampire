@@ -20,14 +20,15 @@ This module provides multiple B_i selection strategies:
     - priority: Keep unit clauses, sample others
     - stratified: Divide axioms into non-overlapping strata
 
-Parses TFF (Typed First-order Form) clauses from tclausify output:
-    - TFF format: tff(name, role, (![X0 : $int] : (formula))).
-    - Quantifiers are stripped to extract the clause content.
+Parses CNF (Clause Normal Form) and TFF (Typed First-order Form) clauses:
+    - CNF format: cnf(name, role, clause). (from clausify mode)
+    - TFF format: tff(name, role, (![X0 : $int] : (formula))). (from tclausify mode)
+    - For TFF: Quantifiers are stripped to extract the clause content.
 
 Uses tptp_parsing_utils for shared parsing logic (quantifier/parentheses handling).
 
 IMPORTANT:
-    - Input must be a TFF clausified problem. Use VampireClausifier first.
+    - Input must be a clausified problem (CNF or TFF format). Use VampireClausifier first.
     - This module only constructs B_i, not complete variants C_i.
     - Seed clauses (S_i) are added separately by main.py after LLM generation.
 
@@ -46,48 +47,17 @@ Usage:
 
 import logging
 import random
-from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional, Set, Tuple
-from enum import Enum
 
-from tptp_parsing_utils import strip_quantifiers, strip_outer_parentheses
-
-
-class ClauseRole(Enum):
-    """TPTP clause roles."""
-
-    AXIOM = "axiom"
-    HYPOTHESIS = "hypothesis"
-    NEGATED_CONJECTURE = "negated_conjecture"
-    CONJECTURE = "conjecture"
-    LEMMA = "lemma"
-    THEOREM = "theorem"
-    DEFINITION = "definition"
-    UNKNOWN = "unknown"
-
-
-@dataclass
-class Clause:
-    """Represents a single TFF clause from Vampire's tclausify output.
-
-    Attributes:
-        name: Clause identifier (e.g., "u12").
-        role: TPTP role (axiom, hypothesis, negated_conjecture, etc.).
-        literals: Clause content with quantifiers stripped (e.g., "mult(e,X0) = X0").
-        original_line: Full TPTP line for reconstruction.
-    """
-
-    name: str
-    role: ClauseRole
-    literals: str
-    original_line: str
-
-    def __str__(self) -> str:
-        return self.original_line
-
-    def __repr__(self) -> str:
-        return f"Clause({self.name}, {self.role.value})"
+from tptp_parsing_utils import (
+    Clause,
+    ClauseRole,
+    parse_cnf_clause,
+    parse_tff_clause,
+    strip_quantifiers,
+    strip_outer_parentheses,
+)
 
 
 class BaseClauseSelector:
@@ -227,15 +197,17 @@ class BaseClauseSelector:
 class BaseClauseSetConstructor:
     """Constructs base clause sets B_i from C_ax (axioms only).
 
-    This class parses TFF clausified problems from Vampire's tclausify mode
+    This class parses CNF and TFF clausified problems from Vampire's clausify/tclausify modes
     and provides methods to construct base clause sets B_i using various
     selection strategies.
 
     Typically operates on C_ax (axioms-only file with negated_conjectures removed),
     but can also parse C₀ (full clausified problem) when needed.
 
-    TFF format: tff(name, role, (![X : $int] : (formula))).
-    Quantifiers are stripped to extract the clause content for processing.
+    Supports both formats:
+    - CNF format: cnf(name, role, clause). (from clausify mode)
+    - TFF format: tff(name, role, (![X : $int] : (formula))). (from tclausify mode)
+    For TFF: Quantifiers are stripped to extract the clause content for processing.
 
     IMPORTANT: This class ONLY constructs B_i (base clauses), not S_i (seed clauses).
     Seed clauses are generated separately by seed_clause_set_constructor.py using LLM.
@@ -247,9 +219,9 @@ class BaseClauseSetConstructor:
 
         Args:
             logger: Logger instance for logging.
-            clausified_problem: Path to TFF clausified problem file.
+            clausified_problem: Path to clausified problem file (CNF or TFF format).
                 Typically C_ax (axioms only), but can also be C₀ (full problem).
-                Use VampireClausifier (tclausify mode) to convert problems first.
+                Use VampireClausifier (clausify or tclausify mode) to convert problems first.
         """
         self.logger = logger
         self.problem_path = Path(clausified_problem)
@@ -281,10 +253,16 @@ class BaseClauseSetConstructor:
                 i += 1
                 continue
 
-            # Parse TFF clause (may span multiple lines)
+            # Parse TFF or CNF clause (may span multiple lines)
             if line.startswith("tff("):
                 full_clause, lines_consumed = self._read_full_clause(lines, i)
-                clause = self._parse_tff_clause(full_clause)
+                clause = parse_tff_clause(full_clause, self.logger)
+                if clause:
+                    self.clauses.append(clause)
+                i += lines_consumed
+            elif line.startswith("cnf("):
+                full_clause, lines_consumed = self._read_full_clause(lines, i)
+                clause = parse_cnf_clause(full_clause, self.logger)
                 if clause:
                     self.clauses.append(clause)
                 i += lines_consumed
@@ -319,60 +297,6 @@ class BaseClauseSetConstructor:
 
         return full_clause, lines_consumed
 
-    def _parse_tff_clause(self, line: str) -> Optional[Clause]:
-        """Parse a TFF (Typed First-order Form) clause.
-
-        Handles quantified formulas from tclausify mode, stripping quantifiers
-        and extracting the clause content.
-
-        Args:
-            line: TFF clause line (may be multi-line joined with spaces).
-
-        Returns:
-            Parsed Clause object, or None if parsing fails.
-
-        Example:
-            tff(u10,axiom, (![X0] : ((mult(e,X0) = X0)))).
-            -> Clause with literals: mult(e,X0) = X0
-        """
-        try:
-            # Extract clause name
-            name_start = line.index("tff(") + 4
-            name_end = line.index(",", name_start)
-            name = line[name_start:name_end]
-
-            # Extract role
-            role_start = name_end + 1
-            role_end = line.index(",", role_start)
-            role_str = line[role_start:role_end].strip()
-
-            try:
-                role = ClauseRole(role_str)
-            except ValueError:
-                role = ClauseRole.UNKNOWN
-
-            # Extract formula (everything between role and final ").")
-            formula_start = role_end + 1
-            formula_end = line.rindex(").")
-            formula = line[formula_start:formula_end].strip()
-
-            # First strip one layer of outer parentheses to expose quantifiers
-            formula = strip_outer_parentheses(formula)
-
-            # Strip quantifiers: ![X0] : or ![X0, X1] : or ![X0 : $int] :
-            formula = strip_quantifiers(formula)
-
-            # Strip remaining outer parentheses if they wrap the entire formula
-            # May need to do this multiple times for nested wrapping
-            prev_formula = None
-            while prev_formula != formula:
-                prev_formula = formula
-                formula = strip_outer_parentheses(formula)
-
-            return Clause(name=name, role=role, literals=formula, original_line=line)
-        except (ValueError, IndexError) as e:
-            self.logger.warning(f"Failed to parse TFF clause: {line[:50]}... ({e})")
-            return None
 
     def construct_base_set(self, strategy: str = "all", **kwargs) -> List[Clause]:
         """Construct base clause set B_i using specified strategy.
@@ -434,7 +358,7 @@ class BaseClauseSetConstructor:
 
 
 if __name__ == "__main__":
-    """Test TFF parsing logic."""
+    """Test TPTP clause parsing logic (CNF and TFF)."""
     import sys
     import tempfile
 
@@ -442,7 +366,10 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.WARNING)
     logger = logging.getLogger()
 
-    print("Testing TFF clause parsing:\n")
+    # Import parsing functions for testing
+    from tptp_parsing_utils import parse_tff_clause
+
+    print("Testing TPTP clause parsing (CNF and TFF):\n")
     print("=" * 80)
 
     constructor = BaseClauseSetConstructor.__new__(BaseClauseSetConstructor)
@@ -461,7 +388,7 @@ if __name__ == "__main__":
 
     tff_passed = True
     for tff_clause in tff_tests:
-        clause = constructor._parse_tff_clause(tff_clause)
+        clause = parse_tff_clause(tff_clause, logger)
         if clause:
             print(f"  ✓ Parsed: {tff_clause}")
             print(f"    Name:     {clause.name}")
@@ -520,8 +447,8 @@ tff(t3,negated_conjecture, (mult(sK0,sK1) != mult(sK1,sK0))).
     all_passed = tff_passed and workflow_passed
 
     tests = [
-        ("TFF clause parsing", tff_passed),
-        ("TFF file workflow", workflow_passed),
+        ("TPTP clause parsing (TFF)", tff_passed),
+        ("TPTP file workflow", workflow_passed),
     ]
 
     for test_name, passed in tests:
