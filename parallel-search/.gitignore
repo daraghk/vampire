@@ -6,6 +6,7 @@ output/
 Problems/
 test_out/
 test_variants/
+docs/
 *_clausified.p
 *_clausified.tptp
 *_clausified.smt2

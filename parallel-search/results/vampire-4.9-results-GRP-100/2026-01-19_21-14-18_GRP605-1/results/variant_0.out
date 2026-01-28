@@ -1,0 +1,30 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0
+% SZS output start Proof for variant_0
+1. double_divide(inverse(double_divide(X0,inverse(double_divide(inverse(X1),double_divide(X0,X2))))),X2) = X1 [input(axiom)]
+2. inverse(inverse(X3)) = X3 [input(assumption)]
+3. inverse(double_divide(X3,X4)) = double_divide(inverse(X4),inverse(X3)) [input(assumption)]
+4. double_divide(X3,double_divide(X3,X4)) = X4 [input(assumption)]
+5. inverse(double_divide(a1,inverse(a1))) != inverse(double_divide(b1,inverse(b1))) [input(negated conjecture)]
+6. inverse(double_divide(X1,inverse(X0))) = double_divide(X0,inverse(X1)) [superposition 3,2]
+9. double_divide(double_divide(double_divide(inverse(X1),double_divide(X0,X2)),inverse(X0)),X2) = X1 [backward demodulation 1,6]
+10. double_divide(a1,inverse(a1)) != inverse(double_divide(b1,inverse(b1))) [backward demodulation 5,6]
+14. double_divide(a1,inverse(a1)) != double_divide(b1,inverse(b1)) [superposition 10,6]
+24. double_divide(double_divide(X0,inverse(inverse(X1))),X0) = X1 [superposition 9,4]
+35. double_divide(double_divide(X0,X1),X0) = X1 [forward demodulation 24,2]
+39. double_divide(X0,X1) = double_divide(X1,X0) [superposition 35,4]
+50. double_divide(double_divide(inverse(X0),double_divide(inverse(X1),double_divide(X0,X2))),X2) = X1 [backward demodulation 9,39]
+66. double_divide(inverse(X0),double_divide(X1,inverse(X1))) = X0 [superposition 50,35]
+362. double_divide(X1,inverse(X1)) = double_divide(X0,inverse(X0)) [superposition 35,66]
+1095. double_divide(a1,inverse(a1)) != double_divide(X0,inverse(X0)) [superposition 14,362]
+1126. $false [subsumption resolution 1095,362]
+% SZS output end Proof for variant_0
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.017 s
+% Instructions burned: 67 (million)
+% ------------------------------
+% ------------------------------

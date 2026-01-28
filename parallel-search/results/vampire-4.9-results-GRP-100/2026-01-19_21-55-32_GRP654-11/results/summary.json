@@ -1,0 +1,74 @@
+{
+  "problem": "2026-01-19_21-55-32_GRP654-11",
+  "timestamp": "2026-01-19T21:56:59.215871",
+  "configuration": {
+    "timeout": 60,
+    "vampire_binary": "../build/vampire",
+    "total_variants": 6,
+    "variants_with_seeds": 6
+  },
+  "results": [
+    {
+      "name": "original",
+      "status": "TIMEOUT",
+      "time": 60.06410312652588,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_21-55-32_GRP654-11/results/original.out"
+    },
+    {
+      "name": "original_clausified",
+      "status": "TIMEOUT",
+      "time": 60.0648992061615,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_21-55-32_GRP654-11/results/original_clausified.out"
+    },
+    {
+      "name": "variant_0",
+      "status": "TIMEOUT",
+      "time": 60.06080961227417,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_21-55-32_GRP654-11/results/variant_0.out"
+    },
+    {
+      "name": "variant_0_original",
+      "status": "TIMEOUT",
+      "time": 60.06483793258667,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_21-55-32_GRP654-11/results/variant_0_original.out"
+    },
+    {
+      "name": "variant_1",
+      "status": "TIMEOUT",
+      "time": 60.061336517333984,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_21-55-32_GRP654-11/results/variant_1.out"
+    },
+    {
+      "name": "variant_1_original",
+      "status": "TIMEOUT",
+      "time": 60.05952429771423,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_21-55-32_GRP654-11/results/variant_1_original.out"
+    },
+    {
+      "name": "variant_2",
+      "status": "TIMEOUT",
+      "time": 60.06378793716431,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_21-55-32_GRP654-11/results/variant_2.out"
+    },
+    {
+      "name": "variant_2_original",
+      "status": "TIMEOUT",
+      "time": 60.06338810920715,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_21-55-32_GRP654-11/results/variant_2_original.out"
+    }
+  ],
+  "statistics": {
+    "total_runs": 8,
+    "proved": 0,
+    "timeout": 8,
+    "unknown": 0
+  }
+}

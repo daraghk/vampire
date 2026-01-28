@@ -1,0 +1,18 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2
+% SZS output start Proof for variant_2
+2. identity = double_divide(X0,double_divide(X0,identity)) [input(axiom)]
+3. identity = double_divide(identity,identity) [input(assumption)]
+4. identity != double_divide(double_divide(a1,double_divide(a1,identity)),identity) [input(negated conjecture)]
+6. identity != double_divide(identity,identity) [forward demodulation 4,2]
+7. $false [subsumption resolution 6,3]
+% SZS output end Proof for variant_2
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.002 s
+% Instructions burned: 5 (million)
+% ------------------------------
+% ------------------------------

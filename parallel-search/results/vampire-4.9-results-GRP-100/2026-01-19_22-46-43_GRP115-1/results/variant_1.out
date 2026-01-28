@@ -1,0 +1,16 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+4. identity = multiply(X3,multiply(X3,X3)) [input(assumption)]
+7. identity != multiply(a,multiply(a,a)) [input(negated conjecture)]
+14. $false [subsumption resolution 7,4]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.002 s
+% Instructions burned: 6 (million)
+% ------------------------------
+% ------------------------------

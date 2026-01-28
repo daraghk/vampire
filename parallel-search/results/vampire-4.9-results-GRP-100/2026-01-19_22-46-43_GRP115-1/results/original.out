@@ -1,0 +1,57 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP115-1
+% SZS output start Proof for GRP115-1
+1. multiply(X0,multiply(multiply(X0,multiply(multiply(X0,X1),X2)),multiply(identity,multiply(X2,X2)))) = X1 [input(axiom)]
+2. identity != multiply(a,multiply(a,a)) [input(negated conjecture)]
+5. multiply(multiply(X1,X0),X2) = multiply(X1,multiply(X0,multiply(identity,multiply(multiply(identity,multiply(X2,X2)),multiply(identity,multiply(X2,X2)))))) [superposition 1,1]
+6. multiply(X1,multiply(multiply(X1,multiply(multiply(X1,X2),multiply(identity,multiply(multiply(identity,X0),multiply(identity,X0))))),X0)) = X2 [superposition 1,1]
+12. multiply(multiply(X1,X0),multiply(identity,X2)) = multiply(X1,multiply(X0,X2)) [superposition 6,1]
+21. multiply(X1,multiply(multiply(X1,multiply(multiply(X1,X2),multiply(identity,multiply(identity,multiply(X0,X0))))),X0)) = X2 [backward demodulation 6,12]
+26. multiply(multiply(X1,X0),X2) = multiply(X1,multiply(X0,multiply(identity,multiply(identity,multiply(multiply(X2,X2),multiply(X2,X2)))))) [backward demodulation 5,12]
+32. multiply(X1,multiply(multiply(X1,multiply(X1,multiply(X2,multiply(identity,multiply(X0,X0))))),X0)) = X2 [forward demodulation 21,12]
+49. multiply(multiply(X0,X1),multiply(multiply(identity,X2),X3)) = multiply(multiply(X0,multiply(X1,X2)),multiply(identity,X3)) [superposition 12,12]
+55. multiply(multiply(X0,X1),multiply(multiply(identity,X2),X3)) = multiply(X0,multiply(multiply(X1,X2),X3)) [forward demodulation 49,12]
+60. multiply(multiply(X1,X2),multiply(identity,X0)) = multiply(X1,multiply(X2,multiply(identity,multiply(identity,multiply(multiply(identity,multiply(X0,X0)),multiply(identity,multiply(X0,X0))))))) [superposition 26,12]
+62. multiply(multiply(X0,X1),identity) = multiply(X0,multiply(X1,multiply(identity,multiply(identity,multiply(identity,multiply(identity,identity)))))) [superposition 26,12]
+65. multiply(multiply(X1,multiply(X1,multiply(X1,multiply(X0,multiply(identity,multiply(multiply(identity,multiply(identity,multiply(multiply(X2,X2),multiply(X2,X2)))),multiply(identity,multiply(identity,multiply(multiply(X2,X2),multiply(X2,X2)))))))))),X2) = X0 [superposition 26,32]
+67. identity = multiply(X0,multiply(multiply(multiply(X0,X0),X1),multiply(X1,X1))) [superposition 32,26]
+70. multiply(X0,multiply(multiply(X1,multiply(identity,multiply(identity,multiply(multiply(X2,X2),multiply(X2,X2))))),X3)) = multiply(multiply(multiply(X0,X1),X2),multiply(identity,X3)) [superposition 12,26]
+75. multiply(multiply(X1,X2),multiply(identity,X0)) = multiply(X1,multiply(X2,multiply(identity,multiply(identity,multiply(identity,multiply(multiply(X0,X0),multiply(X0,X0))))))) [forward demodulation 60,12]
+76. multiply(multiply(X1,X2),multiply(identity,X0)) = multiply(X1,multiply(multiply(X2,identity),X0)) [forward demodulation 75,26]
+77. multiply(X1,multiply(multiply(X2,identity),X0)) = multiply(X1,multiply(X2,X0)) [forward demodulation 76,12]
+85. multiply(multiply(X1,multiply(X1,multiply(X1,multiply(X0,multiply(multiply(identity,multiply(identity,multiply(identity,multiply(multiply(X2,X2),multiply(X2,X2))))),X2))))),X2) = X0 [forward demodulation 65,26]
+89. multiply(X0,multiply(multiply(X1,multiply(identity,multiply(identity,multiply(multiply(X2,X2),multiply(X2,X2))))),X3)) = multiply(multiply(X0,X1),multiply(X2,X3)) [forward demodulation 70,12]
+90. multiply(multiply(X1,multiply(X1,multiply(X1,multiply(multiply(X0,identity),multiply(X2,X2))))),X2) = X0 [backward demodulation 85,89]
+91. multiply(multiply(X1,multiply(X1,multiply(X1,multiply(X0,multiply(X2,X2))))),X2) = X0 [forward demodulation 90,77]
+107. identity = multiply(X0,multiply(multiply(X0,X0),multiply(identity,identity))) [superposition 67,12]
+110. multiply(multiply(X0,X1),multiply(identity,identity)) = multiply(X0,multiply(X1,multiply(identity,identity))) [superposition 26,67]
+111. multiply(X0,multiply(multiply(X0,multiply(X0,multiply(X1,identity))),multiply(multiply(identity,identity),multiply(identity,identity)))) = X1 [superposition 32,67]
+120. identity = multiply(X0,multiply(X0,multiply(X0,identity))) [forward demodulation 107,12]
+121. multiply(multiply(X0,X1),identity) = multiply(X0,multiply(X1,multiply(identity,identity))) [backward demodulation 62,120]
+125. multiply(multiply(X0,X1),identity) = multiply(multiply(X0,X1),multiply(identity,identity)) [forward demodulation 110,121]
+126. multiply(multiply(X0,X1),identity) = multiply(X0,multiply(X1,identity)) [forward demodulation 125,12]
+127. multiply(X0,multiply(X1,multiply(identity,identity))) = multiply(X0,multiply(X1,identity)) [backward demodulation 121,126]
+129. multiply(X0,multiply(X0,multiply(multiply(multiply(X0,multiply(X1,identity)),identity),multiply(identity,identity)))) = X1 [forward demodulation 111,55]
+130. multiply(X0,multiply(X0,multiply(multiply(X0,multiply(X1,identity)),multiply(identity,identity)))) = X1 [forward demodulation 129,77]
+131. multiply(X0,multiply(X0,multiply(multiply(X0,multiply(X1,identity)),identity))) = X1 [forward demodulation 130,127]
+132. multiply(X0,multiply(X0,multiply(X0,multiply(multiply(X1,identity),identity)))) = X1 [forward demodulation 131,126]
+133. multiply(X0,multiply(X0,multiply(X0,multiply(X1,identity)))) = X1 [forward demodulation 132,77]
+414. multiply(identity,identity) = multiply(X0,multiply(multiply(X0,multiply(X0,identity)),identity)) [superposition 126,120]
+425. multiply(identity,identity) = multiply(X0,multiply(X0,multiply(multiply(X0,identity),identity))) [forward demodulation 414,126]
+426. multiply(identity,identity) = multiply(X0,multiply(X0,multiply(X0,identity))) [forward demodulation 425,77]
+427. identity = multiply(identity,identity) [forward demodulation 426,120]
+460. identity = multiply(multiply(X1,multiply(X1,multiply(X1,multiply(X0,multiply(identity,identity))))),multiply(multiply(X1,multiply(X1,multiply(X1,multiply(X0,multiply(identity,identity))))),X0)) [superposition 120,91]
+485. identity = multiply(multiply(X1,multiply(X1,multiply(X1,multiply(X0,identity)))),multiply(multiply(X1,multiply(X1,multiply(X1,multiply(X0,identity)))),X0)) [forward demodulation 460,427]
+486. identity = multiply(X0,multiply(X0,X0)) [forward demodulation 485,133]
+685. identity != identity [superposition 2,486]
+686. $false [trivial inequality removal 685]
+% SZS output end Proof for GRP115-1
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.017 s
+% Instructions burned: 76 (million)
+% ------------------------------
+% ------------------------------

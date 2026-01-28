@@ -1,0 +1,29 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+1. divide(X0,divide(divide(X0,X1),divide(X2,X1))) = X2 [input(axiom)]
+2. multiply(X0,X1) = divide(X0,divide(divide(X2,X2),X1)) [input(axiom)]
+3. inverse(X0) = divide(divide(X1,X1),X0) [input(axiom)]
+4. multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [input(negated conjecture)]
+6. inverse(X3) = divide(divide(X3,X3),X3) [input(assumption)]
+7. multiply(X3,X4) = divide(X3,inverse(X4)) [input(assumption)]
+9. multiply(X3,X4) = divide(X3,divide(divide(X4,X4),X4)) [definition unfolding 7,6]
+10. divide(X0,divide(divide(X2,X2),X1)) = divide(X0,divide(divide(X1,X1),X1)) [definition unfolding 2,9]
+11. divide(divide(X1,X1),X0) = divide(divide(X0,X0),X0) [definition unfolding 3,6]
+12. divide(divide(a3,divide(divide(b3,b3),b3)),divide(divide(c3,c3),c3)) != divide(a3,divide(divide(divide(b3,divide(divide(c3,c3),c3)),divide(b3,divide(divide(c3,c3),c3))),divide(b3,divide(divide(c3,c3),c3)))) [definition unfolding 4,9,9,9,9]
+14. divide(divide(X2,X2),X1) = divide(divide(X0,X0),X1) [superposition 11,11]
+21. divide(X1,X0) = divide(divide(X1,divide(X0,X2)),X2) [superposition 1,1]
+68. divide(X2,divide(divide(X3,X3),X1)) = divide(X2,divide(divide(X0,X0),X1)) [superposition 10,14]
+104. divide(X2,divide(X0,divide(X1,X3))) = divide(divide(X2,divide(X0,X1)),X3) [superposition 21,21]
+142. divide(a3,divide(divide(divide(b3,divide(divide(c3,c3),c3)),divide(b3,divide(divide(c3,c3),c3))),divide(b3,divide(divide(c3,c3),c3)))) != divide(a3,divide(divide(b3,b3),divide(b3,divide(divide(c3,c3),c3)))) [backward demodulation 12,104]
+149. $false [subsumption resolution 142,68]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.005 s
+% Instructions burned: 17 (million)
+% ------------------------------
+% ------------------------------

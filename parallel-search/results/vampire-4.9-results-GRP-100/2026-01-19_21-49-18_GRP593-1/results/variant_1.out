@@ -1,0 +1,49 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+1. inverse(double_divide(double_divide(X0,X1),inverse(double_divide(X0,inverse(double_divide(X2,X1)))))) = X2 [input(axiom)]
+2. inverse(inverse(X3)) = X3 [input(assumption)]
+3. inverse(double_divide(X3,X4)) = double_divide(inverse(X4),inverse(X3)) [input(assumption)]
+4. inverse(double_divide(a1,inverse(a1))) != inverse(double_divide(b1,inverse(b1))) [input(negated conjecture)]
+5. inverse(double_divide(X1,inverse(X0))) = double_divide(X0,inverse(X1)) [superposition 3,2]
+6. inverse(double_divide(inverse(X0),X1)) = double_divide(inverse(X1),X0) [superposition 3,2]
+7. inverse(double_divide(double_divide(X0,X1),double_divide(double_divide(X2,X1),inverse(X0)))) = X2 [backward demodulation 1,5]
+8. inverse(double_divide(a1,inverse(a1))) != double_divide(b1,inverse(b1)) [backward demodulation 4,5]
+9. double_divide(a1,inverse(a1)) != double_divide(b1,inverse(b1)) [forward demodulation 8,5]
+12. inverse(double_divide(double_divide(inverse(X0),X1),double_divide(double_divide(X2,X1),X0))) = X2 [superposition 7,2]
+16. inverse(X0) = double_divide(double_divide(X1,X2),double_divide(double_divide(X0,X2),inverse(X1))) [superposition 2,7]
+24. double_divide(double_divide(X1,inverse(X0)),inverse(X2)) = inverse(double_divide(X2,double_divide(X0,inverse(X1)))) [superposition 5,5]
+54. inverse(X0) = double_divide(double_divide(inverse(X1),X2),double_divide(double_divide(X0,X2),X1)) [superposition 2,12]
+65. inverse(X2) = double_divide(inverse(double_divide(X0,X1)),double_divide(double_divide(X2,inverse(X0)),inverse(inverse(X1)))) [superposition 16,3]
+67. inverse(inverse(X1)) = double_divide(double_divide(X2,inverse(X0)),double_divide(inverse(double_divide(X0,X1)),inverse(X2))) [superposition 16,3]
+72. inverse(X2) = double_divide(inverse(double_divide(X0,X1)),inverse(double_divide(inverse(X1),double_divide(X0,inverse(X2))))) [forward demodulation 65,24]
+73. inverse(X2) = double_divide(inverse(double_divide(X0,X1)),double_divide(inverse(double_divide(X0,inverse(X2))),X1)) [forward demodulation 72,6]
+74. inverse(X2) = double_divide(inverse(double_divide(X0,X1)),double_divide(double_divide(X2,inverse(X0)),X1)) [forward demodulation 73,5]
+76. inverse(inverse(X1)) = double_divide(double_divide(X2,inverse(X0)),inverse(double_divide(X2,double_divide(X0,X1)))) [forward demodulation 67,3]
+77. double_divide(double_divide(X2,inverse(X0)),inverse(double_divide(X2,double_divide(X0,X1)))) = X1 [forward demodulation 76,2]
+85. inverse(inverse(X1)) = double_divide(double_divide(inverse(X2),inverse(X0)),double_divide(inverse(double_divide(X0,X1)),X2)) [superposition 54,3]
+92. inverse(inverse(X1)) = double_divide(inverse(double_divide(X0,X2)),double_divide(inverse(double_divide(X0,X1)),X2)) [forward demodulation 85,3]
+93. double_divide(inverse(double_divide(X0,X2)),double_divide(inverse(double_divide(X0,X1)),X2)) = X1 [forward demodulation 92,2]
+141. double_divide(double_divide(X1,X0),inverse(double_divide(X1,double_divide(inverse(X0),X2)))) = X2 [superposition 77,2]
+297. double_divide(double_divide(X0,inverse(X2)),X3) = double_divide(double_divide(X1,inverse(inverse(double_divide(X2,X3)))),inverse(double_divide(X1,inverse(X0)))) [superposition 77,74]
+331. double_divide(double_divide(X0,inverse(X2)),X3) = double_divide(double_divide(X1,inverse(inverse(double_divide(X2,X3)))),double_divide(X0,inverse(X1))) [forward demodulation 297,5]
+332. double_divide(double_divide(X0,inverse(X2)),X3) = double_divide(double_divide(X1,double_divide(X2,X3)),double_divide(X0,inverse(X1))) [forward demodulation 331,2]
+490. inverse(double_divide(double_divide(X0,double_divide(inverse(inverse(X1)),X2)),double_divide(X1,inverse(X0)))) = X2 [superposition 141,24]
+528. inverse(double_divide(double_divide(X1,inverse(inverse(inverse(X1)))),X2)) = X2 [forward demodulation 490,332]
+529. inverse(double_divide(double_divide(X1,inverse(X1)),X2)) = X2 [forward demodulation 528,2]
+640. double_divide(inverse(double_divide(double_divide(X1,inverse(X1)),X2)),double_divide(X0,X2)) = X0 [superposition 93,529]
+642. inverse(X0) = double_divide(double_divide(X1,inverse(X1)),X0) [superposition 2,529]
+673. double_divide(X2,double_divide(X0,X2)) = X0 [forward demodulation 640,529]
+1715. double_divide(X0,inverse(X0)) = double_divide(X1,inverse(X1)) [superposition 673,642]
+4678. double_divide(a1,inverse(a1)) != double_divide(X0,inverse(X0)) [superposition 9,1715]
+4810. $false [subsumption resolution 4678,1715]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.103 s
+% Instructions burned: 303 (million)
+% ------------------------------
+% ------------------------------

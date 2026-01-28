@@ -1,0 +1,30 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+1. divide(X0,divide(divide(divide(identity,X1),X2),divide(divide(divide(X0,X0),X0),X2))) = X1 [input(axiom)]
+2. identity = divide(X0,X0) [input(axiom)]
+3. divide(X3,identity) = X3 [input(assumption)]
+5. a2 != divide(identity,divide(identity,a2)) [input(negated conjecture)]
+6. divide(X0,divide(divide(divide(identity,X1),X2),divide(divide(identity,X0),X2))) = X1 [backward demodulation 1,2]
+10. divide(X1,divide(divide(identity,X0),divide(divide(identity,X1),identity))) = X0 [superposition 6,3]
+13. divide(identity,divide(divide(divide(identity,X0),X1),divide(identity,X1))) = X0 [superposition 6,3]
+21. divide(X1,divide(divide(identity,X0),divide(identity,X1))) = X0 [forward demodulation 10,3]
+27. divide(divide(divide(identity,X0),X2),divide(divide(identity,identity),X2)) = divide(X1,divide(X0,divide(identity,X1))) [superposition 21,6]
+28. divide(X1,divide(X0,divide(identity,X1))) = divide(divide(identity,X0),divide(identity,identity)) [superposition 21,21]
+38. divide(divide(divide(identity,X0),X2),divide(identity,X2)) = divide(X1,divide(X0,divide(identity,X1))) [forward demodulation 27,2]
+39. divide(divide(identity,X0),identity) = divide(X1,divide(X0,divide(identity,X1))) [forward demodulation 28,2]
+40. divide(identity,X0) = divide(X1,divide(X0,divide(identity,X1))) [forward demodulation 39,3]
+41. divide(identity,X0) = divide(divide(divide(identity,X0),X2),divide(identity,X2)) [backward demodulation 38,40]
+43. divide(identity,divide(identity,X0)) = X0 [backward demodulation 13,41]
+65. a2 != a2 [superposition 5,43]
+70. $false [trivial inequality removal 65]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.003 s
+% Instructions burned: 10 (million)
+% ------------------------------
+% ------------------------------

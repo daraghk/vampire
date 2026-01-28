@@ -1,0 +1,29 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP001-4
+% SZS output start Proof for GRP001-4
+1. multiply(multiply(X0,X1),X2) = multiply(X0,multiply(X1,X2)) [input(axiom)]
+2. multiply(identity,X0) = X0 [input(axiom)]
+3. identity = multiply(X0,X0) [input(assumption)]
+4. multiply(a,b) = c [input(assumption)]
+5. c != multiply(b,a) [input(negated conjecture)]
+6. multiply(X0,multiply(X0,X1)) = multiply(identity,X1) [superposition 1,3]
+9. multiply(a,multiply(b,X0)) = multiply(c,X0) [superposition 1,4]
+10. identity = multiply(X0,multiply(X1,multiply(X0,X1))) [superposition 1,3]
+12. multiply(X0,multiply(X0,X1)) = X1 [forward demodulation 6,2]
+15. multiply(X0,identity) = X0 [superposition 12,3]
+31. multiply(c,b) = multiply(a,identity) [superposition 9,3]
+36. a = multiply(c,b) [forward demodulation 31,15]
+60. multiply(X1,multiply(X0,X1)) = multiply(X0,identity) [superposition 12,10]
+77. multiply(X1,multiply(X0,X1)) = X0 [forward demodulation 60,15]
+110. c = multiply(b,a) [superposition 77,36]
+124. $false [subsumption resolution 110,5]
+% SZS output end Proof for GRP001-4
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.004 s
+% Instructions burned: 10 (million)
+% ------------------------------
+% ------------------------------

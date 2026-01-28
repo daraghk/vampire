@@ -1,0 +1,47 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP527-1_clausified
+% SZS output start Proof for GRP527-1_clausified
+1. divide(X0,divide(divide(X0,X1),divide(X2,X1))) = X2 [input(axiom)]
+2. multiply(X0,X1) = divide(X0,divide(divide(X2,X2),X1)) [input(axiom)]
+3. inverse(X0) = divide(divide(X1,X1),X0) [input(axiom)]
+4. multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [input(negated conjecture)]
+5. multiply(X0,X1) = divide(X0,inverse(X1)) [backward demodulation 2,3]
+7. inverse(inverse(X0)) = multiply(divide(X1,X1),X0) [superposition 5,3]
+27. divide(X1,inverse(divide(X0,X1))) = X0 [superposition 1,3]
+28. divide(X1,X0) = divide(divide(X1,divide(X0,X2)),X2) [superposition 1,1]
+29. inverse(divide(divide(divide(X0,X0),X1),divide(X2,X1))) = X2 [superposition 1,3]
+37. inverse(divide(inverse(X1),divide(X2,X1))) = X2 [forward demodulation 29,3]
+47. multiply(X0,divide(X1,X0)) = X1 [superposition 27,5]
+83. inverse(divide(inverse(inverse(divide(X0,X1))),X0)) = X1 [superposition 37,27]
+90. inverse(X1) = divide(divide(X0,X1),X0) [superposition 27,37]
+98. divide(X0,X1) = inverse(inverse(divide(X0,X1))) [superposition 90,27]
+104. inverse(X1) = multiply(divide(inverse(X0),X1),X0) [superposition 90,5]
+115. inverse(divide(divide(X0,X1),X0)) = X1 [backward demodulation 83,98]
+116. inverse(inverse(X1)) = X1 [forward demodulation 115,90]
+117. multiply(divide(X1,X1),X0) = X0 [backward demodulation 7,116]
+144. divide(X0,divide(X1,X1)) = X0 [superposition 117,47]
+220. divide(X2,X0) = divide(divide(X2,multiply(X0,X1)),inverse(X1)) [superposition 28,5]
+226. divide(divide(X1,inverse(X0)),X0) = divide(X1,divide(X2,X2)) [superposition 28,3]
+234. divide(divide(divide(X1,X2),X0),X1) = divide(inverse(X0),X2) [superposition 28,90]
+260. divide(divide(X1,inverse(X0)),X0) = X1 [forward demodulation 226,144]
+261. divide(multiply(X1,X0),X0) = X1 [forward demodulation 260,5]
+309. divide(X1,multiply(X0,X2)) = divide(divide(X1,X0),X2) [superposition 28,261]
+316. divide(inverse(X0),X2) = divide(divide(X1,multiply(X2,X0)),X1) [backward demodulation 234,309]
+319. divide(inverse(X0),X2) = inverse(multiply(X2,X0)) [forward demodulation 316,90]
+320. inverse(X1) = multiply(inverse(multiply(X1,X0)),X0) [backward demodulation 104,319]
+4773. divide(X1,inverse(multiply(X0,X2))) = divide(divide(X1,inverse(X0)),inverse(X2)) [superposition 220,320]
+4808. divide(X1,inverse(multiply(X0,X2))) = divide(multiply(X1,X0),inverse(X2)) [forward demodulation 4773,5]
+4809. divide(X1,inverse(multiply(X0,X2))) = multiply(multiply(X1,X0),X2) [forward demodulation 4808,5]
+4810. multiply(X1,multiply(X0,X2)) = multiply(multiply(X1,X0),X2) [forward demodulation 4809,5]
+34614. multiply(a3,multiply(b3,c3)) != multiply(a3,multiply(b3,c3)) [superposition 4,4810]
+34679. $false [trivial inequality removal 34614]
+% SZS output end Proof for GRP527-1_clausified
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.609 s
+% Instructions burned: 2375 (million)
+% ------------------------------
+% ------------------------------

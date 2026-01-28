@@ -1,0 +1,23 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP589-1_clausified
+% SZS output start Proof for GRP589-1_clausified
+1. double_divide(inverse(double_divide(double_divide(X0,X1),inverse(double_divide(X0,inverse(X2))))),X1) = X2 [input(axiom)]
+2. inverse(double_divide(a1,inverse(a1))) != inverse(double_divide(b1,inverse(b1))) [input(negated conjecture)]
+3. double_divide(inverse(double_divide(X0,inverse(double_divide(inverse(double_divide(double_divide(X1,X2),inverse(double_divide(X1,inverse(X0))))),inverse(X3))))),X2) = X3 [superposition 1,1]
+4. double_divide(inverse(double_divide(double_divide(inverse(double_divide(double_divide(X1,inverse(X2)),inverse(double_divide(X1,inverse(X0))))),X3),inverse(X0))),X3) = X2 [superposition 1,1]
+9. double_divide(inverse(double_divide(X0,inverse(X0))),inverse(X2)) = X2 [superposition 3,1]
+24. double_divide(inverse(double_divide(X0,inverse(X2))),inverse(X0)) = X2 [superposition 4,9]
+60. double_divide(inverse(X0),inverse(inverse(double_divide(X1,inverse(X1))))) = X0 [superposition 24,9]
+312. inverse(double_divide(X0,inverse(X0))) = double_divide(X1,inverse(X1)) [superposition 60,9]
+513. inverse(double_divide(a1,inverse(a1))) != double_divide(X0,inverse(X0)) [superposition 2,312]
+563. $false [subsumption resolution 513,312]
+% SZS output end Proof for GRP589-1_clausified
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.020 s
+% Instructions burned: 87 (million)
+% ------------------------------
+% ------------------------------

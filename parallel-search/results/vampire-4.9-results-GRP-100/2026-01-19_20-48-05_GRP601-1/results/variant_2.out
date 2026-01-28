@@ -1,0 +1,33 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2
+% SZS output start Proof for variant_2
+1. inverse(double_divide(inverse(double_divide(X0,inverse(double_divide(X1,double_divide(X0,X2))))),X2)) = X1 [input(axiom)]
+2. double_divide(X3,double_divide(X3,X4)) = X4 [input(assumption)]
+3. inverse(inverse(X3)) = X3 [input(assumption)]
+4. double_divide(X3,X4) = double_divide(X4,X3) [input(assumption)]
+5. inverse(double_divide(X3,X4)) = double_divide(inverse(X4),inverse(X3)) [input(assumption)]
+6. inverse(double_divide(a1,inverse(a1))) != inverse(double_divide(b1,inverse(b1))) [input(negated conjecture)]
+7. inverse(double_divide(X2,inverse(double_divide(X0,inverse(double_divide(X1,double_divide(X0,X2))))))) = X1 [backward demodulation 1,4]
+8. double_divide(X1,double_divide(X0,X1)) = X0 [superposition 2,4]
+10. inverse(double_divide(X1,inverse(X0))) = double_divide(X0,inverse(X1)) [superposition 5,3]
+17. inverse(double_divide(X2,double_divide(double_divide(X1,double_divide(X0,X2)),inverse(X0)))) = X1 [backward demodulation 7,10]
+18. inverse(double_divide(a1,inverse(a1))) != double_divide(b1,inverse(b1)) [backward demodulation 6,10]
+19. inverse(double_divide(X2,double_divide(inverse(X0),double_divide(X1,double_divide(X0,X2))))) = X1 [forward demodulation 17,4]
+20. double_divide(a1,inverse(a1)) != double_divide(b1,inverse(b1)) [forward demodulation 18,10]
+21. double_divide(double_divide(X1,X0),X0) = X1 [superposition 8,2]
+47. inverse(double_divide(X1,double_divide(inverse(X0),X0))) = X1 [superposition 19,8]
+58. inverse(double_divide(X1,double_divide(X0,inverse(X0)))) = X1 [forward demodulation 47,4]
+95. inverse(X0) = double_divide(X0,double_divide(X1,inverse(X1))) [superposition 58,21]
+147. double_divide(X1,inverse(X1)) = double_divide(X0,inverse(X0)) [superposition 2,95]
+1148. double_divide(a1,inverse(a1)) != double_divide(X0,inverse(X0)) [superposition 20,147]
+1180. $false [subsumption resolution 1148,147]
+% SZS output end Proof for variant_2
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.020 s
+% Instructions burned: 54 (million)
+% ------------------------------
+% ------------------------------

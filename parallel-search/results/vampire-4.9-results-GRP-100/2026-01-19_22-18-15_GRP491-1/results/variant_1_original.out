@@ -1,0 +1,30 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+1. double_divide(double_divide(identity,X0),double_divide(identity,double_divide(double_divide(double_divide(X0,X1),identity),double_divide(X2,X1)))) = X2 [input(axiom)]
+2. multiply(X0,X1) = double_divide(double_divide(X1,X0),identity) [input(axiom)]
+3. inverse(X0) = double_divide(X0,identity) [input(axiom)]
+4. identity = double_divide(X0,inverse(X0)) [input(axiom)]
+5. a2 != multiply(identity,a2) [input(negated conjecture)]
+7. identity = double_divide(identity,identity) [input(assumption)]
+9. identity = double_divide(X0,double_divide(X0,identity)) [definition unfolding 4,3]
+10. a2 != double_divide(double_divide(a2,identity),identity) [definition unfolding 5,2]
+15. double_divide(double_divide(identity,X0),double_divide(identity,double_divide(double_divide(identity,identity),double_divide(X1,double_divide(X0,identity))))) = X1 [superposition 1,9]
+20. double_divide(double_divide(X0,identity),identity) = double_divide(double_divide(identity,X0),double_divide(identity,identity)) [superposition 1,9]
+23. double_divide(double_divide(identity,X0),double_divide(identity,double_divide(identity,double_divide(X1,double_divide(X0,identity))))) = X1 [forward demodulation 15,7]
+24. double_divide(double_divide(identity,X0),identity) = double_divide(double_divide(X0,identity),identity) [forward demodulation 20,7]
+41. a2 != double_divide(double_divide(identity,a2),identity) [superposition 10,24]
+105. double_divide(double_divide(identity,X0),double_divide(identity,double_divide(identity,identity))) = X0 [superposition 23,9]
+114. double_divide(double_divide(identity,X0),identity) = X0 [forward demodulation 105,9]
+253. a2 != a2 [superposition 41,114]
+258. $false [trivial inequality removal 253]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.008 s
+% Instructions burned: 28 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,32 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP461-1
+% SZS output start Proof for GRP461-1
+1. divide(X0,divide(divide(divide(identity,X1),X2),divide(divide(divide(X0,X0),X0),X2))) = X1 [input(axiom)]
+2. multiply(X0,X1) = divide(X0,divide(identity,X1)) [input(axiom)]
+4. identity = divide(X0,X0) [input(axiom)]
+5. a2 != multiply(identity,a2) [input(negated conjecture)]
+6. a2 != divide(identity,divide(identity,a2)) [definition unfolding 5,2]
+7. divide(X0,divide(divide(divide(identity,X1),X2),divide(divide(identity,X0),X2))) = X1 [backward demodulation 1,4]
+12. divide(identity,divide(divide(divide(identity,X0),X1),divide(identity,X1))) = X0 [superposition 7,4]
+14. divide(X0,divide(divide(divide(identity,X1),divide(identity,X0)),identity)) = X1 [superposition 7,4]
+16. divide(X0,identity) = X0 [superposition 7,4]
+19. divide(X0,divide(divide(identity,X1),divide(identity,X0))) = X1 [backward demodulation 14,16]
+27. divide(divide(divide(identity,X0),X2),divide(divide(identity,identity),X2)) = divide(X1,divide(X0,divide(identity,X1))) [superposition 19,7]
+28. divide(X1,divide(X0,divide(identity,X1))) = divide(divide(identity,X0),divide(identity,identity)) [superposition 19,19]
+39. divide(divide(divide(identity,X0),X2),divide(identity,X2)) = divide(X1,divide(X0,divide(identity,X1))) [forward demodulation 27,4]
+40. divide(divide(identity,X0),identity) = divide(X1,divide(X0,divide(identity,X1))) [forward demodulation 28,4]
+41. divide(identity,X0) = divide(X1,divide(X0,divide(identity,X1))) [forward demodulation 40,16]
+42. divide(identity,X0) = divide(divide(divide(identity,X0),X2),divide(identity,X2)) [backward demodulation 39,41]
+44. divide(identity,divide(identity,X0)) = X0 [backward demodulation 12,42]
+67. a2 != a2 [superposition 6,44]
+72. $false [trivial inequality removal 67]
+% SZS output end Proof for GRP461-1
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.004 s
+% Instructions burned: 10 (million)
+% ------------------------------
+% ------------------------------

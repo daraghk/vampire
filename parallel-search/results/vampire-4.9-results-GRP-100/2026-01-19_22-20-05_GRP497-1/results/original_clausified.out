@@ -1,0 +1,55 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP497-1_clausified
+% SZS output start Proof for GRP497-1_clausified
+1. double_divide(double_divide(identity,double_divide(X0,double_divide(X1,identity))),double_divide(double_divide(X1,double_divide(X2,X0)),identity)) = X2 [input(axiom)]
+2. identity = double_divide(X0,double_divide(X0,identity)) [input(axiom)]
+3. a2 != double_divide(double_divide(a2,identity),identity) [input(negated conjecture)]
+4. double_divide(double_divide(identity,identity),double_divide(double_divide(X0,double_divide(X1,X0)),identity)) = X1 [superposition 1,2]
+6. double_divide(double_divide(identity,double_divide(double_divide(X0,identity),double_divide(X1,identity))),double_divide(double_divide(X1,identity),identity)) = X0 [superposition 1,2]
+8. double_divide(double_divide(identity,double_divide(identity,double_divide(X0,identity))),double_divide(identity,identity)) = X0 [superposition 1,2]
+9. double_divide(X2,double_divide(X0,X1)) = double_divide(double_divide(identity,double_divide(identity,double_divide(double_divide(identity,double_divide(X1,double_divide(X2,identity))),identity))),double_divide(X0,identity)) [superposition 1,1]
+10. identity = double_divide(identity,identity) [superposition 1,2]
+12. double_divide(double_divide(identity,double_divide(identity,double_divide(X0,identity))),identity) = X0 [backward demodulation 8,10]
+13. double_divide(identity,double_divide(double_divide(X0,double_divide(X1,X0)),identity)) = X1 [backward demodulation 4,10]
+22. identity = double_divide(double_divide(identity,double_divide(identity,double_divide(X0,identity))),X0) [superposition 2,12]
+27. double_divide(identity,double_divide(double_divide(double_divide(X0,identity),identity),identity)) = X0 [superposition 13,2]
+31. double_divide(identity,double_divide(identity,double_divide(X0,identity))) = double_divide(identity,double_divide(double_divide(identity,X0),identity)) [superposition 13,12]
+32. double_divide(identity,double_divide(X0,identity)) = double_divide(X1,double_divide(X0,X1)) [superposition 13,13]
+34. double_divide(X1,double_divide(X0,X1)) = double_divide(double_divide(identity,X0),identity) [superposition 12,13]
+39. double_divide(X2,double_divide(X0,X1)) = double_divide(double_divide(identity,double_divide(identity,double_divide(identity,double_divide(double_divide(X1,double_divide(X2,identity)),identity)))),double_divide(X0,identity)) [backward demodulation 9,31]
+54. double_divide(double_divide(identity,double_divide(X0,double_divide(double_divide(identity,double_divide(identity,double_divide(double_divide(X1,X0),identity))),identity))),double_divide(identity,identity)) = X1 [superposition 1,22]
+62. double_divide(double_divide(identity,double_divide(X0,double_divide(double_divide(identity,double_divide(identity,double_divide(double_divide(X1,X0),identity))),identity))),identity) = X1 [forward demodulation 54,10]
+63. double_divide(double_divide(identity,double_divide(X0,double_divide(X1,X0))),identity) = X1 [forward demodulation 62,12]
+85. double_divide(double_divide(X0,identity),identity) = double_divide(double_divide(identity,double_divide(identity,double_divide(identity,identity))),double_divide(X0,identity)) [superposition 1,27]
+91. double_divide(double_divide(X0,identity),identity) = double_divide(double_divide(identity,identity),double_divide(X0,identity)) [forward demodulation 85,2]
+92. double_divide(identity,double_divide(X0,identity)) = double_divide(double_divide(X0,identity),identity) [forward demodulation 91,10]
+93. double_divide(double_divide(identity,double_divide(double_divide(X0,identity),double_divide(X1,identity))),double_divide(identity,double_divide(X1,identity))) = X0 [backward demodulation 6,92]
+109. double_divide(double_divide(identity,identity),double_divide(identity,double_divide(double_divide(X0,identity),identity))) = X0 [superposition 93,2]
+118. double_divide(double_divide(identity,identity),double_divide(identity,double_divide(identity,double_divide(X0,identity)))) = X0 [forward demodulation 109,92]
+119. double_divide(identity,double_divide(identity,double_divide(identity,double_divide(X0,identity)))) = X0 [forward demodulation 118,10]
+120. double_divide(X2,double_divide(X0,X1)) = double_divide(double_divide(X1,double_divide(X2,identity)),double_divide(X0,identity)) [backward demodulation 39,119]
+139. double_divide(X0,identity) = double_divide(identity,double_divide(double_divide(identity,double_divide(identity,double_divide(X0,identity))),identity)) [superposition 32,22]
+158. double_divide(X0,identity) = double_divide(identity,X0) [forward demodulation 139,63]
+173. double_divide(identity,double_divide(identity,double_divide(X0,double_divide(X1,X0)))) = X1 [backward demodulation 13,158]
+179. a2 != double_divide(double_divide(identity,a2),identity) [backward demodulation 3,158]
+274. a2 != double_divide(identity,double_divide(identity,a2)) [superposition 179,158]
+316. double_divide(identity,double_divide(X0,X1)) = double_divide(double_divide(X1,identity),double_divide(X0,identity)) [superposition 120,10]
+335. double_divide(double_divide(identity,double_divide(identity,double_divide(X1,X0))),double_divide(identity,double_divide(X1,identity))) = X0 [backward demodulation 93,316]
+378. double_divide(double_divide(X0,identity),identity) = double_divide(X1,double_divide(X0,X1)) [superposition 34,158]
+432. double_divide(X0,identity) = double_divide(double_divide(identity,double_divide(identity,identity)),double_divide(identity,double_divide(X0,identity))) [superposition 335,2]
+465. double_divide(X0,identity) = double_divide(identity,double_divide(identity,double_divide(X0,identity))) [forward demodulation 432,2]
+466. double_divide(double_divide(X0,identity),identity) = X0 [backward demodulation 12,465]
+480. double_divide(X1,double_divide(X0,X1)) = X0 [backward demodulation 378,466]
+492. double_divide(identity,double_divide(identity,X1)) = X1 [backward demodulation 173,480]
+614. a2 != a2 [superposition 274,492]
+621. $false [trivial inequality removal 614]
+% SZS output end Proof for GRP497-1_clausified
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.014 s
+% Instructions burned: 52 (million)
+% ------------------------------
+% ------------------------------

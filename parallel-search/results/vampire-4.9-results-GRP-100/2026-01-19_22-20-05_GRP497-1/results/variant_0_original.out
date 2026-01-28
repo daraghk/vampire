@@ -1,0 +1,32 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0_original
+% SZS output start Proof for variant_0_original
+1. double_divide(double_divide(identity,double_divide(X0,double_divide(X1,identity))),double_divide(double_divide(X1,double_divide(X2,X0)),identity)) = X2 [input(axiom)]
+2. multiply(X0,X1) = double_divide(double_divide(X1,X0),identity) [input(axiom)]
+3. inverse(X0) = double_divide(X0,identity) [input(axiom)]
+4. identity = double_divide(X0,inverse(X0)) [input(axiom)]
+5. a2 != multiply(identity,a2) [input(negated conjecture)]
+7. double_divide(identity,double_divide(X3,identity)) = X3 [input(assumption)]
+9. identity = double_divide(identity,identity) [input(assumption)]
+10. identity = double_divide(X0,double_divide(X0,identity)) [definition unfolding 4,3]
+11. a2 != double_divide(double_divide(a2,identity),identity) [definition unfolding 5,2]
+14. double_divide(double_divide(identity,double_divide(X0,identity)),double_divide(double_divide(identity,double_divide(X1,X0)),identity)) = X1 [superposition 1,9]
+23. double_divide(double_divide(identity,double_divide(identity,double_divide(X0,identity))),double_divide(identity,identity)) = X0 [superposition 1,10]
+27. double_divide(X0,double_divide(double_divide(identity,double_divide(X1,X0)),identity)) = X1 [forward demodulation 14,7]
+32. double_divide(double_divide(identity,double_divide(identity,double_divide(X0,identity))),identity) = X0 [forward demodulation 23,9]
+33. double_divide(double_divide(identity,X0),identity) = X0 [forward demodulation 32,7]
+34. double_divide(X0,double_divide(X1,X0)) = X1 [backward demodulation 27,33]
+40. identity = double_divide(double_divide(identity,X0),X0) [superposition 10,33]
+84. double_divide(X0,identity) = double_divide(identity,X0) [superposition 34,40]
+105. a2 != double_divide(double_divide(identity,a2),identity) [backward demodulation 11,84]
+108. $false [subsumption resolution 105,33]
+% SZS output end Proof for variant_0_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.004 s
+% Instructions burned: 14 (million)
+% ------------------------------
+% ------------------------------

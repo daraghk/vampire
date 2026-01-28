@@ -1,0 +1,80 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+7. k3_xboole_0(X0,X1) = k3_xboole_0(X1,X0) [input(axiom)]
+8. ~m1_group_2(X2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~m1_group_2(X1,X0) | k9_group_2(X0,X1,X2) = k9_group_2(X0,X2,X1) [input(axiom)]
+12. u1_struct_0(X0) = k1_funct_1(k1_latsubgr(X1),X0) | ~v1_group_1(X0) | ~m1_group_2(X0,X1) | ~v1_funct_1(k1_latsubgr(X1)) | ~v1_funct_2(k1_latsubgr(X1),k1_group_3(X1),k1_zfmisc_1(u1_struct_0(X1))) | ~m2_relset_1(k1_latsubgr(X1),k1_group_3(X1),k1_zfmisc_1(u1_struct_0(X1))) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [input(axiom)]
+15. v1_funct_1(k1_latsubgr(X0)) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) [input(axiom)]
+16. v1_funct_2(k1_latsubgr(X0),k1_group_3(X0),k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) [input(axiom)]
+17. m2_relset_1(k1_latsubgr(X0),k1_group_3(X0),k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) [input(axiom)]
+20. v1_group_1(k9_group_2(X0,X1,X2)) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~m1_group_2(X1,X0) | ~m1_group_2(X2,X0) [input(axiom)]
+21. m1_group_2(k9_group_2(X0,X1,X2),X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~m1_group_2(X1,X0) | ~m1_group_2(X2,X0) [input(axiom)]
+64. ~m1_group_2(X2,X0) | ~v1_group_1(X2) | k3_xboole_0(k1_funct_1(k1_latsubgr(X0),X1),k1_funct_1(k1_latsubgr(X0),X2)) = u1_struct_0(k9_group_2(X0,X1,X2)) | ~v1_group_1(X1) | ~m1_group_2(X1,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) [input(axiom)]
+78. k1_funct_1(k1_latsubgr(sK0),k9_group_2(sK0,sK1,sK2)) != k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),sK1),k1_funct_1(k1_latsubgr(sK0),sK2)) [input(negated conjecture)]
+79. v1_group_1(sK2) [input(negated conjecture)]
+80. m1_group_2(sK2,sK0) [input(negated conjecture)]
+81. v1_group_1(sK1) [input(negated conjecture)]
+82. m1_group_2(sK1,sK0) [input(negated conjecture)]
+83. ~v3_struct_0(sK0) [input(negated conjecture)]
+84. v3_group_1(sK0) [input(negated conjecture)]
+85. v4_group_1(sK0) [input(negated conjecture)]
+86. l1_group_1(sK0) [input(negated conjecture)]
+97. u1_struct_0(X0) = k1_funct_1(k1_latsubgr(X1),X0) | ~v1_group_1(X0) | ~m1_group_2(X0,X1) | ~v1_funct_2(k1_latsubgr(X1),k1_group_3(X1),k1_zfmisc_1(u1_struct_0(X1))) | ~m2_relset_1(k1_latsubgr(X1),k1_group_3(X1),k1_zfmisc_1(u1_struct_0(X1))) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [forward subsumption resolution 12,15]
+98. u1_struct_0(X0) = k1_funct_1(k1_latsubgr(X1),X0) | ~v1_group_1(X0) | ~m1_group_2(X0,X1) | ~m2_relset_1(k1_latsubgr(X1),k1_group_3(X1),k1_zfmisc_1(u1_struct_0(X1))) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [forward subsumption resolution 97,16]
+99. ~m1_group_2(X0,X1) | ~v1_group_1(X0) | u1_struct_0(X0) = k1_funct_1(k1_latsubgr(X1),X0) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [forward subsumption resolution 98,17]
+298. ~v1_group_1(sK2) | k1_funct_1(k1_latsubgr(sK0),sK2) = u1_struct_0(sK2) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [resolution 99,80]
+299. ~v1_group_1(sK1) | k1_funct_1(k1_latsubgr(sK0),sK1) = u1_struct_0(sK1) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [resolution 99,82]
+302. ~v1_group_1(k9_group_2(X0,X1,X2)) | u1_struct_0(k9_group_2(X0,X1,X2)) = k1_funct_1(k1_latsubgr(X0),k9_group_2(X0,X1,X2)) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~m1_group_2(X1,X0) | ~m1_group_2(X2,X0) [resolution 99,21]
+303. ~v1_group_1(k9_group_2(X0,X1,X2)) | u1_struct_0(k9_group_2(X0,X1,X2)) = k1_funct_1(k1_latsubgr(X0),k9_group_2(X0,X1,X2)) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~m1_group_2(X1,X0) | ~m1_group_2(X2,X0) [duplicate literal removal 302]
+306. ~m1_group_2(X2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~m1_group_2(X1,X0) | u1_struct_0(k9_group_2(X0,X1,X2)) = k1_funct_1(k1_latsubgr(X0),k9_group_2(X0,X1,X2)) [forward subsumption resolution 303,20]
+308. k1_funct_1(k1_latsubgr(sK0),sK1) = u1_struct_0(sK1) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 299,81]
+309. k1_funct_1(k1_latsubgr(sK0),sK2) = u1_struct_0(sK2) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 298,79]
+310. k1_funct_1(k1_latsubgr(sK0),sK1) = u1_struct_0(sK1) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 308,83]
+311. k1_funct_1(k1_latsubgr(sK0),sK2) = u1_struct_0(sK2) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 309,83]
+312. k1_funct_1(k1_latsubgr(sK0),sK1) = u1_struct_0(sK1) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 310,84]
+313. k1_funct_1(k1_latsubgr(sK0),sK2) = u1_struct_0(sK2) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 311,84]
+314. k1_funct_1(k1_latsubgr(sK0),sK1) = u1_struct_0(sK1) | ~l1_group_1(sK0) [forward subsumption resolution 312,85]
+315. k1_funct_1(k1_latsubgr(sK0),sK2) = u1_struct_0(sK2) | ~l1_group_1(sK0) [forward subsumption resolution 313,85]
+316. k1_funct_1(k1_latsubgr(sK0),sK1) = u1_struct_0(sK1) [forward subsumption resolution 314,86]
+317. k1_funct_1(k1_latsubgr(sK0),sK2) = u1_struct_0(sK2) [forward subsumption resolution 315,86]
+318. k1_funct_1(k1_latsubgr(sK0),k9_group_2(sK0,sK1,sK2)) != k3_xboole_0(u1_struct_0(sK1),k1_funct_1(k1_latsubgr(sK0),sK2)) [superposition 78,316]
+319. k1_funct_1(k1_latsubgr(sK0),k9_group_2(sK0,sK1,sK2)) != k3_xboole_0(u1_struct_0(sK1),u1_struct_0(sK2)) [forward demodulation 318,317]
+321. v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) | ~m1_group_2(X0,sK0) | k9_group_2(sK0,X0,sK1) = k9_group_2(sK0,sK1,X0) [resolution 8,82]
+328. ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) | ~m1_group_2(X0,sK0) | k9_group_2(sK0,X0,sK1) = k9_group_2(sK0,sK1,X0) [forward subsumption resolution 321,83]
+330. ~v4_group_1(sK0) | ~l1_group_1(sK0) | ~m1_group_2(X0,sK0) | k9_group_2(sK0,X0,sK1) = k9_group_2(sK0,sK1,X0) [forward subsumption resolution 328,84]
+332. ~l1_group_1(sK0) | ~m1_group_2(X0,sK0) | k9_group_2(sK0,X0,sK1) = k9_group_2(sK0,sK1,X0) [forward subsumption resolution 330,85]
+334. ~m1_group_2(X0,sK0) | k9_group_2(sK0,X0,sK1) = k9_group_2(sK0,sK1,X0) [forward subsumption resolution 332,86]
+356. k9_group_2(sK0,sK1,sK2) = k9_group_2(sK0,sK2,sK1) [resolution 334,80]
+438. ~v1_group_1(sK1) | k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),X0),k1_funct_1(k1_latsubgr(sK0),sK1)) = u1_struct_0(k9_group_2(sK0,X0,sK1)) | ~v1_group_1(X0) | ~m1_group_2(X0,sK0) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [resolution 64,82]
+447. k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),X0),k1_funct_1(k1_latsubgr(sK0),sK1)) = u1_struct_0(k9_group_2(sK0,X0,sK1)) | ~v1_group_1(X0) | ~m1_group_2(X0,sK0) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 438,81]
+449. k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),X0),k1_funct_1(k1_latsubgr(sK0),sK1)) = u1_struct_0(k9_group_2(sK0,X0,sK1)) | ~v1_group_1(X0) | ~m1_group_2(X0,sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 447,83]
+451. k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),X0),k1_funct_1(k1_latsubgr(sK0),sK1)) = u1_struct_0(k9_group_2(sK0,X0,sK1)) | ~v1_group_1(X0) | ~m1_group_2(X0,sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 449,84]
+453. k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),X0),k1_funct_1(k1_latsubgr(sK0),sK1)) = u1_struct_0(k9_group_2(sK0,X0,sK1)) | ~v1_group_1(X0) | ~m1_group_2(X0,sK0) | ~l1_group_1(sK0) [forward subsumption resolution 451,85]
+455. k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),X0),k1_funct_1(k1_latsubgr(sK0),sK1)) = u1_struct_0(k9_group_2(sK0,X0,sK1)) | ~v1_group_1(X0) | ~m1_group_2(X0,sK0) [forward subsumption resolution 453,86]
+457. u1_struct_0(k9_group_2(sK0,X0,sK1)) = k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),X0),u1_struct_0(sK1)) | ~v1_group_1(X0) | ~m1_group_2(X0,sK0) [forward demodulation 455,316]
+459. ~m1_group_2(X0,sK0) | ~v1_group_1(X0) | u1_struct_0(k9_group_2(sK0,X0,sK1)) = k3_xboole_0(u1_struct_0(sK1),k1_funct_1(k1_latsubgr(sK0),X0)) [forward demodulation 457,7]
+530. ~v1_group_1(sK2) | k3_xboole_0(u1_struct_0(sK1),k1_funct_1(k1_latsubgr(sK0),sK2)) = u1_struct_0(k9_group_2(sK0,sK2,sK1)) [resolution 459,80]
+539. k3_xboole_0(u1_struct_0(sK1),k1_funct_1(k1_latsubgr(sK0),sK2)) = u1_struct_0(k9_group_2(sK0,sK2,sK1)) [forward subsumption resolution 530,79]
+544. k3_xboole_0(u1_struct_0(sK1),k1_funct_1(k1_latsubgr(sK0),sK2)) = u1_struct_0(k9_group_2(sK0,sK1,sK2)) [forward demodulation 539,356]
+549. k3_xboole_0(u1_struct_0(sK1),u1_struct_0(sK2)) = u1_struct_0(k9_group_2(sK0,sK1,sK2)) [forward demodulation 544,317]
+1064. v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) | ~m1_group_2(X0,sK0) | u1_struct_0(k9_group_2(sK0,X0,sK1)) = k1_funct_1(k1_latsubgr(sK0),k9_group_2(sK0,X0,sK1)) [resolution 306,82]
+1075. ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) | ~m1_group_2(X0,sK0) | u1_struct_0(k9_group_2(sK0,X0,sK1)) = k1_funct_1(k1_latsubgr(sK0),k9_group_2(sK0,X0,sK1)) [forward subsumption resolution 1064,83]
+1079. ~v4_group_1(sK0) | ~l1_group_1(sK0) | ~m1_group_2(X0,sK0) | u1_struct_0(k9_group_2(sK0,X0,sK1)) = k1_funct_1(k1_latsubgr(sK0),k9_group_2(sK0,X0,sK1)) [forward subsumption resolution 1075,84]
+1083. ~l1_group_1(sK0) | ~m1_group_2(X0,sK0) | u1_struct_0(k9_group_2(sK0,X0,sK1)) = k1_funct_1(k1_latsubgr(sK0),k9_group_2(sK0,X0,sK1)) [forward subsumption resolution 1079,85]
+1087. ~m1_group_2(X0,sK0) | u1_struct_0(k9_group_2(sK0,X0,sK1)) = k1_funct_1(k1_latsubgr(sK0),k9_group_2(sK0,X0,sK1)) [forward subsumption resolution 1083,86]
+1401. u1_struct_0(k9_group_2(sK0,sK2,sK1)) = k1_funct_1(k1_latsubgr(sK0),k9_group_2(sK0,sK2,sK1)) [resolution 1087,80]
+1414. k1_funct_1(k1_latsubgr(sK0),k9_group_2(sK0,sK1,sK2)) = u1_struct_0(k9_group_2(sK0,sK1,sK2)) [forward demodulation 1401,356]
+1973. k3_xboole_0(u1_struct_0(sK1),u1_struct_0(sK2)) != u1_struct_0(k9_group_2(sK0,sK1,sK2)) [superposition 319,1414]
+1974. $false [forward subsumption resolution 1973,549]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.034 s
+% Peak memory usage: 50 MB
+% Instructions burned: 84 (million)
+% ------------------------------
+% ------------------------------

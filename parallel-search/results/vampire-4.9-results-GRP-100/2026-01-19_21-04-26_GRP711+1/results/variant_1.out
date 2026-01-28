@@ -1,0 +1,31 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+7. mult(i(X3),mult(X3,X4)) = X4 [input(assumption)]
+8. mult(mult(X4,X3),i(X3)) = X4 [input(assumption)]
+10. sK1 != sK2 [input(negated conjecture)]
+13. mult(sK0,sK2) = mult(sK0,sK1) | mult(sK1,sK0) = mult(sK2,sK0) [input(negated conjecture)]
+16. 1 <=> mult(sK1,sK0) = mult(sK2,sK0) [avatar definition]
+18. mult(sK1,sK0) = mult(sK2,sK0) <- (1) [avatar component clause 16]
+20. 2 <=> mult(sK0,sK2) = mult(sK0,sK1) [avatar definition]
+22. mult(sK0,sK2) = mult(sK0,sK1) <- (2) [avatar component clause 20]
+23. 1 | 2 [avatar split clause 13,20,16]
+36. sK2 = mult(i(sK0),mult(sK0,sK1)) <- (2) [superposition 7,22]
+39. sK1 = sK2 <- (2) [forward demodulation 36,7]
+40. $false <- (2) [subsumption resolution 39,10]
+41. ~2 [avatar contradiction clause 40]
+55. sK2 = mult(mult(sK1,sK0),i(sK0)) <- (1) [superposition 8,18]
+60. sK1 = sK2 <- (1) [forward demodulation 55,8]
+61. $false <- (1) [subsumption resolution 60,10]
+62. ~1 [avatar contradiction clause 61]
+64. $false [avatar sat refutation 23,41,62]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.004 s
+% Instructions burned: 8 (million)
+% ------------------------------
+% ------------------------------

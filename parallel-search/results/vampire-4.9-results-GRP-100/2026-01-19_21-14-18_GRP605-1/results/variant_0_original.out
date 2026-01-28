@@ -1,0 +1,32 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0_original
+% SZS output start Proof for variant_0_original
+1. double_divide(inverse(double_divide(X0,inverse(double_divide(inverse(X1),double_divide(X0,X2))))),X2) = X1 [input(axiom)]
+2. multiply(X0,X1) = inverse(double_divide(X1,X0)) [input(axiom)]
+3. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) [input(negated conjecture)]
+4. inverse(inverse(X3)) = X3 [input(assumption)]
+5. inverse(double_divide(X3,X4)) = double_divide(inverse(X4),inverse(X3)) [input(assumption)]
+6. double_divide(X3,double_divide(X3,X4)) = X4 [input(assumption)]
+7. inverse(double_divide(a1,inverse(a1))) != inverse(double_divide(b1,inverse(b1))) [definition unfolding 3,2,2]
+8. inverse(double_divide(X1,inverse(X0))) = double_divide(X0,inverse(X1)) [superposition 5,4]
+11. double_divide(double_divide(double_divide(inverse(X1),double_divide(X0,X2)),inverse(X0)),X2) = X1 [backward demodulation 1,8]
+12. double_divide(a1,inverse(a1)) != inverse(double_divide(b1,inverse(b1))) [backward demodulation 7,8]
+16. double_divide(a1,inverse(a1)) != double_divide(b1,inverse(b1)) [superposition 12,8]
+26. double_divide(double_divide(X0,inverse(inverse(X1))),X0) = X1 [superposition 11,6]
+37. double_divide(double_divide(X0,X1),X0) = X1 [forward demodulation 26,4]
+41. double_divide(X1,X0) = double_divide(X0,X1) [superposition 37,6]
+52. double_divide(double_divide(inverse(X0),double_divide(inverse(X1),double_divide(X0,X2))),X2) = X1 [backward demodulation 11,41]
+68. double_divide(inverse(X0),double_divide(X1,inverse(X1))) = X0 [superposition 52,37]
+364. double_divide(X1,inverse(X1)) = double_divide(X0,inverse(X0)) [superposition 37,68]
+1097. double_divide(a1,inverse(a1)) != double_divide(X0,inverse(X0)) [superposition 16,364]
+1128. $false [subsumption resolution 1097,364]
+% SZS output end Proof for variant_0_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.017 s
+% Instructions burned: 67 (million)
+% ------------------------------
+% ------------------------------

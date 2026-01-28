@@ -1,0 +1,37 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+2. multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) | a2 != multiply(multiply(inverse(b2),b2),a2) | multiply(inverse(a1),a1) != multiply(inverse(b1),b1) [input(negated conjecture)]
+3. multiply(inverse(X2),multiply(X2,X0)) = X0 [input(assumption)]
+4. multiply(multiply(X0,X2),inverse(X2)) = X0 [input(assumption)]
+5. multiply(multiply(X2,X0),X1) = multiply(X2,multiply(X0,X1)) [input(assumption)]
+6. inverse(inverse(X2)) = X2 [input(assumption)]
+8. 1 <=> multiply(inverse(a1),a1) = multiply(inverse(b1),b1) [avatar definition]
+10. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) <- (~1) [avatar component clause 8]
+12. 2 <=> a2 = multiply(multiply(inverse(b2),b2),a2) [avatar definition]
+14. a2 != multiply(multiply(inverse(b2),b2),a2) <- (~2) [avatar component clause 12]
+16. 3 <=> multiply(multiply(a3,b3),c3) = multiply(a3,multiply(b3,c3)) [avatar definition]
+18. multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) <- (~3) [avatar component clause 16]
+19. ~1 | ~2 | ~3 [avatar split clause 2,16,12,8]
+24. multiply(multiply(X1,inverse(X0)),X0) = X1 [superposition 4,6]
+33. multiply(X0,multiply(X1,inverse(X1))) = X0 [superposition 5,4]
+113. multiply(inverse(X0),X0) = multiply(X1,inverse(X1)) [superposition 3,33]
+284. multiply(inverse(a1),a1) != multiply(X0,inverse(X0)) <- (~1) [superposition 10,113]
+293. multiply(multiply(inverse(X0),X0),X1) = X1 [superposition 24,113]
+303. $false <- (~1) [subsumption resolution 284,113]
+304. 1 [avatar contradiction clause 303]
+318. $false <- (~2) [subsumption resolution 14,293]
+319. 2 [avatar contradiction clause 318]
+320. $false <- (~3) [subsumption resolution 18,5]
+321. 3 [avatar contradiction clause 320]
+322. $false [avatar sat refutation 19,304,319,321]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.007 s
+% Instructions burned: 23 (million)
+% ------------------------------
+% ------------------------------

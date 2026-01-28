@@ -1,0 +1,46 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0
+% SZS output start Proof for variant_0
+1. divide(X0,divide(divide(X0,X1),divide(X2,X1))) = X2 [input(axiom)]
+2. multiply(X0,X1) = divide(X0,divide(divide(X2,X2),X1)) [input(axiom)]
+3. inverse(X0) = divide(divide(X1,X1),X0) [input(axiom)]
+4. divide(divide(X3,X3),inverse(X3)) = X3 [input(assumption)]
+5. divide(X3,X3) = divide(divide(X4,X4),divide(X4,X4)) [input(assumption)]
+6. divide(divide(X3,X4),divide(X5,X4)) = divide(X3,X5) [input(assumption)]
+7. inverse(inverse(X3)) = X3 [input(assumption)]
+8. multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [input(negated conjecture)]
+9. multiply(X0,X1) = divide(X0,inverse(X1)) [backward demodulation 2,3]
+10. divide(X0,divide(X0,X2)) = X2 [backward demodulation 1,6]
+22. divide(X1,X0) = multiply(X1,inverse(X0)) [superposition 9,7]
+27. inverse(X1) = divide(X0,multiply(X0,X1)) [superposition 10,9]
+49. divide(X1,divide(divide(X0,X0),divide(X0,X0))) = X1 [superposition 10,5]
+57. divide(X1,inverse(divide(X0,X0))) = X1 [forward demodulation 49,3]
+66. divide(divide(X1,X1),X2) = divide(inverse(X0),divide(X2,X0)) [superposition 6,3]
+72. divide(X1,divide(X0,X0)) = divide(divide(X1,inverse(X0)),X0) [superposition 6,4]
+77. divide(X1,X0) = inverse(divide(X0,X1)) [superposition 6,3]
+94. divide(inverse(X0),divide(X2,X0)) = inverse(X2) [forward demodulation 66,3]
+98. divide(X1,divide(X0,X0)) = divide(multiply(X1,X0),X0) [forward demodulation 72,9]
+103. divide(X1,divide(X0,X0)) = X1 [backward demodulation 57,77]
+108. divide(multiply(X1,X0),X0) = X1 [backward demodulation 98,103]
+179. multiply(multiply(X0,inverse(X1)),X1) = X0 [superposition 108,9]
+182. divide(multiply(X0,X1),X0) = X1 [superposition 10,108]
+185. multiply(divide(X0,X1),X1) = X0 [forward demodulation 179,22]
+262. multiply(X0,X1) = multiply(X1,X0) [superposition 185,182]
+485. inverse(X1) = divide(inverse(multiply(X1,X0)),inverse(X0)) [superposition 94,27]
+3471. divide(X1,inverse(multiply(X0,X2))) = divide(divide(X1,inverse(X2)),inverse(X0)) [superposition 6,485]
+3521. divide(X1,inverse(multiply(X0,X2))) = divide(multiply(X1,X2),inverse(X0)) [forward demodulation 3471,9]
+3522. multiply(multiply(X1,X2),X0) = divide(X1,inverse(multiply(X0,X2))) [forward demodulation 3521,9]
+3523. multiply(X1,multiply(X0,X2)) = multiply(multiply(X1,X2),X0) [forward demodulation 3522,9]
+23497. multiply(a3,multiply(b3,c3)) != multiply(a3,multiply(c3,b3)) [superposition 8,3523]
+23664. multiply(a3,multiply(b3,c3)) != multiply(a3,multiply(b3,c3)) [forward demodulation 23497,262]
+23665. $false [trivial inequality removal 23664]
+% SZS output end Proof for variant_0
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.254 s
+% Instructions burned: 908 (million)
+% ------------------------------
+% ------------------------------

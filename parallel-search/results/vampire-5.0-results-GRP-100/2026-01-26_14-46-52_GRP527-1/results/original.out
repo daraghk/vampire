@@ -1,0 +1,58 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP527-1
+% SZS output start Proof for GRP527-1
+1. divide(X0,divide(divide(X0,X1),divide(X2,X1))) = X2 [input(axiom)]
+2. multiply(X0,X1) = divide(X0,divide(divide(X2,X2),X1)) [input(axiom)]
+3. inverse(X0) = divide(divide(X1,X1),X0) [input(axiom)]
+4. multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [input(negated conjecture)]
+5. multiply(X0,X1) = divide(X0,inverse(X1)) [forward demodulation 2,3]
+14. divide(X2,divide(divide(X2,inverse(X1)),multiply(X0,X1))) = X0 [superposition 1,5]
+16. divide(X1,inverse(divide(X0,X1))) = X0 [superposition 1,3]
+17. divide(X1,X0) = divide(divide(X1,divide(X0,X2)),X2) [superposition 1,1]
+19. inverse(divide(divide(divide(X1,X1),X2),divide(X0,X2))) = X0 [superposition 3,1]
+20. inverse(divide(inverse(X2),divide(X0,X2))) = X0 [forward demodulation 19,3]
+22. multiply(X1,divide(X0,X1)) = X0 [forward demodulation 16,5]
+23. divide(X2,divide(multiply(X2,X1),multiply(X0,X1))) = X0 [forward demodulation 14,5]
+27. divide(X1,X1) = multiply(X0,inverse(X0)) [superposition 22,3]
+28. multiply(inverse(X1),multiply(X0,X1)) = X0 [superposition 22,5]
+49. divide(X1,X1) = divide(X0,X0) [superposition 27,27]
+53. divide(X1,divide(divide(X1,X2),multiply(X0,inverse(X0)))) = X2 [superposition 1,27]
+56. divide(X1,multiply(X0,inverse(X0))) = X1 [superposition 1,27]
+59. divide(X1,divide(X1,X2)) = X2 [forward demodulation 53,56]
+107. divide(X1,divide(X0,X0)) = X1 [superposition 1,49]
+160. inverse(X1) = divide(X0,multiply(X0,X1)) [superposition 59,5]
+172. multiply(divide(X1,X0),X0) = X1 [superposition 22,59]
+195. divide(X1,divide(X2,X2)) = divide(divide(X1,inverse(X0)),X0) [superposition 17,3]
+213. divide(X0,divide(X1,X2)) = multiply(X2,divide(X0,X1)) [superposition 22,17]
+228. divide(X1,divide(X2,X2)) = divide(multiply(X1,X0),X0) [forward demodulation 195,5]
+234. divide(multiply(X1,X0),X0) = X1 [forward demodulation 228,107]
+240. divide(X1,multiply(X0,X2)) = divide(divide(X1,X0),X2) [superposition 17,234]
+242. multiply(X0,X1) = inverse(divide(inverse(X1),X0)) [superposition 20,234]
+244. multiply(X0,X2) = divide(X1,divide(divide(X1,X2),X0)) [superposition 1,234]
+274. divide(X1,divide(X0,divide(X3,divide(multiply(X1,X2),multiply(X0,X2))))) = X3 [superposition 1,23]
+1365. divide(X0,X1) = multiply(inverse(X1),X0) [superposition 28,172]
+6145. multiply(X2,multiply(X0,X1)) = divide(X0,divide(inverse(X1),X2)) [superposition 213,5]
+6150. multiply(X2,X0) = divide(multiply(X0,X1),divide(X1,X2)) [superposition 213,234]
+7616. multiply(multiply(X0,X1),X2) = divide(X2,divide(inverse(X1),X0)) [superposition 1365,242]
+7619. multiply(X0,multiply(X2,X1)) = multiply(multiply(X0,X1),X2) [forward demodulation 7616,6145]
+27023. multiply(X3,multiply(X0,X1)) = divide(X2,divide(divide(divide(X2,X1),X0),X3)) [superposition 213,244]
+27087. multiply(X3,multiply(X0,X1)) = divide(X2,divide(divide(X2,X1),multiply(X0,X3))) [forward demodulation 27023,240]
+27260. multiply(X3,multiply(X0,X1)) = multiply(multiply(X0,X3),X1) [forward demodulation 27087,244]
+36595. multiply(X2,multiply(X3,X1)) = divide(X3,divide(X0,multiply(multiply(X0,X1),X2))) [superposition 274,6150]
+36683. multiply(X2,multiply(X3,X1)) = divide(X3,divide(X0,multiply(X0,multiply(X2,X1)))) [forward demodulation 36595,7619]
+36859. multiply(X2,multiply(X3,X1)) = divide(X3,inverse(multiply(X2,X1))) [forward demodulation 36683,160]
+37006. multiply(X2,multiply(X3,X1)) = multiply(X3,multiply(X2,X1)) [forward demodulation 36859,5]
+62934. multiply(a3,multiply(b3,c3)) != multiply(b3,multiply(a3,c3)) [superposition 4,27260]
+63074. $false [forward subsumption resolution 62934,37006]
+% SZS output end Proof for GRP527-1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.326 s
+% Peak memory usage: 58 MB
+% Instructions burned: 1603 (million)
+% ------------------------------
+% ------------------------------

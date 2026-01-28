@@ -1,0 +1,73 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2_original
+% SZS output start Proof for variant_2_original
+1. double_divide(X0,inverse(double_divide(inverse(double_divide(double_divide(X0,X1),inverse(X2))),X1))) = X2 [input(axiom)]
+2. multiply(X0,X1) = inverse(double_divide(X1,X0)) [input(axiom)]
+3. multiply(a4,b4) != multiply(b4,a4) | multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) | a2 != multiply(multiply(inverse(b2),b2),a2) | multiply(inverse(a1),a1) != multiply(inverse(b1),b1) [input(negated conjecture)]
+4. inverse(inverse(X0)) = X0 [input(assumption)]
+5. double_divide(X0,X1) = double_divide(X1,X0) [input(assumption)]
+6. inverse(double_divide(X0,X1)) = double_divide(inverse(X1),inverse(X0)) [input(assumption)]
+7. inverse(double_divide(b4,a4)) != inverse(double_divide(a4,b4)) | inverse(double_divide(c3,inverse(double_divide(b3,a3)))) != inverse(double_divide(inverse(double_divide(c3,b3)),a3)) | a2 != inverse(double_divide(a2,inverse(double_divide(b2,inverse(b2))))) | inverse(double_divide(a1,inverse(a1))) != inverse(double_divide(b1,inverse(b1))) [definition unfolding 3,2,2,2,2,2,2,2,2,2,2]
+9. 1 <=> inverse(double_divide(a1,inverse(a1))) = inverse(double_divide(b1,inverse(b1))) [avatar definition]
+11. inverse(double_divide(a1,inverse(a1))) != inverse(double_divide(b1,inverse(b1))) <- (~1) [avatar component clause 9]
+13. 2 <=> a2 = inverse(double_divide(a2,inverse(double_divide(b2,inverse(b2))))) [avatar definition]
+15. a2 != inverse(double_divide(a2,inverse(double_divide(b2,inverse(b2))))) <- (~2) [avatar component clause 13]
+17. 3 <=> inverse(double_divide(c3,inverse(double_divide(b3,a3)))) = inverse(double_divide(inverse(double_divide(c3,b3)),a3)) [avatar definition]
+19. inverse(double_divide(c3,inverse(double_divide(b3,a3)))) != inverse(double_divide(inverse(double_divide(c3,b3)),a3)) <- (~3) [avatar component clause 17]
+21. 4 <=> inverse(double_divide(b4,a4)) = inverse(double_divide(a4,b4)) [avatar definition]
+23. inverse(double_divide(b4,a4)) != inverse(double_divide(a4,b4)) <- (~4) [avatar component clause 21]
+24. ~1 | ~2 | ~3 | ~4 [avatar split clause 7,21,17,13,9]
+25. double_divide(X0,inverse(double_divide(X1,inverse(double_divide(double_divide(X0,X1),inverse(X2)))))) = X2 [backward demodulation 1,5]
+26. inverse(double_divide(X1,inverse(X0))) = double_divide(X0,inverse(X1)) [superposition 6,4]
+27. inverse(double_divide(inverse(X0),X1)) = double_divide(inverse(X1),X0) [superposition 6,4]
+28. inverse(double_divide(X0,X1)) = double_divide(inverse(X0),inverse(X1)) [superposition 6,5]
+32. double_divide(X0,double_divide(double_divide(double_divide(X0,X1),inverse(X2)),inverse(X1))) = X2 [backward demodulation 25,26]
+33. double_divide(a1,inverse(a1)) != inverse(double_divide(b1,inverse(b1))) <- (~1) [backward demodulation 11,26]
+34. double_divide(X0,double_divide(inverse(X1),double_divide(double_divide(X0,X1),inverse(X2)))) = X2 [forward demodulation 32,5]
+41. inverse(double_divide(double_divide(X1,inverse(X0)),X2)) = double_divide(inverse(X2),double_divide(X0,inverse(X1))) [superposition 6,26]
+45. double_divide(X0,inverse(double_divide(double_divide(X2,inverse(double_divide(X0,X1))),X1))) = X2 [backward demodulation 34,41]
+46. double_divide(X0,inverse(double_divide(X1,double_divide(X2,inverse(double_divide(X0,X1)))))) = X2 [forward demodulation 45,5]
+47. double_divide(X1,inverse(double_divide(X0,double_divide(X2,inverse(double_divide(X0,X1)))))) = X2 [superposition 46,5]
+50. double_divide(inverse(X1),inverse(double_divide(inverse(X0),double_divide(X2,inverse(inverse(double_divide(X0,X1))))))) = X2 [superposition 46,6]
+55. inverse(X2) = double_divide(X0,inverse(double_divide(X1,inverse(double_divide(double_divide(X0,X1),X2))))) [superposition 46,6]
+61. double_divide(inverse(X1),double_divide(inverse(double_divide(X2,inverse(inverse(double_divide(X0,X1))))),X0)) = X2 [forward demodulation 50,27]
+62. double_divide(inverse(X1),double_divide(X0,inverse(double_divide(X2,inverse(inverse(double_divide(X0,X1))))))) = X2 [forward demodulation 61,5]
+63. double_divide(inverse(X1),double_divide(X0,double_divide(inverse(double_divide(X0,X1)),inverse(X2)))) = X2 [forward demodulation 62,26]
+64. double_divide(inverse(X1),double_divide(X0,inverse(double_divide(X2,double_divide(X0,X1))))) = X2 [forward demodulation 63,6]
+68. inverse(X2) = double_divide(X0,double_divide(double_divide(double_divide(X0,X1),X2),inverse(X1))) [forward demodulation 55,26]
+69. inverse(X2) = double_divide(X0,double_divide(inverse(X1),double_divide(double_divide(X0,X1),X2))) [forward demodulation 68,5]
+78. double_divide(inverse(X0),X1) = inverse(double_divide(X0,inverse(X1))) [superposition 27,5]
+103. inverse(double_divide(X1,X0)) = inverse(double_divide(X0,X1)) [superposition 28,6]
+193. double_divide(inverse(X2),double_divide(X1,X0)) = inverse(double_divide(inverse(double_divide(X0,X1)),X2)) [superposition 27,103]
+328. double_divide(inverse(inverse(double_divide(X0,X1))),X0) = X1 [superposition 64,46]
+353. double_divide(double_divide(X0,X1),X0) = X1 [forward demodulation 328,4]
+390. double_divide(X1,inverse(double_divide(X2,X0))) = double_divide(inverse(double_divide(X2,X1)),X0) [superposition 47,353]
+421. double_divide(inverse(X2),double_divide(X1,X0)) = inverse(double_divide(X1,inverse(double_divide(X0,X2)))) [backward demodulation 193,390]
+568. inverse(X1) = double_divide(X1,double_divide(inverse(X0),X0)) [superposition 69,353]
+602. inverse(X1) = double_divide(X1,double_divide(X0,inverse(X0))) [forward demodulation 568,5]
+671. double_divide(X1,inverse(X1)) = double_divide(inverse(X0),X0) [superposition 353,602]
+1316. double_divide(a1,inverse(a1)) != double_divide(inverse(b1),b1) <- (~1) [superposition 33,78]
+1358. $false <- (~1) [subsumption resolution 1316,671]
+1359. 1 [avatar contradiction clause 1358]
+1387. a2 != inverse(double_divide(a2,double_divide(b2,inverse(b2)))) <- (~2) [forward demodulation 15,26]
+1388. a2 != inverse(inverse(a2)) <- (~2) [forward demodulation 1387,602]
+1389. $false <- (~2) [subsumption resolution 1388,4]
+1390. 2 [avatar contradiction clause 1389]
+1391. inverse(double_divide(c3,inverse(double_divide(b3,a3)))) != inverse(double_divide(a3,inverse(double_divide(c3,b3)))) <- (~3) [forward demodulation 19,103]
+1392. inverse(double_divide(c3,inverse(double_divide(b3,a3)))) != double_divide(double_divide(c3,b3),inverse(a3)) <- (~3) [forward demodulation 1391,26]
+1393. inverse(double_divide(c3,inverse(double_divide(b3,a3)))) != double_divide(inverse(a3),double_divide(c3,b3)) <- (~3) [forward demodulation 1392,5]
+1394. $false <- (~3) [subsumption resolution 1393,421]
+1395. 3 [avatar contradiction clause 1394]
+1398. $false <- (~4) [subsumption resolution 23,103]
+1399. 4 [avatar contradiction clause 1398]
+1403. $false [avatar sat refutation 24,1359,1390,1395,1399]
+% SZS output end Proof for variant_2_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.020 s
+% Instructions burned: 75 (million)
+% ------------------------------
+% ------------------------------

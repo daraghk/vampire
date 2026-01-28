@@ -1,0 +1,49 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0
+% SZS output start Proof for variant_0
+1. multiply(identity,X0) = X0 [input(axiom)]
+2. multiply(X0,identity) = X0 [input(axiom)]
+3. multiply(X0,left_division(X0,X1)) = X1 [input(axiom)]
+5. multiply(right_division(X0,X1),X1) = X0 [input(axiom)]
+6. right_division(multiply(X0,X1),X1) = X0 [input(axiom)]
+7. identity = multiply(X0,right_inverse(X0)) [input(axiom)]
+9. multiply(multiply(multiply(X0,X1),X2),X1) = multiply(X0,multiply(X1,multiply(X2,X1))) [input(axiom)]
+10. ! [X0,X1] : left_division(X0,X1) = multiply(left_inverse(X0),X1) [input(assumption)]
+11. ! [X0,X1] : right_division(X0,X1) = multiply(X0,right_inverse(X1)) [input(assumption)]
+12. ! [X0,X1] : multiply(left_inverse(X0),multiply(X0,X1)) = X1 [input(assumption)]
+14. multiply(multiply(multiply(a,b),a),c) != multiply(a,multiply(b,multiply(a,c))) [input(negated conjecture)]
+15. left_division(X0,X1) = multiply(left_inverse(X0),X1) [cnf transformation 10]
+16. right_division(X0,X1) = multiply(X0,right_inverse(X1)) [cnf transformation 11]
+17. multiply(left_inverse(X0),multiply(X0,X1)) = X1 [cnf transformation 12]
+19. multiply(X0,multiply(left_inverse(X0),X1)) = X1 [definition unfolding 3,15]
+21. multiply(multiply(X0,right_inverse(X1)),X1) = X0 [definition unfolding 5,16]
+22. multiply(multiply(X0,X1),right_inverse(X1)) = X0 [definition unfolding 6,16]
+32. right_inverse(X0) = multiply(left_inverse(X0),identity) [superposition 17,7]
+36. right_inverse(X0) = left_inverse(X0) [forward demodulation 32,2]
+59. multiply(multiply(X1,left_inverse(X0)),X0) = X1 [superposition 21,36]
+94. right_inverse(X1) = multiply(left_inverse(multiply(X0,X1)),X0) [superposition 17,22]
+95. left_inverse(X1) = multiply(left_inverse(multiply(X0,X1)),X0) [forward demodulation 94,36]
+183. multiply(identity,multiply(X0,multiply(X1,X0))) = multiply(multiply(X0,X1),X0) [superposition 9,1]
+199. multiply(X0,X2) = multiply(X1,multiply(X2,multiply(multiply(left_inverse(multiply(X1,X2)),X0),X2))) [superposition 9,19]
+236. multiply(X0,multiply(X1,X0)) = multiply(multiply(X0,X1),X0) [forward demodulation 183,1]
+342. multiply(left_inverse(multiply(X1,X0)),multiply(X1,multiply(X2,X1))) = multiply(multiply(left_inverse(X0),X2),X1) [superposition 9,95]
+350. multiply(left_inverse(X0),X1) = left_inverse(multiply(left_inverse(X1),X0)) [superposition 59,95]
+499. multiply(a,multiply(b,multiply(a,c))) != multiply(multiply(a,multiply(b,a)),c) [superposition 14,236]
+2252. multiply(X2,multiply(X0,X1)) = multiply(X1,multiply(multiply(left_inverse(multiply(left_inverse(X2),X1)),X0),X1)) [superposition 19,199]
+2255. multiply(X2,multiply(X0,X1)) = multiply(X1,multiply(multiply(multiply(left_inverse(X1),X2),X0),X1)) [forward demodulation 2252,350]
+33808. multiply(multiply(X2,multiply(X1,X2)),X0) = multiply(X2,multiply(X0,multiply(multiply(multiply(left_inverse(X0),X1),X2),X0))) [superposition 199,342]
+33959. multiply(multiply(X2,multiply(X1,X2)),X0) = multiply(X2,multiply(X1,multiply(X2,X0))) [forward demodulation 33808,2255]
+80666. multiply(a,multiply(b,multiply(a,c))) != multiply(a,multiply(b,multiply(a,c))) [superposition 499,33959]
+80909. $false [trivial inequality removal 80666]
+% SZS output end Proof for variant_0
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 1.115 s
+% Peak memory usage: 49 MB
+% Instructions burned: 3491 (million)
+% ------------------------------
+% ------------------------------

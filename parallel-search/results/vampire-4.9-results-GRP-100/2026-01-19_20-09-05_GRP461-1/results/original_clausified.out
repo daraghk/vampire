@@ -1,0 +1,30 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP461-1_clausified
+% SZS output start Proof for GRP461-1_clausified
+1. divide(X0,divide(divide(divide(identity,X1),X2),divide(divide(divide(X0,X0),X0),X2))) = X1 [input(axiom)]
+2. identity = divide(X0,X0) [input(axiom)]
+3. a2 != divide(identity,divide(identity,a2)) [input(negated conjecture)]
+4. divide(X0,divide(divide(divide(identity,X1),X2),divide(divide(identity,X0),X2))) = X1 [backward demodulation 1,2]
+9. divide(identity,divide(divide(divide(identity,X0),X1),divide(identity,X1))) = X0 [superposition 4,2]
+11. divide(X0,divide(divide(divide(identity,X1),divide(identity,X0)),identity)) = X1 [superposition 4,2]
+13. divide(X0,identity) = X0 [superposition 4,2]
+16. divide(X0,divide(divide(identity,X1),divide(identity,X0))) = X1 [backward demodulation 11,13]
+24. divide(divide(divide(identity,X0),X2),divide(divide(identity,identity),X2)) = divide(X1,divide(X0,divide(identity,X1))) [superposition 16,4]
+25. divide(X1,divide(X0,divide(identity,X1))) = divide(divide(identity,X0),divide(identity,identity)) [superposition 16,16]
+36. divide(divide(divide(identity,X0),X2),divide(identity,X2)) = divide(X1,divide(X0,divide(identity,X1))) [forward demodulation 24,2]
+37. divide(divide(identity,X0),identity) = divide(X1,divide(X0,divide(identity,X1))) [forward demodulation 25,2]
+38. divide(identity,X0) = divide(X1,divide(X0,divide(identity,X1))) [forward demodulation 37,13]
+39. divide(identity,X0) = divide(divide(divide(identity,X0),X2),divide(identity,X2)) [backward demodulation 36,38]
+41. divide(identity,divide(identity,X0)) = X0 [backward demodulation 9,39]
+64. a2 != a2 [superposition 3,41]
+69. $false [trivial inequality removal 64]
+% SZS output end Proof for GRP461-1_clausified
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.004 s
+% Instructions burned: 10 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,60 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0_original
+% SZS output start Proof for variant_0_original
+17. group_element(e_1) [input(axiom)]
+18. group_element(e_2) [input(axiom)]
+19. group_element(e_3) [input(axiom)]
+20. ~equalish(e_1,e_2) [input(axiom)]
+22. ~equalish(e_2,e_1) [input(axiom)]
+23. ~equalish(e_2,e_3) [input(axiom)]
+25. ~equalish(e_3,e_2) [input(axiom)]
+26. product1(X0,X1,e_3) | product1(X0,X1,e_2) | product1(X0,X1,e_1) | ~group_element(X1) | ~group_element(X0) [input(axiom)]
+28. ~product1(X0,X3,X1) | ~product1(X0,X2,X1) | equalish(X3,X2) [input(axiom)]
+29. ~product1(X3,X1,X0) | ~product1(X2,X1,X0) | equalish(X3,X2) [input(axiom)]
+30. product1(X0,X0,X0) [input(axiom)]
+32. ~product2(X0,X1,X3) | ~product2(X0,X1,X2) | equalish(X3,X2) [input(axiom)]
+35. product2(X0,X0,X0) [input(axiom)]
+36. ~product1(X4,X1,X5) | product2(X5,X0,X1) | ~product1(X0,X1,X4) [input(negated conjecture)]
+49. ~product1(X0,X1,X0) | equalish(X0,X1) [resolution 28,30]
+50. ~product1(X0,X1,X1) | equalish(X1,X0) [resolution 29,30]
+52. ~product2(X0,X0,X1) | equalish(X0,X1) [resolution 32,35]
+60. ~product1(X2,X1,X0) | product1(X0,X1,e_1) | ~group_element(X1) | ~group_element(X0) | product2(e_3,X2,X1) | product1(X0,X1,e_2) [resolution 26,36]
+64. product1(e_3,X0,e_2) | product1(e_3,X0,e_1) | ~group_element(X0) | ~group_element(e_3) | equalish(e_3,X0) [resolution 26,49]
+68. product1(e_3,X0,e_2) | product1(e_3,X0,e_1) | ~group_element(X0) | equalish(e_3,X0) [subsumption resolution 64,19]
+112. product1(e_3,e_2,e_1) | ~group_element(e_2) | equalish(e_3,e_2) | equalish(e_2,e_3) [resolution 68,50]
+121. 2 <=> product1(e_3,e_2,e_1) [avatar definition]
+123. product1(e_3,e_2,e_1) <- (2) [avatar component clause 121]
+125. product1(e_3,e_2,e_1) | equalish(e_3,e_2) | equalish(e_2,e_3) [subsumption resolution 112,18]
+126. product1(e_3,e_2,e_1) | equalish(e_2,e_3) [subsumption resolution 125,25]
+127. product1(e_3,e_2,e_1) [subsumption resolution 126,23]
+128. 2 [avatar split clause 127,121]
+210. product1(e_1,e_2,e_1) | ~group_element(e_2) | ~group_element(e_1) | product2(e_3,e_3,e_2) | product1(e_1,e_2,e_2) <- (2) [resolution 60,123]
+223. product1(e_1,e_2,e_1) | ~group_element(e_1) | product2(e_3,e_3,e_2) | product1(e_1,e_2,e_2) <- (2) [subsumption resolution 210,18]
+224. product1(e_1,e_2,e_1) | product2(e_3,e_3,e_2) | product1(e_1,e_2,e_2) <- (2) [subsumption resolution 223,17]
+226. 9 <=> product1(e_1,e_2,e_2) [avatar definition]
+228. product1(e_1,e_2,e_2) <- (9) [avatar component clause 226]
+230. 10 <=> product2(e_3,e_3,e_2) [avatar definition]
+232. product2(e_3,e_3,e_2) <- (10) [avatar component clause 230]
+234. 11 <=> product1(e_1,e_2,e_1) [avatar definition]
+236. product1(e_1,e_2,e_1) <- (11) [avatar component clause 234]
+237. 9 | 10 | 11 | ~2 [avatar split clause 224,121,234,230,226]
+239. equalish(e_2,e_1) <- (9) [resolution 228,50]
+247. $false <- (9) [subsumption resolution 239,22]
+248. ~9 [avatar contradiction clause 247]
+281. equalish(e_3,e_2) <- (10) [resolution 232,52]
+283. $false <- (10) [subsumption resolution 281,25]
+284. ~10 [avatar contradiction clause 283]
+431. equalish(e_1,e_2) <- (11) [resolution 236,49]
+440. $false <- (11) [subsumption resolution 431,20]
+441. ~11 [avatar contradiction clause 440]
+442. $false [avatar sat refutation 128,237,248,284,441]
+% SZS output end Proof for variant_0_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.004 s
+% Instructions burned: 14 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,48 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0
+% SZS output start Proof for variant_0
+1. double_divide(double_divide(X0,double_divide(double_divide(X1,double_divide(X0,X2)),double_divide(X2,identity))),double_divide(identity,identity)) = X1 [input(axiom)]
+3. ! [X0] : double_divide(X0,double_divide(X0,identity)) = identity [input(assumption)]
+4. double_divide(identity,double_divide(identity,identity)) = identity [input(assumption)]
+6. ! [X0] : ? [X1] : double_divide(X1,double_divide(identity,identity)) = X0 [input(assumption)]
+7. ? [X0] : double_divide(X0,double_divide(identity,identity)) = identity [input(assumption)]
+8. a2 != double_divide(double_divide(a2,identity),identity) [input(negated conjecture)]
+9. ! [X0] : (? [X1] : double_divide(X1,double_divide(identity,identity)) = X0 => double_divide(sK0(X0),double_divide(identity,identity)) = X0) [skolem symbol introduction]
+10. ! [X0] : double_divide(sK0(X0),double_divide(identity,identity)) = X0 [skolemisation 6,9]
+11. ? [X0] : double_divide(X0,double_divide(identity,identity)) = identity => identity = double_divide(sK1,double_divide(identity,identity)) [skolem symbol introduction]
+12. identity = double_divide(sK1,double_divide(identity,identity)) [skolemisation 7,11]
+13. identity = double_divide(X0,double_divide(X0,identity)) [cnf transformation 3]
+14. identity = double_divide(identity,double_divide(identity,identity)) [cnf transformation 4]
+16. double_divide(sK0(X0),double_divide(identity,identity)) = X0 [cnf transformation 10]
+17. identity = double_divide(sK1,double_divide(identity,identity)) [cnf transformation 12]
+29. double_divide(double_divide(X0,double_divide(identity,double_divide(identity,identity))),double_divide(identity,identity)) = X0 [superposition 1,13]
+32. identity = double_divide(double_divide(identity,double_divide(identity,double_divide(identity,identity))),double_divide(identity,identity)) [superposition 1,14]
+33. sK0(X0) = double_divide(double_divide(identity,double_divide(X0,double_divide(identity,identity))),double_divide(identity,identity)) [superposition 1,16]
+34. sK1 = double_divide(double_divide(identity,double_divide(identity,double_divide(identity,identity))),double_divide(identity,identity)) [superposition 1,17]
+36. sK1 = double_divide(double_divide(identity,identity),double_divide(identity,identity)) [forward demodulation 34,14]
+37. identity = sK0(identity) [forward demodulation 32,33]
+40. double_divide(double_divide(X0,identity),double_divide(identity,identity)) = X0 [forward demodulation 29,14]
+42. double_divide(identity,identity) = double_divide(double_divide(identity,double_divide(sK1,double_divide(identity,identity))),double_divide(identity,identity)) [superposition 1,36]
+45. double_divide(identity,identity) = sK0(sK1) [forward demodulation 42,33]
+47. identity = sK1 [superposition 36,40]
+48. double_divide(X0,identity) = double_divide(double_divide(identity,double_divide(X0,double_divide(identity,identity))),double_divide(identity,identity)) [superposition 1,40]
+52. double_divide(X0,identity) = sK0(X0) [forward demodulation 48,33]
+86. double_divide(sK0(X0),sK0(sK1)) = X0 [superposition 16,45]
+106. double_divide(sK0(X0),sK0(identity)) = X0 [forward demodulation 86,47]
+118. double_divide(sK0(X0),identity) = X0 [forward demodulation 106,37]
+130. sK0(sK0(X0)) = X0 [forward demodulation 118,52]
+400. a2 != double_divide(sK0(a2),identity) [superposition 8,52]
+407. a2 != sK0(sK0(a2)) [forward demodulation 400,52]
+419. $false [forward subsumption resolution 407,130]
+% SZS output end Proof for variant_0
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.004 s
+% Peak memory usage: 47 MB
+% Instructions burned: 13 (million)
+% ------------------------------
+% ------------------------------

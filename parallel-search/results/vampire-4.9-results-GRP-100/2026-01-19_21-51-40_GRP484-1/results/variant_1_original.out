@@ -1,0 +1,27 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+1. double_divide(double_divide(X0,double_divide(double_divide(double_divide(X0,X1),X2),double_divide(X1,identity))),double_divide(identity,identity)) = X2 [input(axiom)]
+2. multiply(X0,X1) = double_divide(double_divide(X1,X0),identity) [input(axiom)]
+3. inverse(X0) = double_divide(X0,identity) [input(axiom)]
+4. identity = double_divide(X0,inverse(X0)) [input(axiom)]
+5. identity != multiply(inverse(a1),a1) [input(negated conjecture)]
+11. identity = double_divide(X0,double_divide(X0,identity)) [definition unfolding 4,3]
+12. identity != double_divide(double_divide(a1,double_divide(a1,identity)),identity) [definition unfolding 5,2,3]
+13. identity != double_divide(identity,identity) [forward demodulation 12,11]
+14. double_divide(double_divide(X0,double_divide(double_divide(identity,X1),double_divide(double_divide(X0,identity),identity))),double_divide(identity,identity)) = X1 [superposition 1,11]
+20. identity = double_divide(double_divide(identity,identity),double_divide(identity,identity)) [superposition 14,11]
+25. double_divide(identity,identity) = double_divide(double_divide(identity,double_divide(identity,double_divide(identity,identity))),double_divide(identity,identity)) [superposition 1,20]
+26. double_divide(identity,identity) = double_divide(double_divide(identity,identity),double_divide(identity,identity)) [forward demodulation 25,11]
+27. identity = double_divide(identity,identity) [forward demodulation 26,20]
+28. $false [subsumption resolution 27,13]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.003 s
+% Instructions burned: 8 (million)
+% ------------------------------
+% ------------------------------

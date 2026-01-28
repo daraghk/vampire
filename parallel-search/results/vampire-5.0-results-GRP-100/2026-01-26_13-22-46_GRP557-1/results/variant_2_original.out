@@ -1,0 +1,33 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2_original
+% SZS output start Proof for variant_2_original
+2. multiply(X0,X1) = divide(X0,inverse(X1)) [input(axiom)]
+3. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) [input(negated conjecture)]
+4. ! [X0,X1,X2] : divide(X0,inverse(divide(divide(X1,X2),divide(X0,X2)))) = X1 [input(assumption)]
+7. ! [X0,X1] : ? [X2] : divide(X0,X2) = X1 [input(assumption)]
+9. ! [X0,X1] : (? [X2] : divide(X0,X2) = X1 => divide(X0,sK0(X0,X1)) = X1) [skolem symbol introduction]
+10. ! [X0,X1] : divide(X0,sK0(X0,X1)) = X1 [skolemisation 7,9]
+13. divide(X0,inverse(divide(divide(X1,X2),divide(X0,X2)))) = X1 [cnf transformation 4]
+16. divide(X0,sK0(X0,X1)) = X1 [cnf transformation 10]
+18. divide(inverse(a1),inverse(a1)) != divide(inverse(b1),inverse(b1)) [definition unfolding 3,2,2]
+19. divide(X1,inverse(divide(X0,divide(X1,sK0(X2,X0))))) = X2 [superposition 13,16]
+39. divide(X1,inverse(divide(X0,X0))) = X1 [superposition 19,16]
+55. divide(X1,inverse(divide(X0,divide(X1,inverse(divide(X2,X2)))))) = X0 [superposition 13,39]
+57. divide(X1,inverse(divide(X0,X1))) = X0 [forward demodulation 55,39]
+92. divide(sK0(X1,X0),inverse(X0)) = X1 [superposition 57,16]
+199. sK0(X0,divide(X1,X1)) = X0 [superposition 39,92]
+273. divide(X0,X0) = divide(X1,X1) [superposition 16,199]
+483. divide(X0,X0) != divide(inverse(a1),inverse(a1)) [superposition 18,273]
+484. $false [forward subsumption resolution 483,273]
+% SZS output end Proof for variant_2_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.007 s
+% Peak memory usage: 50 MB
+% Instructions burned: 26 (million)
+% ------------------------------
+% ------------------------------

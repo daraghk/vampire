@@ -1,0 +1,35 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP516-1
+% SZS output start Proof for GRP516-1
+1. multiply(X0,multiply(multiply(X1,X2),inverse(multiply(X0,X2)))) = X1 [input(axiom)]
+2. multiply(a,b) != multiply(b,a) [input(negated conjecture)]
+3. multiply(X1,multiply(X0,inverse(multiply(X1,multiply(multiply(X0,X3),inverse(multiply(X2,X3))))))) = X2 [superposition 1,1]
+4. multiply(X1,multiply(multiply(X2,multiply(multiply(X0,X3),inverse(multiply(X1,X3)))),inverse(X0))) = X2 [superposition 1,1]
+9. multiply(X1,multiply(X0,inverse(X0))) = X1 [superposition 3,1]
+23. multiply(X1,multiply(X0,inverse(X1))) = X0 [superposition 4,9]
+25. multiply(X0,multiply(multiply(X1,multiply(multiply(X2,multiply(X3,inverse(X3))),inverse(X0))),inverse(X2))) = X1 [superposition 4,9]
+31. multiply(X0,multiply(multiply(X1,multiply(X2,inverse(X0))),inverse(X2))) = X1 [forward demodulation 25,9]
+62. multiply(X2,X1) = multiply(X2,multiply(multiply(X0,X1),inverse(X0))) [superposition 4,23]
+63. multiply(multiply(X2,X1),multiply(X0,inverse(multiply(X0,X1)))) = X2 [superposition 3,23]
+272. multiply(X0,X2) = multiply(multiply(X1,X2),multiply(X0,inverse(X1))) [superposition 31,63]
+300. multiply(X0,multiply(X1,inverse(X2))) = multiply(X1,multiply(X0,inverse(X2))) [superposition 272,23]
+308. multiply(multiply(X0,X1),X2) = multiply(multiply(X0,X2),X1) [superposition 272,62]
+323. multiply(X0,multiply(multiply(X1,inverse(X2)),multiply(X2,inverse(X0)))) = X1 [backward demodulation 31,308]
+326. multiply(X0,multiply(X2,multiply(multiply(X1,inverse(X2)),inverse(X0)))) = X1 [forward demodulation 323,300]
+329. multiply(multiply(X1,inverse(X0)),X0) = X1 [superposition 326,9]
+330. multiply(multiply(X1,inverse(X1)),X0) = X0 [superposition 326,1]
+349. multiply(X0,inverse(multiply(X1,inverse(X1)))) = X0 [superposition 329,9]
+393. multiply(X1,X0) = multiply(X0,multiply(X1,inverse(multiply(X2,inverse(X2))))) [superposition 272,330]
+420. multiply(X0,X1) = multiply(X1,X0) [forward demodulation 393,349]
+461. multiply(a,b) != multiply(a,b) [superposition 2,420]
+480. $false [trivial inequality removal 461]
+% SZS output end Proof for GRP516-1
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.013 s
+% Instructions burned: 53 (million)
+% ------------------------------
+% ------------------------------

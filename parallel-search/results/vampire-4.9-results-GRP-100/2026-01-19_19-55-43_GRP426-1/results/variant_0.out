@@ -1,0 +1,5 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Failed with
+% User error: input formula not in CNF: (multiply(X3,X4) = multiply(X3,X5)) => (X4 = X5) (detected at or around line 8)
+% Trying SMTLIB2
+User error: list expected: %

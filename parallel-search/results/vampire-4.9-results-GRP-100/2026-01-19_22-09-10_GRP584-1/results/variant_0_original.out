@@ -1,0 +1,46 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0_original
+% SZS output start Proof for variant_0_original
+1. double_divide(double_divide(X0,double_divide(double_divide(identity,X1),double_divide(X2,double_divide(X1,X0)))),double_divide(identity,identity)) = X2 [input(axiom)]
+2. multiply(X0,X1) = double_divide(double_divide(X1,X0),identity) [input(axiom)]
+3. inverse(X0) = double_divide(X0,identity) [input(axiom)]
+4. identity = double_divide(X0,inverse(X0)) [input(axiom)]
+5. multiply(a,b) != multiply(b,a) [input(negated conjecture)]
+6. double_divide(identity,double_divide(X3,identity)) = X3 [input(assumption)]
+7. double_divide(double_divide(X3,X4),X4) = X3 [input(assumption)]
+8. identity = double_divide(X0,double_divide(X0,identity)) [definition unfolding 4,3]
+9. double_divide(double_divide(b,a),identity) != double_divide(double_divide(a,b),identity) [definition unfolding 5,2,2]
+11. double_divide(X0,identity) = double_divide(identity,X0) [superposition 6,7]
+12. double_divide(double_divide(b,a),identity) != double_divide(identity,double_divide(a,b)) [backward demodulation 9,11]
+13. identity = double_divide(double_divide(X0,identity),X0) [superposition 8,7]
+18. double_divide(double_divide(identity,X0),identity) = X0 [superposition 7,11]
+19. double_divide(identity,double_divide(a,b)) != double_divide(identity,double_divide(b,a)) [superposition 12,11]
+31. identity = double_divide(double_divide(identity,double_divide(double_divide(identity,X0),X0)),double_divide(identity,identity)) [superposition 1,6]
+32. double_divide(X1,double_divide(double_divide(identity,X2),double_divide(X0,double_divide(X2,X1)))) = double_divide(double_divide(identity,double_divide(double_divide(identity,identity),X0)),double_divide(identity,identity)) [superposition 1,1]
+33. double_divide(X0,double_divide(X2,X1)) = double_divide(double_divide(X1,double_divide(double_divide(identity,X2),X0)),double_divide(identity,identity)) [superposition 1,7]
+36. identity = double_divide(double_divide(identity,identity),double_divide(identity,identity)) [forward demodulation 31,7]
+37. double_divide(X1,double_divide(double_divide(identity,X2),double_divide(X0,double_divide(X2,X1)))) = double_divide(X0,double_divide(identity,identity)) [backward demodulation 32,33]
+48. double_divide(identity,identity) = double_divide(identity,double_divide(identity,identity)) [superposition 7,36]
+49. identity = double_divide(identity,identity) [forward demodulation 48,8]
+57. double_divide(X0,double_divide(X2,X1)) = double_divide(double_divide(X1,double_divide(double_divide(identity,X2),X0)),identity) [backward demodulation 33,49]
+59. double_divide(X0,identity) = double_divide(X1,double_divide(double_divide(identity,X2),double_divide(X0,double_divide(X2,X1)))) [backward demodulation 37,49]
+266. double_divide(double_divide(X1,X0),identity) = double_divide(identity,double_divide(X0,X1)) [superposition 57,18]
+267. double_divide(double_divide(X1,identity),identity) = double_divide(X0,double_divide(X0,X1)) [superposition 57,7]
+285. double_divide(X0,double_divide(X0,X1)) = X1 [forward demodulation 267,7]
+322. double_divide(X0,double_divide(X1,X0)) = X1 [superposition 7,285]
+354. double_divide(X1,double_divide(double_divide(identity,X0),identity)) = double_divide(double_divide(double_divide(X0,X1),identity),identity) [superposition 59,13]
+387. double_divide(X0,X1) = double_divide(X1,double_divide(double_divide(identity,X0),identity)) [forward demodulation 354,7]
+388. double_divide(X0,X1) = double_divide(X1,double_divide(identity,double_divide(X0,identity))) [forward demodulation 387,266]
+389. double_divide(X1,X0) = double_divide(X0,X1) [forward demodulation 388,322]
+390. double_divide(identity,double_divide(a,b)) != double_divide(identity,double_divide(a,b)) [backward demodulation 19,389]
+392. $false [trivial inequality removal 390]
+% SZS output end Proof for variant_0_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.009 s
+% Instructions burned: 32 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,32 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP491-1_clausified
+% SZS output start Proof for GRP491-1_clausified
+1. double_divide(double_divide(identity,X0),double_divide(identity,double_divide(double_divide(double_divide(X0,X1),identity),double_divide(X2,X1)))) = X2 [input(axiom)]
+2. identity = double_divide(X0,double_divide(X0,identity)) [input(axiom)]
+3. a2 != double_divide(double_divide(a2,identity),identity) [input(negated conjecture)]
+4. double_divide(identity,double_divide(identity,double_divide(double_divide(double_divide(double_divide(identity,identity),X0),identity),double_divide(X1,X0)))) = X1 [superposition 1,2]
+5. double_divide(double_divide(identity,X0),double_divide(identity,double_divide(double_divide(identity,identity),double_divide(X1,double_divide(X0,identity))))) = X1 [superposition 1,2]
+9. double_divide(double_divide(X0,identity),identity) = double_divide(double_divide(identity,X0),double_divide(identity,identity)) [superposition 1,2]
+10. double_divide(identity,double_divide(identity,identity)) = double_divide(double_divide(double_divide(identity,identity),identity),identity) [superposition 9,2]
+13. identity = double_divide(double_divide(double_divide(identity,identity),identity),identity) [forward demodulation 10,2]
+27. double_divide(double_divide(identity,identity),identity) = double_divide(identity,double_divide(identity,double_divide(identity,identity))) [superposition 4,13]
+36. double_divide(identity,identity) = double_divide(double_divide(identity,identity),identity) [forward demodulation 27,2]
+40. identity = double_divide(double_divide(identity,identity),identity) [backward demodulation 13,36]
+42. identity = double_divide(identity,identity) [backward demodulation 36,40]
+44. double_divide(double_divide(identity,X0),double_divide(identity,double_divide(identity,double_divide(X1,double_divide(X0,identity))))) = X1 [backward demodulation 5,42]
+45. double_divide(double_divide(X0,identity),identity) = double_divide(double_divide(identity,X0),identity) [backward demodulation 9,42]
+76. a2 != double_divide(double_divide(identity,a2),identity) [superposition 3,45]
+128. double_divide(double_divide(identity,X0),double_divide(identity,double_divide(identity,identity))) = X0 [superposition 44,2]
+137. double_divide(double_divide(identity,X0),identity) = X0 [forward demodulation 128,2]
+265. a2 != a2 [superposition 76,137]
+271. $false [trivial inequality removal 265]
+% SZS output end Proof for GRP491-1_clausified
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.012 s
+% Instructions burned: 30 (million)
+% ------------------------------
+% ------------------------------

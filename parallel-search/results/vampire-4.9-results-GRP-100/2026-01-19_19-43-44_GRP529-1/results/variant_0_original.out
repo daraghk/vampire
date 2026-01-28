@@ -1,0 +1,34 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0_original
+% SZS output start Proof for variant_0_original
+2. multiply(X0,X1) = divide(X0,divide(divide(X2,X2),X1)) [input(axiom)]
+3. inverse(X0) = divide(divide(X1,X1),X0) [input(axiom)]
+4. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) [input(negated conjecture)]
+5. multiply(X3,inverse(X3)) = divide(divide(X4,X4),divide(X3,X3)) [input(assumption)]
+6. inverse(inverse(X3)) = X3 [input(assumption)]
+7. multiply(X3,X4) = multiply(X4,X3) [input(assumption)]
+8. multiply(X0,X1) = divide(X0,inverse(X1)) [backward demodulation 2,3]
+9. multiply(X3,inverse(X3)) = inverse(divide(X3,X3)) [forward demodulation 5,3]
+10. multiply(inverse(a1),a1) != multiply(b1,inverse(b1)) [backward demodulation 4,7]
+11. multiply(inverse(a1),a1) != inverse(divide(b1,b1)) [forward demodulation 10,9]
+13. multiply(X1,inverse(X0)) = divide(X1,X0) [superposition 8,6]
+14. inverse(inverse(X0)) = multiply(divide(X1,X1),X0) [superposition 8,3]
+17. divide(X3,X3) = inverse(divide(X3,X3)) [backward demodulation 9,13]
+19. multiply(inverse(a1),a1) != divide(b1,b1) [backward demodulation 11,17]
+20. multiply(divide(X1,X1),X0) = X0 [forward demodulation 14,6]
+26. multiply(X0,divide(X1,X1)) = X0 [superposition 20,7]
+33. divide(b1,b1) != multiply(a1,inverse(a1)) [superposition 19,7]
+35. divide(b1,b1) != divide(a1,a1) [forward demodulation 33,13]
+106. divide(X1,X1) = divide(X0,X0) [superposition 26,20]
+485. divide(X0,X0) != divide(a1,a1) [superposition 35,106]
+517. $false [subsumption resolution 485,106]
+% SZS output end Proof for variant_0_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.011 s
+% Instructions burned: 30 (million)
+% ------------------------------
+% ------------------------------

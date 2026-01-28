@@ -1,0 +1,55 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP123-8.003_clausified
+% SZS output start Proof for GRP123-8.003_clausified
+15. group_element(e_1) [input(axiom)]
+16. group_element(e_2) [input(axiom)]
+17. group_element(e_3) [input(axiom)]
+22. ~equalish(e_3,e_1) [input(axiom)]
+23. ~equalish(e_3,e_2) [input(axiom)]
+24. product1(X0,X1,e_3) | ~group_element(X1) | product1(X0,X1,e_1) | product1(X0,X1,e_2) | ~group_element(X0) [input(axiom)]
+26. ~product1(X0,X3,X2) | ~product1(X0,X1,X2) | equalish(X1,X3) [input(axiom)]
+28. product1(X0,X0,X0) [input(axiom)]
+30. ~product2(X0,X1,X3) | ~product2(X0,X1,X2) | equalish(X2,X3) [input(axiom)]
+31. ~product2(X0,X3,X2) | ~product2(X0,X1,X2) | equalish(X1,X3) [input(axiom)]
+33. product2(X0,X0,X0) [input(axiom)]
+34. ~product1(X2,X1,X3) | ~product1(X0,X1,X2) | product2(X3,X0,X1) [input(negated conjecture)]
+35. ~product1(X0,X1,X1) | product2(X1,X0,X1) [resolution 28,34]
+43. ~product1(X0,X1,X0) | equalish(X1,X0) [resolution 26,28]
+46. ~product2(X0,X0,X1) | equalish(X1,X0) [resolution 30,33]
+57. ~group_element(e_3) | product1(X0,e_3,e_1) | product1(X0,e_3,e_2) | ~group_element(X0) | product2(e_3,X0,e_3) [resolution 24,35]
+62. product2(e_3,X0,e_3) | product1(X0,e_3,e_2) | ~group_element(X0) | product1(X0,e_3,e_1) [forward subsumption resolution 57,17]
+65. ~product2(e_3,X1,e_3) | ~group_element(X0) | product1(X0,e_3,e_1) | product1(X0,e_3,e_2) | equalish(X1,X0) [resolution 62,31]
+84. product1(X0,e_3,e_2) | product1(X0,e_3,e_1) | ~group_element(X0) | equalish(e_3,X0) [resolution 65,33]
+93. product1(e_2,e_3,e_1) | ~group_element(e_2) | equalish(e_3,e_2) | equalish(e_3,e_2) [resolution 84,43]
+95. product1(e_2,e_3,e_1) | ~group_element(e_2) | equalish(e_3,e_2) [duplicate literal removal 93]
+96. product1(e_2,e_3,e_1) | equalish(e_3,e_2) [forward subsumption resolution 95,16]
+97. product1(e_2,e_3,e_1) [forward subsumption resolution 96,23]
+108. ~product1(X0,e_3,e_2) | product2(e_1,X0,e_3) [resolution 97,34]
+116. 2 <=> product1(e_1,e_3,e_2) [avatar definition]
+117. ~product1(e_1,e_3,e_2) <- (~2) [avatar component clause 116]
+118. product1(e_1,e_3,e_2) <- (2) [avatar component clause 116]
+190. product2(e_1,e_1,e_3) <- (2) [resolution 108,118]
+203. equalish(e_3,e_1) <- (2) [resolution 190,46]
+204. $false <- (2) [forward subsumption resolution 203,22]
+205. ~2 [avatar contradiction clause 204]
+214. product1(e_1,e_3,e_1) | ~group_element(e_1) | equalish(e_3,e_1) <- (~2) [resolution 117,84]
+229. ~group_element(e_1) | equalish(e_3,e_1) <- (~2) [forward subsumption resolution 214,43]
+230. equalish(e_3,e_1) <- (~2) [forward subsumption resolution 229,15]
+231. $false <- (~2) [forward subsumption resolution 230,22]
+232. 2 [avatar contradiction clause 231]
+s4. ~2 [sat_conversion 205]
+s7. 2 [sat_conversion 232]
+s8. # [rat s4,s7]
+233. $false [avatar sat refutation s8]
+% SZS output end Proof for GRP123-8.003_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.003 s
+% Peak memory usage: 58 MB
+% Instructions burned: 8 (million)
+% ------------------------------
+% ------------------------------

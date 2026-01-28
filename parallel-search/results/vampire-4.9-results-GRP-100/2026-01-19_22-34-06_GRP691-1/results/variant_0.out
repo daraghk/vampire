@@ -1,0 +1,9 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Time limit reached!
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Unknown
+% Termination phase: Saturation
+
+% Time elapsed: 60.0000 s
+% Instructions burned: 149675 (million)

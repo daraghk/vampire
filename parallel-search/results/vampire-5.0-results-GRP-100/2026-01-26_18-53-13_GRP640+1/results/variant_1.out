@@ -1,0 +1,47 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+57. ~r1_group_2(X2,X0,X1) | X0 = X1 | v3_struct_0(X2) | ~v3_group_1(X2) | ~v4_group_1(X2) | ~l1_group_1(X2) | ~v1_group_1(X0) | ~m1_group_2(X0,X2) | ~v1_group_1(X1) | ~m1_group_2(X1,X2) [input(axiom)]
+59. ~m1_subset_1(X1,k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | v1_group_1(k5_group_4(X0,X1)) [input(axiom)]
+60. ~m1_subset_1(X1,k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | m1_group_2(k5_group_4(X0,X1),X0) [input(axiom)]
+61. v1_group_1(k8_group_4(X0,X1,X2)) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~m1_group_2(X1,X0) | ~m1_group_2(X2,X0) [input(axiom)]
+62. m1_group_2(k8_group_4(X0,X1,X2),X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~m1_group_2(X1,X0) | ~m1_group_2(X2,X0) [input(axiom)]
+70. r1_group_2(X0,k8_group_4(X0,X1,X2),k5_group_4(X0,k2_xboole_0(u1_struct_0(X1),u1_struct_0(X2)))) | ~m1_subset_1(k2_xboole_0(u1_struct_0(X1),u1_struct_0(X2)),k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(X2,X0) | ~m1_group_2(X1,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) [input(axiom)]
+75. k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK4,u1_struct_0(k8_group_4(sK0,sK2,sK3))) != k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK4,u1_struct_0(k5_group_4(sK0,sK5))) [input(negated conjecture)]
+76. k2_xboole_0(u1_struct_0(sK2),u1_struct_0(sK3)) = sK5 [input(negated conjecture)]
+77. sK5 = k2_xboole_0(u1_struct_0(sK2),u1_struct_0(sK3)) [reorient equations 76]
+78. m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(sK0))) [input(negated conjecture)]
+82. m1_group_2(sK3,sK0) [input(negated conjecture)]
+83. m1_group_2(sK2,sK0) [input(negated conjecture)]
+88. ~v3_struct_0(sK0) [input(negated conjecture)]
+89. v3_group_1(sK0) [input(negated conjecture)]
+90. v4_group_1(sK0) [input(negated conjecture)]
+91. l1_group_1(sK0) [input(negated conjecture)]
+423. r1_group_2(X0,k8_group_4(X0,sK2,sK3),k5_group_4(X0,sK5)) | ~m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(sK3,X0) | ~m1_group_2(sK2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) [superposition 70,77]
+442. ~m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(sK3,X0) | ~m1_group_2(sK2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | k8_group_4(X0,sK2,sK3) = k5_group_4(X0,sK5) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~v1_group_1(k8_group_4(X0,sK2,sK3)) | ~m1_group_2(k8_group_4(X0,sK2,sK3),X0) | ~v1_group_1(k5_group_4(X0,sK5)) | ~m1_group_2(k5_group_4(X0,sK5),X0) [resolution 423,57]
+443. ~m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(sK3,X0) | ~m1_group_2(sK2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | k8_group_4(X0,sK2,sK3) = k5_group_4(X0,sK5) | ~v1_group_1(k8_group_4(X0,sK2,sK3)) | ~m1_group_2(k8_group_4(X0,sK2,sK3),X0) | ~v1_group_1(k5_group_4(X0,sK5)) | ~m1_group_2(k5_group_4(X0,sK5),X0) [duplicate literal removal 442]
+445. ~m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(sK3,X0) | ~m1_group_2(sK2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | k8_group_4(X0,sK2,sK3) = k5_group_4(X0,sK5) | ~m1_group_2(k8_group_4(X0,sK2,sK3),X0) | ~v1_group_1(k5_group_4(X0,sK5)) | ~m1_group_2(k5_group_4(X0,sK5),X0) [forward subsumption resolution 443,61]
+447. ~m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(sK3,X0) | ~m1_group_2(sK2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | k8_group_4(X0,sK2,sK3) = k5_group_4(X0,sK5) | ~v1_group_1(k5_group_4(X0,sK5)) | ~m1_group_2(k5_group_4(X0,sK5),X0) [forward subsumption resolution 445,62]
+449. ~m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(sK3,X0) | ~m1_group_2(sK2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | k8_group_4(X0,sK2,sK3) = k5_group_4(X0,sK5) | ~m1_group_2(k5_group_4(X0,sK5),X0) [forward subsumption resolution 447,59]
+451. ~m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(sK3,X0) | ~m1_group_2(sK2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | k8_group_4(X0,sK2,sK3) = k5_group_4(X0,sK5) [forward subsumption resolution 449,60]
+587. ~m1_group_2(sK3,sK0) | ~m1_group_2(sK2,sK0) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) | k8_group_4(sK0,sK2,sK3) = k5_group_4(sK0,sK5) [resolution 451,78]
+589. ~m1_group_2(sK2,sK0) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) | k8_group_4(sK0,sK2,sK3) = k5_group_4(sK0,sK5) [forward subsumption resolution 587,82]
+590. v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) | k8_group_4(sK0,sK2,sK3) = k5_group_4(sK0,sK5) [forward subsumption resolution 589,83]
+591. ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) | k8_group_4(sK0,sK2,sK3) = k5_group_4(sK0,sK5) [forward subsumption resolution 590,88]
+592. ~v4_group_1(sK0) | ~l1_group_1(sK0) | k8_group_4(sK0,sK2,sK3) = k5_group_4(sK0,sK5) [forward subsumption resolution 591,89]
+593. ~l1_group_1(sK0) | k8_group_4(sK0,sK2,sK3) = k5_group_4(sK0,sK5) [forward subsumption resolution 592,90]
+594. k8_group_4(sK0,sK2,sK3) = k5_group_4(sK0,sK5) [forward subsumption resolution 593,91]
+600. k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK4,u1_struct_0(k5_group_4(sK0,sK5))) != k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK4,u1_struct_0(k5_group_4(sK0,sK5))) [superposition 75,594]
+605. $false [trivial inequality removal 600]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.008 s
+% Peak memory usage: 58 MB
+% Instructions burned: 25 (million)
+% ------------------------------
+% ------------------------------

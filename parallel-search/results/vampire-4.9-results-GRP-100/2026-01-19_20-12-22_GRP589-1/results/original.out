@@ -1,0 +1,25 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP589-1
+% SZS output start Proof for GRP589-1
+1. double_divide(inverse(double_divide(double_divide(X0,X1),inverse(double_divide(X0,inverse(X2))))),X1) = X2 [input(axiom)]
+2. multiply(X0,X1) = inverse(double_divide(X1,X0)) [input(axiom)]
+3. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) [input(negated conjecture)]
+4. inverse(double_divide(a1,inverse(a1))) != inverse(double_divide(b1,inverse(b1))) [definition unfolding 3,2,2]
+5. double_divide(inverse(double_divide(X0,inverse(double_divide(inverse(double_divide(double_divide(X1,X2),inverse(double_divide(X1,inverse(X0))))),inverse(X3))))),X2) = X3 [superposition 1,1]
+6. double_divide(inverse(double_divide(double_divide(inverse(double_divide(double_divide(X1,inverse(X2)),inverse(double_divide(X1,inverse(X0))))),X3),inverse(X0))),X3) = X2 [superposition 1,1]
+11. double_divide(inverse(double_divide(X0,inverse(X0))),inverse(X2)) = X2 [superposition 5,1]
+26. double_divide(inverse(double_divide(X0,inverse(X2))),inverse(X0)) = X2 [superposition 6,11]
+62. double_divide(inverse(X0),inverse(inverse(double_divide(X1,inverse(X1))))) = X0 [superposition 26,11]
+314. inverse(double_divide(X0,inverse(X0))) = double_divide(X1,inverse(X1)) [superposition 62,11]
+515. inverse(double_divide(a1,inverse(a1))) != double_divide(X0,inverse(X0)) [superposition 4,314]
+565. $false [subsumption resolution 515,314]
+% SZS output end Proof for GRP589-1
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.018 s
+% Instructions burned: 87 (million)
+% ------------------------------
+% ------------------------------

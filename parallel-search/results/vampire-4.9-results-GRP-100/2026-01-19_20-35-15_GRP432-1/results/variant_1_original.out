@@ -1,0 +1,17 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+2. multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [input(negated conjecture)]
+4. multiply(multiply(X4,X5),X6) = multiply(X4,multiply(X5,X6)) [input(assumption)]
+8. multiply(a3,multiply(b3,c3)) != multiply(a3,multiply(b3,c3)) [superposition 2,4]
+9. $false [trivial inequality removal 8]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.002 s
+% Instructions burned: 6 (million)
+% ------------------------------
+% ------------------------------

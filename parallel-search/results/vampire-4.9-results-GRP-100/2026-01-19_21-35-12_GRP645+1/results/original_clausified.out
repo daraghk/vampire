@@ -1,0 +1,60 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP645+1_clausified
+% SZS output start Proof for GRP645+1_clausified
+1. k1_funct_1(k1_latsubgr(sK0),k9_group_2(sK0,sK1,sK2)) != k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),sK1),k1_funct_1(k1_latsubgr(sK0),sK2)) [input(negated conjecture)]
+2. m1_group_2(sK2,sK0) [input(negated conjecture)]
+3. v1_group_1(sK2) [input(negated conjecture)]
+4. m1_group_2(sK1,sK0) [input(negated conjecture)]
+5. v1_group_1(sK1) [input(negated conjecture)]
+6. l1_group_1(sK0) [input(negated conjecture)]
+7. v4_group_1(sK0) [input(negated conjecture)]
+8. v3_group_1(sK0) [input(negated conjecture)]
+9. ~v3_struct_0(sK0) [input(negated conjecture)]
+21. ~m2_relset_1(k1_latsubgr(X0),k1_group_3(X0),k1_zfmisc_1(u1_struct_0(X0))) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~v1_funct_1(k1_latsubgr(X0)) | ~v1_funct_2(k1_latsubgr(X0),k1_group_3(X0),k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v1_group_1(X3) | ~m1_group_2(X3,X0) | u1_struct_0(X3) = k1_funct_1(k1_latsubgr(X0),X3) [input(axiom)]
+24. m2_relset_1(k1_latsubgr(X0),k1_group_3(X0),k1_zfmisc_1(u1_struct_0(X0))) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | v3_struct_0(X0) [input(axiom)]
+25. v1_funct_2(k1_latsubgr(X0),k1_group_3(X0),k1_zfmisc_1(u1_struct_0(X0))) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | v3_struct_0(X0) [input(axiom)]
+26. v1_funct_1(k1_latsubgr(X0)) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | v3_struct_0(X0) [input(axiom)]
+27. m1_group_2(k8_group_2(X0,X1,X2),X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~m1_group_2(X1,X0) | ~m1_group_2(X2,X0) | v3_struct_0(X0) [input(axiom)]
+28. v1_group_1(k8_group_2(X0,X1,X2)) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~m1_group_2(X1,X0) | ~m1_group_2(X2,X0) | v3_struct_0(X0) [input(axiom)]
+68. ~m1_group_2(X2,X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~m1_group_2(X1,X0) | v3_struct_0(X0) | k9_group_2(X0,X1,X2) = k8_group_2(X0,X1,X2) [input(axiom)]
+73. ~m1_group_2(X2,X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~v1_group_1(X1) | ~m1_group_2(X1,X0) | ~v1_group_1(X2) | v3_struct_0(X0) | k3_xboole_0(k1_funct_1(k1_latsubgr(X0),X1),k1_funct_1(k1_latsubgr(X0),X2)) = u1_struct_0(k9_group_2(X0,X1,X2)) [input(axiom)]
+280. ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) | ~m1_group_2(X0,sK0) | v3_struct_0(sK0) | k9_group_2(sK0,X0,sK2) = k8_group_2(sK0,X0,sK2) [resolution 68,2]
+288. ~v4_group_1(sK0) | ~l1_group_1(sK0) | ~m1_group_2(X0,sK0) | v3_struct_0(sK0) | k9_group_2(sK0,X0,sK2) = k8_group_2(sK0,X0,sK2) [subsumption resolution 280,8]
+289. ~l1_group_1(sK0) | ~m1_group_2(X0,sK0) | v3_struct_0(sK0) | k9_group_2(sK0,X0,sK2) = k8_group_2(sK0,X0,sK2) [subsumption resolution 288,7]
+290. ~m1_group_2(X0,sK0) | v3_struct_0(sK0) | k9_group_2(sK0,X0,sK2) = k8_group_2(sK0,X0,sK2) [subsumption resolution 289,6]
+291. ~m1_group_2(X0,sK0) | k9_group_2(sK0,X0,sK2) = k8_group_2(sK0,X0,sK2) [subsumption resolution 290,9]
+362. ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) | ~v1_group_1(X0) | ~m1_group_2(X0,sK0) | ~v1_group_1(sK2) | v3_struct_0(sK0) | k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),X0),k1_funct_1(k1_latsubgr(sK0),sK2)) = u1_struct_0(k9_group_2(sK0,X0,sK2)) [resolution 73,2]
+370. ~v4_group_1(sK0) | ~l1_group_1(sK0) | ~v1_group_1(X0) | ~m1_group_2(X0,sK0) | ~v1_group_1(sK2) | v3_struct_0(sK0) | k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),X0),k1_funct_1(k1_latsubgr(sK0),sK2)) = u1_struct_0(k9_group_2(sK0,X0,sK2)) [subsumption resolution 362,8]
+371. ~l1_group_1(sK0) | ~v1_group_1(X0) | ~m1_group_2(X0,sK0) | ~v1_group_1(sK2) | v3_struct_0(sK0) | k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),X0),k1_funct_1(k1_latsubgr(sK0),sK2)) = u1_struct_0(k9_group_2(sK0,X0,sK2)) [subsumption resolution 370,7]
+372. ~v1_group_1(X0) | ~m1_group_2(X0,sK0) | ~v1_group_1(sK2) | v3_struct_0(sK0) | k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),X0),k1_funct_1(k1_latsubgr(sK0),sK2)) = u1_struct_0(k9_group_2(sK0,X0,sK2)) [subsumption resolution 371,6]
+373. ~v1_group_1(X0) | ~m1_group_2(X0,sK0) | v3_struct_0(sK0) | k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),X0),k1_funct_1(k1_latsubgr(sK0),sK2)) = u1_struct_0(k9_group_2(sK0,X0,sK2)) [subsumption resolution 372,3]
+374. ~m1_group_2(X0,sK0) | ~v1_group_1(X0) | k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),X0),k1_funct_1(k1_latsubgr(sK0),sK2)) = u1_struct_0(k9_group_2(sK0,X0,sK2)) [subsumption resolution 373,9]
+385. ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~v1_funct_1(k1_latsubgr(X0)) | ~v1_funct_2(k1_latsubgr(X0),k1_group_3(X0),k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v1_group_1(X1) | ~m1_group_2(X1,X0) | k1_funct_1(k1_latsubgr(X0),X1) = u1_struct_0(X1) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | v3_struct_0(X0) [resolution 21,24]
+386. ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~v1_funct_1(k1_latsubgr(X0)) | ~v1_funct_2(k1_latsubgr(X0),k1_group_3(X0),k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v1_group_1(X1) | ~m1_group_2(X1,X0) | k1_funct_1(k1_latsubgr(X0),X1) = u1_struct_0(X1) [duplicate literal removal 385]
+387. ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~v1_funct_2(k1_latsubgr(X0),k1_group_3(X0),k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v1_group_1(X1) | ~m1_group_2(X1,X0) | k1_funct_1(k1_latsubgr(X0),X1) = u1_struct_0(X1) [subsumption resolution 386,26]
+388. ~m1_group_2(X1,X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | v3_struct_0(X0) | ~v1_group_1(X1) | ~v3_group_1(X0) | k1_funct_1(k1_latsubgr(X0),X1) = u1_struct_0(X1) [subsumption resolution 387,25]
+469. k9_group_2(sK0,sK1,sK2) = k8_group_2(sK0,sK1,sK2) [resolution 291,4]
+683. ~v1_group_1(sK1) | k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),sK1),k1_funct_1(k1_latsubgr(sK0),sK2)) = u1_struct_0(k9_group_2(sK0,sK1,sK2)) [resolution 374,4]
+691. k3_xboole_0(k1_funct_1(k1_latsubgr(sK0),sK1),k1_funct_1(k1_latsubgr(sK0),sK2)) = u1_struct_0(k9_group_2(sK0,sK1,sK2)) [subsumption resolution 683,5]
+692. k1_funct_1(k1_latsubgr(sK0),k9_group_2(sK0,sK1,sK2)) != u1_struct_0(k9_group_2(sK0,sK1,sK2)) [backward demodulation 1,691]
+780. ~v4_group_1(X0) | ~l1_group_1(X0) | v3_struct_0(X0) | ~v1_group_1(k8_group_2(X0,X1,X2)) | ~v3_group_1(X0) | k1_funct_1(k1_latsubgr(X0),k8_group_2(X0,X1,X2)) = u1_struct_0(k8_group_2(X0,X1,X2)) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~m1_group_2(X1,X0) | ~m1_group_2(X2,X0) | v3_struct_0(X0) [resolution 388,27]
+783. ~v4_group_1(X0) | ~l1_group_1(X0) | v3_struct_0(X0) | ~v1_group_1(k8_group_2(X0,X1,X2)) | ~v3_group_1(X0) | k1_funct_1(k1_latsubgr(X0),k8_group_2(X0,X1,X2)) = u1_struct_0(k8_group_2(X0,X1,X2)) | ~m1_group_2(X1,X0) | ~m1_group_2(X2,X0) [duplicate literal removal 780]
+825. ~m1_group_2(X2,X0) | ~l1_group_1(X0) | v3_struct_0(X0) | ~v3_group_1(X0) | k1_funct_1(k1_latsubgr(X0),k8_group_2(X0,X1,X2)) = u1_struct_0(k8_group_2(X0,X1,X2)) | ~m1_group_2(X1,X0) | ~v4_group_1(X0) [subsumption resolution 783,28]
+2293. ~l1_group_1(sK0) | v3_struct_0(sK0) | ~v3_group_1(sK0) | k1_funct_1(k1_latsubgr(sK0),k8_group_2(sK0,X0,sK2)) = u1_struct_0(k8_group_2(sK0,X0,sK2)) | ~m1_group_2(X0,sK0) | ~v4_group_1(sK0) [resolution 825,2]
+2305. v3_struct_0(sK0) | ~v3_group_1(sK0) | k1_funct_1(k1_latsubgr(sK0),k8_group_2(sK0,X0,sK2)) = u1_struct_0(k8_group_2(sK0,X0,sK2)) | ~m1_group_2(X0,sK0) | ~v4_group_1(sK0) [subsumption resolution 2293,6]
+2306. ~v3_group_1(sK0) | k1_funct_1(k1_latsubgr(sK0),k8_group_2(sK0,X0,sK2)) = u1_struct_0(k8_group_2(sK0,X0,sK2)) | ~m1_group_2(X0,sK0) | ~v4_group_1(sK0) [subsumption resolution 2305,9]
+2307. k1_funct_1(k1_latsubgr(sK0),k8_group_2(sK0,X0,sK2)) = u1_struct_0(k8_group_2(sK0,X0,sK2)) | ~m1_group_2(X0,sK0) | ~v4_group_1(sK0) [subsumption resolution 2306,8]
+2308. ~m1_group_2(X0,sK0) | k1_funct_1(k1_latsubgr(sK0),k8_group_2(sK0,X0,sK2)) = u1_struct_0(k8_group_2(sK0,X0,sK2)) [subsumption resolution 2307,7]
+3976. k1_funct_1(k1_latsubgr(sK0),k8_group_2(sK0,sK1,sK2)) = u1_struct_0(k8_group_2(sK0,sK1,sK2)) [resolution 2308,4]
+3985. k1_funct_1(k1_latsubgr(sK0),k9_group_2(sK0,sK1,sK2)) = u1_struct_0(k9_group_2(sK0,sK1,sK2)) [forward demodulation 3976,469]
+3986. $false [subsumption resolution 3985,692]
+% SZS output end Proof for GRP645+1_clausified
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.091 s
+% Instructions burned: 198 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,56 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2
+% SZS output start Proof for variant_2
+1. mult(X0,unit) = X0 [input(axiom)]
+2. mult(unit,X0) = X0 [input(axiom)]
+3. mult(X1,mult(X2,mult(X2,X0))) = mult(mult(mult(X1,X2),X2),X0) [input(axiom)]
+4. unit = mult(X0,i(X0)) [input(axiom)]
+5. unit = mult(i(X0),X0) [input(axiom)]
+6. mult(mult(X1,X2),X2) = mult(X1,mult(X2,X2)) [input(assumption)]
+7. mult(i(X0),mult(X0,X0)) = X0 [input(assumption)]
+8. mult(X0,X2) = mult(i(X0),mult(X0,mult(X0,X2))) [input(assumption)]
+11. sK1 != sK2 [input(negated conjecture)]
+14. mult(sK0,sK2) = mult(sK0,sK1) | mult(sK1,sK0) = mult(sK2,sK0) [input(negated conjecture)]
+15. mult(X1,mult(X2,mult(X2,X0))) = mult(mult(X1,mult(X2,X2)),X0) [backward demodulation 3,6]
+17. 1 <=> mult(sK1,sK0) = mult(sK2,sK0) [avatar definition]
+19. mult(sK1,sK0) = mult(sK2,sK0) <- (1) [avatar component clause 17]
+21. 2 <=> mult(sK0,sK2) = mult(sK0,sK1) [avatar definition]
+23. mult(sK0,sK2) = mult(sK0,sK1) <- (2) [avatar component clause 21]
+24. 1 | 2 [avatar split clause 14,21,17]
+54. mult(i(i(X0)),mult(i(X0),X0)) = X0 [superposition 8,7]
+55. mult(X0,X1) = mult(i(i(X0)),mult(i(X0),mult(X0,X1))) [superposition 8,8]
+64. mult(i(i(X0)),unit) = X0 [forward demodulation 54,5]
+68. i(i(X0)) = X0 [superposition 64,1]
+72. mult(X0,X1) = mult(X0,mult(i(X0),mult(X0,X1))) [backward demodulation 55,68]
+109. mult(unit,X1) = mult(i(mult(X0,X0)),mult(X0,mult(X0,X1))) [superposition 15,5]
+112. unit = mult(X0,mult(X1,mult(X1,i(mult(X0,mult(X1,X1)))))) [superposition 15,4]
+133. mult(i(mult(X0,X0)),mult(X0,mult(X0,X1))) = X1 [forward demodulation 109,2]
+282. mult(i(X0),mult(X0,X1)) = mult(i(mult(X0,X0)),mult(X0,mult(X0,X1))) [superposition 133,72]
+293. sK2 = mult(i(mult(sK0,sK0)),mult(sK0,mult(sK0,sK1))) <- (2) [superposition 133,23]
+312. mult(i(X0),mult(X0,X1)) = X1 [forward demodulation 282,133]
+345. sK1 = sK2 <- (2) [forward demodulation 293,133]
+346. $false <- (2) [subsumption resolution 345,11]
+347. ~2 [avatar contradiction clause 346]
+358. mult(sK2,mult(sK0,sK0)) = mult(mult(sK1,sK0),sK0) <- (1) [superposition 6,19]
+359. mult(sK2,mult(sK0,sK0)) = mult(sK1,mult(sK0,sK0)) <- (1) [forward demodulation 358,6]
+485. unit = mult(sK2,mult(sK0,mult(sK0,i(mult(sK1,mult(sK0,sK0)))))) <- (1) [superposition 112,359]
+502. mult(i(X0),unit) = mult(X1,mult(X1,i(mult(X0,mult(X1,X1))))) [superposition 312,112]
+557. i(X0) = mult(X1,mult(X1,i(mult(X0,mult(X1,X1))))) [forward demodulation 502,1]
+559. unit = mult(sK2,i(sK1)) <- (1) [backward demodulation 485,557]
+576. i(sK1) = mult(i(sK2),unit) <- (1) [superposition 312,559]
+647. i(sK2) = i(sK1) <- (1) [superposition 576,1]
+795. sK2 = i(i(sK1)) <- (1) [superposition 68,647]
+798. sK1 = sK2 <- (1) [forward demodulation 795,68]
+799. $false <- (1) [subsumption resolution 798,11]
+800. ~1 [avatar contradiction clause 799]
+801. $false [avatar sat refutation 24,347,800]
+% SZS output end Proof for variant_2
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.018 s
+% Instructions burned: 47 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,74 @@
+{
+  "problem": "2026-01-26_18-07-06_GRP621+1",
+  "timestamp": "2026-01-26T18:09:35.502301",
+  "configuration": {
+    "timeout": 60,
+    "vampire_binary": "../build/vampire",
+    "total_variants": 6,
+    "variants_with_seeds": 6
+  },
+  "results": [
+    {
+      "name": "original",
+      "status": "PROVED",
+      "time": 0.37288880348205566,
+      "exit_code": 0,
+      "output_file": "output/2026-01-26_18-07-06_GRP621+1/results/original.out"
+    },
+    {
+      "name": "original_clausified",
+      "status": "PROVED",
+      "time": 0.2866342067718506,
+      "exit_code": 0,
+      "output_file": "output/2026-01-26_18-07-06_GRP621+1/results/original_clausified.out"
+    },
+    {
+      "name": "variant_0",
+      "status": "PROVED",
+      "time": 0.40658140182495117,
+      "exit_code": 0,
+      "output_file": "output/2026-01-26_18-07-06_GRP621+1/results/variant_0.out"
+    },
+    {
+      "name": "variant_0_original",
+      "status": "PROVED",
+      "time": 0.25354719161987305,
+      "exit_code": 0,
+      "output_file": "output/2026-01-26_18-07-06_GRP621+1/results/variant_0_original.out"
+    },
+    {
+      "name": "variant_1",
+      "status": "PROVED",
+      "time": 0.35910534858703613,
+      "exit_code": 0,
+      "output_file": "output/2026-01-26_18-07-06_GRP621+1/results/variant_1.out"
+    },
+    {
+      "name": "variant_1_original",
+      "status": "PROVED",
+      "time": 0.2761988639831543,
+      "exit_code": 0,
+      "output_file": "output/2026-01-26_18-07-06_GRP621+1/results/variant_1_original.out"
+    },
+    {
+      "name": "variant_2",
+      "status": "PROVED",
+      "time": 0.4986586570739746,
+      "exit_code": 0,
+      "output_file": "output/2026-01-26_18-07-06_GRP621+1/results/variant_2.out"
+    },
+    {
+      "name": "variant_2_original",
+      "status": "PROVED",
+      "time": 0.37815093994140625,
+      "exit_code": 0,
+      "output_file": "output/2026-01-26_18-07-06_GRP621+1/results/variant_2_original.out"
+    }
+  ],
+  "statistics": {
+    "total_runs": 8,
+    "proved": 8,
+    "timeout": 0,
+    "unknown": 0
+  }
+}

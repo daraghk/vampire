@@ -1,0 +1,28 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+1. double_divide(inverse(double_divide(X0,inverse(double_divide(inverse(X1),double_divide(X0,X2))))),X2) = X1 [input(axiom)]
+2. ! [X0] : inverse(inverse(X0)) = X0 [input(assumption)]
+3. ! [X0,X1] : double_divide(X0,inverse(X0)) = double_divide(X1,inverse(X1)) [input(assumption)]
+4. a2 != inverse(double_divide(a2,inverse(double_divide(b2,inverse(b2))))) [input(negated conjecture)]
+5. inverse(inverse(X0)) = X0 [cnf transformation 2]
+6. double_divide(X0,inverse(X0)) = double_divide(X1,inverse(X1)) [cnf transformation 3]
+14. a2 != inverse(double_divide(a2,inverse(double_divide(X0,inverse(X0))))) [superposition 4,6]
+15. inverse(X0) = double_divide(inverse(double_divide(X1,inverse(double_divide(X0,double_divide(X1,X2))))),X2) [superposition 1,5]
+19. double_divide(X2,inverse(double_divide(inverse(X0),double_divide(X2,double_divide(X1,X3))))) = double_divide(inverse(double_divide(X1,inverse(X0))),X3) [superposition 1,1]
+20. a2 != inverse(double_divide(a2,inverse(double_divide(inverse(X0),X0)))) [superposition 14,5]
+206. a2 != inverse(double_divide(inverse(double_divide(X0,inverse(double_divide(a2,double_divide(X0,X1))))),X1)) [superposition 20,19]
+211. a2 != inverse(inverse(a2)) [forward demodulation 206,15]
+231. $false [forward subsumption resolution 211,5]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.004 s
+% Peak memory usage: 56 MB
+% Instructions burned: 11 (million)
+% ------------------------------
+% ------------------------------

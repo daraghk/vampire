@@ -1,0 +1,73 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2
+% SZS output start Proof for variant_2
+1. divide(divide(divide(X0,X0),divide(X0,divide(X1,divide(divide(divide(X0,X0),X0),X2)))),X2) = X1 [input(axiom)]
+2. multiply(X0,X1) = divide(X0,divide(divide(X2,X2),X1)) [input(axiom)]
+3. inverse(X0) = divide(divide(X2,X2),X0) [input(axiom)]
+5. inverse(inverse(X3)) = X3 [input(assumption)]
+6. divide(X3,X3) = divide(divide(X4,X4),divide(X4,X4)) [input(assumption)]
+7. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) | a2 != multiply(multiply(inverse(b2),b2),a2) | multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [input(negated conjecture)]
+8. divide(inverse(divide(X0,divide(X1,divide(divide(divide(X0,X0),X0),X2)))),X2) = X1 [backward demodulation 1,3]
+9. multiply(X0,X1) = divide(X0,inverse(X1)) [backward demodulation 2,3]
+10. divide(inverse(divide(X0,divide(X1,divide(inverse(X0),X2)))),X2) = X1 [forward demodulation 8,3]
+13. 1 <=> multiply(multiply(a3,b3),c3) = multiply(a3,multiply(b3,c3)) [avatar definition]
+15. multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) <- (~1) [avatar component clause 13]
+17. 2 <=> a2 = multiply(multiply(inverse(b2),b2),a2) [avatar definition]
+19. a2 != multiply(multiply(inverse(b2),b2),a2) <- (~2) [avatar component clause 17]
+21. 3 <=> multiply(inverse(a1),a1) = multiply(inverse(b1),b1) [avatar definition]
+23. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) <- (~3) [avatar component clause 21]
+24. ~1 | ~2 | ~3 [avatar split clause 7,21,17,13]
+25. inverse(X1) = divide(inverse(divide(X0,X0)),X1) [superposition 3,3]
+26. multiply(X1,inverse(X0)) = divide(X1,X0) [superposition 9,5]
+27. inverse(inverse(X0)) = multiply(divide(X1,X1),X0) [superposition 9,3]
+28. inverse(X1) = divide(multiply(inverse(X0),X0),X1) [superposition 3,9]
+30. multiply(divide(X1,X1),X0) = X0 [forward demodulation 27,5]
+33. multiply(multiply(inverse(X0),X0),X1) = X1 [superposition 30,9]
+42. divide(X0,X0) = divide(X1,X1) [superposition 6,6]
+43. divide(X1,X1) = inverse(divide(X0,X0)) [superposition 6,3]
+78. divide(inverse(divide(inverse(X0),divide(X1,divide(X0,X2)))),X2) = X1 [superposition 10,5]
+81. divide(inverse(divide(X1,divide(X2,divide(X0,X0)))),inverse(X1)) = X2 [superposition 10,42]
+89. inverse(divide(X2,divide(X0,divide(inverse(X2),divide(inverse(X1),X3))))) = divide(inverse(divide(X1,X0)),X3) [superposition 10,10]
+90. divide(inverse(inverse(divide(X0,divide(inverse(divide(X1,X1)),X2)))),X2) = X0 [superposition 10,3]
+95. divide(divide(X0,divide(inverse(divide(X1,X1)),X2)),X2) = X0 [forward demodulation 90,5]
+96. divide(divide(X0,inverse(X2)),X2) = X0 [forward demodulation 95,25]
+97. divide(multiply(X0,X2),X2) = X0 [forward demodulation 96,9]
+101. multiply(multiply(X0,inverse(X1)),X1) = X0 [superposition 97,9]
+104. multiply(divide(X0,X1),X1) = X0 [forward demodulation 101,26]
+111. divide(divide(X0,X1),inverse(X1)) = X0 [superposition 97,26]
+119. multiply(X0,X2) = inverse(divide(X1,divide(X0,divide(inverse(X1),X2)))) [superposition 104,10]
+150. divide(X1,divide(X2,X2)) = multiply(X1,divide(X0,X0)) [superposition 26,43]
+229. multiply(inverse(X0),X0) = multiply(inverse(X1),X1) [superposition 104,28]
+727. multiply(inverse(divide(inverse(X0),divide(X1,divide(X0,inverse(X2))))),X2) = X1 [superposition 78,9]
+778. multiply(inverse(divide(inverse(X0),divide(X1,multiply(X0,X2)))),X2) = X1 [forward demodulation 727,9]
+1520. inverse(divide(X1,inverse(divide(X0,X0)))) = divide(inverse(divide(X2,divide(inverse(X1),divide(inverse(X2),X3)))),X3) [superposition 89,43]
+1633. inverse(divide(X1,inverse(divide(X0,X0)))) = divide(multiply(inverse(X1),X3),X3) [forward demodulation 1520,119]
+1634. inverse(X1) = inverse(divide(X1,inverse(divide(X0,X0)))) [forward demodulation 1633,97]
+1635. inverse(X1) = inverse(multiply(X1,divide(X0,X0))) [forward demodulation 1634,9]
+1735. inverse(inverse(X0)) = multiply(X0,divide(X1,X1)) [superposition 5,1635]
+1759. multiply(X0,divide(X1,X1)) = X0 [forward demodulation 1735,5]
+1760. divide(X1,divide(X2,X2)) = X1 [backward demodulation 150,1759]
+1774. divide(inverse(divide(X1,X2)),inverse(X1)) = X2 [backward demodulation 81,1760]
+1981. inverse(divide(X1,X0)) = divide(X0,inverse(inverse(X1))) [superposition 111,1774]
+2010. divide(X0,X1) = inverse(divide(X1,X0)) [forward demodulation 1981,5]
+2049. multiply(divide(divide(X1,multiply(X0,X2)),inverse(X0)),X2) = X1 [backward demodulation 778,2010]
+2070. multiply(multiply(divide(X1,multiply(X0,X2)),X0),X2) = X1 [forward demodulation 2049,9]
+2800. multiply(X0,multiply(X1,X2)) = multiply(multiply(X0,X1),X2) [superposition 2070,97]
+6692. multiply(a3,multiply(b3,c3)) != multiply(a3,multiply(b3,c3)) <- (~1) [superposition 15,2800]
+6713. $false <- (~1) [trivial inequality removal 6692]
+6714. 1 [avatar contradiction clause 6713]
+6782. $false <- (~2) [subsumption resolution 19,33]
+6783. 2 [avatar contradiction clause 6782]
+6784. $false <- (~3) [subsumption resolution 23,229]
+6785. 3 [avatar contradiction clause 6784]
+6786. $false [avatar sat refutation 24,6714,6783,6785]
+% SZS output end Proof for variant_2
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.074 s
+% Instructions burned: 207 (million)
+% ------------------------------
+% ------------------------------

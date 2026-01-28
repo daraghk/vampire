@@ -1,0 +1,31 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0
+% SZS output start Proof for variant_0
+1. double_divide(inverse(double_divide(double_divide(X0,X1),inverse(double_divide(X0,inverse(X2))))),X1) = X2 [input(axiom)]
+2. inverse(inverse(X3)) = X3 [input(assumption)]
+3. inverse(double_divide(X3,X4)) = double_divide(inverse(X4),inverse(X3)) [input(assumption)]
+4. double_divide(double_divide(X3,X4),X4) = X3 [input(assumption)]
+5. inverse(double_divide(a1,inverse(a1))) != inverse(double_divide(b1,inverse(b1))) [input(negated conjecture)]
+6. double_divide(X0,inverse(X1)) = inverse(double_divide(X1,inverse(X0))) [superposition 3,2]
+8. inverse(X1) = double_divide(inverse(double_divide(X0,X1)),inverse(X0)) [superposition 4,3]
+9. double_divide(inverse(double_divide(double_divide(X0,X1),double_divide(X2,inverse(X0)))),X1) = X2 [backward demodulation 1,6]
+10. double_divide(a1,inverse(a1)) != inverse(double_divide(b1,inverse(b1))) [backward demodulation 5,6]
+26. double_divide(X0,inverse(X1)) = double_divide(inverse(double_divide(double_divide(X1,X2),X0)),X2) [superposition 9,4]
+29. double_divide(inverse(X0),double_divide(X1,inverse(X0))) = X1 [superposition 9,4]
+43. double_divide(X0,double_divide(X1,X0)) = X1 [superposition 29,2]
+67. double_divide(double_divide(X0,X1),X0) = X1 [superposition 43,43]
+73. inverse(double_divide(X0,inverse(X1))) = double_divide(inverse(X0),inverse(inverse(X1))) [superposition 8,29]
+91. inverse(double_divide(X0,inverse(X1))) = double_divide(inverse(X0),X1) [forward demodulation 73,2]
+335. double_divide(X1,inverse(X1)) = double_divide(inverse(X0),X0) [superposition 26,67]
+926. double_divide(a1,inverse(a1)) != double_divide(inverse(b1),b1) [superposition 10,91]
+976. $false [subsumption resolution 926,335]
+% SZS output end Proof for variant_0
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.020 s
+% Instructions burned: 53 (million)
+% ------------------------------
+% ------------------------------

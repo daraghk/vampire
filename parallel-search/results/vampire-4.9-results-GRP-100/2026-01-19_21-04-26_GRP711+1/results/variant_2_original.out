@@ -1,0 +1,69 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Theorem for variant_2_original
+% SZS output start Proof for variant_2_original
+1. ! [X0] : mult(X0,unit) = X0 [input(axiom)]
+2. ! [X0] : mult(unit,X0) = X0 [input(axiom)]
+3. ! [X1,X2,X0] : mult(X0,mult(X2,mult(X2,X1))) = mult(mult(mult(X0,X2),X2),X1) [input(axiom)]
+4. ! [X0] : unit = mult(X0,i(X0)) [input(axiom)]
+5. ! [X0] : unit = mult(i(X0),X0) [input(axiom)]
+6. ! [X3,X4,X5] : ((mult(X4,X3) = mult(X5,X3) => X4 = X5) & (mult(X3,X4) = mult(X3,X5) => X4 = X5)) [input(conjecture)]
+7. ~! [X3,X4,X5] : ((mult(X4,X3) = mult(X5,X3) => X4 = X5) & (mult(X3,X4) = mult(X3,X5) => X4 = X5)) [negated conjecture 6]
+8. mult(X6,mult(X7,X7)) = mult(mult(X6,X7),X7) [input(assumption)]
+9. mult(i(X8),mult(X8,X8)) = X8 [input(assumption)]
+10. mult(X8,X7) = mult(i(X8),mult(X8,mult(X8,X7))) [input(assumption)]
+13. ! [X0,X1,X2] : mult(X2,mult(X1,mult(X1,X0))) = mult(mult(mult(X2,X1),X1),X0) [rectify 3]
+14. ~! [X0,X1,X2] : ((mult(X1,X0) = mult(X2,X0) => X1 = X2) & (mult(X0,X2) = mult(X0,X1) => X1 = X2)) [rectify 7]
+15. ? [X0,X1,X2] : ((X1 != X2 & mult(X1,X0) = mult(X2,X0)) | (X1 != X2 & mult(X0,X2) = mult(X0,X1))) [ennf transformation 14]
+16. ? [X0,X1,X2] : ((X1 != X2 & mult(X1,X0) = mult(X2,X0)) | (X1 != X2 & mult(X0,X2) = mult(X0,X1))) => ((sK1 != sK2 & mult(sK1,sK0) = mult(sK2,sK0)) | (sK1 != sK2 & mult(sK0,sK2) = mult(sK0,sK1))) [choice axiom]
+17. (sK1 != sK2 & mult(sK1,sK0) = mult(sK2,sK0)) | (sK1 != sK2 & mult(sK0,sK2) = mult(sK0,sK1)) [skolemisation 15,16]
+18. mult(X0,unit) = X0 [cnf transformation 1]
+19. mult(unit,X0) = X0 [cnf transformation 2]
+20. mult(X2,mult(X1,mult(X1,X0))) = mult(mult(mult(X2,X1),X1),X0) [cnf transformation 13]
+21. unit = mult(X0,i(X0)) [cnf transformation 4]
+22. unit = mult(i(X0),X0) [cnf transformation 5]
+23. mult(sK1,sK0) = mult(sK2,sK0) | mult(sK0,sK2) = mult(sK0,sK1) [cnf transformation 17]
+26. sK1 != sK2 | sK1 != sK2 [cnf transformation 17]
+27. sK1 != sK2 [duplicate literal removal 26]
+29. 1 <=> mult(sK0,sK2) = mult(sK0,sK1) [avatar definition]
+31. mult(sK0,sK2) = mult(sK0,sK1) <- (1) [avatar component clause 29]
+33. 2 <=> mult(sK1,sK0) = mult(sK2,sK0) [avatar definition]
+35. mult(sK1,sK0) = mult(sK2,sK0) <- (2) [avatar component clause 33]
+36. 1 | 2 [avatar split clause 23,33,29]
+37. mult(X2,mult(X1,mult(X1,X0))) = mult(mult(X2,mult(X1,X1)),X0) [backward demodulation 20,8]
+54. mult(sK2,mult(sK0,sK0)) = mult(mult(sK1,sK0),sK0) <- (2) [superposition 8,35]
+61. mult(sK2,mult(sK0,sK0)) = mult(sK1,mult(sK0,sK0)) <- (2) [forward demodulation 54,8]
+68. mult(i(i(X0)),mult(i(X0),X0)) = X0 [superposition 10,9]
+69. mult(X0,X1) = mult(i(i(X0)),mult(i(X0),mult(X0,X1))) [superposition 10,10]
+78. mult(i(i(X0)),unit) = X0 [forward demodulation 68,22]
+82. i(i(X0)) = X0 [superposition 78,18]
+86. mult(X0,X1) = mult(X0,mult(i(X0),mult(X0,X1))) [backward demodulation 69,82]
+123. mult(unit,X1) = mult(i(mult(X0,X0)),mult(X0,mult(X0,X1))) [superposition 37,22]
+126. unit = mult(X0,mult(X1,mult(X1,i(mult(X0,mult(X1,X1)))))) [superposition 37,21]
+147. mult(i(mult(X0,X0)),mult(X0,mult(X0,X1))) = X1 [forward demodulation 123,19]
+331. mult(i(X0),mult(X0,X1)) = mult(i(mult(X0,X0)),mult(X0,mult(X0,X1))) [superposition 147,86]
+363. mult(i(X0),mult(X0,X1)) = X1 [forward demodulation 331,147]
+522. unit = mult(sK2,mult(sK0,mult(sK0,i(mult(sK1,mult(sK0,sK0)))))) <- (2) [superposition 126,61]
+539. mult(i(X0),unit) = mult(X1,mult(X1,i(mult(X0,mult(X1,X1))))) [superposition 363,126]
+594. i(X0) = mult(X1,mult(X1,i(mult(X0,mult(X1,X1))))) [forward demodulation 539,18]
+596. unit = mult(sK2,i(sK1)) <- (2) [backward demodulation 522,594]
+613. i(sK1) = mult(i(sK2),unit) <- (2) [superposition 363,596]
+686. i(sK2) = i(sK1) <- (2) [superposition 613,18]
+728. sK2 = i(i(sK1)) <- (2) [superposition 82,686]
+731. sK1 = sK2 <- (2) [forward demodulation 728,82]
+732. $false <- (2) [subsumption resolution 731,27]
+733. ~2 [avatar contradiction clause 732]
+736. sK2 = mult(i(mult(sK0,sK0)),mult(sK0,mult(sK0,sK1))) <- (1) [superposition 147,31]
+742. sK1 = sK2 <- (1) [forward demodulation 736,147]
+743. $false <- (1) [subsumption resolution 742,27]
+744. ~1 [avatar contradiction clause 743]
+745. $false [avatar sat refutation 36,733,744]
+% SZS output end Proof for variant_2_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.012 s
+% Instructions burned: 43 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,25 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2
+% SZS output start Proof for variant_2
+1. divide(X0,inverse(divide(divide(X1,X2),divide(X0,X2)))) = X1 [input(axiom)]
+2. inverse(inverse(X3)) = X3 [input(assumption)]
+3. divide(inverse(a1),inverse(a1)) != divide(inverse(b1),inverse(b1)) [input(negated conjecture)]
+4. divide(X1,inverse(divide(X0,divide(X1,inverse(divide(divide(X0,X3),divide(X2,X3))))))) = X2 [superposition 1,1]
+10. divide(X1,inverse(divide(X0,X0))) = X1 [superposition 4,1]
+13. divide(X1,inverse(inverse(divide(X0,X0)))) = X1 [superposition 10,10]
+14. divide(X0,inverse(divide(X1,X0))) = X1 [superposition 4,10]
+19. divide(X1,divide(X0,X0)) = X1 [forward demodulation 13,2]
+96. divide(divide(X1,X1),inverse(X0)) = X0 [superposition 14,19]
+155. divide(X0,X0) = divide(X1,X1) [superposition 96,10]
+369. divide(inverse(a1),inverse(a1)) != divide(X0,X0) [superposition 3,155]
+389. $false [subsumption resolution 369,155]
+% SZS output end Proof for variant_2
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.014 s
+% Instructions burned: 62 (million)
+% ------------------------------
+% ------------------------------

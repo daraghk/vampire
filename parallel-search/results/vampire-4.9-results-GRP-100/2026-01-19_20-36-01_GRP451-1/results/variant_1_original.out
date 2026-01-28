@@ -1,0 +1,22 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+4. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) [input(negated conjecture)]
+5. multiply(X3,inverse(X4)) = divide(X3,X4) [input(assumption)]
+6. inverse(inverse(X3)) = X3 [input(assumption)]
+7. divide(X3,X3) = divide(divide(X4,X4),divide(X4,X4)) [input(assumption)]
+11. multiply(X3,inverse(X3)) = multiply(multiply(X4,inverse(X4)),inverse(multiply(X4,inverse(X4)))) [definition unfolding 7,5,5,5,5]
+26. multiply(X0,inverse(X0)) = multiply(X1,inverse(X1)) [superposition 11,11]
+87. multiply(X1,inverse(X1)) = multiply(inverse(X0),X0) [superposition 26,6]
+334. multiply(inverse(a1),a1) != multiply(X0,inverse(X0)) [superposition 4,87]
+338. $false [subsumption resolution 334,87]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.005 s
+% Instructions burned: 19 (million)
+% ------------------------------
+% ------------------------------

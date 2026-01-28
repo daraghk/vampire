@@ -1,0 +1,41 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0_original
+% SZS output start Proof for variant_0_original
+1. double_divide(double_divide(X0,double_divide(double_divide(X1,double_divide(X0,X2)),double_divide(X2,identity))),double_divide(identity,identity)) = X1 [input(axiom)]
+2. multiply(X0,X1) = double_divide(double_divide(X1,X0),identity) [input(axiom)]
+3. inverse(X0) = double_divide(X0,identity) [input(axiom)]
+4. identity = double_divide(X0,inverse(X0)) [input(axiom)]
+5. a2 != multiply(identity,a2) [input(negated conjecture)]
+11. identity = double_divide(X0,double_divide(X0,identity)) [definition unfolding 4,3]
+12. a2 != double_divide(double_divide(a2,identity),identity) [definition unfolding 5,2]
+15. double_divide(double_divide(X0,double_divide(identity,double_divide(identity,identity))),double_divide(identity,identity)) = X0 [superposition 1,11]
+16. double_divide(X1,double_divide(double_divide(X0,double_divide(X1,X2)),double_divide(X2,identity))) = double_divide(double_divide(identity,double_divide(X0,double_divide(identity,identity))),double_divide(identity,identity)) [superposition 1,1]
+17. double_divide(double_divide(X0,identity),double_divide(identity,identity)) = X0 [forward demodulation 15,11]
+18. double_divide(X0,identity) = double_divide(double_divide(identity,double_divide(X0,double_divide(identity,identity))),double_divide(identity,identity)) [superposition 1,17]
+20. double_divide(X0,identity) = double_divide(X1,double_divide(double_divide(X0,double_divide(X1,X2)),double_divide(X2,identity))) [backward demodulation 16,18]
+27. double_divide(double_divide(X0,identity),identity) = double_divide(identity,double_divide(X0,double_divide(identity,identity))) [superposition 20,17]
+32. double_divide(identity,identity) = double_divide(double_divide(identity,identity),identity) [superposition 27,11]
+33. double_divide(double_divide(double_divide(X0,identity),identity),identity) = double_divide(identity,X0) [superposition 27,17]
+35. double_divide(identity,identity) = double_divide(X0,double_divide(double_divide(double_divide(X0,identity),identity),double_divide(double_divide(identity,identity),identity))) [superposition 20,27]
+39. double_divide(identity,identity) = double_divide(X0,double_divide(double_divide(double_divide(X0,identity),identity),double_divide(identity,identity))) [forward demodulation 35,32]
+40. double_divide(identity,identity) = double_divide(X0,double_divide(X0,identity)) [forward demodulation 39,17]
+41. identity = double_divide(identity,identity) [forward demodulation 40,11]
+45. double_divide(double_divide(X0,identity),identity) = double_divide(identity,double_divide(X0,identity)) [backward demodulation 27,41]
+46. double_divide(double_divide(X0,identity),identity) = X0 [backward demodulation 17,41]
+48. double_divide(identity,X0) = double_divide(double_divide(identity,double_divide(X0,identity)),identity) [backward demodulation 33,45]
+51. double_divide(identity,double_divide(X0,identity)) = X0 [backward demodulation 45,46]
+54. double_divide(X0,identity) = double_divide(identity,X0) [backward demodulation 48,51]
+57. a2 != double_divide(double_divide(identity,a2),identity) [backward demodulation 12,54]
+103. double_divide(identity,double_divide(identity,X0)) = X0 [superposition 51,54]
+106. a2 != double_divide(identity,double_divide(identity,a2)) [superposition 57,54]
+112. $false [subsumption resolution 106,103]
+% SZS output end Proof for variant_0_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.005 s
+% Instructions burned: 14 (million)
+% ------------------------------
+% ------------------------------

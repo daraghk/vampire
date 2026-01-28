@@ -1,0 +1,38 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+2. ! [X0,X1,X2] : double_divide(inverse(double_divide(double_divide(X0,X1),inverse(double_divide(X0,inverse(X2))))),X1) = X2 [input(axiom)]
+3. ! [X0,X1] : double_divide(inverse(double_divide(double_divide(X0,X0),inverse(double_divide(X0,inverse(X1))))),X0) = X1 [input(assumption)]
+4. ! [X0,X1] : double_divide(inverse(double_divide(double_divide(X0,X1),inverse(double_divide(X0,inverse(X1))))),X1) = X1 [input(assumption)]
+7. inverse(double_divide(a1,inverse(a1))) != inverse(double_divide(b1,inverse(b1))) [input(negated conjecture)]
+8. double_divide(inverse(double_divide(double_divide(X0,X1),inverse(double_divide(X0,inverse(X2))))),X1) = X2 [cnf transformation 2]
+9. double_divide(inverse(double_divide(double_divide(X0,X0),inverse(double_divide(X0,inverse(X1))))),X0) = X1 [cnf transformation 3]
+10. double_divide(inverse(double_divide(double_divide(X0,X1),inverse(double_divide(X0,inverse(X1))))),X1) = X1 [cnf transformation 4]
+14. double_divide(inverse(double_divide(X0,inverse(double_divide(inverse(double_divide(double_divide(X1,X1),inverse(double_divide(X1,inverse(X0))))),inverse(X1))))),X1) = X1 [superposition 10,9]
+28. double_divide(inverse(double_divide(X0,inverse(double_divide(inverse(double_divide(double_divide(X1,X2),inverse(double_divide(X1,inverse(X0))))),inverse(X3))))),X2) = X3 [superposition 8,8]
+32. double_divide(inverse(double_divide(double_divide(inverse(double_divide(double_divide(X1,inverse(X2)),inverse(double_divide(X1,inverse(X0))))),X3),inverse(X0))),X3) = X2 [superposition 8,8]
+217. double_divide(inverse(double_divide(X0,inverse(X0))),inverse(X2)) = X2 [superposition 28,8]
+283. double_divide(inverse(inverse(double_divide(X0,inverse(X0)))),inverse(X1)) = X1 [superposition 217,217]
+290. double_divide(inverse(double_divide(X0,inverse(X2))),inverse(X0)) = X2 [superposition 32,217]
+382. double_divide(inverse(X0),inverse(inverse(double_divide(X1,inverse(X1))))) = X0 [superposition 290,217]
+510. double_divide(inverse(X0),inverse(inverse(inverse(double_divide(X1,inverse(X1)))))) = X0 [superposition 290,283]
+517. inverse(inverse(double_divide(X0,inverse(X0)))) = double_divide(inverse(double_divide(X1,inverse(double_divide(inverse(double_divide(inverse(double_divide(X0,inverse(X0))),inverse(double_divide(inverse(inverse(double_divide(X0,inverse(X0)))),inverse(X1))))),inverse(inverse(inverse(double_divide(X0,inverse(X0))))))))),inverse(inverse(double_divide(X0,inverse(X0))))) [superposition 14,283]
+534. inverse(inverse(double_divide(X0,inverse(X0)))) = double_divide(X1,inverse(double_divide(inverse(double_divide(inverse(double_divide(X0,inverse(X0))),inverse(double_divide(inverse(inverse(double_divide(X0,inverse(X0)))),inverse(X1))))),inverse(inverse(inverse(double_divide(X0,inverse(X0)))))))) [forward demodulation 517,382]
+551. inverse(inverse(double_divide(X0,inverse(X0)))) = double_divide(X1,inverse(double_divide(inverse(double_divide(X0,inverse(X0))),inverse(double_divide(inverse(inverse(double_divide(X0,inverse(X0)))),inverse(X1)))))) [forward demodulation 534,510]
+555. inverse(inverse(double_divide(X0,inverse(X0)))) = double_divide(X1,inverse(double_divide(inverse(inverse(double_divide(X0,inverse(X0)))),inverse(X1)))) [forward demodulation 551,217]
+556. double_divide(X1,inverse(X1)) = inverse(inverse(double_divide(X0,inverse(X0)))) [forward demodulation 555,283]
+619. double_divide(X0,inverse(X0)) = double_divide(X1,inverse(X1)) [superposition 556,556]
+975. inverse(double_divide(X0,inverse(X0))) != inverse(double_divide(a1,inverse(a1))) [superposition 7,619]
+1111. $false [equality resolution 975]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.031 s
+% Peak memory usage: 55 MB
+% Instructions burned: 81 (million)
+% ------------------------------
+% ------------------------------

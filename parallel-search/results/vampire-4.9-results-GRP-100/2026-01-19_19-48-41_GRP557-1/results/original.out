@@ -1,0 +1,40 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP557-1
+% SZS output start Proof for GRP557-1
+1. divide(X0,inverse(divide(divide(X1,X2),divide(X0,X2)))) = X1 [input(axiom)]
+2. multiply(X0,X1) = divide(X0,inverse(X1)) [input(axiom)]
+3. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) [input(negated conjecture)]
+4. divide(inverse(a1),inverse(a1)) != divide(inverse(b1),inverse(b1)) [definition unfolding 3,2,2]
+5. divide(X1,inverse(divide(X0,divide(X1,inverse(divide(divide(X0,X3),divide(X2,X3))))))) = X2 [superposition 1,1]
+6. divide(X1,inverse(divide(divide(X2,inverse(divide(divide(X0,X3),divide(X1,X3)))),X0))) = X2 [superposition 1,1]
+7. divide(X1,inverse(divide(X2,divide(X1,inverse(divide(X0,divide(X4,inverse(divide(divide(X0,X3),divide(X2,X3)))))))))) = X4 [superposition 5,1]
+11. divide(X1,inverse(divide(X0,X0))) = X1 [superposition 5,1]
+12. divide(X1,inverse(divide(divide(X2,inverse(divide(X3,divide(X1,inverse(divide(divide(X3,X4),divide(X0,X4))))))),X0))) = X2 [superposition 1,5]
+18. divide(X1,inverse(divide(divide(X2,inverse(divide(divide(X3,inverse(divide(X4,divide(X1,inverse(divide(divide(X4,X5),divide(X0,X5))))))),X0))),X3))) = X2 [superposition 6,5]
+26. divide(X1,inverse(divide(X0,X1))) = X0 [superposition 6,11]
+63. divide(inverse(divide(X0,X1)),inverse(X0)) = X1 [superposition 26,26]
+71. divide(X3,X1) = divide(X2,inverse(divide(X3,divide(X2,inverse(divide(X0,divide(X0,X1))))))) [superposition 7,26]
+79. divide(X1,inverse(divide(divide(X2,inverse(divide(X0,divide(X1,inverse(divide(X0,X3)))))),X3))) = X2 [superposition 6,26]
+164. divide(X1,inverse(divide(divide(X0,X2),divide(X3,X2)))) = divide(X1,inverse(divide(X0,X3))) [superposition 12,26]
+195. divide(X1,inverse(divide(divide(X2,inverse(divide(divide(X3,inverse(divide(X4,divide(X1,inverse(divide(X4,X0)))))),X0))),X3))) = X2 [backward demodulation 18,164]
+254. inverse(divide(X0,X1)) = divide(inverse(X0),inverse(X1)) [superposition 63,26]
+259. inverse(divide(divide(X0,X0),X1)) = X1 [superposition 63,11]
+263. inverse(divide(X2,X0)) = divide(X1,inverse(divide(X0,divide(X1,inverse(X2))))) [superposition 1,63]
+266. divide(inverse(b1),inverse(b1)) != inverse(divide(a1,a1)) [backward demodulation 4,254]
+280. divide(X0,X0) = divide(X1,X1) [superposition 26,259]
+304. divide(X1,X0) = inverse(divide(divide(X0,inverse(divide(X2,divide(X1,inverse(divide(X2,X3)))))),X3)) [superposition 195,259]
+321. divide(X1,divide(X1,X2)) = X2 [backward demodulation 79,304]
+339. divide(X3,X1) = divide(X2,inverse(divide(X3,divide(X2,inverse(X1))))) [backward demodulation 71,321]
+340. divide(X0,X2) = inverse(divide(X2,X0)) [backward demodulation 263,339]
+413. divide(inverse(b1),inverse(b1)) != divide(a1,a1) [backward demodulation 266,340]
+588. $false [subsumption resolution 413,280]
+% SZS output end Proof for GRP557-1
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.033 s
+% Instructions burned: 88 (million)
+% ------------------------------
+% ------------------------------

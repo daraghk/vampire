@@ -1,0 +1,63 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Theorem for GRP711+1
+% SZS output start Proof for GRP711+1
+1. ! [X0] : mult(X0,unit) = X0 [input(axiom)]
+2. ! [X0] : mult(unit,X0) = X0 [input(axiom)]
+3. ! [X1,X2,X0] : mult(X0,mult(X2,mult(X2,X1))) = mult(mult(mult(X0,X2),X2),X1) [input(axiom)]
+4. ! [X0] : unit = mult(X0,i(X0)) [input(axiom)]
+5. ! [X0] : unit = mult(i(X0),X0) [input(axiom)]
+6. ! [X3,X4,X5] : ((mult(X4,X3) = mult(X5,X3) => X4 = X5) & (mult(X3,X4) = mult(X3,X5) => X4 = X5)) [input(conjecture)]
+7. ~! [X3,X4,X5] : ((mult(X4,X3) = mult(X5,X3) => X4 = X5) & (mult(X3,X4) = mult(X3,X5) => X4 = X5)) [negated conjecture 6]
+8. ! [X0,X1,X2] : mult(X2,mult(X1,mult(X1,X0))) = mult(mult(mult(X2,X1),X1),X0) [rectify 3]
+9. ~! [X0,X1,X2] : ((mult(X1,X0) = mult(X2,X0) => X1 = X2) & (mult(X0,X2) = mult(X0,X1) => X1 = X2)) [rectify 7]
+10. ? [X0,X1,X2] : ((X1 != X2 & mult(X1,X0) = mult(X2,X0)) | (X1 != X2 & mult(X0,X2) = mult(X0,X1))) [ennf transformation 9]
+11. ? [X0,X1,X2] : ((X1 != X2 & mult(X1,X0) = mult(X2,X0)) | (X1 != X2 & mult(X0,X2) = mult(X0,X1))) => ((sK1 != sK2 & mult(sK1,sK0) = mult(sK2,sK0)) | (sK1 != sK2 & mult(sK0,sK2) = mult(sK0,sK1))) [choice axiom]
+12. (sK1 != sK2 & mult(sK1,sK0) = mult(sK2,sK0)) | (sK1 != sK2 & mult(sK0,sK2) = mult(sK0,sK1)) [skolemisation 10,11]
+13. mult(X0,unit) = X0 [cnf transformation 1]
+14. mult(unit,X0) = X0 [cnf transformation 2]
+15. mult(X2,mult(X1,mult(X1,X0))) = mult(mult(mult(X2,X1),X1),X0) [cnf transformation 8]
+16. unit = mult(X0,i(X0)) [cnf transformation 4]
+17. unit = mult(i(X0),X0) [cnf transformation 5]
+18. mult(sK1,sK0) = mult(sK2,sK0) | mult(sK0,sK2) = mult(sK0,sK1) [cnf transformation 12]
+21. sK1 != sK2 | sK1 != sK2 [cnf transformation 12]
+22. sK1 != sK2 [duplicate literal removal 21]
+24. 1 <=> mult(sK0,sK2) = mult(sK0,sK1) [avatar definition]
+26. mult(sK0,sK2) = mult(sK0,sK1) <- (1) [avatar component clause 24]
+28. 2 <=> mult(sK1,sK0) = mult(sK2,sK0) [avatar definition]
+30. mult(sK1,sK0) = mult(sK2,sK0) <- (2) [avatar component clause 28]
+31. 1 | 2 [avatar split clause 18,28,24]
+40. mult(unit,mult(X0,mult(X0,X1))) = mult(mult(X0,X0),X1) [superposition 15,14]
+42. mult(i(X0),mult(X0,mult(X0,X1))) = mult(mult(unit,X0),X1) [superposition 15,17]
+43. mult(sK2,mult(sK0,mult(sK0,X0))) = mult(mult(mult(sK1,sK0),sK0),X0) <- (2) [superposition 15,30]
+46. mult(mult(X0,X1),X1) = mult(X0,mult(X1,mult(X1,unit))) [superposition 15,13]
+53. mult(X0,mult(X0,X1)) = mult(mult(X0,X0),X1) [forward demodulation 40,14]
+55. mult(X0,X1) = mult(i(X0),mult(X0,mult(X0,X1))) [forward demodulation 42,14]
+56. mult(sK2,mult(sK0,mult(sK0,X0))) = mult(sK1,mult(sK0,mult(sK0,X0))) <- (2) [forward demodulation 43,15]
+59. mult(mult(X0,X1),X1) = mult(X0,mult(X1,X1)) [forward demodulation 46,13]
+60. mult(X2,mult(X1,mult(X1,X0))) = mult(mult(X2,mult(X1,X1)),X0) [backward demodulation 15,59]
+68. unit = mult(X0,mult(X0,i(mult(X0,X0)))) [superposition 53,16]
+81. mult(unit,X1) = mult(i(mult(X0,X0)),mult(X0,mult(X0,X1))) [superposition 60,17]
+100. mult(i(mult(X0,X0)),mult(X0,mult(X0,X1))) = X1 [forward demodulation 81,14]
+182. mult(X0,i(mult(X0,X0))) = mult(i(X0),unit) [superposition 55,68]
+196. i(X0) = mult(X0,i(mult(X0,X0))) [forward demodulation 182,13]
+426. mult(sK2,mult(sK0,i(sK0))) = mult(sK1,mult(sK0,i(sK0))) <- (2) [superposition 56,196]
+432. mult(sK2,unit) = mult(sK1,unit) <- (2) [forward demodulation 426,16]
+433. sK1 = mult(sK2,unit) <- (2) [forward demodulation 432,13]
+436. sK1 = sK2 <- (2) [superposition 13,433]
+442. $false <- (2) [subsumption resolution 436,22]
+443. ~2 [avatar contradiction clause 442]
+446. sK2 = mult(i(mult(sK0,sK0)),mult(sK0,mult(sK0,sK1))) <- (1) [superposition 100,26]
+449. sK1 = sK2 <- (1) [forward demodulation 446,100]
+450. $false <- (1) [subsumption resolution 449,22]
+451. ~1 [avatar contradiction clause 450]
+452. $false [avatar sat refutation 31,443,451]
+% SZS output end Proof for GRP711+1
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.012 s
+% Instructions burned: 28 (million)
+% ------------------------------
+% ------------------------------

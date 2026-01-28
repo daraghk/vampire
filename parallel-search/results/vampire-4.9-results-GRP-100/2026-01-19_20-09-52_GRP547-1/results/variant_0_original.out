@@ -1,0 +1,39 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0_original
+% SZS output start Proof for variant_0_original
+1. divide(divide(identity,divide(X0,X1)),divide(divide(X1,X2),X0)) = X2 [input(axiom)]
+2. multiply(X0,X1) = divide(X0,divide(identity,X1)) [input(axiom)]
+4. identity = divide(X0,X0) [input(axiom)]
+5. multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [input(negated conjecture)]
+7. divide(divide(a3,divide(identity,b3)),divide(identity,c3)) != divide(a3,divide(identity,divide(b3,divide(identity,c3)))) [definition unfolding 5,2,2,2,2]
+8. divide(divide(identity,identity),divide(divide(X0,X1),X0)) = X1 [superposition 1,4]
+10. divide(divide(identity,divide(X0,X1)),divide(identity,X0)) = X1 [superposition 1,4]
+12. divide(X2,X1) = divide(divide(identity,divide(divide(divide(X1,X0),X2),identity)),X0) [superposition 1,1]
+13. divide(divide(identity,divide(divide(X0,X1),X0)),identity) = X1 [superposition 1,4]
+14. divide(identity,divide(divide(X0,X1),X0)) = X1 [forward demodulation 8,4]
+15. divide(X1,identity) = X1 [forward demodulation 13,14]
+16. divide(X2,X1) = divide(divide(identity,divide(divide(X1,X0),X2)),X0) [backward demodulation 12,15]
+19. divide(divide(identity,divide(identity,X0)),divide(X0,X1)) = X1 [superposition 1,15]
+20. divide(identity,divide(identity,X0)) = X0 [superposition 14,4]
+28. divide(X0,divide(X0,X1)) = X1 [backward demodulation 19,20]
+69. divide(X1,divide(identity,divide(X2,X0))) = divide(divide(identity,divide(X0,X1)),divide(identity,X2)) [superposition 16,10]
+77. divide(X1,X0) = divide(identity,divide(divide(X0,identity),X1)) [superposition 16,15]
+88. divide(identity,divide(X0,X1)) = divide(X1,X0) [forward demodulation 77,15]
+89. divide(divide(X1,X0),divide(divide(X1,X2),X0)) = X2 [backward demodulation 1,88]
+97. divide(X1,divide(identity,divide(X2,X0))) = divide(divide(X1,X0),divide(identity,X2)) [backward demodulation 69,88]
+102. divide(divide(a3,divide(identity,b3)),divide(identity,c3)) != divide(a3,divide(divide(identity,c3),b3)) [backward demodulation 7,88]
+107. divide(divide(X1,X0),divide(identity,X2)) = divide(X1,divide(X0,X2)) [forward demodulation 97,88]
+109. divide(a3,divide(divide(identity,c3),b3)) != divide(a3,divide(divide(identity,b3),c3)) [forward demodulation 102,107]
+135. divide(divide(X1,X2),X0) = divide(divide(X1,X0),X2) [superposition 28,89]
+143. divide(a3,divide(divide(identity,b3),c3)) != divide(a3,divide(divide(identity,b3),c3)) [backward demodulation 109,135]
+144. $false [trivial inequality removal 143]
+% SZS output end Proof for variant_0_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.005 s
+% Instructions burned: 14 (million)
+% ------------------------------
+% ------------------------------

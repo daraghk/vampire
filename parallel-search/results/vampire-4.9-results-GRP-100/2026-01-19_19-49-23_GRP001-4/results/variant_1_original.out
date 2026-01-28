@@ -1,0 +1,18 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+4. multiply(a,b) = c [input(assumption)]
+5. c != multiply(b,a) [input(negated conjecture)]
+10. multiply(X0,X1) = multiply(X1,X0) [input(assumption)]
+20. multiply(a,b) != c [superposition 5,10]
+24. $false [subsumption resolution 20,4]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.002 s
+% Instructions burned: 7 (million)
+% ------------------------------
+% ------------------------------

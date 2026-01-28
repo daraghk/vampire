@@ -1,0 +1,47 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP640+1_clausified
+% SZS output start Proof for GRP640+1_clausified
+1. k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK4,u1_struct_0(k8_group_4(sK0,sK2,sK3))) != k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK4,u1_struct_0(k5_group_4(sK0,sK5))) [input(negated conjecture)]
+2. k2_xboole_0(u1_struct_0(sK2),u1_struct_0(sK3)) = sK5 [input(negated conjecture)]
+3. sK5 = k2_xboole_0(u1_struct_0(sK2),u1_struct_0(sK3)) [reorient equations 2]
+4. m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(sK0))) [input(negated conjecture)]
+8. m1_group_2(sK3,sK0) [input(negated conjecture)]
+9. m1_group_2(sK2,sK0) [input(negated conjecture)]
+14. ~v3_struct_0(sK0) [input(negated conjecture)]
+15. v3_group_1(sK0) [input(negated conjecture)]
+16. v4_group_1(sK0) [input(negated conjecture)]
+17. l1_group_1(sK0) [input(negated conjecture)]
+74. ~r1_group_2(X2,X0,X1) | X0 = X1 | v3_struct_0(X2) | ~v3_group_1(X2) | ~v4_group_1(X2) | ~l1_group_1(X2) | ~v1_group_1(X0) | ~m1_group_2(X0,X2) | ~v1_group_1(X1) | ~m1_group_2(X1,X2) [input(axiom)]
+76. ~m1_subset_1(X1,k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | v1_group_1(k5_group_4(X0,X1)) [input(axiom)]
+77. ~m1_subset_1(X1,k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | m1_group_2(k5_group_4(X0,X1),X0) [input(axiom)]
+78. v1_group_1(k8_group_4(X0,X1,X2)) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~m1_group_2(X1,X0) | ~m1_group_2(X2,X0) [input(axiom)]
+79. m1_group_2(k8_group_4(X0,X1,X2),X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~m1_group_2(X1,X0) | ~m1_group_2(X2,X0) [input(axiom)]
+87. r1_group_2(X0,k8_group_4(X0,X1,X2),k5_group_4(X0,k2_xboole_0(u1_struct_0(X1),u1_struct_0(X2)))) | ~m1_subset_1(k2_xboole_0(u1_struct_0(X1),u1_struct_0(X2)),k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(X2,X0) | ~m1_group_2(X1,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) [input(axiom)]
+393. r1_group_2(X0,k8_group_4(X0,sK2,sK3),k5_group_4(X0,sK5)) | ~m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(sK3,X0) | ~m1_group_2(sK2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) [superposition 87,3]
+412. ~m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(sK3,X0) | ~m1_group_2(sK2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | k8_group_4(X0,sK2,sK3) = k5_group_4(X0,sK5) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | ~v1_group_1(k8_group_4(X0,sK2,sK3)) | ~m1_group_2(k8_group_4(X0,sK2,sK3),X0) | ~v1_group_1(k5_group_4(X0,sK5)) | ~m1_group_2(k5_group_4(X0,sK5),X0) [resolution 393,74]
+413. ~m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(sK3,X0) | ~m1_group_2(sK2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | k8_group_4(X0,sK2,sK3) = k5_group_4(X0,sK5) | ~v1_group_1(k8_group_4(X0,sK2,sK3)) | ~m1_group_2(k8_group_4(X0,sK2,sK3),X0) | ~v1_group_1(k5_group_4(X0,sK5)) | ~m1_group_2(k5_group_4(X0,sK5),X0) [duplicate literal removal 412]
+415. ~m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(sK3,X0) | ~m1_group_2(sK2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | k8_group_4(X0,sK2,sK3) = k5_group_4(X0,sK5) | ~m1_group_2(k8_group_4(X0,sK2,sK3),X0) | ~v1_group_1(k5_group_4(X0,sK5)) | ~m1_group_2(k5_group_4(X0,sK5),X0) [forward subsumption resolution 413,78]
+417. ~m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(sK3,X0) | ~m1_group_2(sK2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | k8_group_4(X0,sK2,sK3) = k5_group_4(X0,sK5) | ~v1_group_1(k5_group_4(X0,sK5)) | ~m1_group_2(k5_group_4(X0,sK5),X0) [forward subsumption resolution 415,79]
+419. ~m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(sK3,X0) | ~m1_group_2(sK2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | k8_group_4(X0,sK2,sK3) = k5_group_4(X0,sK5) | ~m1_group_2(k5_group_4(X0,sK5),X0) [forward subsumption resolution 417,76]
+421. ~m1_subset_1(sK5,k1_zfmisc_1(u1_struct_0(X0))) | ~m1_group_2(sK3,X0) | ~m1_group_2(sK2,X0) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | k8_group_4(X0,sK2,sK3) = k5_group_4(X0,sK5) [forward subsumption resolution 419,77]
+502. ~m1_group_2(sK3,sK0) | ~m1_group_2(sK2,sK0) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) | k8_group_4(sK0,sK2,sK3) = k5_group_4(sK0,sK5) [resolution 421,4]
+504. ~m1_group_2(sK2,sK0) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) | k8_group_4(sK0,sK2,sK3) = k5_group_4(sK0,sK5) [forward subsumption resolution 502,8]
+505. v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) | k8_group_4(sK0,sK2,sK3) = k5_group_4(sK0,sK5) [forward subsumption resolution 504,9]
+506. ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) | k8_group_4(sK0,sK2,sK3) = k5_group_4(sK0,sK5) [forward subsumption resolution 505,14]
+507. ~v4_group_1(sK0) | ~l1_group_1(sK0) | k8_group_4(sK0,sK2,sK3) = k5_group_4(sK0,sK5) [forward subsumption resolution 506,15]
+508. ~l1_group_1(sK0) | k8_group_4(sK0,sK2,sK3) = k5_group_4(sK0,sK5) [forward subsumption resolution 507,16]
+509. k8_group_4(sK0,sK2,sK3) = k5_group_4(sK0,sK5) [forward subsumption resolution 508,17]
+511. k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK4,u1_struct_0(k5_group_4(sK0,sK5))) != k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK4,u1_struct_0(k5_group_4(sK0,sK5))) [superposition 1,509]
+516. $false [trivial inequality removal 511]
+% SZS output end Proof for GRP640+1_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.007 s
+% Peak memory usage: 57 MB
+% Instructions burned: 22 (million)
+% ------------------------------
+% ------------------------------

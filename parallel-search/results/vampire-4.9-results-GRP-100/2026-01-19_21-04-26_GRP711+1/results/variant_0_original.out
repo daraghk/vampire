@@ -1,0 +1,38 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Theorem for variant_0_original
+% SZS output start Proof for variant_0_original
+6. ! [X3,X4,X5] : ((mult(X4,X3) = mult(X5,X3) => X4 = X5) & (mult(X3,X4) = mult(X3,X5) => X4 = X5)) [input(conjecture)]
+7. ~! [X3,X4,X5] : ((mult(X4,X3) = mult(X5,X3) => X4 = X5) & (mult(X3,X4) = mult(X3,X5) => X4 = X5)) [negated conjecture 6]
+9. mult(i(X6),mult(X6,X7)) = X7 [input(assumption)]
+10. mult(mult(X7,X6),i(X6)) = X7 [input(assumption)]
+14. ~! [X0,X1,X2] : ((mult(X1,X0) = mult(X2,X0) => X1 = X2) & (mult(X0,X2) = mult(X0,X1) => X1 = X2)) [rectify 7]
+15. ? [X0,X1,X2] : ((X1 != X2 & mult(X1,X0) = mult(X2,X0)) | (X1 != X2 & mult(X0,X2) = mult(X0,X1))) [ennf transformation 14]
+16. ? [X0,X1,X2] : ((X1 != X2 & mult(X1,X0) = mult(X2,X0)) | (X1 != X2 & mult(X0,X2) = mult(X0,X1))) => ((sK1 != sK2 & mult(sK1,sK0) = mult(sK2,sK0)) | (sK1 != sK2 & mult(sK0,sK2) = mult(sK0,sK1))) [choice axiom]
+17. (sK1 != sK2 & mult(sK1,sK0) = mult(sK2,sK0)) | (sK1 != sK2 & mult(sK0,sK2) = mult(sK0,sK1)) [skolemisation 15,16]
+23. mult(sK1,sK0) = mult(sK2,sK0) | mult(sK0,sK2) = mult(sK0,sK1) [cnf transformation 17]
+26. sK1 != sK2 | sK1 != sK2 [cnf transformation 17]
+27. sK1 != sK2 [duplicate literal removal 26]
+29. 1 <=> mult(sK0,sK2) = mult(sK0,sK1) [avatar definition]
+31. mult(sK0,sK2) = mult(sK0,sK1) <- (1) [avatar component clause 29]
+33. 2 <=> mult(sK1,sK0) = mult(sK2,sK0) [avatar definition]
+35. mult(sK1,sK0) = mult(sK2,sK0) <- (2) [avatar component clause 33]
+36. 1 | 2 [avatar split clause 23,33,29]
+65. sK2 = mult(mult(sK1,sK0),i(sK0)) <- (2) [superposition 10,35]
+70. sK1 = sK2 <- (2) [forward demodulation 65,10]
+71. $false <- (2) [subsumption resolution 70,27]
+72. ~2 [avatar contradiction clause 71]
+80. sK2 = mult(i(sK0),mult(sK0,sK1)) <- (1) [superposition 9,31]
+81. sK1 = sK2 <- (1) [forward demodulation 80,9]
+82. $false <- (1) [subsumption resolution 81,27]
+83. ~1 [avatar contradiction clause 82]
+84. $false [avatar sat refutation 36,72,83]
+% SZS output end Proof for variant_0_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.004 s
+% Instructions burned: 9 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,74 @@
+{
+  "problem": "2026-01-19_19-49-35_GRP124-3.005",
+  "timestamp": "2026-01-19T19:52:18.608597",
+  "configuration": {
+    "timeout": 60,
+    "vampire_binary": "../build/vampire",
+    "total_variants": 6,
+    "variants_with_seeds": 6
+  },
+  "results": [
+    {
+      "name": "original",
+      "status": "UNKNOWN",
+      "time": 59.870877504348755,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_19-49-35_GRP124-3.005/results/original.out"
+    },
+    {
+      "name": "original_clausified",
+      "status": "UNKNOWN",
+      "time": 60.045148611068726,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_19-49-35_GRP124-3.005/results/original_clausified.out"
+    },
+    {
+      "name": "variant_0",
+      "status": "UNKNOWN",
+      "time": 60.03297758102417,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_19-49-35_GRP124-3.005/results/variant_0.out"
+    },
+    {
+      "name": "variant_0_original",
+      "status": "TIMEOUT",
+      "time": 60.018072843551636,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_19-49-35_GRP124-3.005/results/variant_0_original.out"
+    },
+    {
+      "name": "variant_1",
+      "status": "UNKNOWN",
+      "time": 60.03251814842224,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_19-49-35_GRP124-3.005/results/variant_1.out"
+    },
+    {
+      "name": "variant_1_original",
+      "status": "TIMEOUT",
+      "time": 60.031041383743286,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_19-49-35_GRP124-3.005/results/variant_1_original.out"
+    },
+    {
+      "name": "variant_2",
+      "status": "UNKNOWN",
+      "time": 60.03274893760681,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_19-49-35_GRP124-3.005/results/variant_2.out"
+    },
+    {
+      "name": "variant_2_original",
+      "status": "TIMEOUT",
+      "time": 60.03040552139282,
+      "exit_code": 1,
+      "output_file": "output/2026-01-19_19-49-35_GRP124-3.005/results/variant_2_original.out"
+    }
+  ],
+  "statistics": {
+    "total_runs": 8,
+    "proved": 0,
+    "timeout": 3,
+    "unknown": 5
+  }
+}

@@ -1,0 +1,74 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0_original
+% SZS output start Proof for variant_0_original
+1. multiply(identity,X0) = X0 [input(axiom)]
+2. multiply(X0,identity) = X0 [input(axiom)]
+3. multiply(X0,left_division(X0,X1)) = X1 [input(axiom)]
+4. left_division(X0,multiply(X0,X1)) = X1 [input(axiom)]
+5. multiply(right_division(X0,X1),X1) = X0 [input(axiom)]
+6. right_division(multiply(X0,X1),X1) = X0 [input(axiom)]
+7. multiply(X0,right_inverse(X0)) = identity [input(axiom)]
+8. identity = multiply(X0,right_inverse(X0)) [reorient equations 7]
+9. multiply(left_inverse(X0),X0) = identity [input(axiom)]
+10. identity = multiply(left_inverse(X0),X0) [reorient equations 9]
+11. multiply(multiply(multiply(X0,X1),X0),X2) = multiply(X0,multiply(X1,multiply(X0,X2))) [input(axiom)]
+12. multiply(multiply(a,multiply(b,c)),a) != multiply(multiply(a,b),multiply(c,a)) [input(negated conjecture)]
+13. ! [X0] : left_division(X0,X0) = identity [input(assumption)]
+17. ! [X0,X1] : multiply(multiply(X0,X1),X0) = multiply(X0,multiply(X1,X0)) [input(assumption)]
+18. identity = left_division(X0,X0) [cnf transformation 13]
+22. multiply(multiply(X0,X1),X0) = multiply(X0,multiply(X1,X0)) [cnf transformation 17]
+23. multiply(multiply(a,b),multiply(c,a)) != multiply(a,multiply(multiply(b,c),a)) [forward demodulation 12,22]
+24. multiply(X0,multiply(X1,multiply(X0,X2))) = multiply(multiply(X0,multiply(X1,X0)),X2) [forward demodulation 11,22]
+37. right_inverse(X0) = left_division(X0,identity) [superposition 4,8]
+52. right_division(identity,right_inverse(X0)) = X0 [superposition 6,8]
+55. left_inverse(X0) = right_division(identity,X0) [superposition 6,10]
+58. left_inverse(right_inverse(X0)) = X0 [forward demodulation 52,55]
+62. multiply(identity,X0) = multiply(X0,multiply(right_inverse(X0),X0)) [superposition 22,8]
+63. multiply(X0,X1) = multiply(X1,multiply(left_division(X1,X0),X1)) [superposition 22,3]
+76. multiply(X0,multiply(right_inverse(X0),X0)) = X0 [forward demodulation 62,1]
+90. multiply(X1,multiply(right_division(X0,X1),multiply(X1,X2))) = multiply(multiply(X1,X0),X2) [superposition 24,5]
+91. multiply(X0,multiply(left_inverse(X0),multiply(X0,X1))) = multiply(multiply(X0,identity),X1) [superposition 24,10]
+100. multiply(X0,multiply(X1,X0)) = right_division(multiply(X0,multiply(X1,multiply(X0,X2))),X2) [superposition 6,24]
+108. multiply(X0,X1) = multiply(X0,multiply(left_inverse(X0),multiply(X0,X1))) [forward demodulation 91,2]
+152. left_division(X0,X0) = multiply(right_inverse(X0),X0) [superposition 4,76]
+156. identity = multiply(right_inverse(X0),X0) [forward demodulation 152,18]
+180. left_division(right_inverse(X0),identity) = X0 [superposition 4,156]
+182. right_inverse(right_inverse(X0)) = X0 [forward demodulation 180,37]
+214. right_inverse(X0) = left_inverse(X0) [superposition 58,182]
+436. multiply(X1,multiply(left_inverse(X1),X0)) = X0 [superposition 108,3]
+450. left_division(X0,multiply(X0,X1)) = multiply(left_inverse(X0),multiply(X0,X1)) [superposition 4,108]
+469. left_division(X0,multiply(X0,X1)) = multiply(right_inverse(X0),multiply(X0,X1)) [forward demodulation 450,214]
+483. multiply(X1,multiply(right_inverse(X1),X0)) = X0 [forward demodulation 436,214]
+493. multiply(right_inverse(X0),multiply(X0,X1)) = X1 [forward demodulation 469,4]
+653. multiply(X1,X0) = left_division(right_inverse(X1),X0) [superposition 483,3]
+666. left_division(X1,X0) = multiply(right_inverse(X1),X0) [superposition 4,483]
+787. right_inverse(X1) = right_division(X0,multiply(X1,X0)) [superposition 6,493]
+926. multiply(right_division(X1,X0),multiply(X0,X2)) = left_division(X0,multiply(multiply(X0,X1),X2)) [superposition 4,90]
+1038. multiply(X1,right_inverse(X0)) = left_division(X0,multiply(left_division(right_inverse(X0),X1),right_inverse(X0))) [superposition 63,666]
+1063. multiply(X1,right_inverse(X0)) = left_division(X0,multiply(multiply(X0,X1),right_inverse(X0))) [forward demodulation 1038,653]
+1096. multiply(X1,right_inverse(X0)) = multiply(right_division(X1,X0),multiply(X0,right_inverse(X0))) [forward demodulation 1063,926]
+1109. multiply(X1,right_inverse(X0)) = multiply(right_division(X1,X0),identity) [forward demodulation 1096,8]
+1113. right_division(X1,X0) = multiply(X1,right_inverse(X0)) [forward demodulation 1109,2]
+1332. multiply(X1,multiply(right_division(X0,multiply(X1,X2)),X1)) = right_division(multiply(X1,X0),X2) [superposition 100,5]
+1447. right_division(X1,X0) = right_inverse(right_division(X0,X1)) [superposition 787,5]
+1983. multiply(X1,X0) = right_division(X1,right_inverse(X0)) [superposition 1113,182]
+2026. right_inverse(X1) = multiply(X0,right_division(right_inverse(X0),X1)) [superposition 483,1113]
+2262. multiply(X2,right_division(X0,X1)) = right_division(X2,right_division(X1,X0)) [superposition 1113,1447]
+23658. multiply(X1,multiply(right_division(X2,right_inverse(X0)),X1)) = right_division(multiply(X1,X2),right_division(right_inverse(X1),X0)) [superposition 1332,2026]
+23954. multiply(X1,multiply(right_division(X2,right_inverse(X0)),X1)) = multiply(multiply(X1,X2),right_division(X0,right_inverse(X1))) [forward demodulation 23658,2262]
+24065. multiply(X1,multiply(right_division(X2,right_inverse(X0)),X1)) = multiply(multiply(X1,X2),multiply(X0,X1)) [forward demodulation 23954,1983]
+24141. multiply(X1,multiply(multiply(X2,X0),X1)) = multiply(multiply(X1,X2),multiply(X0,X1)) [forward demodulation 24065,1983]
+753369. multiply(a,multiply(multiply(b,c),a)) != multiply(a,multiply(multiply(b,c),a)) [superposition 23,24141]
+753447. $false [trivial inequality removal 753369]
+% SZS output end Proof for variant_0_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 17.079 s
+% Peak memory usage: 514 MB
+% Instructions burned: 53427 (million)
+% ------------------------------
+% ------------------------------

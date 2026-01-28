@@ -1,0 +1,68 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP668-1_clausified
+% SZS output start Proof for GRP668-1_clausified
+1. mult(X0,ld(X0,X1)) = X1 [input(axiom)]
+2. ld(X0,mult(X0,X1)) = X1 [input(axiom)]
+3. mult(rd(X0,X1),X1) = X0 [input(axiom)]
+4. rd(mult(X0,X1),X1) = X0 [input(axiom)]
+5. mult(X0,unit) = X0 [input(axiom)]
+6. mult(unit,X0) = X0 [input(axiom)]
+7. mult(X0,mult(X1,mult(X1,X2))) = mult(mult(mult(X0,X1),X1),X2) [input(axiom)]
+8. mult(mult(X0,X1),X0) = mult(X0,mult(X1,X0)) [input(axiom)]
+9. mult(mult(a,b),mult(mult(c,b),c)) != mult(mult(a,mult(mult(b,c),b)),c) [input(negated conjecture)]
+11. ld(unit,X0) = X0 [superposition 6,1]
+29. mult(X0,X1) = mult(X1,mult(ld(X1,X0),X1)) [superposition 8,1]
+34. mult(mult(a,b),mult(mult(c,b),c)) != mult(mult(a,mult(b,mult(c,b))),c) [superposition 9,8]
+36. mult(X0,X1) = rd(mult(X0,mult(X1,X0)),X0) [superposition 4,8]
+39. mult(mult(a,mult(b,mult(c,b))),c) != mult(mult(a,b),mult(c,mult(b,c))) [forward demodulation 34,8]
+47. mult(rd(X0,X1),mult(X1,mult(X1,X2))) = mult(mult(X0,X1),X2) [superposition 7,3]
+56. mult(mult(X0,X1),X1) = mult(X0,mult(X1,mult(X1,unit))) [superposition 5,7]
+57. mult(X0,mult(X1,mult(X1,ld(mult(mult(X0,X1),X1),X2)))) = X2 [superposition 1,7]
+59. mult(mult(X0,X1),X1) = rd(mult(X0,mult(X1,mult(X1,X2))),X2) [superposition 4,7]
+62. mult(mult(X0,X1),X1) = mult(X0,mult(X1,X1)) [forward demodulation 56,5]
+89. rd(mult(X0,X1),mult(ld(X1,X0),X1)) = X1 [superposition 4,29]
+108. mult(X1,rd(X0,X1)) = rd(mult(X1,X0),X1) [superposition 36,3]
+166. mult(X0,ld(X1,X0)) = mult(X1,mult(ld(X1,X0),ld(X1,X0))) [superposition 62,1]
+270. unit = rd(mult(X0,unit),ld(unit,X0)) [superposition 89,5]
+275. unit = rd(mult(X0,unit),X0) [forward demodulation 270,11]
+284. unit = mult(X0,rd(unit,X0)) [forward demodulation 275,108]
+293. mult(mult(X1,X2),ld(X2,X0)) = mult(rd(X1,X2),mult(X2,X0)) [superposition 47,1]
+341. ld(X0,unit) = rd(unit,X0) [superposition 2,284]
+489. mult(X0,mult(rd(unit,X0),mult(rd(unit,X0),ld(mult(unit,rd(unit,X0)),X1)))) = X1 [superposition 57,284]
+582. mult(X0,mult(rd(unit,X0),mult(rd(unit,X0),ld(rd(unit,X0),X1)))) = X1 [forward demodulation 489,6]
+614. mult(X0,mult(rd(unit,X0),X1)) = X1 [forward demodulation 582,1]
+624. mult(X0,mult(ld(X0,unit),X1)) = X1 [forward demodulation 614,341]
+643. mult(mult(X1,X2),X2) = rd(mult(X1,mult(X2,X0)),ld(X2,X0)) [superposition 59,1]
+711. mult(X1,mult(X2,X2)) = rd(mult(X1,mult(X2,X0)),ld(X2,X0)) [forward demodulation 643,62]
+1191. mult(X1,X0) = ld(ld(X1,unit),X0) [superposition 624,1]
+5627. mult(ld(ld(X1,unit),X0),ld(ld(X1,unit),X0)) = mult(X1,mult(X0,ld(ld(X1,unit),X0))) [superposition 624,166]
+5638. mult(mult(X1,X0),mult(X1,X0)) = mult(X1,mult(X0,mult(X1,X0))) [forward demodulation 5627,1191]
+9260. mult(rd(X1,X0),X0) = mult(mult(X1,X0),ld(X0,unit)) [superposition 293,5]
+9417. mult(mult(X1,X0),ld(X0,unit)) = X1 [forward demodulation 9260,3]
+9600. ld(X1,unit) = ld(mult(X0,X1),X0) [superposition 2,9417]
+9601. mult(X0,X1) = rd(X0,ld(X1,unit)) [superposition 4,9417]
+9612. mult(mult(X1,mult(X0,X2)),mult(X0,X2)) = rd(mult(X1,mult(mult(X0,X2),X0)),ld(X2,unit)) [superposition 59,9417]
+9663. mult(mult(X1,mult(X0,X2)),mult(X0,X2)) = rd(mult(X1,mult(X0,mult(X2,X0))),ld(X2,unit)) [forward demodulation 9612,8]
+9749. mult(mult(X1,mult(X0,X2)),mult(X0,X2)) = mult(mult(X1,mult(X0,mult(X2,X0))),X2) [forward demodulation 9663,9601]
+9792. mult(X1,mult(mult(X0,X2),mult(X0,X2))) = mult(mult(X1,mult(X0,mult(X2,X0))),X2) [forward demodulation 9749,62]
+9817. mult(X1,mult(X0,mult(X2,mult(X0,X2)))) = mult(mult(X1,mult(X0,mult(X2,X0))),X2) [forward demodulation 9792,5638]
+11084. ld(X0,X1) = ld(ld(X1,X0),unit) [superposition 9600,1]
+13181. mult(X2,ld(X1,X0)) = rd(X2,ld(X0,X1)) [superposition 9601,11084]
+15520. mult(X1,mult(mult(X0,X2),mult(X0,X2))) = rd(mult(X1,X0),ld(mult(X0,X2),ld(X2,unit))) [superposition 711,9417]
+15719. mult(X1,mult(mult(X0,X2),mult(X0,X2))) = mult(mult(X1,X0),ld(ld(X2,unit),mult(X0,X2))) [forward demodulation 15520,13181]
+15813. mult(X1,mult(mult(X0,X2),mult(X0,X2))) = mult(mult(X1,X0),mult(X2,mult(X0,X2))) [forward demodulation 15719,1191]
+15877. mult(X1,mult(X0,mult(X2,mult(X0,X2)))) = mult(mult(X1,X0),mult(X2,mult(X0,X2))) [forward demodulation 15813,5638]
+799707. mult(mult(a,b),mult(c,mult(b,c))) != mult(a,mult(b,mult(c,mult(b,c)))) [superposition 39,9817]
+799713. $false [forward subsumption resolution 799707,15877]
+% SZS output end Proof for GRP668-1_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 34.092 s
+% Peak memory usage: 321 MB
+% Instructions burned: 88637 (million)
+% ------------------------------
+% ------------------------------

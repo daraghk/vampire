@@ -1,0 +1,32 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+1. double_divide(inverse(double_divide(double_divide(X0,X1),inverse(double_divide(X0,inverse(X2))))),X1) = X2 [input(axiom)]
+2. multiply(X0,X1) = inverse(double_divide(X1,X0)) [input(axiom)]
+3. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) [input(negated conjecture)]
+5. double_divide(X3,X4) = double_divide(X4,X3) [input(assumption)]
+6. double_divide(double_divide(X3,X4),X4) = X3 [input(assumption)]
+7. inverse(double_divide(a1,inverse(a1))) != inverse(double_divide(b1,inverse(b1))) [definition unfolding 3,2,2]
+8. double_divide(double_divide(X0,X1),X0) = X1 [superposition 6,5]
+25. double_divide(inverse(double_divide(X0,inverse(double_divide(double_divide(X0,X1),inverse(X2))))),X1) = X2 [superposition 1,6]
+34. double_divide(inverse(X0),inverse(double_divide(X0,inverse(X1)))) = X1 [superposition 1,6]
+66. double_divide(X0,inverse(X1)) = inverse(double_divide(X1,inverse(X0))) [superposition 8,34]
+74. double_divide(double_divide(double_divide(double_divide(X0,X1),inverse(X2)),inverse(X0)),X1) = X2 [backward demodulation 25,66]
+79. double_divide(a1,inverse(a1)) != inverse(double_divide(b1,inverse(b1))) [backward demodulation 7,66]
+80. double_divide(double_divide(inverse(X0),double_divide(double_divide(X0,X1),inverse(X2))),X1) = X2 [forward demodulation 74,5]
+231. double_divide(a1,inverse(a1)) != double_divide(b1,inverse(b1)) [superposition 79,66]
+426. double_divide(double_divide(inverse(X0),X0),inverse(X1)) = X1 [superposition 80,6]
+461. double_divide(double_divide(X0,inverse(X0)),inverse(X1)) = X1 [forward demodulation 426,5]
+489. double_divide(X0,inverse(X0)) = double_divide(X1,inverse(X1)) [superposition 6,461]
+1002. double_divide(a1,inverse(a1)) != double_divide(X0,inverse(X0)) [superposition 231,489]
+1041. $false [subsumption resolution 1002,489]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.015 s
+% Instructions burned: 61 (million)
+% ------------------------------
+% ------------------------------

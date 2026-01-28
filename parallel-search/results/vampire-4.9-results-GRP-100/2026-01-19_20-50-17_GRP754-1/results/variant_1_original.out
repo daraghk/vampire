@@ -1,0 +1,45 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+1. mult(X0,ld(X0,X1)) = X1 [input(axiom)]
+2. ld(X0,mult(X0,X1)) = X1 [input(axiom)]
+3. mult(rd(X0,X1),X1) = X0 [input(axiom)]
+4. rd(mult(X0,X1),X1) = X0 [input(axiom)]
+5. mult(X0,mult(X1,X2)) = mult(mult(rd(X0,X0),X1),mult(X0,X2)) [input(axiom)]
+6. mult(mult(X0,X1),X2) = mult(mult(X0,X2),mult(X1,ld(X2,X2))) [input(axiom)]
+7. mult(mult(a,a),mult(b,c)) != mult(mult(a,b),mult(a,c)) [input(negated conjecture)]
+10. ld(rd(X0,X1),X0) = X1 [superposition 2,3]
+17. mult(X1,mult(X2,ld(X1,X0))) = mult(mult(rd(X1,X1),X2),X0) [superposition 5,1]
+25. mult(mult(mult(rd(X0,X0),X1),X3),mult(X0,X2)) = mult(mult(X0,mult(X1,X2)),mult(X3,ld(mult(X0,X2),mult(X0,X2)))) [superposition 6,5]
+27. mult(mult(X1,rd(X0,ld(X2,X2))),X2) = mult(mult(X1,X2),X0) [superposition 6,3]
+31. mult(X0,X2) = rd(mult(mult(X0,X1),X2),mult(X1,ld(X2,X2))) [superposition 4,6]
+32. mult(X1,ld(X2,X2)) = ld(mult(X0,X2),mult(mult(X0,X1),X2)) [superposition 2,6]
+33. mult(mult(X0,mult(X1,X2)),mult(X3,ld(mult(X0,X2),mult(X0,X2)))) = mult(mult(X0,mult(X1,ld(X0,X3))),mult(X0,X2)) [forward demodulation 25,17]
+172. mult(mult(rd(X0,X0),X2),X1) = mult(X0,mult(rd(X1,ld(X2,X2)),ld(X0,X2))) [superposition 27,17]
+189. mult(X0,mult(X2,ld(X0,X1))) = mult(X0,mult(rd(X1,ld(X2,X2)),ld(X0,X2))) [forward demodulation 172,17]
+203. mult(rd(X0,X1),X2) = rd(mult(X0,X2),mult(X1,ld(X2,X2))) [superposition 31,3]
+236. mult(ld(X1,X0),ld(X2,X2)) = ld(mult(X1,X2),mult(X0,X2)) [superposition 32,1]
+419. mult(mult(X1,mult(X2,ld(X1,rd(X0,ld(mult(X1,X3),mult(X1,X3)))))),mult(X1,X3)) = mult(mult(X1,mult(X2,X3)),X0) [superposition 33,3]
+1964. rd(X0,mult(X2,ld(X1,X1))) = mult(rd(rd(X0,X1),X2),X1) [superposition 203,3]
+2733. ld(X0,mult(X0,mult(X1,ld(X0,X2)))) = mult(rd(X2,ld(X1,X1)),ld(X0,X1)) [superposition 2,189]
+2799. mult(X1,ld(X0,X2)) = mult(rd(X2,ld(X1,X1)),ld(X0,X1)) [forward demodulation 2733,2]
+7405. rd(X3,ld(mult(X0,X1),mult(X2,X1))) = mult(rd(rd(X3,X1),ld(X0,X2)),X1) [superposition 1964,236]
+7522. mult(mult(X1,mult(X2,X3)),X0) = mult(mult(X1,mult(X2,ld(X1,mult(rd(rd(X0,X3),ld(X1,X1)),X3)))),mult(X1,X3)) [backward demodulation 419,7405]
+10154. mult(X1,ld(rd(X1,X0),X2)) = mult(rd(X2,ld(X1,X1)),X0) [superposition 2799,10]
+10308. mult(mult(X1,mult(X2,X3)),X0) = mult(mult(X1,mult(X2,ld(X1,mult(X1,ld(rd(X1,X3),rd(X0,X3)))))),mult(X1,X3)) [backward demodulation 7522,10154]
+10486. mult(mult(X1,mult(X2,X3)),X0) = mult(mult(X1,mult(X2,ld(rd(X1,X3),rd(X0,X3)))),mult(X1,X3)) [forward demodulation 10308,2]
+38060. mult(mult(X2,mult(rd(X2,X1),X1)),X0) = mult(mult(X2,rd(X0,X1)),mult(X2,X1)) [superposition 10486,1]
+38325. mult(mult(X2,rd(X0,X1)),mult(X2,X1)) = mult(mult(X2,X2),X0) [forward demodulation 38060,3]
+38825. mult(mult(X1,X1),mult(X0,X2)) = mult(mult(X1,X0),mult(X1,X2)) [superposition 38325,4]
+57382. mult(mult(a,a),mult(b,c)) != mult(mult(a,a),mult(b,c)) [superposition 7,38825]
+57411. $false [trivial inequality removal 57382]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 4.043 s
+% Instructions burned: 9378 (million)
+% ------------------------------
+% ------------------------------

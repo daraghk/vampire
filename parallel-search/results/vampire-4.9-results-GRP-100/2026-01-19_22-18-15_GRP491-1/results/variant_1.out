@@ -1,0 +1,26 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+1. double_divide(double_divide(identity,X0),double_divide(identity,double_divide(double_divide(double_divide(X0,X1),identity),double_divide(X2,X1)))) = X2 [input(axiom)]
+2. identity = double_divide(X0,double_divide(X0,identity)) [input(axiom)]
+4. identity = double_divide(identity,identity) [input(assumption)]
+6. a2 != double_divide(double_divide(a2,identity),identity) [input(negated conjecture)]
+11. double_divide(double_divide(identity,X0),double_divide(identity,double_divide(double_divide(identity,identity),double_divide(X1,double_divide(X0,identity))))) = X1 [superposition 1,2]
+16. double_divide(double_divide(X0,identity),identity) = double_divide(double_divide(identity,X0),double_divide(identity,identity)) [superposition 1,2]
+19. double_divide(double_divide(identity,X0),double_divide(identity,double_divide(identity,double_divide(X1,double_divide(X0,identity))))) = X1 [forward demodulation 11,4]
+20. double_divide(double_divide(identity,X0),identity) = double_divide(double_divide(X0,identity),identity) [forward demodulation 16,4]
+37. a2 != double_divide(double_divide(identity,a2),identity) [superposition 6,20]
+101. double_divide(double_divide(identity,X0),double_divide(identity,double_divide(identity,identity))) = X0 [superposition 19,2]
+110. double_divide(double_divide(identity,X0),identity) = X0 [forward demodulation 101,2]
+249. a2 != a2 [superposition 37,110]
+254. $false [trivial inequality removal 249]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 4.9 (Release build, commit 0accf6da4 on 2024-12-10 11:55:58 +0000)
+% Termination reason: Refutation
+
+% Time elapsed: 0.007 s
+% Instructions burned: 28 (million)
+% ------------------------------
+% ------------------------------
