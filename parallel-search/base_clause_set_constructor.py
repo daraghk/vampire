@@ -297,7 +297,6 @@ class BaseClauseSetConstructor:
 
         return full_clause, lines_consumed
 
-
     def construct_base_set(self, strategy: str = "all", **kwargs) -> List[Clause]:
         """Construct base clause set B_i using specified strategy.
 

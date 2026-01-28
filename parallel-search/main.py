@@ -13,8 +13,9 @@ This script orchestrates the complete workflow:
 4. Optionally generate seed clauses S_i using LLM (--generate-seeds)
 5. Optionally verify entailment C_ax ⊨ s using Vampire in parallel (--check-entailment)
 6. Write complete variants as B_i + verified seeds + negated_conjectures
-7. Optionally run Vampire in parallel on original problem and variants
-   (--run-vampire, skipped if no verified variants exist)
+7. Write additional variants with original (non-clausified) problem + verified seeds
+8. Optionally run Vampire in parallel on original problem and variants
+   (--run-vampire, skipped if no variants with verified seeds)
 
 Each problem gets its own timestamped directory with a dedicated log file.
 
@@ -24,11 +25,13 @@ Output structure (single problem):
     ├── clausified/
     │   └── {problem}_clausified.tptp
     ├── variants/
-    │   └── variant_{i}.tptp
-    └── results/ (if --run-vampire used and verified variants exist)
+    │   ├── variant_{i}.tptp
+    │   └── variant_{i}_original.tptp (if verified seeds exist)
+    └── results/ (if --run-vampire used and variants with verified seeds exist)
         ├── original.out
         ├── original_clausified.out
         ├── variant_{i}.out
+        ├── variant_{i}_original.out (if verified seeds exist)
         └── summary.json
 
 Output structure (multiple problems):
@@ -37,12 +40,12 @@ Output structure (multiple problems):
     │   ├── {timestamp}_{problem1}.log
     │   ├── clausified/
     │   ├── variants/
-    │   └── results/ (if --run-vampire used and verified variants exist)
+    │   └── results/ (if --run-vampire used and variants with verified seeds exist)
     ├── {timestamp}_{problem2}/
     │   ├── {timestamp}_{problem2}.log
     │   ├── clausified/
     │   ├── variants/
-    │   └── results/ (if --run-vampire used and verified variants exist)
+    │   └── results/ (if --run-vampire used and variants with verified seeds exist)
     └── ...
 
 Usage:
@@ -79,6 +82,7 @@ Examples:
 
 import argparse
 import os
+import re
 import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime
@@ -109,7 +113,7 @@ def check_seed_entailment(
     Args:
         seed_index: Index of the seed (for result ordering).
         seed_content: The seed clause content in TPTP format.
-        clausified_path: Path to the clausified problem file.
+        clausified_path: Path to the axioms-only file (C_ax) for entailment checking.
         vampire_binary: Path to Vampire executable.
         timeout: Timeout for entailment check in seconds.
 
@@ -174,6 +178,82 @@ def write_variant_clause_set(clauses, output_path, problem_name, num_clauses):
 
         for clause in clauses:
             f.write(f"{clause}\n")
+
+
+def write_original_with_seeds(
+    original_problem_path, verified_seeds, output_path, problem_name
+):
+    """Write original (non-clausified) problem file with verified seeds/lemmas appended.
+
+    This creates a variant that consists of the original (non-clausified) problem
+    with the verified seed clauses added as lemmas. This allows Vampire to work
+    with the original problem structure while benefiting from the generated lemmas.
+
+    Args:
+        original_problem_path: Path to the original problem file (non-clausified).
+        verified_seeds: List of verified seed Clause objects to append.
+        output_path: Path to output file.
+        problem_name: Name of the original problem.
+
+    Returns:
+        True if successful, False otherwise.
+    """
+    if not original_problem_path or not original_problem_path.exists():
+        return False
+
+    if not verified_seeds:
+        # No seeds to add, skip creating this variant
+        return False
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    try:
+        # Read original (non-clausified) problem content
+        with open(original_problem_path, "r", encoding="utf-8", errors="ignore") as f:
+            original_content = f.read()
+
+        # Write output file
+        with open(output_path, "w", encoding="utf-8") as f:
+            # Write original (non-clausified) problem content
+            f.write(original_content)
+
+            # Add separator comment
+            f.write(
+                "\n%--------------------------------------------------------------------------\n"
+            )
+            f.write("% Generated lemmas (verified seeds)\n")
+            f.write(
+                "%--------------------------------------------------------------------------\n\n"
+            )
+
+            # Append verified seeds as lemmas
+            for seed in verified_seeds:
+                seed_str = str(seed)
+
+                # Convert seed role to "lemma" for the original (non-clausified) problem variant
+                if seed_str.startswith("tff("):
+                    # TFF format: tff(name, role, formula)
+                    # Replace role with "lemma"
+                    seed_with_lemma = re.sub(
+                        r"(tff\([^,]+,)\s*[^,]+(,)", r"\1 lemma\2", seed_str, count=1
+                    )
+                    f.write(f"{seed_with_lemma}\n")
+                elif seed_str.startswith("cnf("):
+                    # CNF format: cnf(name, role, formula)
+                    # Replace role with "lemma"
+                    seed_with_lemma = re.sub(
+                        r"(cnf\([^,]+,)\s*[^,]+(,)", r"\1 lemma\2", seed_str, count=1
+                    )
+                    f.write(f"{seed_with_lemma}\n")
+                else:
+                    # Fallback: write as-is
+                    f.write(f"{seed_str}\n")
+
+        return True
+    except Exception as e:
+        # Log error but don't crash
+        print(f"Error writing original (non-clausified) variant with seeds: {e}")
+        return False
 
 
 def setup_problem_output(problem_path, base_output_dir):
@@ -354,13 +434,177 @@ def initialize_seed_generator(logger, args):
         return None
 
 
+def generate_and_verify_seeds(
+    variant_index,
+    seed_generator,
+    base_clauses,
+    problem_path,
+    axioms_only,
+    args,
+    logger,
+):
+    """Generate seed clauses and verify them via entailment checking.
+
+    This function handles:
+    1. Seed clause generation using LLM (if seed_generator provided)
+    2. Parallel entailment checking (if --check-entailment enabled)
+    3. Parsing and filtering of verified seeds
+
+    Args:
+        variant_index: Index of this variant (for logging).
+        seed_generator: SeedClauseGenerator instance or None.
+        base_clauses: List of base Clause objects (B_i) for LLM context.
+        problem_path: Path to original (non-clausified) problem file.
+        axioms_only: Path to axioms-only file (C_ax) for entailment checking.
+        args: Command-line arguments.
+        logger: Logger instance.
+
+    Returns:
+        List of verified seed Clause objects (empty if no seed generation or no verified seeds).
+    """
+    seed_clauses = []
+
+    if not seed_generator:
+        return seed_clauses
+
+    logger.info(f"  Generating S_i seed clauses for variant {variant_index}...")
+
+    # Extract context from original problem
+    context = seed_generator.extract_problem_context(problem_path)
+
+    # Convert base clauses to strings for LLM context
+    base_clause_strs = [str(clause) for clause in base_clauses]
+
+    # Generate seeds
+    seeds = seed_generator.generate_seeds(
+        problem_context=context,
+        base_clauses=base_clause_strs,
+        num_seeds=args.generate_seeds,
+        domain_hint=args.domain_hint,
+    )
+
+    # Run entailment checks in parallel if requested
+    entailment_results = {}  # seed_index -> is_entailed
+    entailment_debug_logs = {}  # seed_index -> list of debug messages
+    if args.check_entailment:
+        logger.info(
+            f"  Entailment checking enabled (timeout: {args.entailment_timeout}s)"
+        )
+        logger.info(f"  Running {len(seeds)} entailment checks in parallel...")
+
+        # Limit workers to avoid resource exhaustion
+        max_workers = min(os.cpu_count() or 4, len(seeds), 8)  # Cap at 8 workers
+
+        # Submit all entailment checks in parallel
+        with ProcessPoolExecutor(max_workers=max_workers) as executor:
+            futures = {
+                executor.submit(
+                    check_seed_entailment,
+                    j,
+                    seed.content,
+                    axioms_only,
+                    args.vampire,
+                    args.entailment_timeout,
+                ): j
+                for j, seed in enumerate(seeds)
+            }
+
+            # Collect results as they complete
+            completed = 0
+            for future in as_completed(futures):
+                expected_idx = futures[future]
+                try:
+                    returned_idx, is_entailed, debug_logs = future.result()
+                    # Sanity check: returned index should match expected
+                    assert (
+                        returned_idx == expected_idx
+                    ), f"Index mismatch: {returned_idx} != {expected_idx}"
+                    entailment_results[returned_idx] = is_entailed
+                    entailment_debug_logs[returned_idx] = debug_logs
+                    completed += 1
+                    if len(seeds) > 5:  # Only show progress for many seeds
+                        logger.info(
+                            f"  Progress: {completed}/{len(seeds)} checks completed"
+                        )
+                except Exception as e:
+                    logger.warning(
+                        f"  Entailment check for seed {expected_idx} raised exception: {e}"
+                    )
+                    entailment_results[expected_idx] = False
+                    entailment_debug_logs[expected_idx] = [f"Exception: {e}"]
+                    completed += 1
+
+        logger.info(f"  All entailment checks completed ({completed}/{len(seeds)})")
+
+    # Process seeds in order and log results
+    verified_count = 0
+    failed_count = 0
+
+    for j, seed in enumerate(seeds):
+        logger.info("  " + "─" * 76)
+        logger.info(f"  VARIANT {variant_index} SEED {j}")
+        logger.info("  " + "─" * 76)
+        logger.info(f"    Clause: {seed.content}")
+        logger.info(f"    Reason: {seed.description}")
+        logger.info(f"    Confidence: {seed.confidence:.2f}")
+
+        # Check entailment result if entailment checking was enabled
+        if args.check_entailment:
+            is_entailed = entailment_results.get(j, False)
+
+            # Replay debug logs from subprocess
+            debug_logs = entailment_debug_logs.get(j, [])
+            for log_line in debug_logs:
+                if log_line.strip():  # Skip empty lines
+                    logger.debug(log_line)
+
+            if is_entailed:
+                logger.info(f"    ✓ Entailment verified (C_ax ⊨ s)")
+                verified_count += 1
+            else:
+                logger.warning(f"    ✗ Entailment check failed, skipping seed")
+                failed_count += 1
+                continue
+
+        # Parse seed clause to add to variant
+        # Check format and use appropriate parser
+        if seed.content.strip().startswith("tff("):
+            parsed = parse_tff_clause(seed.content, logger)
+        elif seed.content.strip().startswith("cnf("):
+            parsed = parse_cnf_clause(seed.content, logger)
+        else:
+            logger.warning(
+                f"    Seed clause not in CNF or TFF format: {seed.content[:50]}..."
+            )
+            parsed = None
+
+        if parsed:
+            seed_clauses.append(parsed)
+        else:
+            logger.warning(f"    Failed to parse seed clause, skipping")
+            # If parsing failed after entailment check passed, this is a bug
+            if args.check_entailment and is_entailed:
+                logger.error(
+                    f"    ERROR: Entailment passed but parsing failed! This indicates a bug."
+                )
+                failed_count += 1
+
+        logger.info("")  # Blank line after each seed
+
+    if args.check_entailment:
+        logger.info(
+            f"  Entailment results: {verified_count} verified, {failed_count} failed"
+        )
+
+    return seed_clauses
+
+
 def construct_variant(
     variant_index,
-    constructor,
+    base,
     stats,
-    seed_generator,
+    verified_seeds,
     negated_conjectures,
-    axioms_only,
     problem_path,
     problem_output,
     args,
@@ -368,19 +612,13 @@ def construct_variant(
 ):
     """Construct a single variant as B_i + verified seeds + negated_conjectures.
 
-    Base clauses B_i are selected from C_ax (axioms only) using the chosen strategy.
-    If entailment checking is enabled, all seed clauses are checked in parallel
-    using ProcessPoolExecutor against C_ax. Results are collected and logged in order.
-    The final variant consists of B_i + verified seeds + negated_conjectures.
-
     Args:
         variant_index: Index of this variant.
-        constructor: BaseClauseSetConstructor instance (operates on C_ax).
-        stats: Statistics dict from constructor.
-        seed_generator: SeedClauseGenerator instance or None.
+        base: Base clause set B_i (already constructed from C_ax).
+        stats: Statistics dict from constructor (for logging).
+        verified_seeds: List of verified seed Clause objects (from generate_and_verify_seeds).
         negated_conjectures: List of negated_conjecture clauses from C₀.
-        axioms_only: Path to axioms-only file (C_ax).
-        problem_path: Path to original problem.
+        problem_path: Path to original (non-clausified) problem.
         problem_output: Output directory for this problem.
         args: Command-line arguments.
         logger: Logger instance.
@@ -392,8 +630,7 @@ def construct_variant(
     logger.info(f"VARIANT {variant_index}")
     logger.info("=" * 80)
 
-    # Construct base clause set B_i
-    base = constructor.construct_base_set(strategy=args.strategy)
+    # Log base clause set statistics
     kept_pct = (
         (len(base) / stats["total_clauses"] * 100) if stats["total_clauses"] > 0 else 0
     )
@@ -401,137 +638,9 @@ def construct_variant(
         f"  B_i = {len(base)}/{stats['total_clauses']} clauses from C_ax ({kept_pct:.1f}%)"
     )
 
-    # Generate seed clauses S_i if requested
-    seed_clauses = []
-    if seed_generator:
-        logger.info(f"  Generating S_i seed clauses for variant {variant_index}...")
-
-        # Extract context from original problem
-        context = seed_generator.extract_problem_context(problem_path)
-
-        # Convert base clauses to strings for LLM context
-        base_clause_strs = [str(clause) for clause in base]
-
-        # Generate seeds
-        seeds = seed_generator.generate_seeds(
-            problem_context=context,
-            base_clauses=base_clause_strs,
-            num_seeds=args.generate_seeds,
-            domain_hint=args.domain_hint,
-        )
-
-        # Run entailment checks in parallel if requested
-        entailment_results = {}  # seed_index -> is_entailed
-        entailment_debug_logs = {}  # seed_index -> list of debug messages
-        if args.check_entailment:
-            logger.info(
-                f"  Entailment checking enabled (timeout: {args.entailment_timeout}s)"
-            )
-            logger.info(f"  Running {len(seeds)} entailment checks in parallel...")
-
-            # Limit workers to avoid resource exhaustion
-            max_workers = min(os.cpu_count() or 4, len(seeds), 8)  # Cap at 8 workers
-
-            # Submit all entailment checks in parallel
-            with ProcessPoolExecutor(max_workers=max_workers) as executor:
-                futures = {
-                    executor.submit(
-                        check_seed_entailment,
-                        j,
-                        seed.content,
-                        axioms_only,
-                        args.vampire,
-                        args.entailment_timeout,
-                    ): j
-                    for j, seed in enumerate(seeds)
-                }
-
-                # Collect results as they complete
-                completed = 0
-                for future in as_completed(futures):
-                    expected_idx = futures[future]
-                    try:
-                        returned_idx, is_entailed, debug_logs = future.result()
-                        # Sanity check: returned index should match expected
-                        assert (
-                            returned_idx == expected_idx
-                        ), f"Index mismatch: {returned_idx} != {expected_idx}"
-                        entailment_results[returned_idx] = is_entailed
-                        entailment_debug_logs[returned_idx] = debug_logs
-                        completed += 1
-                        if len(seeds) > 5:  # Only show progress for many seeds
-                            logger.info(
-                                f"  Progress: {completed}/{len(seeds)} checks completed"
-                            )
-                    except Exception as e:
-                        logger.warning(
-                            f"  Entailment check for seed {expected_idx} raised exception: {e}"
-                        )
-                        entailment_results[expected_idx] = False
-                        entailment_debug_logs[expected_idx] = [f"Exception: {e}"]
-                        completed += 1
-
-            logger.info(f"  All entailment checks completed ({completed}/{len(seeds)})")
-
-        # Process seeds in order and log results
-        verified_count = 0
-        failed_count = 0
-
-        for j, seed in enumerate(seeds):
-            logger.info("  " + "─" * 76)
-            logger.info(f"  VARIANT {variant_index} SEED {j}")
-            logger.info("  " + "─" * 76)
-            logger.info(f"    Clause: {seed.content}")
-            logger.info(f"    Reason: {seed.description}")
-            logger.info(f"    Confidence: {seed.confidence:.2f}")
-
-            # Check entailment result if entailment checking was enabled
-            if args.check_entailment:
-                is_entailed = entailment_results.get(j, False)
-
-                # Replay debug logs from subprocess
-                debug_logs = entailment_debug_logs.get(j, [])
-                for log_line in debug_logs:
-                    if log_line.strip():  # Skip empty lines
-                        logger.debug(log_line)
-
-                if is_entailed:
-                    logger.info(f"    ✓ Entailment verified (C_ax ⊨ s)")
-                    verified_count += 1
-                else:
-                    logger.warning(f"    ✗ Entailment check failed, skipping seed")
-                    failed_count += 1
-                    continue
-
-            # Parse seed clause to add to variant
-            # Check format and use appropriate parser
-            if seed.content.strip().startswith("tff("):
-                parsed = parse_tff_clause(seed.content, logger)
-            elif seed.content.strip().startswith("cnf("):
-                parsed = parse_cnf_clause(seed.content, logger)
-            else:
-                logger.warning(f"    Seed clause not in CNF or TFF format: {seed.content[:50]}...")
-                parsed = None
-            
-            if parsed:
-                seed_clauses.append(parsed)
-            else:
-                logger.warning(f"    Failed to parse seed clause, skipping")
-                # If parsing failed after entailment check passed, this is a bug
-                if args.check_entailment and is_entailed:
-                    logger.error(f"    ERROR: Entailment passed but parsing failed! This indicates a bug.")
-                    failed_count += 1
-
-            logger.info("")  # Blank line after each seed
-
-        if args.check_entailment:
-            logger.info(
-                f"  Entailment results: {verified_count} verified, {failed_count} failed"
-            )
-
-    # Construct variant as B_i + seeds + negated_conjectures
+    # Construct variant as B_i + verified seeds + negated_conjectures
     # negated_conjectures passed as parameter (extracted once in process_problem)
-    complete_clause_set = base + seed_clauses + negated_conjectures
+    complete_clause_set = base + verified_seeds + negated_conjectures
 
     output_path = problem_output / "variants" / f"variant_{variant_index}.tptp"
     write_variant_clause_set(
@@ -543,7 +652,7 @@ def construct_variant(
 
     logger.info(f"  Written to: {output_path}")
     logger.info(
-        f"  Summary: Variant = B_i ({len(base)} clauses) + verified seeds ({len(seed_clauses)}) + negated_conjectures ({len(negated_conjectures)}) = {len(complete_clause_set)} total clauses"
+        f"  Summary: Variant = B_i ({len(base)} clauses) + verified seeds ({len(verified_seeds)}) + negated_conjectures ({len(negated_conjectures)}) = {len(complete_clause_set)} total clauses"
     )
     logger.info("")
 
@@ -562,7 +671,8 @@ def process_problem(problem_path, base_output_dir, args):
     4. Optionally generate seed clauses S_i using LLM (--generate-seeds)
     5. Optionally verify entailment C_ax ⊨ s in parallel (--check-entailment)
     6. Write complete variants as B_i + verified seeds + negated_conjectures
-    7. Optionally run Vampire in parallel (--run-vampire, skipped if no verified variants)
+    7. Write additional variants with original (non-clausified) problem + verified seeds
+    8. Optionally run Vampire in parallel (--run-vampire, skipped if no variants with verified seeds)
 
     Args:
         problem_path: Path to the problem file.
@@ -610,18 +720,55 @@ def process_problem(problem_path, base_output_dir, args):
 
     # Construct complete variants: B_i + verified seeds + negated_conjectures
     for i in range(args.num_variants):
+        # Construct base clause set B_i for this variant
+        base = constructor.construct_base_set(strategy=args.strategy)
+
+        # Generate and verify seed clauses (returns verified Clause objects)
+        verified_seeds = generate_and_verify_seeds(
+            i,
+            seed_generator,
+            base,
+            problem_path,
+            axioms_only,
+            args,
+            logger,
+        )
+
+        # Construct variant from B_i + verified seeds + negated_conjectures
         construct_variant(
             i,
-            constructor,
+            base,
             stats,
-            seed_generator,
+            verified_seeds,
             negated_conjectures,
-            axioms_only,
             problem_path,
             problem_output,
             args,
             logger,
         )
+
+        # Also create variant with original (non-clausified) problem + verified seeds (if seeds exist)
+        if verified_seeds:
+            original_variant_path = (
+                problem_output / "variants" / f"variant_{i}_original.tptp"
+            )
+            if write_original_with_seeds(
+                problem_path,
+                verified_seeds,
+                original_variant_path,
+                problem_path.name,
+            ):
+                logger.info(
+                    f"  Written original (non-clausified) variant with seeds: {original_variant_path}"
+                )
+                logger.info(
+                    f"  Original variant: Original (non-clausified) problem + {len(verified_seeds)} verified seeds"
+                )
+                logger.info("")
+            else:
+                logger.warning(
+                    f"  Failed to write original (non-clausified) variant with seeds"
+                )
 
     logger.info("=" * 80)
     logger.info(f"COMPLETED: {problem_path.name}")

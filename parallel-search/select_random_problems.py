@@ -8,6 +8,7 @@ The script supports:
 - Random selection of N problems from the complete TPTP problem set (26,000+ problems)
 - Optional filtering by problem type/domain (e.g., ARI, BOO, GRP, etc.)
 - Automatic filtering of large problems (>1500 lines by default)
+- Automatic filtering of problems with include statements (require external axiom files)
 - Optional clearing of the input directory before copying
 - Reproducible selection via random seed
 - Customizable paths for problems and input directories
@@ -109,6 +110,58 @@ def get_all_problems(problems_dir: Path, problem_type: str = None) -> List[Path]
         raise FileNotFoundError(f"No .p files found in {target_dir}")
 
     return problems
+
+
+def has_include_statements(file_path: Path) -> bool:
+    """Check if a problem file contains include statements.
+
+    Args:
+        file_path: Path to the problem file to check.
+
+    Returns:
+        True if the file contains include statements, False otherwise.
+    """
+    try:
+        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+            for line in f:
+                # Check for include statements (case-insensitive, handles whitespace)
+                stripped = line.strip().lower()
+                if stripped.startswith("include(") or stripped.startswith("include "):
+                    return True
+        return False
+    except Exception:
+        # If we can't read the file, assume it has includes to be safe
+        return True
+
+
+def filter_problems_by_include(problems: List[Path]) -> tuple:
+    """Filter out problems that contain include statements.
+
+    Args:
+        problems: List of problem files to filter.
+
+    Returns:
+        Tuple of (filtered_problems, excluded_count) where filtered_problems
+        contains only problems without include statements, and excluded_count is
+        the number of problems that were filtered out.
+    """
+    filtered = []
+    excluded = 0
+
+    print("Filtering problems with include statements...")
+
+    for problem in problems:
+        if not has_include_statements(problem):
+            filtered.append(problem)
+        else:
+            excluded += 1
+            if excluded <= 5:  # Show first 5 excluded problems
+                print(f"  Excluded: {problem.name} (contains include statements)")
+
+    if excluded > 5:
+        print(f"  ... and {excluded - 5} more excluded problems")
+
+    return filtered, excluded
 
 
 def filter_problems_by_size(problems: List[Path], max_lines: int) -> tuple:
@@ -315,12 +368,19 @@ Examples:
         else:
             print(f"Found {len(all_problems)} problems in all-problems/")
 
+        # Filter by include statements first
+        filtered_problems, excluded_includes = filter_problems_by_include(all_problems)
+        print(
+            f"After filtering includes: {len(filtered_problems)} problems available ({excluded_includes} excluded)"
+        )
+        print()
+
         # Filter by size
-        filtered_problems, excluded_count = filter_problems_by_size(
-            all_problems, args.max_lines
+        filtered_problems, excluded_size = filter_problems_by_size(
+            filtered_problems, args.max_lines
         )
         print(
-            f"After filtering: {len(filtered_problems)} problems available ({excluded_count} excluded)"
+            f"After filtering by size: {len(filtered_problems)} problems available ({excluded_size} excluded)"
         )
         print()
 
@@ -339,7 +399,8 @@ Examples:
         print("=" * 80)
         print("SUMMARY:")
         print(f"  Total problems scanned: {len(all_problems)}")
-        print(f"  Excluded (too large): {excluded_count}")
+        print(f"  Excluded (has includes): {excluded_includes}")
+        print(f"  Excluded (too large): {excluded_size}")
         print(f"  Available after filtering: {len(filtered_problems)}")
         print(f"  ✓ Copied: {copied}")
         if skipped > 0:

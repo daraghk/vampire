@@ -11,6 +11,7 @@ Typical usage:
     clause = parse_tff_clause("tff(u1, axiom, p(X)).", logger)
     clause = parse_cnf_clause("cnf(c1, axiom, p(X) | q(Y)).", logger)
 """
+
 import logging
 import re
 from dataclasses import dataclass
@@ -131,7 +132,9 @@ class Clause:
         return f"Clause({self.name}, {self.role.value})"
 
 
-def parse_tff_clause(line: str, logger: Optional[logging.Logger] = None) -> Optional[Clause]:
+def parse_tff_clause(
+    line: str, logger: Optional[logging.Logger] = None
+) -> Optional[Clause]:
     """Parse a TFF (Typed First-order Form) clause.
 
     Handles quantified formulas from tclausify mode, stripping quantifiers
@@ -189,7 +192,9 @@ def parse_tff_clause(line: str, logger: Optional[logging.Logger] = None) -> Opti
         return None
 
 
-def parse_cnf_clause(line: str, logger: Optional[logging.Logger] = None) -> Optional[Clause]:
+def parse_cnf_clause(
+    line: str, logger: Optional[logging.Logger] = None
+) -> Optional[Clause]:
     """Parse a CNF (Clause Normal Form) clause.
 
     CNF format: cnf(name, role, clause).

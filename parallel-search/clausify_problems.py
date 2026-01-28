@@ -70,7 +70,9 @@ class VampireClausifier:
         self.timeout = timeout
         self.mode = mode
         if mode not in ["clausify", "tclausify"]:
-            raise ValueError(f"Invalid clausification mode: {mode}. Must be 'clausify' or 'tclausify'")
+            raise ValueError(
+                f"Invalid clausification mode: {mode}. Must be 'clausify' or 'tclausify'"
+            )
         self.stats = {"success": 0, "error": 0, "timeout": 0, "skipped": 0}
 
     def is_problem_file(self, path: Path) -> bool:

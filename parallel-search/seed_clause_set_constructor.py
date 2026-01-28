@@ -258,6 +258,9 @@ class SeedClauseGenerator:
 
         clauses_sample = "\n".join(base_clauses)
 
+        # Override the clause format
+        clause_format = "TFF"
+
         prompt = f"""
 I need help generating useful lemmas for a theorem proving problem.
 
@@ -354,6 +357,6 @@ Please generate the {num_seeds} lemmas now.
                     context_lines.append(line)
                 # Stop at first non-comment line
                 elif context_lines and not line.startswith("%") and line:
-                    break
+                        break
 
         return "\n".join(context_lines) if context_lines else "No context available"

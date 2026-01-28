@@ -133,8 +133,8 @@ def run_vampire(
         subprocess_timeout = timeout + 5 if timeout else None
 
         result = subprocess.run(
-            cmd + ["--mode", "casc"],
-            # cmd,
+            # cmd + ["--mode", "casc"],
+            cmd,
             capture_output=True,
             text=True,
             timeout=subprocess_timeout,
@@ -362,7 +362,7 @@ def run_parallel_evaluation(
             return (1, x["name"])
         else:
             return (2, x["name"])
-    
+
     results.sort(key=sort_key)
 
     # Generate summary

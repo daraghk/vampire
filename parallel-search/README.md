@@ -74,15 +74,19 @@ output/
     ├── {timestamp}_{problem}.log      # Single log file (HH:MM timestamps)
     ├── clausified/                    # Clausified problems (CNF or TFF format)
     │   └── {problem}_clausified.tptp
-    ├── variants/                      # Generated clause set variants (Variant = B_i + verified seeds + negated_conjectures)
-    │   ├── variant_0.tptp
+    ├── variants/                      # Generated clause set variants
+    │   ├── variant_0.tptp             # Variant = B_i + verified seeds + negated_conjectures
+    │   ├── variant_0_original.tptp    # Original (non-clausified) problem + verified seeds (if seeds exist)
     │   ├── variant_1.tptp
+    │   ├── variant_1_original.tptp    # Original (non-clausified) problem + verified seeds (if seeds exist)
     │   └── ...
-    └── results/                       # Vampire execution results (only if --run-vampire used and verified variants exist)
+    └── results/                       # Vampire execution results (only if --run-vampire used and variants with verified seeds exist)
         ├── original.out               # Vampire output for original problem (non-clausified)
         ├── original_clausified.out    # Vampire output for original clausified problem (C₀)
         ├── variant_0.out              # Vampire output for variant_0
+        ├── variant_0_original.out     # Vampire output for variant_0_original (if seeds exist)
         ├── variant_1.out              # Vampire output for variant_1
+        ├── variant_1_original.out     # Vampire output for variant_1_original (if seeds exist)
         ├── ...
         └── summary.json               # Execution summary with statistics
 ```
@@ -121,15 +125,21 @@ The workflow performs up to six main steps:
    - This avoids vacuous truth: if C₀ is UNSAT, all seeds would trivially entail
    - Only verified seeds (proved by Vampire) are added to variants
    - Ensures soundness: UNSAT(variant) ⟹ UNSAT(C₀)
-6. **Parallel Execution** (optional, requires `--run-vampire`): Run Vampire in parallel on:
+6. **Variant Writing**: Write two types of variants for each base clause set:
+   - **Clausified variant**: B_i + verified seeds + negated_conjectures (clausified format)
+   - **Original variant**: Original (non-clausified) problem + verified seeds as lemmas (only if verified seeds exist)
+   - Original variants preserve the original problem structure while adding verified lemmas
+7. **Parallel Execution** (optional, requires `--run-vampire`): Run Vampire in parallel on:
    - The original problem (non-clausified)
    - The original clausified problem (C₀)
-   - All variants: **B_i + verified seeds + negated_conjectures**
+   - All clausified variants: **B_i + verified seeds + negated_conjectures**
+   - All original variants: **Original (non-clausified) problem + verified seeds** (if seeds exist)
    - Skipped entirely if no variants have verified seeds (no point comparing original alone)
    - Captures execution time, exit status, and full Vampire output
    - Generates summary with statistics and identifies which runs proved the problem
 
-Each variant consists of: B_i (selected axioms) + verified seeds + negated_conjectures (to prove).
+Each clausified variant consists of: B_i (selected axioms) + verified seeds + negated_conjectures (to prove).
+Each original variant consists of: Original (non-clausified) problem + verified seeds (as lemmas).
 
 All operations are logged with structured output. Log timestamps show HH:MM format for
 readability (full date is in the directory name). Visual separators clearly mark each variant.
@@ -156,8 +166,11 @@ The parallel search strategy works as follows:
    - negated_conjectures (the negated conjectures to prove)
    - Variant = Bᵢ + Sᵢ + negated_conjectures
 4. **Verify entailment**: Check that **C_ax ⊨ s** for each seed clause s using Vampire
-5. **Run in parallel**: Launch independent Vampire instances on the original problem (non-clausified), the original clausified problem (C₀), and each variant
-6. **First to finish wins**: If any proves UNSAT(variant), then UNSAT(C₀) follows
+5. **Write variants**: Create two types of variants for each base clause set:
+   - **Clausified variant**: Bᵢ + Sᵢ + negated_conjectures (clausified format)
+   - **Original variant**: Original (non-clausified) problem + Sᵢ as lemmas (only if Sᵢ exists)
+6. **Run in parallel**: Launch independent Vampire instances on the original problem (non-clausified), the original clausified problem (C₀), and each variant (both clausified and original variants)
+7. **First to finish wins**: If any proves UNSAT(variant), then UNSAT(C₀) follows
 
 ## Key Properties
 
@@ -179,7 +192,7 @@ The parallel search strategy works as follows:
 - ✅ Entailment checking via conjecture proving (C_ax ⊨ s verification using `entailment_checker.py`)
 - ✅ Native Vampire conjecture handling (cleaner than manual clause negation)
 - ✅ Axioms-only filtering (C_ax creation to avoid vacuous truth in entailment)
-- ✅ Variant file generation (B_i + verified seeds + negated_conjectures written to TPTP files)
+- ✅ Variant file generation (clausified variants: B_i + verified seeds + negated_conjectures; original variants: original problem + verified seeds as lemmas)
 - ✅ Structured logging with timestamped outputs
 - ✅ Parallel execution framework (running original problem, original clausified problem, and variants via `run_parallel.py`)
 - ✅ Results capture (execution time, status, full Vampire output, JSON summary)
