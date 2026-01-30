@@ -1,0 +1,63 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP658+1_clausified
+% SZS output start Proof for GRP658+1_clausified
+1. mult(X0,ld(X0,X1)) = X1 [input(axiom)]
+2. ld(X0,mult(X0,X1)) = X1 [input(axiom)]
+3. mult(rd(X0,X1),X1) = X0 [input(axiom)]
+4. rd(mult(X0,X1),X1) = X0 [input(axiom)]
+5. mult(mult(X0,mult(X1,X1)),X2) = mult(mult(X0,X1),mult(X1,X2)) [input(axiom)]
+6. sK0(X0) != mult(sK0(X0),X0) | sK0(X0) != mult(X0,sK0(X0)) [input(negated conjecture)]
+8. rd(X0,ld(X1,X0)) = X1 [superposition 4,1]
+10. mult(mult(rd(X0,mult(X1,X1)),X1),mult(X1,X2)) = mult(X0,X2) [superposition 5,3]
+13. mult(X0,mult(X1,X1)) = rd(mult(mult(X0,X1),mult(X1,X2)),X2) [superposition 4,5]
+15. mult(mult(X0,X1),mult(X1,ld(mult(X0,mult(X1,X1)),X2))) = X2 [superposition 1,5]
+24. mult(X1,ld(X2,X0)) = mult(mult(rd(X1,mult(X2,X2)),X2),X0) [superposition 10,1]
+25. mult(X1,X2) = mult(mult(rd(X1,mult(rd(X0,X2),rd(X0,X2))),rd(X0,X2)),X0) [superposition 10,3]
+27. mult(X2,mult(X3,X1)) = mult(mult(rd(X2,mult(mult(rd(X0,mult(X3,X3)),X3),mult(rd(X0,mult(X3,X3)),X3))),mult(rd(X0,mult(X3,X3)),X3)),mult(X0,X1)) [superposition 10,10]
+31. mult(rd(X0,mult(X2,X2)),X2) = rd(mult(X0,X1),mult(X2,X1)) [superposition 4,10]
+32. mult(X2,X1) = ld(mult(rd(X0,mult(X2,X2)),X2),mult(X0,X1)) [superposition 2,10]
+38. mult(mult(rd(X0,mult(X2,X2)),X2),mult(mult(X2,X1),mult(X2,X1))) = rd(mult(mult(X0,X1),mult(mult(X2,X1),X3)),X3) [superposition 13,10]
+52. rd(mult(mult(X0,X1),mult(mult(X2,X1),X3)),X3) = mult(X0,ld(X2,mult(mult(X2,X1),mult(X2,X1)))) [forward demodulation 38,24]
+95. mult(X2,ld(mult(X1,mult(X2,X2)),X0)) = ld(mult(X1,X2),X0) [superposition 2,15]
+141. mult(rd(X0,mult(X1,X1)),X1) = rd(mult(X0,ld(X1,X2)),X2) [superposition 4,24]
+285. mult(rd(X1,mult(X2,X2)),X2) = rd(X0,mult(X2,ld(X1,X0))) [superposition 31,1]
+588. mult(X1,ld(X2,X0)) = ld(mult(rd(X2,mult(X1,X1)),X1),X0) [superposition 32,1]
+1200. mult(rd(X1,mult(X1,X1)),X1) = rd(X0,X0) [superposition 141,1]
+1597. mult(rd(X1,X2),X2) = mult(rd(X0,X0),X1) [superposition 25,1200]
+1670. mult(rd(X0,X0),X1) = X1 [forward demodulation 1597,3]
+2131. mult(X0,ld(mult(X0,X0),X2)) = ld(mult(rd(X1,X1),X0),X2) [superposition 95,1670]
+2148. ld(X0,X2) = mult(X0,ld(mult(X0,X0),X2)) [forward demodulation 2131,1670]
+4026. sK0(ld(X0,mult(mult(X0,X1),mult(X0,X1)))) != rd(mult(mult(sK0(ld(X0,mult(mult(X0,X1),mult(X0,X1)))),X1),mult(mult(X0,X1),X2)),X2) | sK0(ld(X0,mult(mult(X0,X1),mult(X0,X1)))) != mult(ld(X0,mult(mult(X0,X1),mult(X0,X1))),sK0(ld(X0,mult(mult(X0,X1),mult(X0,X1))))) [superposition 6,52]
+4310. sK0(ld(rd(X0,X1),mult(X0,X0))) != rd(mult(mult(sK0(ld(rd(X0,X1),mult(X0,X0))),X1),mult(X0,X2)),X2) | sK0(ld(rd(X0,X1),mult(X0,X0))) != mult(ld(rd(X0,X1),mult(X0,X0)),sK0(ld(rd(X0,X1),mult(X0,X0)))) [superposition 4026,3]
+5274. sK0(ld(rd(X1,X2),mult(X1,X1))) != rd(mult(mult(sK0(ld(rd(X1,X2),mult(X1,X1))),X2),X0),ld(X1,X0)) | sK0(ld(rd(X1,X2),mult(X1,X1))) != mult(ld(rd(X1,X2),mult(X1,X1)),sK0(ld(rd(X1,X2),mult(X1,X1)))) [superposition 4310,1]
+5676. sK0(ld(rd(X1,X2),mult(X1,X1))) != rd(X0,ld(X1,ld(mult(sK0(ld(rd(X1,X2),mult(X1,X1))),X2),X0))) | sK0(ld(rd(X1,X2),mult(X1,X1))) != mult(ld(rd(X1,X2),mult(X1,X1)),sK0(ld(rd(X1,X2),mult(X1,X1)))) [superposition 5274,1]
+6642. sK0(ld(X0,mult(X1,X1))) != rd(X2,ld(X1,ld(mult(sK0(ld(X0,mult(X1,X1))),ld(X0,X1)),X2))) | sK0(ld(X0,mult(X1,X1))) != mult(ld(X0,mult(X1,X1)),sK0(ld(X0,mult(X1,X1)))) [superposition 5676,8]
+7105. sK0(mult(X0,X1)) != rd(X2,ld(X1,ld(mult(sK0(mult(X0,X1)),ld(mult(rd(X1,mult(X0,X0)),X0),X1)),X2))) | sK0(mult(X0,X1)) != mult(mult(X0,X1),sK0(mult(X0,X1))) [superposition 6642,32]
+7143. sK0(mult(X0,X1)) != rd(X2,ld(X1,ld(mult(sK0(mult(X0,X1)),mult(X0,ld(X1,X1))),X2))) | sK0(mult(X0,X1)) != mult(mult(X0,X1),sK0(mult(X0,X1))) [forward demodulation 7105,588]
+21481. mult(X2,ld(mult(X0,mult(X1,X2)),X3)) = ld(mult(mult(rd(X0,mult(mult(rd(X2,mult(X1,X1)),X1),mult(rd(X2,mult(X1,X1)),X1))),mult(rd(X2,mult(X1,X1)),X1)),X2),X3) [superposition 95,27]
+21683. mult(X2,ld(mult(X0,mult(X1,X2)),X3)) = ld(mult(X0,ld(mult(rd(X2,mult(X1,X1)),X1),X2)),X3) [forward demodulation 21481,24]
+21892. mult(X2,ld(mult(X0,mult(X1,X2)),X3)) = ld(mult(X0,mult(X1,ld(X2,X2))),X3) [forward demodulation 21683,588]
+24498. sK0(rd(X0,X0)) != rd(X2,ld(X1,ld(mult(sK0(rd(X0,X0)),mult(rd(X1,mult(X1,X1)),ld(X1,X1))),X2))) | sK0(rd(X0,X0)) != mult(rd(X0,X0),sK0(rd(X0,X0))) [superposition 7143,1200]
+24590. sK0(rd(X0,X0)) != rd(X2,ld(X1,ld(mult(sK0(rd(X0,X0)),mult(rd(X1,mult(X1,X1)),ld(X1,X1))),X2))) [forward subsumption resolution 24498,1670]
+24641. sK0(rd(X0,X0)) != rd(X2,ld(X1,mult(X1,ld(mult(sK0(rd(X0,X0)),mult(rd(X1,mult(X1,X1)),X1)),X2)))) [forward demodulation 24590,21892]
+24682. sK0(rd(X0,X0)) != rd(X2,ld(mult(sK0(rd(X0,X0)),mult(rd(X1,mult(X1,X1)),X1)),X2)) [forward demodulation 24641,2]
+24722. sK0(rd(X0,X0)) != mult(sK0(rd(X0,X0)),mult(rd(X1,mult(X1,X1)),X1)) [forward demodulation 24682,8]
+25390. sK0(rd(X2,X2)) != mult(sK0(rd(X2,X2)),mult(rd(mult(rd(X0,mult(X1,X1)),X1),mult(X0,ld(X1,mult(rd(X0,mult(X1,X1)),X1)))),mult(rd(X0,mult(X1,X1)),X1))) [superposition 24722,24]
+25406. sK0(rd(X2,X2)) != mult(sK0(rd(X2,X2)),mult(mult(rd(X1,mult(X0,X0)),X0),mult(rd(X0,mult(X1,X1)),X1))) [forward demodulation 25390,285]
+25410. sK0(rd(X2,X2)) != mult(sK0(rd(X2,X2)),mult(X1,ld(X0,mult(rd(X0,mult(X1,X1)),X1)))) [forward demodulation 25406,24]
+27787. sK0(rd(X1,X1)) != mult(sK0(rd(X1,X1)),mult(X0,ld(mult(X0,X0),X0))) [superposition 25410,1670]
+27823. sK0(rd(X1,X1)) != mult(sK0(rd(X1,X1)),ld(X0,X0)) [forward demodulation 27787,2148]
+29730. sK0(rd(X0,X0)) != sK0(rd(X0,X0)) [superposition 27823,1]
+29732. $false [trivial inequality removal 29730]
+% SZS output end Proof for GRP658+1_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.593 s
+% Peak memory usage: 64 MB
+% Instructions burned: 2055 (million)
+% ------------------------------
+% ------------------------------

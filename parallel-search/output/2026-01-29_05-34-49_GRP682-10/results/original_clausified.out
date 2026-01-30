@@ -1,0 +1,34 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP682-10_clausified
+% SZS output start Proof for GRP682-10_clausified
+1. ld(X0,mult(X0,X0)) = X0 [input(axiom)]
+3. mult(X0,ld(X0,X1)) = ld(X0,mult(X0,X1)) [input(axiom)]
+5. ld(ld(X0,X1),mult(ld(X0,X1),mult(X2,X3))) = mult(ld(X0,mult(X0,X2)),X3) [input(axiom)]
+8. ld(ld(x0,x1),mult(ld(x0,x1),x2)) != ld(x0,mult(x0,x2)) [input(negated conjecture)]
+10. mult(X0,ld(X0,X0)) = X0 [forward demodulation 1,3]
+13. ld(x0,mult(x0,x2)) != mult(ld(x0,x1),ld(ld(x0,x1),x2)) [superposition 8,3]
+14. mult(ld(x0,x1),ld(ld(x0,x1),x2)) != mult(x0,ld(x0,x2)) [forward demodulation 13,3]
+34. mult(ld(X0,mult(X0,X2)),X3) = ld(mult(X0,ld(X0,X1)),mult(mult(X0,ld(X0,X1)),mult(X2,X3))) [superposition 5,3]
+37. ld(ld(X1,X2),mult(ld(X1,X2),X0)) = mult(ld(X1,mult(X1,X0)),ld(X0,X0)) [superposition 5,10]
+44. ld(ld(X1,X2),mult(ld(X1,X2),X0)) = mult(mult(X1,ld(X1,X0)),ld(X0,X0)) [forward demodulation 37,3]
+47. mult(ld(X0,mult(X0,X2)),X3) = mult(mult(X0,ld(X0,X1)),ld(mult(X0,ld(X0,X1)),mult(X2,X3))) [forward demodulation 34,3]
+49. mult(mult(X1,ld(X1,X0)),ld(X0,X0)) = mult(ld(X1,X2),ld(ld(X1,X2),X0)) [forward demodulation 44,3]
+52. mult(mult(X0,ld(X0,X2)),X3) = mult(mult(X0,ld(X0,X1)),ld(mult(X0,ld(X0,X1)),mult(X2,X3))) [forward demodulation 47,3]
+251. mult(ld(X0,X1),ld(ld(X0,X1),X2)) = mult(ld(X0,X3),ld(ld(X0,X3),X2)) [superposition 49,49]
+572. mult(mult(X0,ld(X0,X1)),X2) = mult(X0,ld(X0,mult(X1,X2))) [superposition 52,10]
+862. mult(ld(X0,X2),ld(ld(X0,X2),X1)) = mult(X0,ld(X0,mult(X1,ld(X1,X1)))) [superposition 49,572]
+899. mult(X0,ld(X0,X1)) = mult(ld(X0,X2),ld(ld(X0,X2),X1)) [forward demodulation 862,10]
+6949. mult(x0,ld(x0,x2)) != mult(ld(x0,X0),ld(ld(x0,X0),x2)) [superposition 14,251]
+7021. $false [forward subsumption resolution 6949,899]
+% SZS output end Proof for GRP682-10_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.105 s
+% Peak memory usage: 59 MB
+% Instructions burned: 273 (million)
+% ------------------------------
+% ------------------------------

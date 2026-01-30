@@ -1,0 +1,49 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+1. divide(X0,divide(divide(divide(divide(X1,X1),X1),X2),divide(divide(divide(X1,X1),X0),X2))) = X1 [input(axiom)]
+4. ! [X0,X1] : divide(divide(X0,X0),X1) = inverse(X1) [input(assumption)]
+6. ! [X0] : inverse(inverse(X0)) = X0 [input(assumption)]
+7. ! [X0,X1] : multiply(X0,inverse(X1)) = divide(X0,X1) [input(assumption)]
+9. multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [input(negated conjecture)]
+10. divide(divide(X0,X0),X1) = inverse(X1) [cnf transformation 4]
+12. inverse(inverse(X0)) = X0 [cnf transformation 6]
+13. multiply(X0,inverse(X1)) = divide(X0,X1) [cnf transformation 7]
+16. multiply(X0,inverse(multiply(multiply(multiply(multiply(X1,inverse(X1)),inverse(X1)),inverse(X2)),inverse(multiply(multiply(multiply(X1,inverse(X1)),inverse(X0)),inverse(X2)))))) = X1 [definition unfolding 1,13,13,13,13,13,13,13,13]
+19. inverse(X1) = multiply(multiply(X0,inverse(X0)),inverse(X1)) [definition unfolding 10,13,13]
+22. multiply(X0,inverse(multiply(multiply(multiply(multiply(X1,inverse(X1)),inverse(X1)),inverse(X2)),inverse(multiply(inverse(X0),inverse(X2)))))) = X1 [forward demodulation 16,19]
+23. multiply(X0,inverse(multiply(multiply(inverse(X1),inverse(X2)),inverse(multiply(inverse(X0),inverse(X2)))))) = X1 [forward demodulation 22,19]
+25. inverse(X1) = multiply(inverse(multiply(X0,inverse(X0))),inverse(X1)) [superposition 19,19]
+28. multiply(X1,inverse(multiply(X0,inverse(multiply(inverse(X1),inverse(multiply(multiply(inverse(X0),inverse(X3)),inverse(multiply(inverse(inverse(X2)),inverse(X3)))))))))) = X2 [superposition 23,23]
+32. multiply(X0,inverse(inverse(multiply(inverse(X0),inverse(inverse(X1)))))) = X1 [superposition 23,19]
+34. inverse(multiply(multiply(inverse(X0),inverse(X1)),inverse(multiply(inverse(multiply(X2,inverse(X2))),inverse(X1))))) = X0 [superposition 19,23]
+35. inverse(multiply(multiply(inverse(X0),inverse(X1)),inverse(inverse(X1)))) = X0 [forward demodulation 34,25]
+37. multiply(X0,multiply(inverse(X0),inverse(inverse(X1)))) = X1 [forward demodulation 32,12]
+39. multiply(X1,inverse(multiply(X0,inverse(multiply(inverse(X1),inverse(multiply(multiply(inverse(X0),inverse(X3)),inverse(multiply(X2,inverse(X3)))))))))) = X2 [forward demodulation 28,12]
+40. inverse(multiply(multiply(inverse(X0),inverse(X1)),X1)) = X0 [forward demodulation 35,12]
+42. multiply(X0,multiply(inverse(X0),X1)) = X1 [forward demodulation 37,12]
+56. multiply(inverse(X0),multiply(X0,X1)) = X1 [superposition 42,12]
+57. inverse(multiply(multiply(inverse(X0),inverse(X2)),inverse(multiply(inverse(inverse(X1)),inverse(X2))))) = multiply(X1,X0) [superposition 42,23]
+61. multiply(X1,X0) = inverse(multiply(multiply(inverse(X0),inverse(X2)),inverse(multiply(X1,inverse(X2))))) [forward demodulation 57,12]
+90. inverse(X0) = inverse(multiply(multiply(X0,inverse(X1)),X1)) [superposition 40,12]
+339. inverse(multiply(multiply(inverse(X0),inverse(X2)),X2)) = multiply(multiply(X0,inverse(X1)),X1) [superposition 40,90]
+345. multiply(multiply(X0,inverse(X1)),X1) = X0 [forward demodulation 339,40]
+483. multiply(inverse(multiply(X0,inverse(X1))),X0) = X1 [superposition 56,345]
+1008. multiply(X1,X0) = inverse(multiply(X2,inverse(multiply(inverse(inverse(X1)),inverse(multiply(multiply(inverse(X2),inverse(X3)),inverse(multiply(X0,inverse(X3))))))))) [superposition 42,39]
+1015. multiply(X1,X0) = inverse(multiply(X2,inverse(multiply(inverse(inverse(X1)),multiply(X0,X2))))) [forward demodulation 1008,61]
+1101. multiply(X1,X0) = inverse(multiply(X2,inverse(multiply(X1,multiply(X0,X2))))) [forward demodulation 1015,12]
+2851. multiply(X0,multiply(X1,X2)) = multiply(multiply(X0,X1),X2) [superposition 483,1101]
+22866. multiply(a3,multiply(b3,c3)) != multiply(a3,multiply(b3,c3)) [superposition 9,2851]
+22939. $false [trivial inequality removal 22866]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.179 s
+% Peak memory usage: 71 MB
+% Instructions burned: 602 (million)
+% ------------------------------
+% ------------------------------

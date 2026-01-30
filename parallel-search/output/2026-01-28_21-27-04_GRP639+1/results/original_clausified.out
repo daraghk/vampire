@@ -1,0 +1,50 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP639+1_clausified
+% SZS output start Proof for GRP639+1_clausified
+1. ~r1_tarski(k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,sK3),k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,u1_struct_0(k5_group_4(sK0,sK3)))) [input(negated conjecture)]
+2. m1_subset_1(sK3,k1_zfmisc_1(u1_struct_0(sK0))) [input(negated conjecture)]
+3. v1_funct_1(sK2) [input(negated conjecture)]
+4. v1_funct_2(sK2,u1_struct_0(sK0),u1_struct_0(sK1)) [input(negated conjecture)]
+5. m2_relset_1(sK2,u1_struct_0(sK0),u1_struct_0(sK1)) [input(negated conjecture)]
+10. ~v3_struct_0(sK0) [input(negated conjecture)]
+11. v3_group_1(sK0) [input(negated conjecture)]
+12. v4_group_1(sK0) [input(negated conjecture)]
+13. l1_group_1(sK0) [input(negated conjecture)]
+17. ~m1_subset_1(X0,k1_zfmisc_1(k2_zfmisc_1(X1,X2))) | v1_relat_1(X0) [input(axiom)]
+25. r1_tarski(X0,u1_struct_0(k5_group_4(X1,X0))) | ~v1_group_1(k5_group_4(X1,X0)) | ~m1_group_2(k5_group_4(X1,X0),X1) | ~m1_subset_1(X0,k1_zfmisc_1(u1_struct_0(X1))) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [input(axiom)]
+30. ~m1_subset_1(X1,k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | v1_group_1(k5_group_4(X0,X1)) [input(axiom)]
+31. ~m1_subset_1(X1,k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | m1_group_2(k5_group_4(X0,X1),X0) [input(axiom)]
+36. m1_subset_1(X0,k1_zfmisc_1(k2_zfmisc_1(X1,X2))) | ~m2_relset_1(X0,X1,X2) [input(axiom)]
+69. ~m1_relset_1(X2,X0,X1) | ~v1_funct_1(X2) | ~v1_funct_2(X2,X0,X1) | k2_funct_2(X0,X1,X2,X3) = k9_relat_1(X2,X3) [input(axiom)]
+71. ~m2_relset_1(X0,X1,X2) | m1_relset_1(X0,X1,X2) [input(axiom)]
+73. r1_tarski(k9_relat_1(X0,X1),k9_relat_1(X0,X2)) | ~r1_tarski(X1,X2) | ~v1_relat_1(X0) [input(axiom)]
+84. r1_tarski(X0,u1_struct_0(k5_group_4(X1,X0))) | ~m1_group_2(k5_group_4(X1,X0),X1) | ~m1_subset_1(X0,k1_zfmisc_1(u1_struct_0(X1))) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [forward subsumption resolution 25,30]
+86. r1_tarski(X0,u1_struct_0(k5_group_4(X1,X0))) | ~m1_subset_1(X0,k1_zfmisc_1(u1_struct_0(X1))) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [forward subsumption resolution 84,31]
+117. m1_relset_1(sK2,u1_struct_0(sK0),u1_struct_0(sK1)) [resolution 71,5]
+158. ~m2_relset_1(X0,X1,X2) | v1_relat_1(X0) [resolution 36,17]
+328. ~v1_funct_1(sK2) | ~v1_funct_2(sK2,u1_struct_0(sK0),u1_struct_0(sK1)) | k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,X0) = k9_relat_1(sK2,X0) [resolution 69,117]
+329. ~v1_funct_2(sK2,u1_struct_0(sK0),u1_struct_0(sK1)) | k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,X0) = k9_relat_1(sK2,X0) [forward subsumption resolution 328,3]
+332. k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,X0) = k9_relat_1(sK2,X0) [forward subsumption resolution 329,4]
+356. ~r1_tarski(k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,sK3),k9_relat_1(sK2,u1_struct_0(k5_group_4(sK0,sK3)))) [superposition 1,332]
+359. ~r1_tarski(k9_relat_1(sK2,sK3),k9_relat_1(sK2,u1_struct_0(k5_group_4(sK0,sK3)))) [forward demodulation 356,332]
+436. v1_relat_1(sK2) [resolution 158,5]
+534. ~r1_tarski(sK3,u1_struct_0(k5_group_4(sK0,sK3))) | ~v1_relat_1(sK2) [resolution 359,73]
+538. ~r1_tarski(sK3,u1_struct_0(k5_group_4(sK0,sK3))) [forward subsumption resolution 534,436]
+548. ~m1_subset_1(sK3,k1_zfmisc_1(u1_struct_0(sK0))) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [resolution 538,86]
+549. v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 548,2]
+550. ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 549,10]
+551. ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 550,11]
+552. ~l1_group_1(sK0) [forward subsumption resolution 551,12]
+553. $false [forward subsumption resolution 552,13]
+% SZS output end Proof for GRP639+1_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.011 s
+% Peak memory usage: 49 MB
+% Instructions burned: 25 (million)
+% ------------------------------
+% ------------------------------

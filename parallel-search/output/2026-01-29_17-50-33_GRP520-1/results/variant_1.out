@@ -1,0 +1,34 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+2. ! [X0,X1,X2] : multiply(X0,multiply(multiply(inverse(multiply(X0,X1)),X2),X1)) = X2 [input(axiom)]
+3. ! [X0,X1] : ? [X2] : multiply(X0,X2) = X1 [input(assumption)]
+7. multiply(a,b) != multiply(b,a) [input(negated conjecture)]
+8. ! [X0,X1] : (? [X2] : multiply(X0,X2) = X1 => multiply(X0,sK0(X0,X1)) = X1) [skolem symbol introduction]
+9. ! [X0,X1] : multiply(X0,sK0(X0,X1)) = X1 [skolemisation 3,8]
+12. multiply(X0,multiply(multiply(inverse(multiply(X0,X1)),X2),X1)) = X2 [cnf transformation 2]
+13. multiply(X0,sK0(X0,X1)) = X1 [cnf transformation 9]
+23. multiply(X1,multiply(multiply(inverse(X0),X2),sK0(X1,X0))) = X2 [superposition 12,13]
+26. multiply(X1,multiply(multiply(inverse(X0),X3),multiply(multiply(inverse(multiply(X1,X2)),X0),X2))) = X3 [superposition 12,12]
+59. multiply(multiply(inverse(X0),X1),X0) = X1 [superposition 23,13]
+79. multiply(X0,X1) = sK0(inverse(X1),X0) [superposition 59,13]
+152. multiply(inverse(X1),multiply(X0,X1)) = X0 [superposition 13,79]
+215. multiply(inverse(multiply(X0,X1)),X0) = inverse(X1) [superposition 152,152]
+520. multiply(X1,multiply(inverse(X0),X0)) = X1 [superposition 12,215]
+591. multiply(X1,multiply(multiply(inverse(X1),X2),multiply(inverse(X0),X0))) = X2 [superposition 26,215]
+649. multiply(X1,multiply(inverse(X1),X2)) = X2 [forward demodulation 591,520]
+1008. multiply(X0,X1) = multiply(X1,X0) [superposition 649,152]
+1589. multiply(a,b) != multiply(a,b) [superposition 7,1008]
+1590. $false [trivial inequality removal 1589]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.020 s
+% Peak memory usage: 67 MB
+% Instructions burned: 68 (million)
+% ------------------------------
+% ------------------------------

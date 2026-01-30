@@ -1,0 +1,49 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+1. double_divide(inverse(double_divide(inverse(double_divide(X0,inverse(X1))),X2)),double_divide(X0,X2)) = X1 [input(axiom)]
+2. ! [X0] : inverse(inverse(X0)) = X0 [input(assumption)]
+3. ! [X0,X1,X2] : (double_divide(X0,X2) = double_divide(X1,X2) => X0 = X1) [input(assumption)]
+5. a2 != inverse(double_divide(a2,inverse(double_divide(b2,inverse(b2))))) [input(negated conjecture)]
+6. ! [X0,X1,X2] : (X0 = X1 | double_divide(X0,X2) != double_divide(X1,X2)) [ennf transformation 3]
+8. inverse(inverse(X0)) = X0 [cnf transformation 2]
+9. double_divide(X0,X2) != double_divide(X1,X2) | X0 = X1 [cnf transformation 6]
+13. inverse(X0) = double_divide(inverse(double_divide(inverse(double_divide(X1,X0)),X2)),double_divide(X1,X2)) [superposition 1,8]
+14. double_divide(inverse(X0),double_divide(inverse(double_divide(X1,inverse(X0))),double_divide(X1,inverse(X2)))) = X2 [superposition 1,1]
+15. double_divide(inverse(double_divide(inverse(double_divide(inverse(double_divide(inverse(double_divide(X1,inverse(X0))),X2)),inverse(X3))),double_divide(X1,X2))),X0) = X3 [superposition 1,1]
+19. double_divide(X3,double_divide(X1,X2)) != X0 | inverse(double_divide(inverse(double_divide(X1,inverse(X0))),X2)) = X3 [superposition 9,1]
+33. double_divide(inverse(inverse(X0)),double_divide(inverse(double_divide(X1,X0)),double_divide(X1,inverse(X2)))) = X2 [superposition 1,13]
+34. double_divide(X0,double_divide(inverse(double_divide(X1,X0)),double_divide(X1,inverse(X2)))) = X2 [forward demodulation 33,8]
+155. inverse(double_divide(inverse(double_divide(X0,inverse(double_divide(X1,double_divide(X0,X2))))),X2)) = X1 [equality resolution 19]
+204. double_divide(inverse(double_divide(inverse(X0),double_divide(inverse(double_divide(inverse(double_divide(X1,inverse(inverse(X2)))),X3)),double_divide(X1,X3)))),X0) = X2 [superposition 15,15]
+250. double_divide(inverse(double_divide(inverse(X0),inverse(X2))),X0) = X2 [forward demodulation 204,1]
+268. double_divide(inverse(X0),double_divide(inverse(inverse(X1)),inverse(X0))) = X1 [superposition 250,250]
+287. double_divide(inverse(X0),double_divide(inverse(X1),X1)) = X0 [superposition 1,250]
+288. inverse(double_divide(X0,double_divide(inverse(X1),X1))) = X0 [superposition 155,250]
+312. double_divide(inverse(X0),double_divide(X1,inverse(X0))) = X1 [forward demodulation 268,8]
+426. double_divide(X0,double_divide(X2,X0)) = X2 [superposition 312,288]
+428. double_divide(inverse(X1),X0) = inverse(double_divide(inverse(inverse(X1)),inverse(X0))) [superposition 312,250]
+429. double_divide(X0,X1) = double_divide(X1,X0) [superposition 34,312]
+430. double_divide(X0,inverse(X1)) = double_divide(inverse(X1),X0) [superposition 14,312]
+465. inverse(double_divide(X1,inverse(X0))) = double_divide(inverse(X1),X0) [forward demodulation 428,8]
+673. double_divide(double_divide(X0,X1),X0) = X1 [superposition 426,426]
+732. double_divide(X0,double_divide(X0,X1)) = X1 [forward demodulation 673,429]
+1531. double_divide(inverse(X1),double_divide(X0,inverse(X0))) = X1 [superposition 287,429]
+1585. double_divide(inverse(X1),X1) = double_divide(inverse(X0),X0) [superposition 732,287]
+1609. double_divide(inverse(X1),X1) = double_divide(X0,inverse(X0)) [forward demodulation 1585,430]
+1649. double_divide(X0,inverse(X0)) = double_divide(X1,inverse(X1)) [forward demodulation 1609,430]
+21442. a2 != inverse(double_divide(a2,inverse(double_divide(X0,inverse(X0))))) [superposition 5,1649]
+21567. a2 != double_divide(inverse(a2),double_divide(X0,inverse(X0))) [forward demodulation 21442,465]
+21746. $false [forward subsumption resolution 21567,1531]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.301 s
+% Peak memory usage: 71 MB
+% Instructions burned: 930 (million)
+% ------------------------------
+% ------------------------------

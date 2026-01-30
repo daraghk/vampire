@@ -1,0 +1,32 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP540-1
+% SZS output start Proof for GRP540-1
+1. divide(divide(X0,X1),divide(divide(X0,X2),X1)) = X2 [input(axiom)]
+2. multiply(X0,X1) = divide(X0,divide(divide(X2,X2),X1)) [input(axiom)]
+3. inverse(X0) = divide(divide(X1,X1),X0) [input(axiom)]
+4. identity = divide(X0,X0) [input(axiom)]
+5. multiply(a,b) != multiply(b,a) [input(negated conjecture)]
+6. inverse(X0) = divide(identity,X0) [forward demodulation 3,4]
+7. multiply(X0,X1) = divide(X0,divide(identity,X1)) [forward demodulation 2,4]
+8. multiply(X0,X1) = divide(X0,inverse(X1)) [forward demodulation 7,6]
+20. divide(divide(X0,X1),divide(identity,X1)) = X0 [superposition 1,4]
+25. divide(divide(X0,inverse(X2)),multiply(divide(X0,X1),X2)) = X1 [superposition 1,8]
+27. divide(multiply(X0,X2),multiply(divide(X0,X1),X2)) = X1 [forward demodulation 25,8]
+29. divide(divide(X0,X1),inverse(X1)) = X0 [forward demodulation 20,6]
+33. multiply(divide(X0,X1),X1) = X0 [forward demodulation 29,8]
+202. divide(multiply(X0,X1),X0) = X1 [superposition 27,33]
+666. multiply(X0,X1) = multiply(X1,X0) [superposition 33,202]
+833. multiply(a,b) != multiply(a,b) [superposition 5,666]
+834. $false [trivial inequality removal 833]
+% SZS output end Proof for GRP540-1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.013 s
+% Peak memory usage: 59 MB
+% Instructions burned: 29 (million)
+% ------------------------------
+% ------------------------------

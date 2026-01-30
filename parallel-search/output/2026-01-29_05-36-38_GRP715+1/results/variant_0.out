@@ -1,0 +1,75 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0
+% SZS output start Proof for variant_0
+6. mult(mult(mult(X0,X1),X2),X1) = mult(X0,mult(mult(X1,X2),X1)) [input(axiom)]
+7. mult(X0,mult(X1,X1)) = mult(mult(X0,X1),X1) [input(axiom)]
+8. mult(X0,unit) = X0 [input(axiom)]
+9. mult(unit,X0) = X0 [input(axiom)]
+10. unit = mult(op_a,op_b) [input(axiom)]
+11. unit = mult(op_b,op_a) [input(axiom)]
+14. mult(op_a,op_b) = mult(op_b,op_a) [input(assumption)]
+17. sK0 != mult(mult(sK0,op_a),op_b) | sK0 != mult(mult(sK0,op_b),op_a) [input(negated conjecture)]
+20. mult(op_a,op_b) = mult(op_b,op_a) [cnf transformation 14]
+24. 1 <=> sK0 = mult(mult(sK0,op_b),op_a) [avatar definition]
+26. sK0 != mult(mult(sK0,op_b),op_a) <- (~1) [avatar component clause 24]
+28. 2 <=> sK0 = mult(mult(sK0,op_a),op_b) [avatar definition]
+30. sK0 != mult(mult(sK0,op_a),op_b) <- (~2) [avatar component clause 28]
+31. ~1 | ~2 [avatar split clause 17,28,24]
+84. mult(op_a,mult(op_b,op_b)) = mult(unit,op_b) [superposition 7,10]
+91. op_b = mult(op_a,mult(op_b,op_b)) [forward demodulation 84,9]
+142. mult(mult(X0,X1),mult(mult(X1,X2),X1)) = mult(mult(mult(X0,mult(X1,X1)),X2),X1) [superposition 6,7]
+150. mult(op_b,mult(mult(op_a,X0),op_a)) = mult(mult(unit,X0),op_a) [superposition 6,11]
+153. mult(mult(X0,X1),mult(mult(X2,X1),X2)) = mult(mult(X0,mult(mult(X1,X2),X1)),X2) [superposition 6,6]
+168. mult(op_b,mult(mult(op_a,X0),op_a)) = mult(X0,op_a) [forward demodulation 150,9]
+974. mult(mult(op_b,op_b),op_a) = mult(op_b,mult(op_b,op_a)) [superposition 168,91]
+992. mult(mult(op_b,op_b),op_a) = mult(op_b,mult(op_a,op_b)) [forward demodulation 974,20]
+996. mult(op_b,unit) = mult(mult(op_b,op_b),op_a) [forward demodulation 992,10]
+998. op_b = mult(mult(op_b,op_b),op_a) [forward demodulation 996,8]
+2506. mult(mult(X0,mult(op_b,op_b)),mult(mult(op_a,mult(op_b,op_b)),op_a)) = mult(mult(X0,mult(op_b,mult(op_b,op_b))),op_a) [superposition 153,998]
+2512. mult(mult(X0,op_a),mult(mult(mult(op_b,op_b),op_a),mult(op_b,op_b))) = mult(mult(X0,mult(op_b,op_a)),mult(op_b,op_b)) [superposition 153,91]
+2601. mult(mult(X0,op_a),mult(mult(mult(op_b,op_b),op_a),mult(op_b,op_b))) = mult(mult(X0,mult(op_a,op_b)),mult(op_b,op_b)) [forward demodulation 2512,20]
+2607. mult(mult(X0,mult(op_b,mult(op_b,op_b))),op_a) = mult(mult(X0,mult(op_b,op_b)),mult(op_b,op_a)) [forward demodulation 2506,91]
+2627. mult(mult(X0,op_a),mult(mult(mult(op_b,op_b),op_a),mult(op_b,op_b))) = mult(mult(X0,unit),mult(op_b,op_b)) [forward demodulation 2601,10]
+2633. mult(mult(X0,mult(op_b,mult(op_b,op_b))),op_a) = mult(mult(X0,mult(op_b,op_b)),mult(op_a,op_b)) [forward demodulation 2607,20]
+2646. mult(X0,mult(op_b,op_b)) = mult(mult(X0,op_a),mult(mult(mult(op_b,op_b),op_a),mult(op_b,op_b))) [forward demodulation 2627,8]
+2650. mult(mult(X0,mult(op_b,mult(op_b,op_b))),op_a) = mult(mult(X0,mult(op_b,op_b)),unit) [forward demodulation 2633,10]
+2655. mult(X0,mult(op_b,op_b)) = mult(mult(X0,op_a),mult(op_b,mult(op_b,op_b))) [forward demodulation 2646,998]
+2657. mult(X0,mult(op_b,op_b)) = mult(mult(X0,mult(op_b,mult(op_b,op_b))),op_a) [forward demodulation 2650,8]
+18215. mult(mult(X0,mult(op_b,op_b)),op_a) = mult(X0,mult(mult(op_a,mult(op_b,mult(op_b,op_b))),op_a)) [superposition 6,2655]
+18253. mult(X0,mult(op_a,mult(op_b,op_b))) = mult(mult(X0,mult(op_b,op_b)),op_a) [forward demodulation 18215,2657]
+18284. mult(X0,op_b) = mult(mult(X0,mult(op_b,op_b)),op_a) [forward demodulation 18253,91]
+30458. mult(mult(X0,op_a),op_b) = mult(X0,mult(mult(op_a,mult(op_b,op_b)),op_a)) [superposition 6,18284]
+30459. mult(mult(X0,mult(op_a,op_a)),op_b) = mult(mult(X0,op_a),mult(mult(op_a,mult(op_b,op_b)),op_a)) [superposition 142,18284]
+30516. mult(mult(X0,mult(op_a,op_a)),op_b) = mult(mult(X0,op_a),mult(op_a,op_b)) [forward demodulation 30459,18284]
+30517. mult(mult(X0,op_a),op_b) = mult(X0,mult(op_a,op_b)) [forward demodulation 30458,18284]
+30546. mult(mult(X0,mult(op_a,op_a)),op_b) = mult(mult(X0,op_a),unit) [forward demodulation 30516,10]
+30547. mult(X0,unit) = mult(mult(X0,op_a),op_b) [forward demodulation 30517,10]
+30566. mult(X0,op_a) = mult(mult(X0,mult(op_a,op_a)),op_b) [forward demodulation 30546,8]
+30567. mult(mult(X0,op_a),op_b) = X0 [forward demodulation 30547,8]
+54004. mult(mult(X0,op_b),op_a) = mult(X0,mult(mult(op_b,mult(op_a,op_a)),op_b)) [superposition 6,30566]
+54073. mult(mult(X0,op_b),op_a) = mult(X0,mult(op_b,op_a)) [forward demodulation 54004,30566]
+54106. mult(mult(X0,op_b),op_a) = mult(X0,mult(op_a,op_b)) [forward demodulation 54073,20]
+54131. mult(X0,unit) = mult(mult(X0,op_b),op_a) [forward demodulation 54106,10]
+54151. mult(mult(X0,op_b),op_a) = X0 [forward demodulation 54131,8]
+54681. sK0 != sK0 <- (~1) [superposition 26,54151]
+54731. $false <- (~1) [trivial inequality removal 54681]
+54732. 1 [avatar contradiction clause 54731]
+54780. $false <- (~2) [forward subsumption resolution 30,30567]
+54781. 2 [avatar contradiction clause 54780]
+s1. ~2 | ~1 [sat_conversion 31]
+s2. 1 [sat_conversion 54732]
+s3. 2 [sat_conversion 54781]
+s4. # [rat s1,s2,s3]
+54782. $false [avatar sat refutation s4]
+% SZS output end Proof for variant_0
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.604 s
+% Peak memory usage: 59 MB
+% Instructions burned: 2543 (million)
+% ------------------------------
+% ------------------------------

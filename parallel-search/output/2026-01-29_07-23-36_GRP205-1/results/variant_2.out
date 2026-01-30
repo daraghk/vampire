@@ -1,0 +1,54 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2
+% SZS output start Proof for variant_2
+1. multiply(identity,X0) = X0 [input(axiom)]
+2. multiply(X0,identity) = X0 [input(axiom)]
+3. multiply(X0,left_division(X0,X1)) = X1 [input(axiom)]
+4. left_division(X0,multiply(X0,X1)) = X1 [input(axiom)]
+5. multiply(right_division(X0,X1),X1) = X0 [input(axiom)]
+6. right_division(multiply(X0,X1),X1) = X0 [input(axiom)]
+8. identity = multiply(left_inverse(X0),X0) [input(axiom)]
+9. multiply(multiply(multiply(X0,X1),X0),X2) = multiply(X0,multiply(X1,multiply(X0,X2))) [input(axiom)]
+15. multiply(x,multiply(multiply(y,z),x)) != multiply(multiply(x,y),multiply(z,x)) [input(negated conjecture)]
+98. multiply(X1,multiply(left_division(X1,X0),multiply(X1,X2))) = multiply(multiply(X0,X1),X2) [superposition 9,3]
+102. multiply(left_inverse(X0),multiply(X0,multiply(left_inverse(X0),X1))) = multiply(multiply(identity,left_inverse(X0)),X1) [superposition 9,8]
+108. multiply(multiply(X0,X1),X0) = multiply(X0,multiply(X1,multiply(X0,identity))) [superposition 2,9]
+112. multiply(multiply(X0,X1),X0) = right_division(multiply(X0,multiply(X1,multiply(X0,X2))),X2) [superposition 6,9]
+119. multiply(multiply(X0,X1),X0) = multiply(X0,multiply(X1,X0)) [forward demodulation 108,2]
+122. multiply(left_inverse(X0),X1) = multiply(left_inverse(X0),multiply(X0,multiply(left_inverse(X0),X1))) [forward demodulation 102,1]
+301. multiply(left_inverse(X1),multiply(X1,X0)) = X0 [superposition 122,3]
+306. multiply(X0,multiply(left_inverse(X0),X1)) = left_division(left_inverse(X0),multiply(left_inverse(X0),X1)) [superposition 4,122]
+321. multiply(X0,multiply(left_inverse(X0),X1)) = X1 [forward demodulation 306,4]
+330. left_division(X1,X0) = multiply(left_inverse(X1),X0) [superposition 301,3]
+335. multiply(left_inverse(right_division(X0,X1)),X0) = X1 [superposition 301,5]
+341. multiply(X1,X0) = left_division(left_inverse(X1),X0) [superposition 4,301]
+373. multiply(multiply(X1,left_inverse(X0)),X0) = multiply(left_inverse(X0),multiply(left_division(left_inverse(X0),X1),identity)) [superposition 98,8]
+409. multiply(multiply(X1,left_inverse(X0)),X0) = left_division(X0,multiply(left_division(left_inverse(X0),X1),identity)) [forward demodulation 373,330]
+424. multiply(multiply(X1,left_inverse(X0)),X0) = left_division(X0,left_division(left_inverse(X0),X1)) [forward demodulation 409,2]
+429. left_division(X0,multiply(X0,X1)) = multiply(multiply(X1,left_inverse(X0)),X0) [forward demodulation 424,341]
+430. multiply(multiply(X1,left_inverse(X0)),X0) = X1 [forward demodulation 429,4]
+922. multiply(multiply(X1,right_division(X0,multiply(X1,X2))),X1) = right_division(multiply(X1,X0),X2) [superposition 112,5]
+954. multiply(X1,multiply(right_division(X0,multiply(X1,X2)),X1)) = right_division(multiply(X1,X0),X2) [forward demodulation 922,119]
+1196. multiply(X0,X1) = right_division(X0,left_inverse(X1)) [superposition 430,5]
+1209. right_division(X0,X1) = multiply(X0,left_inverse(X1)) [superposition 6,430]
+2048. right_division(X0,X1) = left_inverse(right_division(X1,X0)) [superposition 6,335]
+2901. left_inverse(X1) = multiply(X0,right_division(left_inverse(X0),X1)) [superposition 321,1209]
+3838. multiply(X2,right_division(X0,X1)) = right_division(X2,right_division(X1,X0)) [superposition 1209,2048]
+16309. multiply(X1,multiply(right_division(X2,left_inverse(X0)),X1)) = right_division(multiply(X1,X2),right_division(left_inverse(X1),X0)) [superposition 954,2901]
+16585. multiply(X1,multiply(right_division(X2,left_inverse(X0)),X1)) = multiply(multiply(X1,X2),right_division(X0,left_inverse(X1))) [forward demodulation 16309,3838]
+16666. multiply(X1,multiply(right_division(X2,left_inverse(X0)),X1)) = multiply(multiply(X1,X2),multiply(X0,X1)) [forward demodulation 16585,1196]
+16720. multiply(X1,multiply(multiply(X2,X0),X1)) = multiply(multiply(X1,X2),multiply(X0,X1)) [forward demodulation 16666,1196]
+491590. multiply(x,multiply(multiply(y,z),x)) != multiply(x,multiply(multiply(y,z),x)) [superposition 15,16720]
+491672. $false [trivial inequality removal 491590]
+% SZS output end Proof for variant_2
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 16.995 s
+% Peak memory usage: 226 MB
+% Instructions burned: 67051 (million)
+% ------------------------------
+% ------------------------------

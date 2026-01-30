@@ -1,0 +1,51 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2
+% SZS output start Proof for variant_2
+1. mult(X0,ld(X0,X1)) = X1 [input(axiom)]
+2. ld(X0,mult(X0,X1)) = X1 [input(axiom)]
+8. mult(op_c,mult(X0,X1)) = mult(mult(op_c,X0),X1) [input(axiom)]
+10. mult(X0,mult(op_c,X1)) = mult(mult(X0,op_c),X1) [input(axiom)]
+11. op_d = ld(X0,mult(op_c,X0)) [input(axiom)]
+19. mult(op_d,mult(sK0,sK1)) != mult(mult(op_d,sK0),sK1) | mult(sK0,mult(sK1,op_d)) != mult(mult(sK0,sK1),op_d) | mult(sK0,mult(op_d,sK1)) != mult(mult(sK0,op_d),sK1) [input(negated conjecture)]
+26. 1 <=> mult(sK0,mult(op_d,sK1)) = mult(mult(sK0,op_d),sK1) [avatar definition]
+27. mult(sK0,mult(op_d,sK1)) = mult(mult(sK0,op_d),sK1) <- (1) [avatar component clause 26]
+28. mult(sK0,mult(op_d,sK1)) != mult(mult(sK0,op_d),sK1) <- (~1) [avatar component clause 26]
+30. 2 <=> mult(sK0,mult(sK1,op_d)) = mult(mult(sK0,sK1),op_d) [avatar definition]
+32. mult(sK0,mult(sK1,op_d)) != mult(mult(sK0,sK1),op_d) <- (~2) [avatar component clause 30]
+34. 3 <=> mult(op_d,mult(sK0,sK1)) = mult(mult(op_d,sK0),sK1) [avatar definition]
+36. mult(op_d,mult(sK0,sK1)) != mult(mult(op_d,sK0),sK1) <- (~3) [avatar component clause 34]
+37. ~1 | ~2 | ~3 [avatar split clause 19,34,30,26]
+66. op_c = op_d [superposition 2,11]
+67. mult(op_c,X0) = mult(X0,op_d) [superposition 1,11]
+73. mult(sK0,mult(op_c,sK1)) != mult(mult(sK0,op_c),sK1) <- (~1) [superposition 28,66]
+74. $false <- (~1) [forward subsumption resolution 73,10]
+75. 1 [avatar contradiction clause 74]
+76. mult(sK0,mult(op_d,sK1)) = mult(mult(op_c,sK0),sK1) <- (1) [forward demodulation 27,67]
+77. mult(sK0,mult(sK1,op_d)) != mult(op_c,mult(sK0,sK1)) <- (~2) [forward demodulation 32,67]
+78. mult(sK0,mult(op_d,sK1)) = mult(op_c,mult(sK0,sK1)) <- (1) [forward demodulation 76,8]
+79. mult(sK0,mult(op_c,sK1)) != mult(op_c,mult(sK0,sK1)) <- (~2) [forward demodulation 77,67]
+80. mult(sK0,mult(op_c,sK1)) = mult(op_c,mult(sK0,sK1)) <- (1) [forward demodulation 78,66]
+81. $false <- (1, ~2) [forward subsumption resolution 80,79]
+82. ~1 | 2 [avatar contradiction clause 81]
+84. mult(mult(op_c,sK0),sK1) != mult(op_c,mult(sK0,sK1)) <- (~3) [forward demodulation 36,66]
+86. $false <- (~3) [forward subsumption resolution 84,8]
+87. 3 [avatar contradiction clause 86]
+s1. ~3 | ~2 | ~1 [sat_conversion 37]
+s2. 1 [sat_conversion 75]
+s3. ~1 | 2 [sat_conversion 82]
+s4. 3 [sat_conversion 87]
+s5. 2 [rat s3,s2]
+s6. # [rat s1,s2,s5,s4]
+88. $false [avatar sat refutation s6]
+% SZS output end Proof for variant_2
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.002 s
+% Peak memory usage: 58 MB
+% Instructions burned: 5 (million)
+% ------------------------------
+% ------------------------------

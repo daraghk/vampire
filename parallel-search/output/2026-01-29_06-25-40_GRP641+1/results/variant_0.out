@@ -1,0 +1,77 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0
+% SZS output start Proof for variant_0
+10. u1_struct_0(X0) = k1_funct_1(k1_latsubgr(X1),X0) | ~v1_group_1(X0) | ~m1_group_2(X0,X1) | ~v1_funct_1(k1_latsubgr(X1)) | ~v1_funct_2(k1_latsubgr(X1),k1_group_3(X1),k1_zfmisc_1(u1_struct_0(X1))) | ~m2_relset_1(k1_latsubgr(X1),k1_group_3(X1),k1_zfmisc_1(u1_struct_0(X1))) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [input(axiom)]
+13. v1_funct_1(k1_latsubgr(X0)) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) [input(axiom)]
+14. v1_funct_2(k1_latsubgr(X0),k1_group_3(X0),k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) [input(axiom)]
+15. m2_relset_1(k1_latsubgr(X0),k1_group_3(X0),k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) [input(axiom)]
+16. m1_subset_1(k2_group_1(X0),u1_struct_0(X0)) | v3_struct_0(X0) | ~l1_group_1(X0) [input(axiom)]
+17. ~l1_group_1(X0) | l1_struct_0(X0) [input(axiom)]
+18. ~m1_group_2(X0,X1) | ~v3_struct_0(X0) | v3_struct_0(X1) | ~v3_group_1(X1) | ~l1_group_1(X1) [input(axiom)]
+20. ~m1_group_2(X0,X1) | l1_group_1(X0) | v3_struct_0(X1) | ~v3_group_1(X1) | ~l1_group_1(X1) [input(axiom)]
+32. ~v1_xboole_0(u1_struct_0(X0)) | v3_struct_0(X0) | ~l1_struct_0(X0) [input(axiom)]
+57. ~m1_subset_1(X1,X0) | r2_hidden(X1,X0) | v1_xboole_0(X0) [input(axiom)]
+60. ~m1_group_2(X1,X0) | k2_group_1(X0) = k2_group_1(X1) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) [input(axiom)]
+70. ~r2_hidden(k2_group_1(sK0),k1_funct_1(k1_latsubgr(sK0),sK1)) [input(negated conjecture)]
+71. v1_group_1(sK1) [input(negated conjecture)]
+72. m1_group_2(sK1,sK0) [input(negated conjecture)]
+73. ~v3_struct_0(sK0) [input(negated conjecture)]
+74. v3_group_1(sK0) [input(negated conjecture)]
+75. v4_group_1(sK0) [input(negated conjecture)]
+76. l1_group_1(sK0) [input(negated conjecture)]
+88. u1_struct_0(X0) = k1_funct_1(k1_latsubgr(X1),X0) | ~v1_group_1(X0) | ~m1_group_2(X0,X1) | ~v1_funct_2(k1_latsubgr(X1),k1_group_3(X1),k1_zfmisc_1(u1_struct_0(X1))) | ~m2_relset_1(k1_latsubgr(X1),k1_group_3(X1),k1_zfmisc_1(u1_struct_0(X1))) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [forward subsumption resolution 10,13]
+89. u1_struct_0(X0) = k1_funct_1(k1_latsubgr(X1),X0) | ~v1_group_1(X0) | ~m1_group_2(X0,X1) | ~m2_relset_1(k1_latsubgr(X1),k1_group_3(X1),k1_zfmisc_1(u1_struct_0(X1))) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [forward subsumption resolution 88,14]
+90. ~m1_group_2(X0,X1) | ~v1_group_1(X0) | u1_struct_0(X0) = k1_funct_1(k1_latsubgr(X1),X0) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [forward subsumption resolution 89,15]
+185. ~v3_struct_0(sK1) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~l1_group_1(sK0) [resolution 18,72]
+188. ~v3_struct_0(sK1) | ~v3_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 185,73]
+189. ~v3_struct_0(sK1) | ~l1_group_1(sK0) [forward subsumption resolution 188,74]
+190. ~v3_struct_0(sK1) [forward subsumption resolution 189,76]
+197. l1_group_1(sK1) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~l1_group_1(sK0) [resolution 20,72]
+200. l1_group_1(sK1) | ~v3_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 197,73]
+201. l1_group_1(sK1) | ~l1_group_1(sK0) [forward subsumption resolution 200,74]
+202. l1_group_1(sK1) [forward subsumption resolution 201,76]
+204. l1_struct_0(sK1) [resolution 202,17]
+237. k2_group_1(sK0) = k2_group_1(sK1) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [resolution 60,72]
+240. k2_group_1(sK0) = k2_group_1(sK1) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 237,73]
+241. k2_group_1(sK0) = k2_group_1(sK1) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 240,74]
+242. k2_group_1(sK0) = k2_group_1(sK1) | ~l1_group_1(sK0) [forward subsumption resolution 241,75]
+243. k2_group_1(sK0) = k2_group_1(sK1) [forward subsumption resolution 242,76]
+244. m1_subset_1(k2_group_1(sK0),u1_struct_0(sK1)) | v3_struct_0(sK1) | ~l1_group_1(sK1) [superposition 16,243]
+245. m1_subset_1(k2_group_1(sK0),u1_struct_0(sK1)) | ~l1_group_1(sK1) [forward subsumption resolution 244,190]
+246. m1_subset_1(k2_group_1(sK0),u1_struct_0(sK1)) [forward subsumption resolution 245,202]
+251. r2_hidden(k2_group_1(sK0),u1_struct_0(sK1)) | v1_xboole_0(u1_struct_0(sK1)) [resolution 246,57]
+253. 7 <=> v1_xboole_0(u1_struct_0(sK1)) [avatar definition]
+255. v1_xboole_0(u1_struct_0(sK1)) <- (7) [avatar component clause 253]
+257. 8 <=> r2_hidden(k2_group_1(sK0),u1_struct_0(sK1)) [avatar definition]
+259. r2_hidden(k2_group_1(sK0),u1_struct_0(sK1)) <- (8) [avatar component clause 257]
+260. 7 | 8 [avatar split clause 251,257,253]
+268. v3_struct_0(sK1) | ~l1_struct_0(sK1) <- (7) [resolution 255,32]
+272. ~l1_struct_0(sK1) <- (7) [forward subsumption resolution 268,190]
+273. $false <- (7) [forward subsumption resolution 272,204]
+274. ~7 [avatar contradiction clause 273]
+282. ~v1_group_1(sK1) | k1_funct_1(k1_latsubgr(sK0),sK1) = u1_struct_0(sK1) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [resolution 90,72]
+285. k1_funct_1(k1_latsubgr(sK0),sK1) = u1_struct_0(sK1) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 282,71]
+286. k1_funct_1(k1_latsubgr(sK0),sK1) = u1_struct_0(sK1) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 285,73]
+287. k1_funct_1(k1_latsubgr(sK0),sK1) = u1_struct_0(sK1) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 286,74]
+288. k1_funct_1(k1_latsubgr(sK0),sK1) = u1_struct_0(sK1) | ~l1_group_1(sK0) [forward subsumption resolution 287,75]
+289. k1_funct_1(k1_latsubgr(sK0),sK1) = u1_struct_0(sK1) [forward subsumption resolution 288,76]
+315. ~r2_hidden(k2_group_1(sK0),u1_struct_0(sK1)) [superposition 70,289]
+316. $false <- (8) [forward subsumption resolution 315,259]
+317. ~8 [avatar contradiction clause 316]
+s5. 7 | 8 [sat_conversion 260]
+s6. ~7 [sat_conversion 274]
+s8. ~8 [sat_conversion 317]
+s9. # [rat s5,s8,s6]
+318. $false [avatar sat refutation s9]
+% SZS output end Proof for variant_0
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.005 s
+% Peak memory usage: 59 MB
+% Instructions burned: 14 (million)
+% ------------------------------
+% ------------------------------

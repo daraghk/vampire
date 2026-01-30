@@ -1,0 +1,81 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2
+% SZS output start Proof for variant_2
+1. divide(X0,divide(divide(divide(divide(X1,X1),X1),X2),divide(divide(divide(X1,X1),X0),X2))) = X1 [input(axiom)]
+3. divide(divide(X0,X0),X1) = inverse(X1) [input(axiom)]
+4. ! [X0] : divide(divide(X0,X0),X0) = inverse(X0) [input(axiom)]
+5. ! [X0,X1,X2] : multiply(X0,X1) = divide(X0,divide(divide(X2,X2),X1)) [input(axiom)]
+9. multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [input(negated conjecture)]
+10. divide(divide(X0,X0),X0) = inverse(X0) [cnf transformation 4]
+11. multiply(X0,X1) = divide(X0,divide(divide(X2,X2),X1)) [cnf transformation 5]
+15. divide(divide(X1,X1),X1) = divide(divide(X0,X0),X1) [definition unfolding 3,10]
+19. multiply(X2,divide(divide(X3,X3),X1)) = divide(X2,multiply(divide(X0,X0),X1)) [superposition 11,11]
+21. divide(divide(X2,X2),X1) = divide(divide(X0,X0),X1) [superposition 15,15]
+28. divide(divide(divide(divide(X0,X0),X1),divide(divide(X0,X0),X1)),divide(divide(X0,X0),X1)) = multiply(divide(X2,X2),X1) [superposition 11,15]
+29. multiply(divide(divide(divide(X0,X0),X1),divide(divide(X0,X0),X1)),X1) = multiply(divide(X2,X2),X1) [forward demodulation 28,11]
+34. multiply(divide(X2,X2),X1) = multiply(multiply(divide(divide(X0,X0),X1),X1),X1) [forward demodulation 29,11]
+78. multiply(X2,X3) = divide(X2,divide(divide(divide(X0,X0),divide(X1,X1)),X3)) [superposition 11,21]
+96. divide(divide(X0,X0),X1) = divide(X2,divide(divide(divide(multiply(divide(divide(X0,X0),X1),X1),divide(divide(X0,X0),X1)),X3),divide(divide(multiply(divide(divide(X0,X0),X1),X1),X2),X3))) [superposition 1,11]
+99. divide(X1,divide(divide(divide(divide(X0,X0),X1),X2),divide(divide(divide(X0,X0),X1),X2))) = X1 [superposition 1,15]
+102. divide(X0,divide(divide(divide(divide(X1,X1),X1),X2),divide(divide(divide(X0,X0),X0),X2))) = X1 [superposition 1,15]
+115. divide(divide(X0,X0),multiply(divide(divide(divide(X0,X0),X0),X1),X1)) = X0 [superposition 1,11]
+119. multiply(X1,divide(divide(divide(X0,X0),X1),divide(divide(X0,X0),X0))) = X0 [superposition 11,1]
+122. multiply(X1,divide(divide(divide(divide(X0,X0),X0),X2),divide(divide(divide(X0,X0),divide(X3,X3)),X2))) = divide(X1,X0) [superposition 11,1]
+123. divide(X1,X0) = multiply(X1,multiply(divide(divide(divide(X0,X0),X0),X2),X2)) [forward demodulation 122,78]
+126. multiply(X1,multiply(divide(divide(X0,X0),X1),X0)) = X0 [forward demodulation 119,11]
+141. divide(divide(X0,X0),X1) = divide(X2,divide(divide(multiply(multiply(divide(divide(X0,X0),X1),X1),X1),X3),divide(divide(multiply(divide(divide(X0,X0),X1),X1),X2),X3))) [forward demodulation 96,11]
+153. multiply(X1,multiply(divide(divide(X0,X0),X1),X2)) = X2 [superposition 126,21]
+288. multiply(X1,X0) = multiply(divide(divide(X3,X3),divide(divide(X2,X2),X1)),X0) [superposition 153,153]
+293. multiply(X1,X0) = multiply(multiply(divide(X3,X3),X1),X0) [forward demodulation 288,11]
+624. divide(divide(X1,X1),multiply(divide(divide(divide(X0,X0),X1),X2),X2)) = X1 [superposition 115,21]
+710. divide(X1,X2) = multiply(X1,multiply(X0,divide(divide(divide(divide(X0,X0),X0),X3),divide(divide(divide(X0,X0),divide(divide(X2,X2),X2)),X3)))) [superposition 123,1]
+741. divide(multiply(divide(X0,X0),X1),X2) = multiply(X1,multiply(divide(divide(divide(X2,X2),X2),X3),X3)) [superposition 293,123]
+742. divide(multiply(divide(X0,X0),X1),X2) = divide(X1,X2) [forward demodulation 741,123]
+757. divide(X1,X2) = multiply(X1,multiply(X0,divide(divide(divide(divide(X0,X0),X0),X3),divide(multiply(divide(X0,X0),X2),X3)))) [forward demodulation 710,11]
+766. divide(X1,X2) = multiply(X1,multiply(X0,divide(divide(divide(divide(X0,X0),X0),X3),divide(X2,X3)))) [forward demodulation 757,742]
+771. divide(X2,X3) = divide(multiply(multiply(divide(divide(X0,X0),X1),X1),X2),X3) [superposition 742,11]
+777. divide(multiply(multiply(divide(divide(X0,X0),X1),X1),X1),X3) = divide(X1,X3) [superposition 742,34]
+868. divide(X1,divide(X0,X0)) = X1 [superposition 99,1]
+893. divide(X1,divide(divide(divide(divide(X0,X0),X0),divide(divide(divide(divide(X2,X2),divide(divide(X0,X0),X1)),X3),divide(divide(divide(X2,X2),divide(divide(X0,X0),X1)),X3))),divide(divide(X0,X0),X1))) = X0 [superposition 1,99]
+896. divide(X1,multiply(divide(divide(divide(X0,X0),X0),divide(divide(divide(divide(X2,X2),divide(divide(X0,X0),X1)),X3),divide(divide(divide(X2,X2),divide(divide(X0,X0),X1)),X3))),X1)) = X0 [forward demodulation 893,11]
+913. divide(X1,multiply(divide(divide(X0,X0),X0),X1)) = X0 [forward demodulation 896,868]
+1001. multiply(divide(X0,X0),X1) = divide(X1,divide(X2,X2)) [superposition 742,868]
+1002. multiply(divide(X0,X0),X1) = X1 [forward demodulation 1001,868]
+1093. divide(X1,X2) = multiply(X1,multiply(X0,divide(divide(divide(divide(X0,X0),X0),X3),divide(divide(divide(divide(divide(X2,X2),X2),divide(divide(X2,X2),X2)),divide(divide(X2,X2),X2)),X3)))) [superposition 123,102]
+1105. divide(X1,X2) = divide(X1,divide(divide(divide(divide(X2,X2),X2),divide(divide(X2,X2),X2)),divide(divide(X2,X2),X2))) [forward demodulation 1093,766]
+1162. divide(X1,X2) = multiply(X1,divide(divide(X2,X2),X2)) [forward demodulation 1105,11]
+1902. divide(X1,X0) = multiply(X1,divide(divide(X2,X2),X0)) [superposition 19,1002]
+2729. divide(divide(X0,X0),X1) = divide(X2,multiply(multiply(divide(divide(divide(X0,X0),X1),divide(divide(X0,X0),X1)),X1),X2)) [superposition 913,11]
+2734. divide(multiply(divide(divide(X1,X1),divide(divide(X2,X2),X2)),X0),X0) = X2 [superposition 913,153]
+2805. divide(multiply(multiply(divide(X1,X1),X2),X0),X0) = X2 [forward demodulation 2734,11]
+2810. divide(divide(X0,X0),X1) = divide(X2,multiply(X1,X2)) [forward demodulation 2729,293]
+2829. divide(multiply(X2,X0),X0) = X2 [forward demodulation 2805,293]
+3142. multiply(multiply(X0,divide(divide(X1,X1),X2)),X2) = X0 [superposition 11,2829]
+3147. multiply(divide(X0,X2),X2) = X0 [forward demodulation 3142,1902]
+10157. divide(X2,X0) = divide(divide(X1,X1),divide(X0,X2)) [superposition 2810,3147]
+10200. divide(X2,X1) = multiply(X2,divide(X0,multiply(X1,X0))) [superposition 1162,2810]
+10249. multiply(X2,X1) = divide(X2,divide(X0,multiply(X1,X0))) [superposition 78,2810]
+16689. divide(X1,divide(X0,X2)) = multiply(X1,divide(X2,X0)) [superposition 10200,3147]
+17861. divide(divide(X2,X2),multiply(divide(divide(X0,X0),X1),divide(divide(multiply(multiply(divide(divide(X0,X0),X1),X1),X1),X4),divide(divide(multiply(divide(divide(X0,X0),X1),X1),divide(divide(X3,X3),X2)),X4)))) = X2 [superposition 624,141]
+18065. divide(divide(X2,X2),divide(divide(divide(X0,X0),X1),divide(divide(divide(multiply(divide(divide(X0,X0),X1),X1),divide(divide(X3,X3),X2)),X4),divide(multiply(multiply(divide(divide(X0,X0),X1),X1),X1),X4)))) = X2 [forward demodulation 17861,16689]
+18225. divide(divide(divide(divide(multiply(divide(divide(X0,X0),X1),X1),divide(divide(X3,X3),X2)),X4),divide(multiply(multiply(divide(divide(X0,X0),X1),X1),X1),X4)),divide(divide(X0,X0),X1)) = X2 [forward demodulation 18065,10157]
+18318. multiply(divide(divide(divide(multiply(divide(divide(X0,X0),X1),X1),divide(divide(X3,X3),X2)),X4),divide(multiply(multiply(divide(divide(X0,X0),X1),X1),X1),X4)),X1) = X2 [forward demodulation 18225,11]
+18369. multiply(divide(divide(divide(multiply(divide(divide(X0,X0),X1),X1),divide(divide(X3,X3),X2)),X4),divide(X1,X4)),X1) = X2 [forward demodulation 18318,777]
+18389. multiply(divide(divide(multiply(multiply(divide(divide(X0,X0),X1),X1),X2),X4),divide(X1,X4)),X1) = X2 [forward demodulation 18369,11]
+18394. multiply(divide(divide(X2,X4),divide(X1,X4)),X1) = X2 [forward demodulation 18389,771]
+18448. multiply(X0,X1) = multiply(divide(X0,divide(X2,X1)),X2) [superposition 18394,2829]
+29862. multiply(multiply(X0,X1),X2) = multiply(X0,multiply(X1,X2)) [superposition 18448,10249]
+75367. multiply(a3,multiply(b3,c3)) != multiply(a3,multiply(b3,c3)) [superposition 9,29862]
+75420. $false [trivial inequality removal 75367]
+% SZS output end Proof for variant_2
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.639 s
+% Peak memory usage: 71 MB
+% Instructions burned: 2253 (million)
+% ------------------------------
+% ------------------------------

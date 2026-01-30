@@ -1,0 +1,22 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2_original
+% SZS output start Proof for variant_2_original
+2. multiply(X0,X1) = double_divide(double_divide(X1,X0),identity) [input(axiom)]
+5. multiply(identity,a2) != a2 [input(negated conjecture)]
+6. a2 != multiply(identity,a2) [reorient equations 5]
+10. ! [X0,X1] : double_divide(double_divide(X0,X1),X1) = X0 [input(assumption)]
+14. double_divide(double_divide(X0,X1),X1) = X0 [cnf transformation 10]
+16. a2 != double_divide(double_divide(a2,identity),identity) [definition unfolding 6,2]
+17. $false [forward subsumption resolution 16,14]
+% SZS output end Proof for variant_2_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.0000 s
+% Peak memory usage: 62 MB
+% Instructions burned: 1 (million)
+% ------------------------------
+% ------------------------------

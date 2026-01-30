@@ -1,0 +1,55 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2
+% SZS output start Proof for variant_2
+1. group_element(e_1) [input(axiom)]
+2. group_element(e_2) [input(axiom)]
+3. group_element(e_3) [input(axiom)]
+8. ~equalish(e_3,e_1) [input(axiom)]
+9. ~equalish(e_3,e_2) [input(axiom)]
+10. product1(X0,X1,e_3) | ~group_element(X1) | product1(X0,X1,e_1) | product1(X0,X1,e_2) | ~group_element(X0) [input(axiom)]
+12. ~product1(X0,X3,X2) | ~product1(X0,X1,X2) | equalish(X1,X3) [input(axiom)]
+14. product1(X0,X0,X0) [input(axiom)]
+16. ~product2(X0,X1,X3) | ~product2(X0,X1,X2) | equalish(X2,X3) [input(axiom)]
+17. ~product2(X0,X3,X2) | ~product2(X0,X1,X2) | equalish(X1,X3) [input(axiom)]
+19. product2(X0,X0,X0) [input(axiom)]
+25. ~product1(X2,X1,X3) | ~product1(X0,X1,X2) | product2(X3,X0,X1) [input(negated conjecture)]
+35. ~product1(X0,X1,X1) | product2(X1,X0,X1) [resolution 14,25]
+42. ~product1(X0,X1,X0) | equalish(X1,X0) [resolution 12,14]
+45. ~product2(X0,X0,X1) | equalish(X1,X0) [resolution 16,19]
+54. ~group_element(e_3) | product1(X0,e_3,e_1) | product1(X0,e_3,e_2) | ~group_element(X0) | product2(e_3,X0,e_3) [resolution 10,35]
+61. product2(e_3,X0,e_3) | product1(X0,e_3,e_2) | ~group_element(X0) | product1(X0,e_3,e_1) [forward subsumption resolution 54,3]
+65. ~product2(e_3,X1,e_3) | ~group_element(X0) | product1(X0,e_3,e_1) | product1(X0,e_3,e_2) | equalish(X1,X0) [resolution 61,17]
+86. product1(X0,e_3,e_2) | product1(X0,e_3,e_1) | ~group_element(X0) | equalish(e_3,X0) [resolution 65,19]
+96. product1(e_2,e_3,e_1) | ~group_element(e_2) | equalish(e_3,e_2) | equalish(e_3,e_2) [resolution 86,42]
+104. product1(e_2,e_3,e_1) | ~group_element(e_2) | equalish(e_3,e_2) [duplicate literal removal 96]
+105. product1(e_2,e_3,e_1) | equalish(e_3,e_2) [forward subsumption resolution 104,2]
+106. product1(e_2,e_3,e_1) [forward subsumption resolution 105,9]
+118. ~product1(X0,e_3,e_2) | product2(e_1,X0,e_3) [resolution 106,25]
+126. 2 <=> product1(e_1,e_3,e_2) [avatar definition]
+127. ~product1(e_1,e_3,e_2) <- (~2) [avatar component clause 126]
+128. product1(e_1,e_3,e_2) <- (2) [avatar component clause 126]
+212. product2(e_1,e_1,e_3) <- (2) [resolution 118,128]
+254. equalish(e_3,e_1) <- (2) [resolution 212,45]
+257. $false <- (2) [forward subsumption resolution 254,8]
+258. ~2 [avatar contradiction clause 257]
+279. product1(e_1,e_3,e_1) | ~group_element(e_1) | equalish(e_3,e_1) <- (~2) [resolution 127,86]
+308. ~group_element(e_1) | equalish(e_3,e_1) <- (~2) [forward subsumption resolution 279,42]
+310. equalish(e_3,e_1) <- (~2) [forward subsumption resolution 308,1]
+312. $false <- (~2) [forward subsumption resolution 310,8]
+313. 2 [avatar contradiction clause 312]
+s4. ~2 [sat_conversion 258]
+s7. 2 [sat_conversion 313]
+s9. # [rat s4,s7]
+316. $false [avatar sat refutation s9]
+% SZS output end Proof for variant_2
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.003 s
+% Peak memory usage: 62 MB
+% Instructions burned: 12 (million)
+% ------------------------------
+% ------------------------------

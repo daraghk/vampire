@@ -1,0 +1,73 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Theorem for variant_1_original
+% SZS output start Proof for variant_1_original
+1. ! [X0,X1] : mult(X1,ld(X1,X0)) = X0 [input(axiom)]
+2. ! [X0,X1] : ld(X1,mult(X1,X0)) = X0 [input(axiom)]
+3. ! [X0,X1] : mult(rd(X1,X0),X0) = X1 [input(axiom)]
+4. ! [X0,X1] : rd(mult(X1,X0),X0) = X1 [input(axiom)]
+5. ! [X0,X1,X2] : mult(mult(X2,mult(X1,X1)),X0) = mult(mult(X2,X1),mult(X1,X0)) [input(axiom)]
+6. ? [X0] : ! [X1] : (mult(X1,X0) = X1 & mult(X0,X1) = X1) [input(conjecture)]
+7. ~? [X0] : ! [X1] : (mult(X1,X0) = X1 & mult(X0,X1) = X1) [negated conjecture 6]
+13. ! [X0] : ? [X1] : (mult(X1,X0) != X1 | mult(X0,X1) != X1) [ennf transformation 7]
+14. ! [X0] : (? [X1] : (mult(X1,X0) != X1 | mult(X0,X1) != X1) => (sK0(X0) != mult(sK0(X0),X0) | sK0(X0) != mult(X0,sK0(X0)))) [skolem symbol introduction]
+15. ! [X0] : (sK0(X0) != mult(sK0(X0),X0) | sK0(X0) != mult(X0,sK0(X0))) [skolemisation 13,14]
+16. mult(X1,ld(X1,X0)) = X0 [cnf transformation 1]
+17. ld(X1,mult(X1,X0)) = X0 [cnf transformation 2]
+18. mult(rd(X1,X0),X0) = X1 [cnf transformation 3]
+19. rd(mult(X1,X0),X0) = X1 [cnf transformation 4]
+20. mult(mult(X2,mult(X1,X1)),X0) = mult(mult(X2,X1),mult(X1,X0)) [cnf transformation 5]
+21. sK0(X0) != mult(sK0(X0),X0) | sK0(X0) != mult(X0,sK0(X0)) [cnf transformation 15]
+30. rd(X0,ld(X1,X0)) = X1 [superposition 19,16]
+36. mult(mult(rd(X0,mult(X1,X1)),X1),mult(X1,X2)) = mult(X0,X2) [superposition 20,18]
+42. mult(X0,mult(X1,X1)) = rd(mult(mult(X0,X1),mult(X1,X2)),X2) [superposition 19,20]
+46. mult(mult(X0,X1),mult(X1,ld(mult(X0,mult(X1,X1)),X2))) = X2 [superposition 16,20]
+61. mult(X1,ld(X2,X0)) = mult(mult(rd(X1,mult(X2,X2)),X2),X0) [superposition 36,16]
+63. mult(X1,X2) = mult(mult(rd(X1,mult(rd(X0,X2),rd(X0,X2))),rd(X0,X2)),X0) [superposition 36,18]
+65. mult(X2,mult(X3,X1)) = mult(mult(rd(X2,mult(mult(rd(X0,mult(X3,X3)),X3),mult(rd(X0,mult(X3,X3)),X3))),mult(rd(X0,mult(X3,X3)),X3)),mult(X0,X1)) [superposition 36,36]
+69. mult(rd(X0,mult(X2,X2)),X2) = rd(mult(X0,X1),mult(X2,X1)) [superposition 19,36]
+70. mult(X2,X1) = ld(mult(rd(X0,mult(X2,X2)),X2),mult(X0,X1)) [superposition 17,36]
+78. mult(mult(rd(X0,mult(X2,X2)),X2),mult(mult(X2,X1),mult(X2,X1))) = rd(mult(mult(X0,X1),mult(mult(X2,X1),X3)),X3) [superposition 42,36]
+94. rd(mult(mult(X0,X1),mult(mult(X2,X1),X3)),X3) = mult(X0,ld(X2,mult(mult(X2,X1),mult(X2,X1)))) [forward demodulation 78,61]
+147. mult(X2,ld(mult(X1,mult(X2,X2)),X0)) = ld(mult(X1,X2),X0) [superposition 17,46]
+202. mult(rd(X0,mult(X1,X1)),X1) = rd(mult(X0,ld(X1,X2)),X2) [superposition 19,61]
+358. mult(rd(X1,mult(X2,X2)),X2) = rd(X0,mult(X2,ld(X1,X0))) [superposition 69,16]
+685. mult(X1,ld(X2,X0)) = ld(mult(rd(X2,mult(X1,X1)),X1),X0) [superposition 70,16]
+1335. rd(X0,X0) = mult(rd(X1,mult(X1,X1)),X1) [superposition 202,16]
+1758. mult(rd(X1,X2),X2) = mult(rd(X0,X0),X1) [superposition 63,1335]
+1806. mult(rd(X0,X0),X1) = X1 [forward demodulation 1758,18]
+2294. mult(X0,ld(mult(X0,X0),X2)) = ld(mult(rd(X1,X1),X0),X2) [superposition 147,1806]
+2311. ld(X0,X2) = mult(X0,ld(mult(X0,X0),X2)) [forward demodulation 2294,1806]
+4262. sK0(ld(X0,mult(mult(X0,X1),mult(X0,X1)))) != rd(mult(mult(sK0(ld(X0,mult(mult(X0,X1),mult(X0,X1)))),X1),mult(mult(X0,X1),X2)),X2) | sK0(ld(X0,mult(mult(X0,X1),mult(X0,X1)))) != mult(ld(X0,mult(mult(X0,X1),mult(X0,X1))),sK0(ld(X0,mult(mult(X0,X1),mult(X0,X1))))) [superposition 21,94]
+4549. sK0(ld(rd(X0,X1),mult(X0,X0))) != rd(mult(mult(sK0(ld(rd(X0,X1),mult(X0,X0))),X1),mult(X0,X2)),X2) | sK0(ld(rd(X0,X1),mult(X0,X0))) != mult(ld(rd(X0,X1),mult(X0,X0)),sK0(ld(rd(X0,X1),mult(X0,X0)))) [superposition 4262,18]
+5547. sK0(ld(rd(X1,X2),mult(X1,X1))) != rd(mult(mult(sK0(ld(rd(X1,X2),mult(X1,X1))),X2),X0),ld(X1,X0)) | sK0(ld(rd(X1,X2),mult(X1,X1))) != mult(ld(rd(X1,X2),mult(X1,X1)),sK0(ld(rd(X1,X2),mult(X1,X1)))) [superposition 4549,16]
+5959. sK0(ld(rd(X1,X2),mult(X1,X1))) != rd(X0,ld(X1,ld(mult(sK0(ld(rd(X1,X2),mult(X1,X1))),X2),X0))) | sK0(ld(rd(X1,X2),mult(X1,X1))) != mult(ld(rd(X1,X2),mult(X1,X1)),sK0(ld(rd(X1,X2),mult(X1,X1)))) [superposition 5547,16]
+6942. sK0(ld(X0,mult(X1,X1))) != rd(X2,ld(X1,ld(mult(sK0(ld(X0,mult(X1,X1))),ld(X0,X1)),X2))) | sK0(ld(X0,mult(X1,X1))) != mult(ld(X0,mult(X1,X1)),sK0(ld(X0,mult(X1,X1)))) [superposition 5959,30]
+7425. sK0(mult(X0,X1)) != rd(X2,ld(X1,ld(mult(sK0(mult(X0,X1)),ld(mult(rd(X1,mult(X0,X0)),X0),X1)),X2))) | sK0(mult(X0,X1)) != mult(mult(X0,X1),sK0(mult(X0,X1))) [superposition 6942,70]
+7473. sK0(mult(X0,X1)) != rd(X2,ld(X1,ld(mult(sK0(mult(X0,X1)),mult(X0,ld(X1,X1))),X2))) | sK0(mult(X0,X1)) != mult(mult(X0,X1),sK0(mult(X0,X1))) [forward demodulation 7425,685]
+21954. mult(X2,ld(mult(X0,mult(X1,X2)),X3)) = ld(mult(mult(rd(X0,mult(mult(rd(X2,mult(X1,X1)),X1),mult(rd(X2,mult(X1,X1)),X1))),mult(rd(X2,mult(X1,X1)),X1)),X2),X3) [superposition 147,65]
+22156. mult(X2,ld(mult(X0,mult(X1,X2)),X3)) = ld(mult(X0,ld(mult(rd(X2,mult(X1,X1)),X1),X2)),X3) [forward demodulation 21954,61]
+22369. mult(X2,ld(mult(X0,mult(X1,X2)),X3)) = ld(mult(X0,mult(X1,ld(X2,X2))),X3) [forward demodulation 22156,685]
+25688. sK0(rd(X0,X0)) != rd(X2,ld(X1,ld(mult(sK0(rd(X0,X0)),mult(rd(X1,mult(X1,X1)),ld(X1,X1))),X2))) | sK0(rd(X0,X0)) != mult(rd(X0,X0),sK0(rd(X0,X0))) [superposition 7473,1335]
+25794. sK0(rd(X0,X0)) != rd(X2,ld(X1,ld(mult(sK0(rd(X0,X0)),mult(rd(X1,mult(X1,X1)),ld(X1,X1))),X2))) [forward subsumption resolution 25688,1806]
+25846. sK0(rd(X0,X0)) != rd(X2,ld(X1,mult(X1,ld(mult(sK0(rd(X0,X0)),mult(rd(X1,mult(X1,X1)),X1)),X2)))) [forward demodulation 25794,22369]
+25888. sK0(rd(X0,X0)) != rd(X2,ld(mult(sK0(rd(X0,X0)),mult(rd(X1,mult(X1,X1)),X1)),X2)) [forward demodulation 25846,17]
+25929. sK0(rd(X0,X0)) != mult(sK0(rd(X0,X0)),mult(rd(X1,mult(X1,X1)),X1)) [forward demodulation 25888,30]
+27118. sK0(rd(X2,X2)) != mult(sK0(rd(X2,X2)),mult(rd(mult(rd(X0,mult(X1,X1)),X1),mult(X0,ld(X1,mult(rd(X0,mult(X1,X1)),X1)))),mult(rd(X0,mult(X1,X1)),X1))) [superposition 25929,61]
+27135. sK0(rd(X2,X2)) != mult(sK0(rd(X2,X2)),mult(mult(rd(X1,mult(X0,X0)),X0),mult(rd(X0,mult(X1,X1)),X1))) [forward demodulation 27118,358]
+27139. sK0(rd(X2,X2)) != mult(sK0(rd(X2,X2)),mult(X1,ld(X0,mult(rd(X0,mult(X1,X1)),X1)))) [forward demodulation 27135,61]
+31382. sK0(rd(X1,X1)) != mult(sK0(rd(X1,X1)),mult(X0,ld(mult(X0,X0),X0))) [superposition 27139,1806]
+31418. sK0(rd(X1,X1)) != mult(sK0(rd(X1,X1)),ld(X0,X0)) [forward demodulation 31382,2311]
+32967. sK0(rd(X0,X0)) != sK0(rd(X0,X0)) [superposition 31418,16]
+32969. $false [trivial inequality removal 32967]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.789 s
+% Peak memory usage: 64 MB
+% Instructions burned: 2264 (million)
+% ------------------------------
+% ------------------------------

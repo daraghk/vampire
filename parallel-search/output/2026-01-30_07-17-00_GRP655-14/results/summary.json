@@ -1,0 +1,60 @@
+{
+  "problem": "2026-01-30_07-17-00_GRP655-14",
+  "timestamp": "2026-01-30T07:19:16.521356",
+  "configuration": {
+    "timeout": 60,
+    "vampire_binary": "../build/vampire",
+    "total_variants": 5,
+    "variants_with_seeds": 4
+  },
+  "results": [
+    {
+      "name": "original",
+      "status": "TIMEOUT",
+      "time": 60.025357246398926,
+      "exit_code": 1,
+      "output_file": "output/2026-01-30_07-17-00_GRP655-14/results/original.out"
+    },
+    {
+      "name": "original_clausified",
+      "status": "TIMEOUT",
+      "time": 60.02366042137146,
+      "exit_code": 1,
+      "output_file": "output/2026-01-30_07-17-00_GRP655-14/results/original_clausified.out"
+    },
+    {
+      "name": "variant_0",
+      "status": "TIMEOUT",
+      "time": 60.02667570114136,
+      "exit_code": 1,
+      "output_file": "output/2026-01-30_07-17-00_GRP655-14/results/variant_0.out"
+    },
+    {
+      "name": "variant_0_original",
+      "status": "TIMEOUT",
+      "time": 60.02455449104309,
+      "exit_code": 1,
+      "output_file": "output/2026-01-30_07-17-00_GRP655-14/results/variant_0_original.out"
+    },
+    {
+      "name": "variant_1",
+      "status": "TIMEOUT",
+      "time": 60.024885416030884,
+      "exit_code": 1,
+      "output_file": "output/2026-01-30_07-17-00_GRP655-14/results/variant_1.out"
+    },
+    {
+      "name": "variant_1_original",
+      "status": "TIMEOUT",
+      "time": 60.02477717399597,
+      "exit_code": 1,
+      "output_file": "output/2026-01-30_07-17-00_GRP655-14/results/variant_1_original.out"
+    }
+  ],
+  "statistics": {
+    "total_runs": 6,
+    "proved": 0,
+    "timeout": 6,
+    "unknown": 0
+  }
+}

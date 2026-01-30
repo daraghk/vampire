@@ -1,0 +1,32 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP729-1_clausified
+% SZS output start Proof for GRP729-1_clausified
+1. mult(unit,X0) = X0 [input(axiom)]
+4. unit = mult(i(X0),X0) [input(axiom)]
+5. i(mult(X0,X1)) = mult(i(X0),i(X1)) [input(axiom)]
+6. mult(i(X0),mult(X0,X1)) = X1 [input(axiom)]
+10. mult(mult(X0,X1),X2) = mult(mult(X0,mult(X1,X2)),asoc(X0,X1,X2)) [input(axiom)]
+11. mult(X0,X1) = mult(mult(X1,X0),op_k(X0,X1)) [input(axiom)]
+19. unit = asoc(X0,X1,asoc(X2,X3,X4)) [input(axiom)]
+20. unit != asoc(a,b,op_k(c,d)) [input(negated conjecture)]
+90. op_k(X0,X1) = mult(i(mult(X1,X0)),mult(X0,X1)) [superposition 6,11]
+155. mult(mult(i(mult(X0,X1)),X0),X1) = mult(unit,asoc(i(mult(X0,X1)),X0,X1)) [superposition 10,4]
+171. mult(mult(i(mult(X0,X1)),X0),X1) = asoc(i(mult(X0,X1)),X0,X1) [forward demodulation 155,1]
+5437. mult(mult(i(X0),i(X1)),mult(X1,X0)) = asoc(i(X0),i(X1),mult(X1,X0)) [superposition 171,6]
+5544. mult(i(mult(X0,X1)),mult(X1,X0)) = asoc(i(X0),i(X1),mult(X1,X0)) [forward demodulation 5437,5]
+5584. op_k(X1,X0) = asoc(i(X0),i(X1),mult(X1,X0)) [forward demodulation 5544,90]
+73833. unit = asoc(X2,X3,op_k(X0,X1)) [superposition 19,5584]
+77685. unit != unit [superposition 20,73833]
+77686. $false [trivial inequality removal 77685]
+% SZS output end Proof for GRP729-1_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 1.856 s
+% Peak memory usage: 69 MB
+% Instructions burned: 5974 (million)
+% ------------------------------
+% ------------------------------

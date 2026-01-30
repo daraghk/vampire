@@ -1,0 +1,37 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP710-10
+% SZS output start Proof for GRP710-10
+1. mult(X0,unit) = X0 [input(axiom)]
+2. mult(unit,X0) = X0 [input(axiom)]
+3. mult(X0,mult(X1,mult(X1,X2))) = mult(mult(mult(X0,X1),X1),X2) [input(axiom)]
+4. mult(X0,i(X0)) = unit [input(axiom)]
+5. unit = mult(X0,i(X0)) [reorient equations 4]
+6. mult(i(X0),X0) = unit [input(axiom)]
+7. unit = mult(i(X0),X0) [reorient equations 6]
+8. mult(x0,X0) != x1 [input(negated conjecture)]
+16. mult(X0,mult(i(X0),mult(i(X0),X1))) = mult(mult(unit,i(X0)),X1) [superposition 3,5]
+19. mult(i(X0),mult(X0,mult(X0,X1))) = mult(mult(unit,X0),X1) [superposition 3,7]
+24. mult(mult(X0,X1),X1) = mult(X0,mult(X1,mult(X1,unit))) [superposition 1,3]
+26. mult(mult(X0,X1),X1) = mult(X0,mult(X1,X1)) [forward demodulation 24,1]
+29. mult(X0,X1) = mult(i(X0),mult(X0,mult(X0,X1))) [forward demodulation 19,2]
+32. mult(i(X0),X1) = mult(X0,mult(i(X0),mult(i(X0),X1))) [forward demodulation 16,2]
+46. mult(X0,mult(X1,mult(X1,X2))) = mult(mult(X0,mult(X1,X1)),X2) [superposition 3,26]
+261. mult(i(X0),X1) = mult(i(X0),mult(X0,mult(i(X0),X1))) [superposition 29,32]
+1586. mult(unit,X1) = mult(i(mult(X0,X0)),mult(X0,mult(X0,X1))) [superposition 46,7]
+1711. mult(i(mult(X0,X0)),mult(X0,mult(X0,X1))) = X1 [forward demodulation 1586,2]
+1819. mult(X0,mult(i(X0),X1)) = mult(i(mult(i(X0),i(X0))),mult(i(X0),mult(i(X0),X1))) [superposition 1711,261]
+1874. mult(X0,mult(i(X0),X1)) = X1 [forward demodulation 1819,1711]
+2180. x1 != X0 [superposition 8,1874]
+2379. $false [equality resolution 2180]
+% SZS output end Proof for GRP710-10
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.040 s
+% Peak memory usage: 71 MB
+% Instructions burned: 102 (million)
+% ------------------------------
+% ------------------------------

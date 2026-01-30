@@ -1,0 +1,61 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2
+% SZS output start Proof for variant_2
+3. product(X0,difference(X0,X1)) = X1 [input(axiom)]
+4. difference(X0,product(X0,X1)) = X1 [input(axiom)]
+5. quotient(product(X0,X1),X1) = X0 [input(axiom)]
+6. product(quotient(X0,X1),X1) = X0 [input(axiom)]
+7. difference(X0,product(product(X0,X1),X2)) = quotient(product(X1,product(X2,X0)),X0) [input(axiom)]
+24. product(product(X0,X1),a(X2,X3,X4)) = product(X0,product(X1,a(X2,X3,X4))) [input(axiom)]
+25. one = product(a(X0,X1,X2),difference(X2,product(a(X2,X0,X1),X2))) [input(axiom)]
+26. a(X0,difference(X1,one),X2) = a(X0,quotient(one,X1),X2) [input(axiom)]
+27. a(difference(X0,one),X1,X2) = a(quotient(one,X0),X1,X2) [input(axiom)]
+28. a(X0,X1,X2) = a(quotient(one,X2),X0,X1) [input(axiom)]
+29. ! [X0] : quotient(X0,one) = X0 [input(assumption)]
+33. ! [X0] : product(quotient(one,X0),X0) = one [input(assumption)]
+34. a(x0,x1,x1) != a(x1,x1,x0) [input(negated conjecture)]
+35. quotient(X0,one) = X0 [cnf transformation 29]
+39. one = product(quotient(one,X0),X0) [cnf transformation 33]
+40. a(difference(X0,one),X1,X2) = a(X1,X2,X0) [forward demodulation 27,28]
+56. difference(quotient(one,X0),one) = X0 [superposition 4,39]
+63. quotient(X0,difference(X1,X0)) = X1 [superposition 5,3]
+97. a(X0,X1,X2) = a(X1,X2,difference(X0,one)) [superposition 28,63]
+101. a(X0,X1,X2) = a(X1,X2,quotient(one,X0)) [superposition 40,56]
+170. quotient(X0,X1) = difference(X1,product(product(X1,quotient(X0,product(X2,X1))),X2)) [superposition 7,6]
+426. one = product(a(X0,X1,quotient(one,X2)),difference(quotient(one,X2),product(a(X0,X1,X2),quotient(one,X2)))) [superposition 25,28]
+438. difference(X2,product(a(X2,X0,X1),X2)) = difference(a(X0,X1,X2),one) [superposition 4,25]
+449. one = product(a(X2,X0,X1),difference(quotient(one,X2),product(a(X0,X1,X2),quotient(one,X2)))) [forward demodulation 426,101]
+938. a(X2,X3,X4) = difference(product(X0,X1),product(X0,product(X1,a(X2,X3,X4)))) [superposition 4,24]
+3254. quotient(X0,difference(X1,product(a(X1,X2,X3),X1))) = difference(difference(X1,product(a(X1,X2,X3),X1)),product(product(difference(X1,product(a(X1,X2,X3),X1)),quotient(X0,one)),a(X2,X3,X1))) [superposition 170,25]
+3301. quotient(X0,difference(X1,product(a(X1,X2,X3),X1))) = difference(difference(X1,product(a(X1,X2,X3),X1)),product(difference(X1,product(a(X1,X2,X3),X1)),product(quotient(X0,one),a(X2,X3,X1)))) [forward demodulation 3254,24]
+3339. quotient(X0,difference(X1,product(a(X1,X2,X3),X1))) = product(quotient(X0,one),a(X2,X3,X1)) [forward demodulation 3301,4]
+3362. quotient(X0,difference(X1,product(a(X1,X2,X3),X1))) = product(X0,a(X2,X3,X1)) [forward demodulation 3339,35]
+3376. product(X0,a(X2,X3,X1)) = quotient(X0,difference(a(X2,X3,X1),one)) [forward demodulation 3362,438]
+5146. a(X0,difference(X1,one),X2) = a(X2,difference(X0,one),X1) [superposition 40,97]
+7028. quotient(product(a(X2,X0,X1),X2),difference(a(X0,X1,X2),one)) = X2 [superposition 63,438]
+7035. product(product(a(X2,X0,X1),X2),a(X0,X1,X2)) = X2 [forward demodulation 7028,3376]
+7061. product(a(X2,X0,X1),product(X2,a(X0,X1,X2))) = X2 [forward demodulation 7035,24]
+17983. one = product(a(X1,quotient(one,X1),X0),difference(a(X0,X1,quotient(one,X1)),one)) [superposition 449,438]
+18053. one = product(a(X1,quotient(one,X1),X0),difference(a(X1,X0,X1),one)) [forward demodulation 17983,101]
+18136. one = product(a(X1,difference(X1,one),X0),difference(a(X1,X0,X1),one)) [forward demodulation 18053,26]
+141082. a(X1,X2,X0) = difference(product(a(X0,X1,X2),X0),X0) [superposition 938,7061]
+292986. a(X0,difference(X0,one),X1) = quotient(one,difference(a(X0,X1,X0),one)) [superposition 5,18136]
+293031. a(X0,difference(X0,one),X1) = a(X0,X1,X0) [forward demodulation 292986,63]
+293554. a(X0,X1,X0) = a(X0,difference(X1,one),X0) [superposition 5146,293031]
+294296. difference(product(a(X0,X1,X0),X0),X0) = a(difference(X1,one),X0,X0) [superposition 141082,293554]
+294366. a(X0,X0,X1) = difference(product(a(X0,X1,X0),X0),X0) [forward demodulation 294296,40]
+294484. a(X1,X0,X0) = a(X0,X0,X1) [forward demodulation 294366,141082]
+295235. a(x1,x1,x0) != a(x1,x1,x0) [superposition 34,294484]
+295376. $false [trivial inequality removal 295235]
+% SZS output end Proof for variant_2
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 5.246 s
+% Peak memory usage: 123 MB
+% Instructions burned: 14444 (million)
+% ------------------------------
+% ------------------------------

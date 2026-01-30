@@ -1,0 +1,69 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2_original
+% SZS output start Proof for variant_2_original
+7. group_element(e_1) [input(axiom)]
+8. group_element(e_2) [input(axiom)]
+9. group_element(e_3) [input(axiom)]
+10. ~equalish(e_1,e_2) [input(axiom)]
+12. ~equalish(e_2,e_1) [input(axiom)]
+13. ~equalish(e_2,e_3) [input(axiom)]
+15. ~equalish(e_3,e_2) [input(axiom)]
+16. product1(X0,X1,e_3) | ~group_element(X1) | product1(X0,X1,e_1) | product1(X0,X1,e_2) | ~group_element(X0) [input(axiom)]
+18. ~product1(X0,X3,X2) | ~product1(X0,X1,X2) | equalish(X1,X3) [input(axiom)]
+19. ~product1(X3,X1,X2) | ~product1(X0,X1,X2) | equalish(X0,X3) [input(axiom)]
+20. product1(X0,X0,X0) [input(axiom)]
+22. ~product2(X0,X1,X3) | ~product2(X0,X1,X2) | equalish(X2,X3) [input(axiom)]
+25. product2(X0,X0,X0) [input(axiom)]
+26. ~product1(X2,X1,X3) | ~product1(X0,X1,X2) | product2(X3,X0,X1) [input(negated conjecture)]
+32. ~product1(X0,X1,X0) | equalish(X1,X0) [resolution 18,20]
+34. ~product1(X0,X1,X1) | equalish(X0,X1) [resolution 19,20]
+36. ~product2(X0,X0,X1) | equalish(X1,X0) [resolution 22,25]
+45. ~product1(X2,X0,X1) | product1(X1,X0,e_1) | product1(X1,X0,e_2) | ~group_element(X1) | ~group_element(X0) | product2(e_3,X2,X0) [resolution 16,26]
+48. ~group_element(X0) | product1(e_3,X0,e_1) | product1(e_3,X0,e_2) | ~group_element(e_3) | equalish(X0,e_3) [resolution 16,32]
+51. product1(e_3,X0,e_2) | product1(e_3,X0,e_1) | ~group_element(X0) | equalish(X0,e_3) [forward subsumption resolution 48,9]
+269. product1(e_3,e_2,e_1) | ~group_element(e_2) | equalish(e_2,e_3) | equalish(e_3,e_2) [resolution 51,34]
+282. product1(e_3,e_2,e_1) | equalish(e_2,e_3) | equalish(e_3,e_2) [forward subsumption resolution 269,8]
+285. product1(e_3,e_2,e_1) | equalish(e_3,e_2) [forward subsumption resolution 282,13]
+292. 14 <=> product1(e_3,e_2,e_1) [avatar definition]
+294. product1(e_3,e_2,e_1) <- (14) [avatar component clause 292]
+296. product1(e_3,e_2,e_1) [forward subsumption resolution 285,15]
+297. 14 [avatar split clause 296,292]
+299. product1(e_1,e_2,e_1) | product1(e_1,e_2,e_2) | ~group_element(e_1) | ~group_element(e_2) | product2(e_3,e_3,e_2) <- (14) [resolution 294,45]
+304. product1(e_1,e_2,e_1) | product1(e_1,e_2,e_2) | ~group_element(e_2) | product2(e_3,e_3,e_2) <- (14) [forward subsumption resolution 299,7]
+305. product1(e_1,e_2,e_1) | product1(e_1,e_2,e_2) | product2(e_3,e_3,e_2) <- (14) [forward subsumption resolution 304,8]
+307. 15 <=> product2(e_3,e_3,e_2) [avatar definition]
+309. product2(e_3,e_3,e_2) <- (15) [avatar component clause 307]
+311. 16 <=> product1(e_1,e_2,e_2) [avatar definition]
+313. product1(e_1,e_2,e_2) <- (16) [avatar component clause 311]
+315. 17 <=> product1(e_1,e_2,e_1) [avatar definition]
+317. product1(e_1,e_2,e_1) <- (17) [avatar component clause 315]
+318. 15 | 16 | 17 | ~14 [avatar split clause 305,292,315,311,307]
+332. equalish(e_2,e_3) <- (15) [resolution 309,36]
+334. $false <- (15) [forward subsumption resolution 332,13]
+335. ~15 [avatar contradiction clause 334]
+356. equalish(e_1,e_2) <- (16) [resolution 313,34]
+365. $false <- (16) [forward subsumption resolution 356,10]
+366. ~16 [avatar contradiction clause 365]
+391. equalish(e_2,e_1) <- (17) [resolution 317,32]
+398. $false <- (17) [forward subsumption resolution 391,12]
+399. ~17 [avatar contradiction clause 398]
+s12. 14 [sat_conversion 297]
+s13. ~14 | 15 | 16 | 17 [sat_conversion 318]
+s14. ~15 [sat_conversion 335]
+s15. ~16 [sat_conversion 366]
+s16. ~17 [sat_conversion 399]
+s17. ~14 [rat s13,s16,s15,s14]
+s18. # [rat s12,s17]
+400. $false [avatar sat refutation s18]
+% SZS output end Proof for variant_2_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.006 s
+% Peak memory usage: 67 MB
+% Instructions burned: 14 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,35 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP710-10_clausified
+% SZS output start Proof for GRP710-10_clausified
+1. mult(X0,unit) = X0 [input(axiom)]
+2. mult(unit,X0) = X0 [input(axiom)]
+3. mult(X0,mult(X1,mult(X1,X2))) = mult(mult(mult(X0,X1),X1),X2) [input(axiom)]
+4. unit = mult(X0,i(X0)) [input(axiom)]
+5. unit = mult(i(X0),X0) [input(axiom)]
+6. mult(x0,X0) != x1 [input(negated conjecture)]
+14. mult(X0,mult(i(X0),mult(i(X0),X1))) = mult(mult(unit,i(X0)),X1) [superposition 3,4]
+17. mult(i(X0),mult(X0,mult(X0,X1))) = mult(mult(unit,X0),X1) [superposition 3,5]
+22. mult(mult(X0,X1),X1) = mult(X0,mult(X1,mult(X1,unit))) [superposition 1,3]
+24. mult(mult(X0,X1),X1) = mult(X0,mult(X1,X1)) [forward demodulation 22,1]
+27. mult(X0,X1) = mult(i(X0),mult(X0,mult(X0,X1))) [forward demodulation 17,2]
+30. mult(i(X0),X1) = mult(X0,mult(i(X0),mult(i(X0),X1))) [forward demodulation 14,2]
+44. mult(X0,mult(X1,mult(X1,X2))) = mult(mult(X0,mult(X1,X1)),X2) [superposition 3,24]
+259. mult(i(X0),X1) = mult(i(X0),mult(X0,mult(i(X0),X1))) [superposition 27,30]
+1584. mult(unit,X1) = mult(i(mult(X0,X0)),mult(X0,mult(X0,X1))) [superposition 44,5]
+1709. mult(i(mult(X0,X0)),mult(X0,mult(X0,X1))) = X1 [forward demodulation 1584,2]
+1817. mult(X0,mult(i(X0),X1)) = mult(i(mult(i(X0),i(X0))),mult(i(X0),mult(i(X0),X1))) [superposition 1709,259]
+1872. mult(X0,mult(i(X0),X1)) = X1 [forward demodulation 1817,1709]
+2178. x1 != X0 [superposition 6,1872]
+2377. $false [equality resolution 2178]
+% SZS output end Proof for GRP710-10_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.041 s
+% Peak memory usage: 71 MB
+% Instructions burned: 102 (million)
+% ------------------------------
+% ------------------------------

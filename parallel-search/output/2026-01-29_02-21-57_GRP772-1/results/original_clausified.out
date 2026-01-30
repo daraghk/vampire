@@ -1,0 +1,55 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP772-1_clausified
+% SZS output start Proof for GRP772-1_clausified
+1. product(X0,one) = X0 [input(axiom)]
+3. product(X0,difference(X0,X1)) = X1 [input(axiom)]
+4. difference(X0,product(X0,X1)) = X1 [input(axiom)]
+5. quotient(product(X0,X1),X1) = X0 [input(axiom)]
+6. product(quotient(X0,X1),X1) = X0 [input(axiom)]
+7. difference(X0,product(product(X0,X1),X2)) = quotient(product(X1,product(X2,X0)),X0) [input(axiom)]
+24. product(product(X0,X1),a(X2,X3,X4)) = product(X0,product(X1,a(X2,X3,X4))) [input(axiom)]
+25. one = product(a(X0,X1,X2),difference(X2,product(a(X2,X0,X1),X2))) [input(axiom)]
+27. a(difference(X0,one),X1,X2) = a(quotient(one,X0),X1,X2) [input(axiom)]
+28. a(X0,X1,X2) = a(quotient(one,X2),X0,X1) [input(axiom)]
+29. a(x0,x1,x1) != a(x1,x1,x0) [input(negated conjecture)]
+30. a(difference(X0,one),X1,X2) = a(X1,X2,X0) [forward demodulation 27,28]
+42. quotient(X0,one) = X0 [superposition 5,1]
+43. quotient(X0,difference(X1,X0)) = X1 [superposition 5,3]
+72. a(X0,X1,X2) = a(X1,X2,difference(X0,one)) [superposition 28,43]
+152. quotient(X0,X1) = difference(X1,product(product(X1,quotient(X0,product(X2,X1))),X2)) [superposition 7,6]
+395. one = product(a(X0,X1,difference(X2,one)),difference(difference(X2,one),product(a(X0,X1,X2),difference(X2,one)))) [superposition 25,30]
+407. difference(X2,product(a(X2,X0,X1),X2)) = difference(a(X0,X1,X2),one) [superposition 4,25]
+417. one = product(a(X2,X0,X1),difference(difference(X2,one),product(a(X0,X1,X2),difference(X2,one)))) [forward demodulation 395,72]
+915. a(X2,X3,X4) = difference(product(X0,X1),product(X0,product(X1,a(X2,X3,X4)))) [superposition 4,24]
+3295. quotient(X0,difference(X1,product(a(X1,X2,X3),X1))) = difference(difference(X1,product(a(X1,X2,X3),X1)),product(product(difference(X1,product(a(X1,X2,X3),X1)),quotient(X0,one)),a(X2,X3,X1))) [superposition 152,25]
+3342. quotient(X0,difference(X1,product(a(X1,X2,X3),X1))) = difference(difference(X1,product(a(X1,X2,X3),X1)),product(difference(X1,product(a(X1,X2,X3),X1)),product(quotient(X0,one),a(X2,X3,X1)))) [forward demodulation 3295,24]
+3380. quotient(X0,difference(X1,product(a(X1,X2,X3),X1))) = product(quotient(X0,one),a(X2,X3,X1)) [forward demodulation 3342,4]
+3405. quotient(X0,difference(X1,product(a(X1,X2,X3),X1))) = product(X0,a(X2,X3,X1)) [forward demodulation 3380,42]
+3421. product(X0,a(X2,X3,X1)) = quotient(X0,difference(a(X2,X3,X1),one)) [forward demodulation 3405,407]
+3743. a(X0,difference(X1,one),X2) = a(X2,difference(X0,one),X1) [superposition 30,72]
+7069. quotient(product(a(X2,X0,X1),X2),difference(a(X0,X1,X2),one)) = X2 [superposition 43,407]
+7076. product(product(a(X2,X0,X1),X2),a(X0,X1,X2)) = X2 [forward demodulation 7069,3421]
+7103. product(a(X2,X0,X1),product(X2,a(X0,X1,X2))) = X2 [forward demodulation 7076,24]
+20066. one = product(a(X1,difference(X1,one),X0),difference(a(X0,X1,difference(X1,one)),one)) [superposition 417,407]
+20144. one = product(a(X1,difference(X1,one),X0),difference(a(X1,X0,X1),one)) [forward demodulation 20066,72]
+145673. a(X1,X2,X0) = difference(product(a(X0,X1,X2),X0),X0) [superposition 915,7103]
+341302. a(X0,difference(X0,one),X1) = quotient(one,difference(a(X0,X1,X0),one)) [superposition 5,20144]
+341329. a(X0,X1,X0) = a(X0,difference(X0,one),X1) [forward demodulation 341302,43]
+341762. a(X0,X1,X0) = a(X0,difference(X1,one),X0) [superposition 3743,341329]
+342262. difference(product(a(X0,X1,X0),X0),X0) = a(difference(X1,one),X0,X0) [superposition 145673,341762]
+342325. a(X0,X0,X1) = difference(product(a(X0,X1,X0),X0),X0) [forward demodulation 342262,30]
+342441. a(X0,X0,X1) = a(X1,X0,X0) [forward demodulation 342325,145673]
+343323. a(x1,x1,x0) != a(x1,x1,x0) [superposition 29,342441]
+343324. $false [trivial inequality removal 343323]
+% SZS output end Proof for GRP772-1_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 5.974 s
+% Peak memory usage: 135 MB
+% Instructions burned: 16969 (million)
+% ------------------------------
+% ------------------------------

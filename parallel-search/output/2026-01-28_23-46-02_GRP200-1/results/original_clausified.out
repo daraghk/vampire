@@ -1,0 +1,74 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP200-1_clausified
+% SZS output start Proof for GRP200-1_clausified
+1. multiply(identity,X0) = X0 [input(axiom)]
+2. multiply(X0,identity) = X0 [input(axiom)]
+3. multiply(X0,left_division(X0,X1)) = X1 [input(axiom)]
+4. left_division(X0,multiply(X0,X1)) = X1 [input(axiom)]
+5. multiply(right_division(X0,X1),X1) = X0 [input(axiom)]
+6. right_division(multiply(X0,X1),X1) = X0 [input(axiom)]
+7. identity = multiply(X0,right_inverse(X0)) [input(axiom)]
+8. identity = multiply(left_inverse(X0),X0) [input(axiom)]
+9. multiply(multiply(X0,multiply(X1,X2)),X0) = multiply(multiply(X0,X1),multiply(X2,X0)) [input(axiom)]
+10. multiply(multiply(multiply(a,b),c),b) != multiply(a,multiply(b,multiply(c,b))) [input(negated conjecture)]
+21. identity = left_division(X0,X0) [superposition 4,2]
+22. right_inverse(X0) = left_division(X0,identity) [superposition 4,7]
+28. left_division(right_division(X0,X1),X0) = X1 [superposition 4,5]
+32. right_division(identity,right_inverse(X0)) = X0 [superposition 6,7]
+33. right_division(X0,left_division(X1,X0)) = X1 [superposition 6,3]
+35. left_inverse(X0) = right_division(identity,X0) [superposition 6,8]
+38. left_inverse(right_inverse(X0)) = X0 [forward demodulation 32,35]
+42. multiply(multiply(X1,X0),X1) = multiply(multiply(X1,X2),multiply(left_division(X2,X0),X1)) [superposition 9,3]
+43. multiply(multiply(X1,X0),X1) = multiply(multiply(X1,identity),multiply(X0,X1)) [superposition 9,1]
+50. multiply(multiply(left_inverse(multiply(X0,X1)),X0),multiply(X1,left_inverse(multiply(X0,X1)))) = multiply(identity,left_inverse(multiply(X0,X1))) [superposition 9,8]
+52. multiply(X0,multiply(X1,X2)) = right_division(multiply(multiply(X0,X1),multiply(X2,X0)),X0) [superposition 6,9]
+57. left_inverse(multiply(X0,X1)) = multiply(multiply(left_inverse(multiply(X0,X1)),X0),multiply(X1,left_inverse(multiply(X0,X1)))) [forward demodulation 50,1]
+61. multiply(multiply(X1,X0),X1) = multiply(X1,multiply(X0,X1)) [forward demodulation 43,2]
+106. multiply(identity,X0) = multiply(X0,multiply(right_inverse(X0),X0)) [superposition 61,7]
+115. multiply(multiply(X0,X1),multiply(X2,X0)) = multiply(X0,multiply(multiply(X1,X2),X0)) [superposition 9,61]
+126. multiply(X0,multiply(right_inverse(X0),X0)) = X0 [forward demodulation 106,1]
+139. left_division(X0,X0) = multiply(right_inverse(X0),X0) [superposition 4,126]
+142. identity = multiply(right_inverse(X0),X0) [forward demodulation 139,21]
+201. left_division(right_inverse(X0),identity) = X0 [superposition 4,142]
+207. right_inverse(right_inverse(X0)) = X0 [forward demodulation 201,22]
+266. right_inverse(X0) = left_inverse(X0) [superposition 38,207]
+505. multiply(X0,multiply(right_inverse(X0),X1)) = right_division(multiply(identity,multiply(X1,X0)),X0) [superposition 52,7]
+515. multiply(right_inverse(X0),multiply(X0,X1)) = right_division(multiply(identity,multiply(X1,right_inverse(X0))),right_inverse(X0)) [superposition 52,142]
+563. multiply(right_inverse(X0),multiply(X0,X1)) = right_division(multiply(X1,right_inverse(X0)),right_inverse(X0)) [forward demodulation 515,1]
+570. right_division(multiply(X1,X0),X0) = multiply(X0,multiply(right_inverse(X0),X1)) [forward demodulation 505,1]
+586. multiply(right_inverse(X0),multiply(X0,X1)) = X1 [forward demodulation 563,6]
+591. multiply(X0,multiply(right_inverse(X0),X1)) = X1 [forward demodulation 570,6]
+822. multiply(X1,X0) = left_division(right_inverse(X1),X0) [superposition 591,3]
+828. left_division(X1,X0) = multiply(right_inverse(X1),X0) [superposition 4,591]
+1322. right_inverse(X0) = right_division(X1,multiply(X0,X1)) [superposition 33,822]
+2930. right_inverse(multiply(left_inverse(multiply(X0,X1)),X0)) = right_division(multiply(X1,left_inverse(multiply(X0,X1))),left_inverse(multiply(X0,X1))) [superposition 1322,57]
+2958. right_inverse(multiply(left_inverse(multiply(X0,X1)),X0)) = X1 [forward demodulation 2930,6]
+2971. right_inverse(multiply(right_inverse(multiply(X0,X1)),X0)) = X1 [forward demodulation 2958,266]
+2976. right_inverse(left_division(multiply(X0,X1),X0)) = X1 [forward demodulation 2971,828]
+3406. left_division(X1,X0) = right_inverse(left_division(X0,X1)) [superposition 2976,3]
+3434. right_inverse(X0) = left_division(multiply(X1,X0),X1) [superposition 207,2976]
+3658. right_inverse(X0) = left_division(X1,right_division(X1,X0)) [superposition 3406,28]
+4105. multiply(multiply(X1,X0),right_inverse(X0)) = X1 [superposition 3,3434]
+4406. right_division(X1,X0) = multiply(X1,right_inverse(X0)) [superposition 3,3658]
+4894. multiply(multiply(multiply(X0,X1),X2),multiply(X0,X1)) = multiply(X0,multiply(left_division(right_inverse(X1),X2),multiply(X0,X1))) [superposition 42,4105]
+4939. multiply(multiply(multiply(X0,X1),X2),multiply(X0,X1)) = multiply(X0,multiply(multiply(X1,X2),multiply(X0,X1))) [forward demodulation 4894,822]
+4990. multiply(multiply(multiply(X0,X1),X2),multiply(X0,X1)) = multiply(X0,multiply(X1,multiply(multiply(X2,X0),X1))) [forward demodulation 4939,115]
+5022. multiply(multiply(X0,X1),multiply(X2,multiply(X0,X1))) = multiply(X0,multiply(X1,multiply(multiply(X2,X0),X1))) [forward demodulation 4990,61]
+8688. multiply(multiply(multiply(X1,X0),X2),X0) = multiply(multiply(X1,X0),multiply(multiply(X2,right_inverse(X1)),multiply(X1,X0))) [superposition 115,586]
+8828. multiply(multiply(multiply(X1,X0),X2),X0) = multiply(X1,multiply(X0,multiply(multiply(multiply(X2,right_inverse(X1)),X1),X0))) [forward demodulation 8688,5022]
+8947. multiply(multiply(multiply(X1,X0),X2),X0) = multiply(X1,multiply(X0,multiply(multiply(right_division(X2,X1),X1),X0))) [forward demodulation 8828,4406]
+9036. multiply(multiply(multiply(X1,X0),X2),X0) = multiply(X1,multiply(X0,multiply(X2,X0))) [forward demodulation 8947,5]
+411142. multiply(a,multiply(b,multiply(c,b))) != multiply(a,multiply(b,multiply(c,b))) [superposition 10,9036]
+411185. $false [trivial inequality removal 411142]
+% SZS output end Proof for GRP200-1_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 6.700 s
+% Peak memory usage: 179 MB
+% Instructions burned: 21206 (million)
+% ------------------------------
+% ------------------------------

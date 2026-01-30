@@ -1,0 +1,74 @@
+{
+  "problem": "2026-01-29_02-07-24_GRP124-6.005",
+  "timestamp": "2026-01-29T02:09:51.732115",
+  "configuration": {
+    "timeout": 60,
+    "vampire_binary": "../build/vampire",
+    "total_variants": 6,
+    "variants_with_seeds": 6
+  },
+  "results": [
+    {
+      "name": "original",
+      "status": "TIMEOUT",
+      "time": 60.049649238586426,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_02-07-24_GRP124-6.005/results/original.out"
+    },
+    {
+      "name": "original_clausified",
+      "status": "TIMEOUT",
+      "time": 60.04909825325012,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_02-07-24_GRP124-6.005/results/original_clausified.out"
+    },
+    {
+      "name": "variant_0",
+      "status": "TIMEOUT",
+      "time": 60.051122188568115,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_02-07-24_GRP124-6.005/results/variant_0.out"
+    },
+    {
+      "name": "variant_0_original",
+      "status": "TIMEOUT",
+      "time": 60.04856562614441,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_02-07-24_GRP124-6.005/results/variant_0_original.out"
+    },
+    {
+      "name": "variant_1",
+      "status": "TIMEOUT",
+      "time": 60.04221177101135,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_02-07-24_GRP124-6.005/results/variant_1.out"
+    },
+    {
+      "name": "variant_1_original",
+      "status": "TIMEOUT",
+      "time": 60.04191303253174,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_02-07-24_GRP124-6.005/results/variant_1_original.out"
+    },
+    {
+      "name": "variant_2",
+      "status": "TIMEOUT",
+      "time": 60.05190300941467,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_02-07-24_GRP124-6.005/results/variant_2.out"
+    },
+    {
+      "name": "variant_2_original",
+      "status": "TIMEOUT",
+      "time": 60.04370832443237,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_02-07-24_GRP124-6.005/results/variant_2_original.out"
+    }
+  ],
+  "statistics": {
+    "total_runs": 8,
+    "proved": 0,
+    "timeout": 8,
+    "unknown": 0
+  }
+}

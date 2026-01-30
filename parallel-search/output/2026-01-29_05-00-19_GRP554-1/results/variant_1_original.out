@@ -1,0 +1,43 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+2. multiply(X0,X1) = divide(X0,inverse(X1)) [input(axiom)]
+3. multiply(multiply(inverse(b2),b2),a2) != a2 [input(negated conjecture)]
+4. a2 != multiply(multiply(inverse(b2),b2),a2) [reorient equations 3]
+6. ! [X0,X1,X2] : divide(divide(X2,inverse(divide(X1,divide(X2,X0)))),X0) = X1 [input(assumption)]
+7. ! [X0,X1] : ? [X2] : divide(divide(X2,inverse(divide(X0,divide(X2,X1)))),X1) = X0 [input(assumption)]
+8. ! [X0,X1] : divide(divide(X0,inverse(divide(divide(X0,X1),divide(X0,X1)))),X1) = divide(X0,X1) [input(assumption)]
+10. ! [X0,X1] : (? [X2] : divide(divide(X2,inverse(divide(X0,divide(X2,X1)))),X1) = X0 => divide(divide(sK0(X0,X1),inverse(divide(X0,divide(sK0(X0,X1),X1)))),X1) = X0) [skolem symbol introduction]
+11. ! [X0,X1] : divide(divide(sK0(X0,X1),inverse(divide(X0,divide(sK0(X0,X1),X1)))),X1) = X0 [skolemisation 7,10]
+13. divide(divide(X2,inverse(divide(X1,divide(X2,X0)))),X0) = X1 [cnf transformation 6]
+14. divide(divide(sK0(X0,X1),inverse(divide(X0,divide(sK0(X0,X1),X1)))),X1) = X0 [cnf transformation 11]
+15. divide(X0,X1) = divide(divide(X0,inverse(divide(divide(X0,X1),divide(X0,X1)))),X1) [cnf transformation 8]
+17. a2 != divide(divide(inverse(b2),inverse(b2)),inverse(a2)) [definition unfolding 4,2,2]
+18. divide(divide(divide(X1,inverse(divide(X0,divide(X1,X2)))),inverse(divide(X3,X0))),X2) = X3 [superposition 13,13]
+19. divide(X2,inverse(divide(X0,divide(X2,divide(X1,X3))))) = divide(divide(X1,inverse(X0)),X3) [superposition 13,13]
+46. divide(X0,inverse(divide(divide(X0,X1),divide(X0,X1)))) = divide(divide(divide(X2,inverse(divide(X1,divide(X2,X3)))),inverse(divide(X0,X1))),X3) [superposition 18,15]
+51. divide(X0,inverse(divide(X1,X0))) = X1 [superposition 18,14]
+57. divide(X0,inverse(divide(divide(X0,X1),divide(X0,X1)))) = X0 [forward demodulation 46,18]
+68. divide(X1,inverse(X0)) = divide(divide(X2,inverse(divide(X3,divide(X2,X1)))),inverse(divide(X0,X3))) [superposition 51,18]
+86. divide(divide(X1,inverse(X3)),X2) = divide(divide(sK0(X0,divide(X1,X2)),inverse(divide(X0,divide(sK0(X0,divide(X1,X2)),divide(X1,X2))))),inverse(divide(X3,X0))) [superposition 19,14]
+97. divide(divide(divide(X0,inverse(X1)),X2),divide(X0,X2)) = X1 [superposition 14,19]
+112. divide(divide(X1,inverse(X3)),X2) = divide(divide(X1,X2),inverse(X3)) [forward demodulation 86,68]
+166. divide(X1,inverse(divide(X0,X0))) = X1 [superposition 57,51]
+270. divide(divide(X0,inverse(X1)),divide(X0,inverse(divide(divide(divide(X0,inverse(X1)),X2),divide(divide(X0,inverse(X1)),X2))))) = X1 [superposition 97,57]
+313. divide(divide(X0,inverse(X1)),X0) = X1 [forward demodulation 270,166]
+353. divide(X0,X0) = divide(X1,X1) [superposition 313,166]
+445. divide(divide(X0,X0),inverse(X1)) = X1 [superposition 313,112]
+608. a2 != divide(divide(X0,X0),inverse(a2)) [superposition 17,353]
+614. $false [forward subsumption resolution 608,445]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.007 s
+% Peak memory usage: 59 MB
+% Instructions burned: 29 (million)
+% ------------------------------
+% ------------------------------

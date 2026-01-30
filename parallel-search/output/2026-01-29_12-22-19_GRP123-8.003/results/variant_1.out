@@ -1,0 +1,62 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+15. group_element(e_1) [input(axiom)]
+16. group_element(e_2) [input(axiom)]
+17. group_element(e_3) [input(axiom)]
+22. ~equalish(e_3,e_1) [input(axiom)]
+23. ~equalish(e_3,e_2) [input(axiom)]
+24. product1(X0,X1,e_3) | ~group_element(X1) | product1(X0,X1,e_1) | product1(X0,X1,e_2) | ~group_element(X0) [input(axiom)]
+31. ~product2(X0,X3,X2) | ~product2(X0,X1,X2) | equalish(X1,X3) [input(axiom)]
+33. product2(X0,X0,X0) [input(axiom)]
+35. ! [X0,X1,X2,X3] : ((product2(X0,X1,X3) & product2(X0,X1,X2)) => equalish(X2,X3)) [input(axiom)]
+37. ! [X0,X1,X2,X3] : ((product1(X0,X3,X2) & product1(X0,X1,X2)) => equalish(X1,X3)) [input(assumption)]
+38. ! [X0] : product1(X0,X0,X0) [input(axiom)]
+39. ~product1(X2,X1,X3) | ~product1(X0,X1,X2) | product2(X3,X0,X1) [input(negated conjecture)]
+42. ! [X0,X1,X2,X3] : (equalish(X2,X3) | (~product2(X0,X1,X3) | ~product2(X0,X1,X2))) [ennf transformation 35]
+43. ! [X0,X1,X2,X3] : (equalish(X2,X3) | ~product2(X0,X1,X3) | ~product2(X0,X1,X2)) [flattening 42]
+46. ! [X0,X1,X2,X3] : (equalish(X1,X3) | (~product1(X0,X3,X2) | ~product1(X0,X1,X2))) [ennf transformation 37]
+47. ! [X0,X1,X2,X3] : (equalish(X1,X3) | ~product1(X0,X3,X2) | ~product1(X0,X1,X2)) [flattening 46]
+49. ~product2(X0,X1,X3) | equalish(X2,X3) | ~product2(X0,X1,X2) [cnf transformation 43]
+51. ~product1(X0,X3,X2) | equalish(X1,X3) | ~product1(X0,X1,X2) [cnf transformation 47]
+52. product1(X0,X0,X0) [cnf transformation 38]
+53. ~product1(X0,X1,X1) | product2(X1,X0,X1) [resolution 52,39]
+58. ~product1(X1,X0,X1) | equalish(X0,X1) [resolution 51,52]
+68. ~product2(X1,X1,X0) | equalish(X0,X1) [resolution 49,33]
+75. ~group_element(e_3) | product1(X0,e_3,e_1) | product1(X0,e_3,e_2) | ~group_element(X0) | product2(e_3,X0,e_3) [resolution 24,53]
+80. product2(e_3,X0,e_3) | product1(X0,e_3,e_2) | ~group_element(X0) | product1(X0,e_3,e_1) [forward subsumption resolution 75,17]
+84. ~product2(e_3,X1,e_3) | ~group_element(X0) | product1(X0,e_3,e_1) | product1(X0,e_3,e_2) | equalish(X1,X0) [resolution 80,31]
+109. product1(X0,e_3,e_2) | product1(X0,e_3,e_1) | ~group_element(X0) | equalish(e_3,X0) [resolution 84,33]
+122. product1(e_2,e_3,e_1) | ~group_element(e_2) | equalish(e_3,e_2) | equalish(e_3,e_2) [resolution 109,58]
+124. product1(e_2,e_3,e_1) | ~group_element(e_2) | equalish(e_3,e_2) [duplicate literal removal 122]
+125. product1(e_2,e_3,e_1) | equalish(e_3,e_2) [forward subsumption resolution 124,16]
+127. product1(e_2,e_3,e_1) [forward subsumption resolution 125,23]
+137. ~product1(X0,e_3,e_2) | product2(e_1,X0,e_3) [resolution 127,39]
+145. 2 <=> product1(e_1,e_3,e_2) [avatar definition]
+146. ~product1(e_1,e_3,e_2) <- (~2) [avatar component clause 145]
+147. product1(e_1,e_3,e_2) <- (2) [avatar component clause 145]
+221. product2(e_1,e_1,e_3) <- (2) [resolution 137,147]
+235. equalish(e_3,e_1) <- (2) [resolution 221,68]
+237. $false <- (2) [forward subsumption resolution 235,22]
+238. ~2 [avatar contradiction clause 237]
+243. product1(e_1,e_3,e_1) | ~group_element(e_1) | equalish(e_3,e_1) <- (~2) [resolution 146,109]
+258. ~group_element(e_1) | equalish(e_3,e_1) <- (~2) [forward subsumption resolution 243,58]
+259. equalish(e_3,e_1) <- (~2) [forward subsumption resolution 258,15]
+260. $false <- (~2) [forward subsumption resolution 259,22]
+261. 2 [avatar contradiction clause 260]
+s4. ~2 [sat_conversion 238]
+s7. 2 [sat_conversion 261]
+s8. # [rat s4,s7]
+262. $false [avatar sat refutation s8]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.004 s
+% Peak memory usage: 62 MB
+% Instructions burned: 9 (million)
+% ------------------------------
+% ------------------------------

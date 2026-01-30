@@ -1,0 +1,33 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2
+% SZS output start Proof for variant_2
+1. multiply(X0,multiply(multiply(X1,X2),inverse(multiply(X0,X2)))) = X1 [input(axiom)]
+2. ! [X0,X1] : multiply(X0,X1) = multiply(X1,X0) [input(assumption)]
+3. ! [X0] : inverse(inverse(X0)) = X0 [input(assumption)]
+4. ! [X0,X1] : inverse(multiply(X0,X1)) = multiply(inverse(X1),inverse(X0)) [input(assumption)]
+6. multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [input(negated conjecture)]
+7. multiply(X0,X1) = multiply(X1,X0) [cnf transformation 2]
+8. inverse(inverse(X0)) = X0 [cnf transformation 3]
+9. inverse(multiply(X0,X1)) = multiply(inverse(X1),inverse(X0)) [cnf transformation 4]
+17. inverse(multiply(inverse(X0),X1)) = multiply(inverse(X1),X0) [superposition 9,8]
+55. multiply(X1,multiply(multiply(X2,multiply(multiply(X0,X3),inverse(multiply(X1,X3)))),inverse(X0))) = X2 [superposition 1,1]
+60. multiply(X0,multiply(inverse(multiply(X0,X1)),multiply(X2,X1))) = X2 [superposition 1,7]
+66. multiply(X1,multiply(inverse(X0),multiply(X2,multiply(multiply(X0,X3),inverse(multiply(X1,X3)))))) = X2 [forward demodulation 55,7]
+2407. multiply(X2,multiply(X0,X1)) = inverse(multiply(inverse(X0),inverse(multiply(X2,X1)))) [superposition 66,60]
+2463. multiply(X2,multiply(X0,X1)) = multiply(inverse(inverse(multiply(X2,X1))),X0) [forward demodulation 2407,17]
+2563. multiply(X2,multiply(X0,X1)) = multiply(multiply(X2,X1),X0) [forward demodulation 2463,8]
+2762. multiply(a3,multiply(b3,c3)) != multiply(a3,multiply(c3,b3)) [superposition 6,2563]
+2858. multiply(a3,multiply(b3,c3)) != multiply(a3,multiply(b3,c3)) [forward demodulation 2762,7]
+2859. $false [trivial inequality removal 2858]
+% SZS output end Proof for variant_2
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.033 s
+% Peak memory usage: 56 MB
+% Instructions burned: 91 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,63 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0
+% SZS output start Proof for variant_0
+1. divide(divide(divide(X0,X0),divide(X0,divide(X1,divide(divide(identity,X0),X2)))),X2) = X1 [input(axiom)]
+4. ! [X0,X1] : divide(divide(X0,X0),X1) = divide(identity,X1) [input(assumption)]
+5. ! [X0,X1] : divide(X1,divide(X0,X0)) = divide(X1,identity) [input(assumption)]
+6. ! [X0] : divide(identity,divide(X0,X0)) = identity [input(assumption)]
+7. ! [X0,X1] : divide(divide(X0,X0),divide(X1,X1)) = divide(identity,divide(X1,X1)) [input(assumption)]
+8. divide(divide(a3,divide(identity,b3)),divide(identity,c3)) != divide(a3,divide(identity,divide(b3,divide(identity,c3)))) [input(negated conjecture)]
+10. divide(divide(X0,X0),X1) = divide(identity,X1) [cnf transformation 4]
+11. divide(X1,divide(X0,X0)) = divide(X1,identity) [cnf transformation 5]
+12. identity = divide(identity,divide(X0,X0)) [cnf transformation 6]
+13. divide(divide(X0,X0),divide(X1,X1)) = divide(identity,divide(X1,X1)) [cnf transformation 7]
+14. divide(divide(identity,divide(X0,divide(X1,divide(divide(identity,X0),X2)))),X2) = X1 [forward demodulation 1,10]
+69. divide(divide(identity,divide(identity,divide(X1,divide(identity,X0)))),X0) = X1 [superposition 14,10]
+70. divide(divide(identity,divide(identity,divide(X1,divide(identity,divide(X0,X0))))),divide(X0,X0)) = X1 [superposition 14,13]
+74. divide(divide(identity,divide(X1,divide(X0,identity))),divide(identity,X1)) = X0 [superposition 14,11]
+78. divide(identity,divide(X2,divide(X0,divide(divide(identity,X2),divide(divide(identity,X1),X3))))) = divide(divide(identity,divide(X1,X0)),X3) [superposition 14,14]
+79. divide(divide(identity,X0),X1) = divide(divide(identity,divide(X0,identity)),X1) [superposition 14,11]
+92. divide(divide(identity,divide(identity,divide(X1,divide(identity,divide(X0,X0))))),identity) = X1 [forward demodulation 70,11]
+96. divide(divide(identity,divide(identity,divide(X1,identity))),identity) = X1 [forward demodulation 92,12]
+100. divide(identity,divide(identity,divide(X0,identity))) = divide(divide(identity,divide(identity,X0)),identity) [superposition 96,96]
+123. divide(identity,divide(X1,divide(X0,divide(divide(identity,X1),divide(identity,X2))))) = divide(divide(identity,divide(identity,X0)),X2) [superposition 69,14]
+129. divide(divide(identity,divide(identity,divide(X0,divide(identity,divide(X1,X1))))),identity) = X0 [superposition 11,69]
+133. divide(identity,divide(identity,divide(divide(X0,divide(identity,divide(X1,X1))),identity))) = X0 [forward demodulation 129,100]
+142. divide(identity,divide(identity,divide(divide(X0,identity),identity))) = X0 [forward demodulation 133,12]
+176. divide(identity,divide(identity,divide(X0,identity))) = X0 [superposition 74,12]
+186. divide(identity,divide(X1,divide(X0,identity))) = divide(divide(identity,divide(identity,X0)),X1) [superposition 69,74]
+215. divide(identity,divide(identity,divide(X0,identity))) = divide(identity,divide(identity,X0)) [superposition 176,96]
+222. divide(X0,identity) = X0 [superposition 142,176]
+239. divide(identity,divide(identity,X0)) = X0 [forward demodulation 215,176]
+248. divide(divide(identity,X0),X1) = divide(divide(identity,divide(identity,divide(identity,divide(X0,identity)))),X1) [superposition 79,96]
+291. divide(divide(identity,X0),X1) = divide(identity,divide(X1,divide(divide(identity,divide(X0,identity)),identity))) [forward demodulation 248,186]
+299. divide(divide(identity,X0),X1) = divide(identity,divide(X1,divide(divide(identity,X0),identity))) [forward demodulation 291,79]
+306. divide(divide(identity,X0),X1) = divide(identity,divide(X1,divide(identity,X0))) [forward demodulation 299,222]
+549. divide(identity,divide(X1,divide(X2,divide(divide(identity,X1),divide(X0,X3))))) = divide(divide(identity,divide(divide(identity,X0),X2)),X3) [superposition 78,239]
+563. divide(identity,divide(X1,divide(X2,divide(divide(identity,X1),divide(identity,X0))))) = divide(divide(identity,divide(X0,X2)),identity) [superposition 78,222]
+630. divide(identity,divide(X1,divide(X2,divide(divide(identity,X1),divide(identity,X0))))) = divide(identity,divide(X0,X2)) [forward demodulation 563,222]
+666. divide(identity,divide(X0,X2)) = divide(divide(identity,divide(divide(identity,identity),X2)),X0) [forward demodulation 630,549]
+682. divide(divide(identity,divide(identity,X2)),X0) = divide(identity,divide(X0,X2)) [forward demodulation 666,10]
+688. divide(X2,X0) = divide(identity,divide(X0,X2)) [forward demodulation 682,239]
+1934. divide(divide(identity,divide(divide(identity,X1),X3)),X0) = divide(identity,divide(X2,divide(X3,divide(divide(identity,X2),divide(identity,divide(X0,divide(X1,identity))))))) [superposition 78,186]
+2016. divide(divide(identity,divide(divide(identity,X1),X3)),X0) = divide(divide(identity,divide(identity,X3)),divide(X0,divide(X1,identity))) [forward demodulation 1934,123]
+2079. divide(divide(identity,divide(divide(identity,X1),X3)),X0) = divide(identity,divide(divide(X0,divide(X1,identity)),divide(X3,identity))) [forward demodulation 2016,186]
+2122. divide(divide(identity,divide(divide(identity,X1),X3)),X0) = divide(divide(X3,identity),divide(X0,divide(X1,identity))) [forward demodulation 2079,688]
+2145. divide(divide(identity,divide(divide(identity,X1),X3)),X0) = divide(divide(X3,identity),divide(X0,X1)) [forward demodulation 2122,222]
+2154. divide(X3,divide(X0,X1)) = divide(divide(identity,divide(divide(identity,X1),X3)),X0) [forward demodulation 2145,222]
+2160. divide(X3,divide(X0,X1)) = divide(divide(X3,divide(identity,X1)),X0) [forward demodulation 2154,688]
+12984. divide(a3,divide(identity,divide(b3,divide(identity,c3)))) != divide(a3,divide(divide(identity,c3),b3)) [superposition 8,2160]
+13101. divide(a3,divide(divide(identity,c3),b3)) != divide(a3,divide(divide(identity,c3),b3)) [forward demodulation 12984,306]
+13102. $false [trivial inequality removal 13101]
+% SZS output end Proof for variant_0
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.089 s
+% Peak memory usage: 62 MB
+% Instructions burned: 345 (million)
+% ------------------------------
+% ------------------------------

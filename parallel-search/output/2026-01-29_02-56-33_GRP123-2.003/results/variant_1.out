@@ -1,0 +1,64 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+7. group_element(e_1) [input(axiom)]
+8. group_element(e_2) [input(axiom)]
+9. group_element(e_3) [input(axiom)]
+10. ~equalish(e_1,e_2) [input(axiom)]
+11. ~equalish(e_1,e_3) [input(axiom)]
+12. ~equalish(e_2,e_1) [input(axiom)]
+14. ~equalish(e_3,e_1) [input(axiom)]
+16. product(X0,X1,e_3) | ~group_element(X1) | product(X0,X1,e_1) | product(X0,X1,e_2) | ~group_element(X0) [input(axiom)]
+23. ! [X0,X1,X2,X3] : ((product(X0,X3,X2) & product(X0,X1,X2)) => equalish(X1,X3)) [input(assumption)]
+24. ! [X0,X1,X2,X3] : ((product(X3,X1,X2) & product(X0,X1,X2)) => equalish(X0,X3)) [input(assumption)]
+25. ! [X0] : product(X0,X0,X0) [input(assumption)]
+27. ~product(X5,X4,X3) | ~product(X3,X4,X2) | ~product(X5,X1,X0) | ~product(X0,X1,X2) | equalish(X1,X4) [input(negated conjecture)]
+32. ! [X0,X1,X2,X3] : (equalish(X1,X3) | (~product(X0,X3,X2) | ~product(X0,X1,X2))) [ennf transformation 23]
+33. ! [X0,X1,X2,X3] : (equalish(X1,X3) | ~product(X0,X3,X2) | ~product(X0,X1,X2)) [flattening 32]
+34. ! [X0,X1,X2,X3] : (equalish(X0,X3) | (~product(X3,X1,X2) | ~product(X0,X1,X2))) [ennf transformation 24]
+35. ! [X0,X1,X2,X3] : (equalish(X0,X3) | ~product(X3,X1,X2) | ~product(X0,X1,X2)) [flattening 34]
+40. ~product(X0,X3,X2) | equalish(X1,X3) | ~product(X0,X1,X2) [cnf transformation 33]
+41. ~product(X3,X1,X2) | equalish(X0,X3) | ~product(X0,X1,X2) [cnf transformation 35]
+42. product(X0,X0,X0) [cnf transformation 25]
+43. ~product(X3,X2,X1) | ~product(X0,X2,X3) | ~product(X0,X0,X1) | equalish(X2,X0) [resolution 42,27]
+59. ~product(X1,X0,X1) | equalish(X0,X1) [resolution 40,42]
+61. ~product(X0,X1,X1) | equalish(X0,X1) [resolution 41,42]
+71. ~product(X2,X2,e_3) | product(X1,X0,e_1) | product(X1,X0,e_2) | ~group_element(X1) | ~product(X2,X0,X1) | ~group_element(X0) | equalish(X0,X2) [resolution 16,43]
+147. equalish(X0,e_3) | ~group_element(X0) | product(e_3,X0,e_1) | product(e_3,X0,e_2) | ~group_element(e_3) [resolution 59,16]
+148. product(e_3,X0,e_2) | ~group_element(X0) | product(e_3,X0,e_1) | equalish(X0,e_3) [forward subsumption resolution 147,9]
+166. ~product(e_3,X1,X0) | product(X0,X1,e_2) | ~group_element(X0) | product(X0,X1,e_1) | ~group_element(X1) | equalish(X1,e_3) [resolution 71,42]
+410. ~group_element(X0) | product(e_3,X0,e_1) | equalish(X0,e_3) | product(e_2,X0,e_2) | ~group_element(e_2) | product(e_2,X0,e_1) | ~group_element(X0) | equalish(X0,e_3) [resolution 148,166]
+429. ~group_element(X0) | product(e_3,X0,e_1) | equalish(X0,e_3) | product(e_2,X0,e_2) | ~group_element(e_2) | product(e_2,X0,e_1) [duplicate literal removal 410]
+433. product(e_3,X0,e_1) | ~group_element(X0) | equalish(X0,e_3) | product(e_2,X0,e_2) | product(e_2,X0,e_1) [forward subsumption resolution 429,8]
+544. ~group_element(e_1) | equalish(e_1,e_3) | product(e_2,e_1,e_2) | product(e_2,e_1,e_1) | equalish(e_3,e_1) [resolution 433,61]
+560. equalish(e_1,e_3) | product(e_2,e_1,e_2) | product(e_2,e_1,e_1) | equalish(e_3,e_1) [forward subsumption resolution 544,7]
+564. product(e_2,e_1,e_2) | product(e_2,e_1,e_1) | equalish(e_3,e_1) [forward subsumption resolution 560,11]
+569. 19 <=> product(e_2,e_1,e_1) [avatar definition]
+571. product(e_2,e_1,e_1) <- (19) [avatar component clause 569]
+573. 20 <=> product(e_2,e_1,e_2) [avatar definition]
+575. product(e_2,e_1,e_2) <- (20) [avatar component clause 573]
+577. product(e_2,e_1,e_2) | product(e_2,e_1,e_1) [forward subsumption resolution 564,14]
+578. 19 | 20 [avatar split clause 577,573,569]
+606. equalish(e_2,e_1) <- (19) [resolution 571,61]
+615. $false <- (19) [forward subsumption resolution 606,12]
+616. ~19 [avatar contradiction clause 615]
+998. equalish(e_1,e_2) <- (20) [resolution 575,59]
+1007. $false <- (20) [forward subsumption resolution 998,10]
+1008. ~20 [avatar contradiction clause 1007]
+s11. 19 | 20 [sat_conversion 578]
+s12. ~19 [sat_conversion 616]
+s21. ~20 [sat_conversion 1008]
+s22. # [rat s11,s21,s12]
+1009. $false [avatar sat refutation s22]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.017 s
+% Peak memory usage: 59 MB
+% Instructions burned: 58 (million)
+% ------------------------------
+% ------------------------------

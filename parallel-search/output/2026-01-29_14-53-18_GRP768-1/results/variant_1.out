@@ -1,0 +1,41 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+3. product(X0,difference(X0,X1)) = X1 [input(axiom)]
+4. difference(X0,product(X0,X1)) = X1 [input(axiom)]
+5. quotient(product(X0,X1),X1) = X0 [input(axiom)]
+6. product(quotient(X0,X1),X1) = X0 [input(axiom)]
+7. difference(X0,product(product(X0,X1),X2)) = quotient(product(X1,product(X2,X0)),X0) [input(axiom)]
+9. product(difference(X0,one),X0) = product(X0,quotient(one,X0)) [input(axiom)]
+13. product(product(difference(X0,one),X0),product(X1,X2)) = product(product(product(difference(X0,one),X0),X1),X2) [input(axiom)]
+21. quotient(product(product(difference(x0,one),x0),product(x1,x2)),product(difference(x0,one),x0)) != product(quotient(product(product(difference(x0,one),x0),x1),product(difference(x0,one),x0)),quotient(product(product(difference(x0,one),x0),x2),product(difference(x0,one),x0))) [input(negated conjecture)]
+67. quotient(product(product(x0,quotient(one,x0)),product(x1,x2)),product(x0,quotient(one,x0))) != product(quotient(product(product(x0,quotient(one,x0)),x1),product(x0,quotient(one,x0))),quotient(product(product(x0,quotient(one,x0)),x2),product(x0,quotient(one,x0)))) [superposition 21,9]
+105. difference(X1,product(product(X1,X2),quotient(X0,X1))) = quotient(product(X2,X0),X1) [superposition 7,6]
+463. product(product(product(X0,quotient(one,X0)),X1),X2) = product(product(X0,quotient(one,X0)),product(X1,X2)) [superposition 13,9]
+479. product(product(difference(X0,one),X0),X1) = quotient(product(product(difference(X0,one),X0),product(X1,X2)),X2) [superposition 5,13]
+497. product(product(difference(X0,one),X0),X1) = difference(X2,product(product(X2,product(difference(X0,one),X0)),X1)) [forward demodulation 479,7]
+516. product(product(X0,quotient(one,X0)),X1) = difference(X2,product(product(X2,product(X0,quotient(one,X0))),X1)) [forward demodulation 497,9]
+769. quotient(product(X1,X2),product(difference(X0,one),X0)) = difference(product(difference(X0,one),X0),product(product(difference(X0,one),X0),product(X1,quotient(X2,product(difference(X0,one),X0))))) [superposition 105,13]
+779. product(X1,quotient(X2,product(difference(X0,one),X0))) = quotient(product(X1,X2),product(difference(X0,one),X0)) [forward demodulation 769,4]
+795. product(X1,quotient(X2,product(X0,quotient(one,X0)))) = quotient(product(X1,X2),product(X0,quotient(one,X0))) [forward demodulation 779,9]
+8053. product(product(X1,quotient(one,X1)),X2) = difference(quotient(X0,product(X1,quotient(one,X1))),product(X0,X2)) [superposition 516,6]
+8078. quotient(product(product(X0,quotient(one,X0)),X1),X2) = product(product(X0,quotient(one,X0)),quotient(X1,X2)) [superposition 105,516]
+248451. product(X2,X1) = product(quotient(X2,product(X0,quotient(one,X0))),product(product(X0,quotient(one,X0)),X1)) [superposition 3,8053]
+250098. quotient(product(product(x0,quotient(one,x0)),product(x1,x2)),product(x0,quotient(one,x0))) != product(quotient(product(product(x0,quotient(one,x0)),x1),product(x0,quotient(one,x0))),product(product(x0,quotient(one,x0)),quotient(x2,product(x0,quotient(one,x0))))) [superposition 67,8078]
+250225. quotient(product(product(x0,quotient(one,x0)),product(x1,x2)),product(x0,quotient(one,x0))) != product(product(product(x0,quotient(one,x0)),x1),quotient(x2,product(x0,quotient(one,x0)))) [forward demodulation 250098,248451]
+250334. quotient(product(product(x0,quotient(one,x0)),product(x1,x2)),product(x0,quotient(one,x0))) != product(product(x0,quotient(one,x0)),product(x1,quotient(x2,product(x0,quotient(one,x0))))) [forward demodulation 250225,463]
+250399. product(product(x0,quotient(one,x0)),quotient(product(x1,x2),product(x0,quotient(one,x0)))) != product(product(x0,quotient(one,x0)),product(x1,quotient(x2,product(x0,quotient(one,x0))))) [forward demodulation 250334,795]
+250441. product(product(x0,quotient(one,x0)),product(x1,quotient(x2,product(x0,quotient(one,x0))))) != product(product(x0,quotient(one,x0)),product(x1,quotient(x2,product(x0,quotient(one,x0))))) [forward demodulation 250399,795]
+250442. $false [trivial inequality removal 250441]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 4.011 s
+% Peak memory usage: 87 MB
+% Instructions burned: 11385 (million)
+% ------------------------------
+% ------------------------------

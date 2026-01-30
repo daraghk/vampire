@@ -1,0 +1,69 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0
+% SZS output start Proof for variant_0
+1. divide(divide(X0,inverse(divide(X1,divide(X0,X2)))),X2) = X1 [input(axiom)]
+2. ! [X0] : inverse(inverse(X0)) = X0 [input(assumption)]
+3. ! [X0,X1,X2] : divide(divide(X0,X1),X2) = divide(X0,divide(X2,inverse(X1))) [input(assumption)]
+4. divide(a,inverse(b)) != divide(b,inverse(a)) [input(negated conjecture)]
+5. inverse(inverse(X0)) = X0 [cnf transformation 2]
+6. divide(divide(X0,X1),X2) = divide(X0,divide(X2,inverse(X1))) [cnf transformation 3]
+7. divide(divide(X1,inverse(X0)),X2) = divide(X1,divide(X2,X0)) [superposition 6,5]
+9. divide(divide(divide(X1,inverse(divide(X0,divide(X1,X2)))),inverse(divide(X3,X0))),X2) = X3 [superposition 1,1]
+10. divide(divide(X2,inverse(divide(divide(X0,X1),X2))),inverse(X1)) = X0 [superposition 1,6]
+11. divide(X2,inverse(divide(X0,divide(X2,divide(X1,X3))))) = divide(divide(X1,inverse(X0)),X3) [superposition 1,1]
+13. divide(divide(divide(X1,inverse(divide(X0,divide(X1,divide(X2,inverse(X3)))))),X3),X2) = X0 [superposition 6,1]
+14. divide(divide(X1,X2),divide(X3,inverse(divide(X0,divide(X3,inverse(X2)))))) = divide(X1,X0) [superposition 6,1]
+15. divide(X1,X0) = divide(divide(divide(X1,X2),divide(X0,divide(X3,inverse(X2)))),X3) [forward demodulation 14,6]
+16. divide(divide(X1,divide(X3,divide(X0,divide(X1,divide(X2,inverse(X3)))))),X2) = X0 [forward demodulation 13,7]
+18. divide(X2,inverse(divide(X0,divide(X2,divide(X1,X3))))) = divide(X1,divide(X3,X0)) [forward demodulation 11,7]
+19. divide(X2,divide(inverse(X1),divide(divide(X0,X1),X2))) = X0 [forward demodulation 10,7]
+20. divide(divide(X1,inverse(divide(X0,divide(X1,X2)))),divide(X2,divide(X3,X0))) = X3 [forward demodulation 9,7]
+22. divide(X1,X0) = divide(divide(divide(X1,X2),divide(divide(X0,X2),X3)),X3) [forward demodulation 15,6]
+23. divide(divide(X1,divide(X3,divide(X0,divide(divide(X1,X3),X2)))),X2) = X0 [forward demodulation 16,6]
+25. divide(X1,divide(divide(X2,divide(X3,X0)),divide(X0,divide(X1,X2)))) = X3 [forward demodulation 20,7]
+34. divide(X0,divide(divide(X1,inverse(X2)),X3)) = divide(divide(divide(X0,inverse(X3)),X2),X1) [superposition 6,7]
+35. divide(X0,inverse(X3)) = divide(divide(X1,inverse(divide(X0,divide(divide(X1,X2),X3)))),X2) [superposition 1,7]
+40. divide(X0,inverse(X3)) = divide(X1,divide(X2,divide(X0,divide(divide(X1,X2),X3)))) [forward demodulation 35,7]
+41. divide(X0,divide(divide(X1,inverse(X2)),X3)) = divide(divide(X0,divide(X2,X3)),X1) [forward demodulation 34,7]
+46. divide(divide(X0,divide(X2,X3)),X1) = divide(X0,divide(X1,divide(X3,X2))) [forward demodulation 41,7]
+56. divide(X0,inverse(X2)) = divide(X3,divide(inverse(X1),divide(divide(X0,divide(X1,X2)),X3))) [superposition 19,7]
+64. divide(divide(X1,inverse(divide(X2,X0))),divide(inverse(X3),divide(divide(X0,X3),X1))) = X2 [superposition 1,19]
+67. divide(X1,divide(divide(inverse(X3),divide(divide(X0,X3),X1)),divide(X2,X0))) = X2 [forward demodulation 64,7]
+74. divide(X0,inverse(X2)) = divide(X3,divide(inverse(X1),divide(X0,divide(X3,divide(X2,X1))))) [forward demodulation 56,46]
+77. divide(X1,divide(inverse(X3),divide(divide(X2,X0),divide(X1,divide(X0,X3))))) = X2 [forward demodulation 67,46]
+81. divide(divide(X2,X0),inverse(X0)) = X2 [forward demodulation 77,74]
+91. divide(X0,X2) = divide(X1,divide(inverse(inverse(X2)),divide(X0,X1))) [superposition 19,81]
+93. divide(X0,divide(inverse(inverse(X1)),X1)) = X0 [superposition 7,81]
+95. divide(X0,divide(X1,X1)) = X0 [forward demodulation 93,5]
+97. divide(X0,X2) = divide(X1,divide(X2,divide(X0,X1))) [forward demodulation 91,5]
+234. divide(X0,inverse(divide(X1,divide(X0,divide(X2,X2))))) = X1 [superposition 1,95]
+242. divide(X2,divide(X2,X1)) = X1 [forward demodulation 234,18]
+286. divide(divide(X1,divide(X2,divide(X0,divide(divide(X1,X2),X3)))),X4) = divide(divide(X0,divide(divide(X4,X3),X5)),X5) [superposition 22,23]
+293. divide(X2,divide(X3,divide(X0,divide(divide(X2,X3),divide(X1,X4))))) = divide(divide(X1,inverse(X0)),X4) [superposition 1,23]
+300. divide(X2,divide(X3,divide(X0,divide(divide(X2,X3),divide(X1,X4))))) = divide(X1,divide(X4,X0)) [forward demodulation 293,7]
+306. divide(divide(X1,divide(X2,divide(X0,divide(divide(X1,X2),X3)))),X4) = divide(X0,divide(X5,divide(X5,divide(X4,X3)))) [forward demodulation 286,46]
+337. divide(X1,divide(X4,X0)) = divide(X0,inverse(divide(X1,X4))) [forward demodulation 300,40]
+340. divide(divide(X1,divide(X2,divide(X0,divide(divide(X1,X2),X3)))),X4) = divide(X0,divide(X4,X3)) [forward demodulation 306,242]
+371. divide(X0,divide(X4,X3)) = divide(X1,divide(X4,divide(divide(X0,divide(divide(X1,X2),X3)),X2))) [forward demodulation 340,46]
+397. divide(X0,divide(X4,X3)) = divide(X1,divide(X4,divide(X0,divide(X2,divide(X3,divide(X1,X2)))))) [forward demodulation 371,46]
+418. divide(X0,divide(X4,X3)) = divide(X1,divide(X4,divide(X0,divide(X1,X3)))) [forward demodulation 397,97]
+487. inverse(X0) = divide(divide(X1,X0),X1) [superposition 6,242]
+545. divide(X3,inverse(divide(X0,divide(X3,X4)))) = divide(X1,divide(divide(X2,X0),divide(X4,divide(X1,X2)))) [superposition 25,1]
+646. divide(X3,inverse(divide(X0,divide(X3,X4)))) = divide(X4,divide(divide(X2,X0),X2)) [forward demodulation 545,418]
+694. divide(X3,inverse(divide(X0,divide(X3,X4)))) = divide(X4,inverse(X0)) [forward demodulation 646,487]
+738. divide(X4,inverse(X0)) = divide(X0,divide(divide(X3,X4),X3)) [forward demodulation 694,337]
+776. divide(X0,inverse(X4)) = divide(X4,inverse(X0)) [forward demodulation 738,487]
+1491. divide(a,inverse(b)) != divide(a,inverse(b)) [superposition 4,776]
+1517. $false [trivial inequality removal 1491]
+% SZS output end Proof for variant_0
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.015 s
+% Peak memory usage: 59 MB
+% Instructions burned: 49 (million)
+% ------------------------------
+% ------------------------------

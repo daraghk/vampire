@@ -1,0 +1,38 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0
+% SZS output start Proof for variant_0
+5. mult(mult(X0,X1),mult(X2,X0)) = mult(X0,mult(mult(X1,X2),X0)) [input(axiom)]
+8. ! [X0,X1,X2] : (mult(X0,X2) = X1 => X2 = ld(X0,X1)) [input(assumption)]
+9. ! [X0,X1,X2] : (mult(X2,X0) = X1 => X2 = rd(X1,X0)) [input(assumption)]
+10. ! [X0] : mult(X0,ld(X0,X0)) = X0 [input(assumption)]
+11. sK0(X0) != mult(sK0(X0),X0) | sK0(X0) != mult(X0,sK0(X0)) [input(negated conjecture)]
+14. ! [X0,X1,X2] : (X2 = ld(X0,X1) | mult(X0,X2) != X1) [ennf transformation 8]
+15. ! [X0,X1,X2] : (X2 = rd(X1,X0) | mult(X2,X0) != X1) [ennf transformation 9]
+18. ld(X0,X1) = X2 | mult(X0,X2) != X1 [cnf transformation 14]
+19. rd(X1,X0) = X2 | mult(X2,X0) != X1 [cnf transformation 15]
+20. mult(X0,ld(X0,X0)) = X0 [cnf transformation 10]
+21. ld(X0,mult(X0,X2)) = X2 [equality resolution 18]
+22. rd(mult(X2,X0),X0) = X2 [equality resolution 19]
+57. mult(X2,X0) = ld(mult(X0,X1),mult(X0,mult(mult(X1,X2),X0))) [superposition 21,5]
+58. mult(X0,X1) = rd(mult(X0,mult(mult(X1,X2),X0)),mult(X2,X0)) [superposition 22,5]
+78. mult(X1,X0) = ld(X0,mult(X0,mult(mult(ld(X0,X0),X1),X0))) [superposition 57,20]
+94. mult(X1,X0) = mult(mult(ld(X0,X0),X1),X0) [forward demodulation 78,21]
+194. rd(mult(X0,X1),X1) = mult(ld(X1,X1),X0) [superposition 22,94]
+207. mult(ld(X1,X1),X0) = X0 [forward demodulation 194,22]
+269. mult(X1,ld(X2,X2)) = rd(mult(X1,mult(X0,X1)),mult(X0,X1)) [superposition 58,207]
+284. mult(X1,ld(X2,X2)) = X1 [forward demodulation 269,22]
+537. sK0(ld(X0,X0)) != sK0(ld(X0,X0)) | sK0(ld(X0,X0)) != mult(ld(X0,X0),sK0(ld(X0,X0))) [superposition 11,284]
+538. sK0(ld(X0,X0)) != mult(ld(X0,X0),sK0(ld(X0,X0))) [trivial inequality removal 537]
+539. $false [forward subsumption resolution 538,207]
+% SZS output end Proof for variant_0
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.009 s
+% Peak memory usage: 62 MB
+% Instructions burned: 32 (million)
+% ------------------------------
+% ------------------------------

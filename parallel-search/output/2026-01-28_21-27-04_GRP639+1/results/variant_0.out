@@ -1,0 +1,53 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0
+% SZS output start Proof for variant_0
+4. ~m1_subset_1(X0,k1_zfmisc_1(k2_zfmisc_1(X1,X2))) | v1_relat_1(X0) [input(axiom)]
+12. r1_tarski(X0,u1_struct_0(k5_group_4(X1,X0))) | ~v1_group_1(k5_group_4(X1,X0)) | ~m1_group_2(k5_group_4(X1,X0),X1) | ~m1_subset_1(X0,k1_zfmisc_1(u1_struct_0(X1))) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [input(axiom)]
+17. ~m1_subset_1(X1,k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | v1_group_1(k5_group_4(X0,X1)) [input(axiom)]
+18. ~m1_subset_1(X1,k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | m1_group_2(k5_group_4(X0,X1),X0) [input(axiom)]
+23. m1_subset_1(X0,k1_zfmisc_1(k2_zfmisc_1(X1,X2))) | ~m2_relset_1(X0,X1,X2) [input(axiom)]
+56. ~m1_relset_1(X2,X0,X1) | ~v1_funct_1(X2) | ~v1_funct_2(X2,X0,X1) | k2_funct_2(X0,X1,X2,X3) = k9_relat_1(X2,X3) [input(axiom)]
+58. ~m2_relset_1(X0,X1,X2) | m1_relset_1(X0,X1,X2) [input(axiom)]
+74. ! [X0,X1,X2] : ((v1_relat_1(X0) & r1_tarski(X1,X2)) => r1_tarski(k9_relat_1(X0,X1),k9_relat_1(X0,X2))) [input(assumption)]
+75. ~r1_tarski(k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,sK3),k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,u1_struct_0(k5_group_4(sK0,sK3)))) [input(negated conjecture)]
+76. m1_subset_1(sK3,k1_zfmisc_1(u1_struct_0(sK0))) [input(negated conjecture)]
+77. v1_funct_1(sK2) [input(negated conjecture)]
+78. v1_funct_2(sK2,u1_struct_0(sK0),u1_struct_0(sK1)) [input(negated conjecture)]
+79. m2_relset_1(sK2,u1_struct_0(sK0),u1_struct_0(sK1)) [input(negated conjecture)]
+84. ~v3_struct_0(sK0) [input(negated conjecture)]
+85. v3_group_1(sK0) [input(negated conjecture)]
+86. v4_group_1(sK0) [input(negated conjecture)]
+87. l1_group_1(sK0) [input(negated conjecture)]
+90. ! [X0,X1,X2] : (r1_tarski(k9_relat_1(X0,X1),k9_relat_1(X0,X2)) | (~v1_relat_1(X0) | ~r1_tarski(X1,X2))) [ennf transformation 74]
+91. ! [X0,X1,X2] : (r1_tarski(k9_relat_1(X0,X1),k9_relat_1(X0,X2)) | ~v1_relat_1(X0) | ~r1_tarski(X1,X2)) [flattening 90]
+98. r1_tarski(k9_relat_1(X0,X1),k9_relat_1(X0,X2)) | ~v1_relat_1(X0) | ~r1_tarski(X1,X2) [cnf transformation 91]
+100. r1_tarski(X0,u1_struct_0(k5_group_4(X1,X0))) | ~m1_group_2(k5_group_4(X1,X0),X1) | ~m1_subset_1(X0,k1_zfmisc_1(u1_struct_0(X1))) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [forward subsumption resolution 12,17]
+102. r1_tarski(X0,u1_struct_0(k5_group_4(X1,X0))) | ~m1_subset_1(X0,k1_zfmisc_1(u1_struct_0(X1))) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [forward subsumption resolution 100,18]
+133. m1_relset_1(sK2,u1_struct_0(sK0),u1_struct_0(sK1)) [resolution 58,79]
+175. ~m2_relset_1(X0,X1,X2) | v1_relat_1(X0) [resolution 23,4]
+364. ~v1_funct_1(sK2) | ~v1_funct_2(sK2,u1_struct_0(sK0),u1_struct_0(sK1)) | k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,X0) = k9_relat_1(sK2,X0) [resolution 56,133]
+365. ~v1_funct_2(sK2,u1_struct_0(sK0),u1_struct_0(sK1)) | k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,X0) = k9_relat_1(sK2,X0) [forward subsumption resolution 364,77]
+368. k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,X0) = k9_relat_1(sK2,X0) [forward subsumption resolution 365,78]
+394. ~r1_tarski(k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,sK3),k9_relat_1(sK2,u1_struct_0(k5_group_4(sK0,sK3)))) [superposition 75,368]
+397. ~r1_tarski(k9_relat_1(sK2,sK3),k9_relat_1(sK2,u1_struct_0(k5_group_4(sK0,sK3)))) [forward demodulation 394,368]
+481. v1_relat_1(sK2) [resolution 175,79]
+511. ~v1_relat_1(sK2) | ~r1_tarski(sK3,u1_struct_0(k5_group_4(sK0,sK3))) [resolution 397,98]
+512. ~r1_tarski(sK3,u1_struct_0(k5_group_4(sK0,sK3))) [forward subsumption resolution 511,481]
+513. ~m1_subset_1(sK3,k1_zfmisc_1(u1_struct_0(sK0))) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [resolution 512,102]
+514. v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 513,76]
+515. ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 514,84]
+516. ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 515,85]
+517. ~l1_group_1(sK0) [forward subsumption resolution 516,86]
+518. $false [forward subsumption resolution 517,87]
+% SZS output end Proof for variant_0
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.007 s
+% Peak memory usage: 49 MB
+% Instructions burned: 23 (million)
+% ------------------------------
+% ------------------------------

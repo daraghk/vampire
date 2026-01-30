@@ -1,0 +1,56 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2_original
+% SZS output start Proof for variant_2_original
+7. mult(mult(mult(X0,X1),X2),X1) = mult(X0,mult(mult(X1,X2),X1)) [input(axiom)]
+8. mult(X0,mult(X1,X1)) = mult(mult(X0,X1),X1) [input(axiom)]
+9. mult(X0,unit) = X0 [input(axiom)]
+10. mult(unit,X0) = X0 [input(axiom)]
+11. mult(op_a,op_b) = unit [input(axiom)]
+12. unit = mult(op_a,op_b) [reorient equations 11]
+13. mult(op_b,op_a) = unit [input(axiom)]
+14. unit = mult(op_b,op_a) [reorient equations 13]
+15. mult(mult(x0,op_a),op_b) != x0 [input(negated conjecture)]
+16. x0 != mult(mult(x0,op_a),op_b) [reorient equations 15]
+21. ! [X0] : mult(mult(op_a,op_b),X0) = X0 [input(assumption)]
+26. mult(mult(op_a,op_b),X0) = X0 [cnf transformation 21]
+80. mult(op_b,mult(op_a,op_a)) = mult(unit,op_a) [superposition 8,14]
+87. op_a = mult(op_b,mult(op_a,op_a)) [forward demodulation 80,10]
+132. mult(mult(X0,X1),mult(mult(X1,X2),X1)) = mult(mult(mult(X0,mult(X1,X1)),X2),X1) [superposition 7,8]
+141. mult(op_a,mult(mult(op_b,X0),op_b)) = mult(X0,op_b) [superposition 7,26]
+143. mult(mult(X0,X1),mult(mult(X2,X1),X2)) = mult(mult(X0,mult(mult(X1,X2),X1)),X2) [superposition 7,7]
+296. mult(mult(op_a,op_a),op_b) = mult(op_a,mult(op_a,op_b)) [superposition 141,87]
+305. mult(mult(op_a,op_a),op_b) = mult(op_a,unit) [forward demodulation 296,12]
+306. op_a = mult(mult(op_a,op_a),op_b) [forward demodulation 305,9]
+2415. mult(mult(X0,op_b),mult(mult(mult(op_a,op_a),op_b),mult(op_a,op_a))) = mult(mult(X0,mult(op_a,op_b)),mult(op_a,op_a)) [superposition 143,87]
+2422. mult(mult(X0,mult(op_a,op_a)),mult(mult(op_b,mult(op_a,op_a)),op_b)) = mult(mult(X0,mult(op_a,mult(op_a,op_a))),op_b) [superposition 143,306]
+2500. mult(mult(X0,mult(op_a,mult(op_a,op_a))),op_b) = mult(mult(X0,mult(op_a,op_a)),mult(op_a,op_b)) [forward demodulation 2422,87]
+2506. mult(mult(X0,op_b),mult(mult(mult(op_a,op_a),op_b),mult(op_a,op_a))) = mult(mult(X0,unit),mult(op_a,op_a)) [forward demodulation 2415,12]
+2527. mult(mult(X0,mult(op_a,mult(op_a,op_a))),op_b) = mult(mult(X0,mult(op_a,op_a)),unit) [forward demodulation 2500,12]
+2531. mult(X0,mult(op_a,op_a)) = mult(mult(X0,op_b),mult(mult(mult(op_a,op_a),op_b),mult(op_a,op_a))) [forward demodulation 2506,9]
+2545. mult(X0,mult(op_a,op_a)) = mult(mult(X0,mult(op_a,mult(op_a,op_a))),op_b) [forward demodulation 2527,9]
+2548. mult(X0,mult(op_a,op_a)) = mult(mult(X0,op_b),mult(op_a,mult(op_a,op_a))) [forward demodulation 2531,306]
+25896. mult(mult(X0,mult(op_a,op_a)),op_b) = mult(X0,mult(mult(op_b,mult(op_a,mult(op_a,op_a))),op_b)) [superposition 7,2548]
+25938. mult(mult(X0,mult(op_a,op_a)),op_b) = mult(X0,mult(op_b,mult(op_a,op_a))) [forward demodulation 25896,2545]
+25974. mult(X0,op_a) = mult(mult(X0,mult(op_a,op_a)),op_b) [forward demodulation 25938,87]
+26045. mult(mult(X0,mult(op_b,op_b)),op_a) = mult(mult(X0,op_b),mult(mult(op_b,mult(op_a,op_a)),op_b)) [superposition 132,25974]
+26103. mult(mult(X0,mult(op_b,op_b)),op_a) = mult(mult(X0,op_b),mult(op_b,op_a)) [forward demodulation 26045,25974]
+26136. mult(mult(X0,mult(op_b,op_b)),op_a) = mult(mult(X0,op_b),unit) [forward demodulation 26103,14]
+26159. mult(X0,op_b) = mult(mult(X0,mult(op_b,op_b)),op_a) [forward demodulation 26136,9]
+53812. mult(mult(X0,op_a),op_b) = mult(X0,mult(mult(op_a,mult(op_b,op_b)),op_a)) [superposition 7,26159]
+53884. mult(mult(X0,op_a),op_b) = mult(X0,mult(op_a,op_b)) [forward demodulation 53812,26159]
+53920. mult(X0,unit) = mult(mult(X0,op_a),op_b) [forward demodulation 53884,12]
+53945. mult(mult(X0,op_a),op_b) = X0 [forward demodulation 53920,9]
+55042. x0 != x0 [superposition 16,53945]
+55089. $false [trivial inequality removal 55042]
+% SZS output end Proof for variant_2_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.652 s
+% Peak memory usage: 62 MB
+% Instructions burned: 2409 (million)
+% ------------------------------
+% ------------------------------

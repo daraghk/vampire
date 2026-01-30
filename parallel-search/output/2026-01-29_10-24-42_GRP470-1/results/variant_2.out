@@ -1,0 +1,82 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2
+% SZS output start Proof for variant_2
+1. divide(inverse(divide(X0,divide(X1,divide(X2,X3)))),divide(divide(X3,X2),X0)) = X1 [input(axiom)]
+2. ! [X0] : inverse(inverse(X0)) = X0 [input(assumption)]
+3. a2 != divide(divide(inverse(b2),inverse(b2)),inverse(a2)) [input(negated conjecture)]
+4. inverse(inverse(X0)) = X0 [cnf transformation 2]
+6. inverse(divide(X2,divide(X0,divide(X3,X4)))) = divide(inverse(divide(X1,X0)),divide(divide(X2,divide(X4,X3)),X1)) [superposition 1,1]
+7. divide(X4,X3) = divide(inverse(X0),divide(divide(X2,X1),inverse(divide(divide(X1,X2),divide(X0,divide(X3,X4)))))) [superposition 1,1]
+8. divide(inverse(divide(X1,divide(X2,divide(divide(divide(X3,X4),X5),inverse(divide(X5,divide(X0,divide(X4,X3)))))))),divide(X0,X1)) = X2 [superposition 1,1]
+13. inverse(divide(inverse(divide(X1,divide(X0,divide(X2,X3)))),divide(X4,divide(X1,divide(X3,X2))))) = divide(inverse(divide(X5,X4)),divide(X0,X5)) [superposition 6,1]
+16. inverse(divide(X0,divide(divide(X1,divide(divide(X2,X3),X0)),divide(X3,X2)))) = X1 [superposition 1,6]
+18. divide(X0,divide(X3,X2)) = divide(inverse(inverse(divide(X0,divide(X1,divide(X2,X3))))),divide(divide(X5,X4),inverse(divide(divide(X4,X5),X1)))) [superposition 1,6]
+19. divide(inverse(divide(X4,divide(X5,divide(divide(divide(X0,divide(X3,X2)),X6),inverse(divide(X6,X1)))))),divide(inverse(divide(X0,divide(X1,divide(X2,X3)))),X4)) = X5 [superposition 1,6]
+21. divide(X0,divide(X3,X2)) = divide(divide(X0,divide(X1,divide(X2,X3))),divide(divide(X5,X4),inverse(divide(divide(X4,X5),X1)))) [forward demodulation 18,4]
+29. inverse(inverse(divide(X0,divide(X1,divide(inverse(divide(divide(X2,X3),X1)),divide(X3,X2)))))) = X0 [superposition 16,6]
+31. inverse(X0) = divide(X1,divide(divide(X0,divide(divide(X2,X3),X1)),divide(X3,X2))) [superposition 4,16]
+32. divide(X0,divide(X1,divide(inverse(divide(divide(X2,X3),X1)),divide(X3,X2)))) = X0 [forward demodulation 29,4]
+33. divide(X1,X2) = divide(X0,divide(divide(X3,X4),inverse(divide(divide(X4,X3),divide(inverse(X0),divide(X2,X1)))))) [superposition 7,4]
+41. divide(divide(divide(X1,X2),X3),inverse(divide(X3,divide(X0,divide(X2,X1))))) = divide(inverse(X4),divide(divide(X5,X6),inverse(divide(divide(X6,X5),divide(X4,X0))))) [superposition 7,1]
+43. divide(divide(divide(X2,X3),inverse(divide(divide(X3,X2),divide(X4,divide(X1,X0))))),inverse(X4)) = divide(inverse(X5),divide(divide(X6,X7),inverse(divide(divide(X7,X6),divide(X5,divide(X0,X1)))))) [superposition 7,7]
+46. divide(inverse(divide(divide(X2,X3),divide(X4,divide(X1,X0)))),divide(X3,X2)) = divide(inverse(inverse(X4)),divide(divide(X5,X6),inverse(divide(divide(X6,X5),divide(X0,X1))))) [superposition 7,7]
+51. divide(inverse(divide(X2,divide(X3,divide(X0,X1)))),divide(divide(divide(divide(X5,X6),inverse(divide(divide(X6,X5),divide(X4,divide(X1,X0))))),inverse(X4)),X2)) = X3 [superposition 1,7]
+59. divide(inverse(divide(divide(X2,X3),divide(X4,divide(X1,X0)))),divide(X3,X2)) = divide(X4,divide(divide(X5,X6),inverse(divide(divide(X6,X5),divide(X0,X1))))) [forward demodulation 46,4]
+62. divide(X1,X0) = divide(divide(divide(X2,X3),inverse(divide(divide(X3,X2),divide(X4,divide(X1,X0))))),inverse(X4)) [forward demodulation 43,7]
+72. inverse(X1) = divide(divide(X2,X3),divide(inverse(X0),divide(divide(divide(X3,X2),X1),X0))) [superposition 31,31]
+202. inverse(X0) = divide(divide(inverse(divide(divide(X1,X2),divide(X3,X4))),divide(X2,X1)),divide(X0,divide(X4,X3))) [superposition 31,32]
+940. inverse(divide(X0,divide(X3,divide(divide(X2,X1),X4)))) = divide(inverse(divide(divide(divide(X5,X6),inverse(divide(divide(X6,X5),X4))),X3)),divide(X0,divide(X1,X2))) [superposition 6,21]
+1197. divide(inverse(divide(X0,X1)),divide(X2,X0)) = divide(inverse(divide(X6,X1)),divide(X2,X6)) [superposition 13,13]
+1416. divide(inverse(divide(X1,divide(X2,divide(inverse(divide(divide(X3,X4),X2)),divide(X4,X3))))),divide(X5,X1)) = divide(inverse(X0),divide(X5,X0)) [superposition 1197,32]
+1645. divide(inverse(X0),divide(X5,X0)) = divide(inverse(X1),divide(X5,X1)) [forward demodulation 1416,32]
+1863. divide(X5,divide(X6,divide(inverse(divide(divide(divide(X7,X8),inverse(divide(divide(X8,X7),divide(X0,divide(X4,X3))))),X6)),divide(X0,divide(divide(X1,X2),inverse(divide(divide(X2,X1),divide(X3,X4)))))))) = X5 [superposition 32,59]
+2028. divide(X5,divide(X6,inverse(divide(X0,divide(X6,divide(divide(inverse(divide(divide(X2,X1),divide(X3,X4))),divide(X1,X2)),divide(X0,divide(X4,X3)))))))) = X5 [forward demodulation 1863,940]
+2109. divide(X5,divide(X6,inverse(divide(X0,divide(X6,inverse(X0)))))) = X5 [forward demodulation 2028,202]
+2154. divide(inverse(X1),divide(X2,X1)) = divide(X0,divide(X2,inverse(X0))) [superposition 1645,4]
+2166. divide(inverse(X1),divide(inverse(divide(X2,divide(X0,divide(X3,X4)))),X1)) = divide(inverse(divide(divide(X4,X3),X2)),X0) [superposition 1645,1]
+2723. divide(X1,divide(X2,inverse(divide(inverse(X0),divide(X2,X0))))) = X1 [superposition 2109,4]
+3203. inverse(inverse(X3)) = divide(X3,divide(divide(X0,divide(divide(X1,X2),inverse(X0))),divide(X2,X1))) [superposition 31,2154]
+3405. divide(X3,divide(divide(X0,divide(divide(X1,X2),inverse(X0))),divide(X2,X1))) = X3 [forward demodulation 3203,4]
+10857. inverse(divide(divide(X1,X0),inverse(divide(X2,X3)))) = divide(divide(X3,X2),inverse(divide(X0,X1))) [superposition 72,3405]
+11491. divide(X5,divide(inverse(X0),divide(divide(X1,X2),inverse(divide(divide(X2,X1),divide(X0,divide(divide(X3,X4),inverse(divide(X4,X3))))))))) = X5 [superposition 2723,41]
+11975. divide(X5,divide(inverse(divide(X4,X3)),divide(X3,X4))) = X5 [forward demodulation 11491,7]
+12409. divide(X2,inverse(divide(divide(X0,X1),inverse(divide(X1,X0))))) = X2 [superposition 11975,11975]
+12441. divide(inverse(X0),divide(X2,X0)) = inverse(divide(inverse(divide(X1,divide(X2,divide(X3,X4)))),divide(divide(X4,X3),X1))) [superposition 8,11975]
+12442. inverse(divide(inverse(divide(X1,X2)),divide(divide(X3,divide(X4,X5)),X1))) = divide(inverse(X0),divide(inverse(divide(X3,divide(X2,divide(X5,X4)))),X0)) [superposition 19,11975]
+12484. divide(X2,X3) = divide(divide(X2,X3),divide(divide(X1,X0),inverse(divide(X0,X1)))) [superposition 33,11975]
+12698. inverse(divide(inverse(divide(X1,X2)),divide(divide(X3,divide(X4,X5)),X1))) = divide(inverse(divide(divide(X4,X5),X3)),X2) [forward demodulation 12442,2166]
+12699. inverse(X2) = divide(inverse(X0),divide(X2,X0)) [forward demodulation 12441,1]
+12710. divide(X2,divide(divide(X0,X1),inverse(divide(X1,X0)))) = X2 [forward demodulation 12409,10857]
+12781. divide(inverse(divide(divide(X4,X5),X3)),X2) = inverse(inverse(divide(X3,divide(X2,divide(X5,X4))))) [forward demodulation 12698,6]
+12800. divide(X3,divide(X2,divide(X5,X4))) = divide(inverse(divide(divide(X4,X5),X3)),X2) [forward demodulation 12781,4]
+13071. divide(inverse(divide(X1,divide(X2,divide(inverse(divide(inverse(X3),divide(X4,X3))),X4)))),divide(divide(divide(divide(X5,X6),inverse(divide(divide(X6,X5),X0))),inverse(X0)),X1)) = X2 [superposition 51,2723]
+13100. divide(inverse(divide(X1,divide(X2,divide(divide(X3,X4),inverse(divide(X4,X3)))))),divide(divide(divide(divide(X5,X6),inverse(divide(divide(X6,X5),X0))),inverse(X0)),X1)) = X2 [superposition 51,11975]
+13144. divide(inverse(divide(divide(inverse(divide(X5,X6)),divide(X6,X5)),divide(X7,divide(X4,X3)))),divide(divide(divide(X0,X1),inverse(divide(divide(X1,X0),divide(X2,divide(X3,X4))))),inverse(X2))) = X7 [superposition 51,11975]
+13504. divide(divide(X7,divide(X4,X3)),divide(divide(divide(divide(X0,X1),inverse(divide(divide(X1,X0),divide(X2,divide(X3,X4))))),inverse(X2)),divide(divide(X6,X5),inverse(divide(X5,X6))))) = X7 [forward demodulation 13144,12800]
+13540. divide(inverse(divide(X1,X2)),divide(divide(divide(divide(X5,X6),inverse(divide(divide(X6,X5),X0))),inverse(X0)),X1)) = X2 [forward demodulation 13100,12710]
+13564. divide(inverse(divide(X1,divide(X2,divide(inverse(inverse(X4)),X4)))),divide(divide(divide(divide(X5,X6),inverse(divide(divide(X6,X5),X0))),inverse(X0)),X1)) = X2 [forward demodulation 13071,12699]
+13922. divide(divide(X7,divide(X4,X3)),divide(divide(divide(X0,X1),inverse(divide(divide(X1,X0),divide(X2,divide(X3,X4))))),inverse(X2))) = X7 [forward demodulation 13504,12484]
+13961. divide(X2,divide(inverse(inverse(X4)),X4)) = X2 [forward demodulation 13564,13540]
+14100. divide(divide(X7,divide(X4,X3)),divide(X3,X4)) = X7 [forward demodulation 13922,62]
+14118. divide(X2,divide(X4,X4)) = X2 [forward demodulation 13961,4]
+14340. divide(X1,X1) = divide(X0,divide(divide(X2,X3),inverse(divide(divide(X3,X2),inverse(X0))))) [superposition 33,14118]
+14354. inverse(X2) = divide(divide(X1,X0),inverse(divide(divide(X0,X1),X2))) [superposition 72,14118]
+14495. inverse(X2) = divide(divide(X3,X3),divide(divide(X2,divide(X0,X1)),divide(X1,X0))) [superposition 31,14118]
+14539. inverse(X2) = divide(divide(X3,X3),X2) [forward demodulation 14495,14100]
+14640. divide(X1,X1) = divide(X0,inverse(inverse(X0))) [forward demodulation 14340,14354]
+14788. divide(X1,X1) = divide(X0,X0) [forward demodulation 14640,4]
+19742. a2 != divide(divide(X0,X0),inverse(a2)) [superposition 3,14788]
+19759. a2 != inverse(inverse(a2)) [forward demodulation 19742,14539]
+20060. $false [forward subsumption resolution 19759,4]
+% SZS output end Proof for variant_2
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.420 s
+% Peak memory usage: 61 MB
+% Instructions burned: 1426 (million)
+% ------------------------------
+% ------------------------------

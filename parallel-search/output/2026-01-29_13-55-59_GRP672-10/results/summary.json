@@ -1,0 +1,74 @@
+{
+  "problem": "2026-01-29_13-55-59_GRP672-10",
+  "timestamp": "2026-01-29T13:59:51.200446",
+  "configuration": {
+    "timeout": 60,
+    "vampire_binary": "../build/vampire",
+    "total_variants": 6,
+    "variants_with_seeds": 6
+  },
+  "results": [
+    {
+      "name": "original",
+      "status": "TIMEOUT",
+      "time": 60.04767084121704,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_13-55-59_GRP672-10/results/original.out"
+    },
+    {
+      "name": "original_clausified",
+      "status": "TIMEOUT",
+      "time": 60.05333709716797,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_13-55-59_GRP672-10/results/original_clausified.out"
+    },
+    {
+      "name": "variant_0",
+      "status": "TIMEOUT",
+      "time": 60.04740786552429,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_13-55-59_GRP672-10/results/variant_0.out"
+    },
+    {
+      "name": "variant_0_original",
+      "status": "TIMEOUT",
+      "time": 60.047184228897095,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_13-55-59_GRP672-10/results/variant_0_original.out"
+    },
+    {
+      "name": "variant_1",
+      "status": "TIMEOUT",
+      "time": 60.052605867385864,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_13-55-59_GRP672-10/results/variant_1.out"
+    },
+    {
+      "name": "variant_1_original",
+      "status": "TIMEOUT",
+      "time": 60.04979228973389,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_13-55-59_GRP672-10/results/variant_1_original.out"
+    },
+    {
+      "name": "variant_2",
+      "status": "TIMEOUT",
+      "time": 60.06169509887695,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_13-55-59_GRP672-10/results/variant_2.out"
+    },
+    {
+      "name": "variant_2_original",
+      "status": "TIMEOUT",
+      "time": 60.06276488304138,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_13-55-59_GRP672-10/results/variant_2_original.out"
+    }
+  ],
+  "statistics": {
+    "total_runs": 8,
+    "proved": 0,
+    "timeout": 8,
+    "unknown": 0
+  }
+}
