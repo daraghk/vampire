@@ -1,0 +1,139 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0_original
+% SZS output start Proof for variant_0_original
+1. mult(X0,ld(X0,X1)) = X1 [input(axiom)]
+2. ld(X0,mult(X0,X1)) = X1 [input(axiom)]
+6. mult(unit,X0) = X0 [input(axiom)]
+7. mult(mult(mult(X0,X1),X2),X1) = mult(X0,mult(mult(X1,X2),X1)) [input(axiom)]
+8. mult(mult(X0,X1),i(X1)) = X0 [input(axiom)]
+11. mult(i(X0),X0) = unit [input(axiom)]
+12. unit = mult(i(X0),X0) [reorient equations 11]
+13. mult(X0,X1) = mult(X1,X0) | mult(i(X0),mult(X0,X1)) = X1 [input(axiom)]
+14. mult(mult(a,b),mult(c,a)) != mult(mult(a,mult(b,c)),a) [input(negated conjecture)]
+15. ! [X0] : ld(X0,unit) = i(X0) [input(assumption)]
+17. ! [X0] : i(i(X0)) = X0 [input(assumption)]
+20. i(X0) = ld(X0,unit) [cnf transformation 15]
+22. i(i(X0)) = X0 [cnf transformation 17]
+25. mult(mult(X0,X1),ld(X1,unit)) = X0 [definition unfolding 8,20]
+27. unit = mult(ld(X0,unit),X0) [definition unfolding 12,20]
+28. mult(ld(X0,unit),mult(X0,X1)) = X1 | mult(X0,X1) = mult(X1,X0) [definition unfolding 13,20]
+30. ld(ld(X0,unit),unit) = X0 [definition unfolding 22,20,20]
+79. mult(mult(X1,ld(X0,unit)),X0) = X1 [superposition 25,30]
+82. ld(X1,unit) = ld(mult(X0,X1),X0) [superposition 2,25]
+103. mult(ld(X0,unit),mult(mult(X0,X1),X0)) = mult(mult(unit,X1),X0) [superposition 7,27]
+112. mult(X0,X2) = mult(X1,mult(mult(X2,ld(mult(X1,X2),X0)),X2)) [superposition 7,1]
+127. mult(X1,X0) = mult(ld(X0,unit),mult(mult(X0,X1),X0)) [forward demodulation 103,6]
+146. ld(X1,X0) = mult(ld(X1,unit),X0) | mult(ld(X1,X0),X1) = X0 [superposition 28,1]
+156. mult(X1,X0) = ld(ld(X1,unit),X0) | mult(X0,X1) = mult(X1,X0) [superposition 2,28]
+270. ld(X0,X1) = ld(ld(X1,X0),unit) [superposition 82,1]
+402. mult(mult(X1,X0),X1) = ld(ld(X1,unit),mult(X0,X1)) [superposition 2,127]
+637. mult(mult(X1,ld(mult(X2,X1),X0)),X1) = ld(X2,mult(X0,X1)) [superposition 2,112]
+1118. mult(X0,X1) = ld(ld(X1,unit),X0) | mult(ld(ld(X1,unit),unit),X0) = ld(ld(X1,unit),X0) [superposition 79,146]
+1127. mult(X1,X0) = ld(ld(X1,unit),X0) | mult(X0,X1) = ld(ld(X1,unit),X0) [forward demodulation 1118,30]
+44179. mult(X0,X1) != mult(X1,X0) | mult(X0,X1) = ld(ld(X0,unit),X1) [equality factoring 1127]
+44186. mult(X0,X1) = ld(ld(X0,unit),X1) [forward subsumption resolution 44179,156]
+44650. ld(X0,X1) = mult(ld(X0,unit),X1) [superposition 44186,30]
+44651. mult(ld(X1,X0),X2) = ld(ld(X0,X1),X2) [superposition 44186,270]
+44696. mult(mult(X0,X1),X0) = mult(X0,mult(X1,X0)) [superposition 402,44186]
+45673. ld(X0,unit) = mult(ld(X0,ld(X1,unit)),X1) [superposition 79,44650]
+55726. mult(mult(a,b),mult(c,a)) != mult(a,mult(mult(b,c),a)) [superposition 14,44696]
+78151. mult(mult(X1,ld(ld(X0,unit),X2)),X1) = ld(ld(X0,ld(X1,unit)),mult(X2,X1)) [superposition 637,45673]
+78315. mult(mult(X1,ld(ld(X0,unit),X2)),X1) = mult(ld(ld(X1,unit),X0),mult(X2,X1)) [forward demodulation 78151,44651]
+78482. mult(mult(X1,ld(ld(X0,unit),X2)),X1) = mult(mult(X1,X0),mult(X2,X1)) [forward demodulation 78315,44186]
+78620. mult(X1,mult(ld(ld(X0,unit),X2),X1)) = mult(mult(X1,X0),mult(X2,X1)) [forward demodulation 78482,44696]
+78733. mult(X1,mult(mult(X0,X2),X1)) = mult(mult(X1,X0),mult(X2,X1)) [forward demodulation 78620,44186]
+792109. $false [forward subsumption resolution 55726,78733]
+% SZS output end Proof for variant_0_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% --------------------------------------------------
+% INPUT                           |  PROOF |  TOTAL
+% --------------------------------------------------
+% Axiom                           |      7 |     11
+% Assumption                      |      2 |      5
+% Negated conjecture              |      1 |      1
+% --------------------------------------------------
+% FORMULA TRANSFORMATIONS         |  PROOF |  TOTAL
+% --------------------------------------------------
+% Cnf transformation              |      2 |      5
+% Reorient equations              |      1 |      2
+% --------------------------------------------------
+% SIMPLIFYING INFERENCES          |  PROOF |  TOTAL
+% --------------------------------------------------
+% Duplicate literal removal       |      0 |    629
+% Trivial inequality removal      |      0 |      1
+% Forward subsumption resolution  |      2 |      2
+% Forward demodulation            |      6 | 347475
+% --------------------------------------------------
+% GENERATING INFERENCES           |  PROOF |  TOTAL
+% --------------------------------------------------
+% Superposition                   |     16 | 443955
+% Equality factoring              |      1 |      6
+% --------------------------------------------------
+% AVATAR                          |  PROOF |  TOTAL
+% --------------------------------------------------
+% Avatar definition               |      0 |      4
+% Avatar component clause         |      0 |      4
+% Avatar split clause             |      0 |      1
+% Avatar contradiction clause     |      0 |      1
+% --------------------------------------------------
+% MISCELLANEOUS INFERENCES        |  PROOF |  TOTAL
+% --------------------------------------------------
+% Definition unfolding            |      4 |      7
+% --------------------------------------------------
+% CLAUSES/FORMULAS                |  PROOF |  TOTAL
+% --------------------------------------------------
+% Input clauses                   |      7 |     10
+% Input formulas                  |      3 |      7
+% Clauses                         |     39 | 792098
+% Formulas                        |      3 |     11
+% --------------------------------------------------
+% PREPROCESSING                   |           TOTAL
+% --------------------------------------------------
+% Function definitions            |               1
+% --------------------------------------------------
+% SATURATION                      |           TOTAL
+% --------------------------------------------------
+% Initial clauses                 |              16
+% Activations started             |             987
+% Active clauses                  |             987
+% Passive clauses                 |           13825
+% Final active clauses            |             986
+% Final passive clauses           |           12838
+% Discarded non-redundant clauses |          808436
+% --------------------------------------------------
+% SIMPLIFYING INFERENCES          |           TOTAL
+% --------------------------------------------------
+% Duplicate literals              |             629
+% Trivial inequalities            |               1
+% --------------------------------------------------
+% DELETION INFERENCES             |           TOTAL
+% --------------------------------------------------
+% Forward subsumptions            |           72454
+% Fw demodulations to eq. taut.   |           11834
+% --------------------------------------------------
+% REDUNDANT INFERENCES            |           TOTAL
+% --------------------------------------------------
+% Due to ordering aftercheck      |            5312
+% --------------------------------------------------
+% AVATAR                          |           TOTAL
+% --------------------------------------------------
+% Split clauses                   |               1
+% Split components                |               2
+% Sat splitting refutations       |               1
+% --------------------------------------------------
+% SAT SOLVER                      |           TOTAL
+% --------------------------------------------------
+% SAT solver clauses              |               2
+% SAT solver unit clauses         |               1
+% SAT solver binary clauses       |               1
+% --------------------------------------------------
+% Time elapsed: 12.635 s
+% Peak memory usage: 337 MB
+% Instructions burned: 45837 (million)
+% ------------------------------
+% ------------------------------
