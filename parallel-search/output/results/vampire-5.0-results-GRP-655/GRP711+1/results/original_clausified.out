@@ -1,0 +1,57 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP711+1_clausified
+% SZS output start Proof for GRP711+1_clausified
+1. mult(X0,unit) = X0 [input(axiom)]
+2. mult(unit,X0) = X0 [input(axiom)]
+3. mult(X0,mult(X1,mult(X1,X2))) = mult(mult(mult(X0,X1),X1),X2) [input(axiom)]
+4. unit = mult(X0,i(X0)) [input(axiom)]
+5. unit = mult(i(X0),X0) [input(axiom)]
+6. sK1 != sK2 [input(negated conjecture)]
+9. mult(sK0,sK1) = mult(sK0,sK2) | mult(sK1,sK0) = mult(sK2,sK0) [input(negated conjecture)]
+11. 1 <=> mult(sK1,sK0) = mult(sK2,sK0) [avatar definition]
+13. mult(sK1,sK0) = mult(sK2,sK0) <- (1) [avatar component clause 11]
+15. 2 <=> mult(sK0,sK1) = mult(sK0,sK2) [avatar definition]
+17. mult(sK0,sK1) = mult(sK0,sK2) <- (2) [avatar component clause 15]
+18. 1 | 2 [avatar split clause 9,15,11]
+20. 3 <=> sK1 = sK2 [avatar definition]
+22. sK1 != sK2 <- (~3) [avatar component clause 20]
+25. ~3 [avatar split clause 6,20]
+38. mult(mult(X0,X1),mult(X1,mult(X1,X2))) = mult(mult(X0,mult(X1,mult(X1,X1))),X2) [superposition 3,3]
+42. mult(mult(X0,X1),X1) = mult(X0,mult(X1,mult(X1,unit))) [superposition 1,3]
+44. mult(mult(X0,X1),X1) = mult(X0,mult(X1,X1)) [forward demodulation 42,1]
+65. mult(unit,i(X0)) = mult(X0,mult(i(X0),i(X0))) [superposition 44,4]
+84. i(X0) = mult(X0,mult(i(X0),i(X0))) [forward demodulation 65,2]
+367. mult(unit,X1) = mult(mult(i(mult(X0,mult(X0,X0))),X0),mult(X0,mult(X0,X1))) [superposition 38,5]
+412. mult(mult(i(mult(X0,mult(X0,X0))),X0),mult(X0,mult(X0,X1))) = X1 [forward demodulation 367,2]
+5076. sK2 = mult(mult(i(mult(sK0,mult(sK0,sK0))),sK0),mult(sK0,mult(sK0,sK1))) <- (2) [superposition 412,17]
+5161. sK1 = sK2 <- (2) [forward demodulation 5076,412]
+5255. $false <- (2, ~3) [forward subsumption resolution 5161,22]
+5256. ~2 | 3 [avatar contradiction clause 5255]
+5419. mult(sK2,mult(sK0,mult(sK0,X0))) = mult(mult(mult(sK1,sK0),sK0),X0) <- (1) [superposition 3,13]
+5433. mult(sK2,mult(sK0,mult(sK0,X0))) = mult(sK1,mult(sK0,mult(sK0,X0))) <- (1) [forward demodulation 5419,3]
+5473. mult(sK2,mult(sK0,i(sK0))) = mult(sK1,mult(sK0,i(sK0))) <- (1) [superposition 5433,84]
+5514. mult(sK2,unit) = mult(sK1,unit) <- (1) [forward demodulation 5473,4]
+5529. sK1 = mult(sK2,unit) <- (1) [forward demodulation 5514,1]
+5540. sK1 = sK2 <- (1) [forward demodulation 5529,1]
+5544. $false <- (1, ~3) [forward subsumption resolution 5540,22]
+5545. ~1 | 3 [avatar contradiction clause 5544]
+s1. 1 | 2 [sat_conversion 18]
+s4. ~3 [sat_conversion 25]
+s5. ~2 | 3 [sat_conversion 5256]
+s11. ~1 | 3 [sat_conversion 5545]
+s12. ~1 [rat s11,s4]
+s13. ~2 [rat s5,s4]
+s14. # [rat s1,s13,s12]
+5546. $false [avatar sat refutation s14]
+% SZS output end Proof for GRP711+1_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.107 s
+% Peak memory usage: 62 MB
+% Instructions burned: 369 (million)
+% ------------------------------
+% ------------------------------

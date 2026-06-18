@@ -1,0 +1,56 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0_original
+% SZS output start Proof for variant_0_original
+1. divide(inverse(divide(divide(divide(X0,X0),X1),divide(X2,divide(X1,X3)))),X3) = X2 [input(axiom)]
+2. multiply(X0,X1) = divide(X0,inverse(X1)) [input(axiom)]
+3. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) | multiply(multiply(inverse(b2),b2),a2) != a2 | multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [input(negated conjecture)]
+4. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) | a2 != multiply(multiply(inverse(b2),b2),a2) | multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [reorient equations 3]
+5. ! [X0] : inverse(inverse(X0)) = X0 [input(assumption)]
+6. ! [X0,X1] : inverse(divide(X0,X1)) = divide(X1,X0) [input(assumption)]
+7. ! [X0,X1] : divide(X0,X0) = divide(X1,X1) [input(assumption)]
+8. ! [X0] : divide(X0,divide(X0,X0)) = X0 [input(assumption)]
+9. inverse(inverse(X0)) = X0 [cnf transformation 5]
+10. inverse(divide(X0,X1)) = divide(X1,X0) [cnf transformation 6]
+11. divide(X0,X0) = divide(X1,X1) [cnf transformation 7]
+12. divide(X0,divide(X0,X0)) = X0 [cnf transformation 8]
+13. divide(inverse(a1),inverse(a1)) != divide(inverse(b1),inverse(b1)) | a2 != divide(divide(inverse(b2),inverse(b2)),inverse(a2)) | divide(divide(a3,inverse(b3)),inverse(c3)) != divide(a3,inverse(divide(b3,inverse(c3)))) [definition unfolding 4,2,2,2,2,2,2,2,2]
+14. a2 != divide(divide(inverse(b2),inverse(b2)),inverse(a2)) | divide(divide(a3,inverse(b3)),inverse(c3)) != divide(a3,inverse(divide(b3,inverse(c3)))) [forward subsumption resolution 13,11]
+15. divide(divide(divide(X2,divide(X1,X3)),divide(divide(X0,X0),X1)),X3) = X2 [forward demodulation 1,10]
+16. divide(divide(a3,inverse(b3)),inverse(c3)) != divide(a3,divide(inverse(c3),b3)) | a2 != divide(divide(inverse(b2),inverse(b2)),inverse(a2)) [forward demodulation 14,10]
+18. 1 <=> a2 = divide(divide(inverse(b2),inverse(b2)),inverse(a2)) [avatar definition]
+20. a2 != divide(divide(inverse(b2),inverse(b2)),inverse(a2)) <- (~1) [avatar component clause 18]
+22. 2 <=> divide(divide(a3,inverse(b3)),inverse(c3)) = divide(a3,divide(inverse(c3),b3)) [avatar definition]
+24. divide(divide(a3,inverse(b3)),inverse(c3)) != divide(a3,divide(inverse(c3),b3)) <- (~2) [avatar component clause 22]
+25. ~1 | ~2 [avatar split clause 16,22,18]
+31. a2 != divide(divide(X0,X0),inverse(a2)) <- (~1) [superposition 20,11]
+33. divide(X1,divide(X0,X0)) = X1 [superposition 12,11]
+38. inverse(X0) = divide(divide(X0,X0),X0) [superposition 10,12]
+49. inverse(X0) = divide(divide(X1,X1),X0) [superposition 10,33]
+68. divide(divide(X0,divide(divide(X1,X1),X2)),X2) = X0 [superposition 15,33]
+75. divide(divide(X0,inverse(X2)),X2) = X0 [forward demodulation 68,49]
+116. a2 != inverse(inverse(a2)) <- (~1) [superposition 31,38]
+117. $false <- (~1) [forward subsumption resolution 116,9]
+118. 1 [avatar contradiction clause 117]
+252. divide(X0,inverse(divide(X1,X2))) = divide(divide(X0,divide(divide(X3,X3),X1)),X2) [superposition 15,75]
+253. divide(X0,inverse(divide(X1,X2))) = divide(divide(X0,inverse(X1)),X2) [forward demodulation 252,49]
+262. divide(X0,divide(X2,X1)) = divide(divide(X0,inverse(X1)),X2) [forward demodulation 253,10]
+1989. divide(a3,divide(inverse(c3),b3)) != divide(a3,divide(inverse(c3),b3)) <- (~2) [superposition 24,262]
+1993. $false <- (~2) [trivial inequality removal 1989]
+1994. 2 [avatar contradiction clause 1993]
+s1. ~2 | ~1 [sat_conversion 25]
+s2. 1 [sat_conversion 118]
+s3. 2 [sat_conversion 1994]
+s4. # [rat s1,s2,s3]
+2167. $false [avatar sat refutation s4]
+% SZS output end Proof for variant_0_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.019 s
+% Peak memory usage: 59 MB
+% Instructions burned: 64 (million)
+% ------------------------------
+% ------------------------------

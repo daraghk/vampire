@@ -1,0 +1,30 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP481-1
+% SZS output start Proof for GRP481-1
+1. double_divide(double_divide(double_divide(X0,double_divide(X1,identity)),double_divide(double_divide(X2,double_divide(X3,double_divide(X3,identity))),double_divide(X0,identity))),X1) = X2 [input(axiom)]
+2. multiply(X0,X1) = double_divide(double_divide(X1,X0),identity) [input(axiom)]
+3. inverse(X0) = double_divide(X0,identity) [input(axiom)]
+4. double_divide(X0,identity) = inverse(X0) [reorient equations 3]
+5. identity = double_divide(X0,inverse(X0)) [input(axiom)]
+6. multiply(inverse(a1),a1) != identity [input(negated conjecture)]
+7. identity != multiply(inverse(a1),a1) [reorient equations 6]
+8. identity = double_divide(X0,double_divide(X0,identity)) [definition unfolding 5,4]
+9. identity != double_divide(double_divide(a1,double_divide(a1,identity)),identity) [definition unfolding 7,2,4]
+10. double_divide(double_divide(double_divide(X0,double_divide(X1,identity)),double_divide(double_divide(X2,identity),double_divide(X0,identity))),X1) = X2 [forward demodulation 1,8]
+11. identity != double_divide(identity,identity) [superposition 9,8]
+13. double_divide(double_divide(identity,double_divide(double_divide(X1,identity),double_divide(X0,identity))),X0) = X1 [superposition 10,8]
+23. double_divide(double_divide(identity,identity),double_divide(X0,identity)) = X0 [superposition 13,8]
+63. identity = double_divide(identity,identity) [superposition 8,23]
+66. $false [forward subsumption resolution 63,11]
+% SZS output end Proof for GRP481-1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.002 s
+% Peak memory usage: 56 MB
+% Instructions burned: 5 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,27 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2_original
+% SZS output start Proof for variant_2_original
+12. multiply(multiply(a,multiply(b,c)),a) != multiply(multiply(a,b),multiply(c,a)) [input(negated conjecture)]
+13. ! [X0] : multiply(identity,X0) = X0 [input(assumption)]
+14. ! [X0] : multiply(X0,identity) = X0 [input(assumption)]
+17. ! [X0,X1,X2] : multiply(X0,multiply(multiply(X1,X2),X0)) = multiply(multiply(X0,X1),multiply(X2,X0)) [input(assumption)]
+18. multiply(identity,X0) = X0 [cnf transformation 13]
+19. multiply(X0,identity) = X0 [cnf transformation 14]
+22. multiply(X0,multiply(multiply(X1,X2),X0)) = multiply(multiply(X0,X1),multiply(X2,X0)) [cnf transformation 17]
+23. multiply(multiply(a,multiply(b,c)),a) != multiply(a,multiply(multiply(b,c),a)) [forward demodulation 12,22]
+63. multiply(X0,multiply(multiply(X1,identity),X0)) = multiply(multiply(X0,X1),X0) [superposition 22,18]
+70. multiply(X0,multiply(X1,X0)) = multiply(multiply(X0,X1),X0) [forward demodulation 63,19]
+126. multiply(a,multiply(multiply(b,c),a)) != multiply(a,multiply(multiply(b,c),a)) [superposition 23,70]
+132. $false [trivial inequality removal 126]
+% SZS output end Proof for variant_2_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.003 s
+% Peak memory usage: 70 MB
+% Instructions burned: 6 (million)
+% ------------------------------
+% ------------------------------

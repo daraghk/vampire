@@ -1,0 +1,58 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Theorem for variant_0_original
+% SZS output start Proof for variant_0_original
+1. ! [X0,X1] : mult(X1,ld(X1,X0)) = X0 [input(axiom)]
+6. ! [X0] : mult(unit,X0) = X0 [input(axiom)]
+8. ! [X0,X1] : mult(op_c,mult(X1,X0)) = mult(mult(op_c,X1),X0) [input(axiom)]
+9. ! [X0,X1] : mult(X1,mult(X0,op_c)) = mult(mult(X1,X0),op_c) [input(axiom)]
+10. ! [X0,X1] : mult(X1,mult(op_c,X0)) = mult(mult(X1,op_c),X0) [input(axiom)]
+13. ! [X0,X1] : op_f = mult(X1,mult(X0,ld(mult(X1,X0),op_c))) [input(axiom)]
+14. ! [X0,X1] : (mult(op_f,mult(X0,X1)) = mult(mult(op_f,X0),X1) & mult(X0,mult(X1,op_f)) = mult(mult(X0,X1),op_f) & mult(X0,mult(op_f,X1)) = mult(mult(X0,op_f),X1)) [input(conjecture)]
+15. ~! [X0,X1] : (mult(op_f,mult(X0,X1)) = mult(mult(op_f,X0),X1) & mult(X0,mult(X1,op_f)) = mult(mult(X0,X1),op_f) & mult(X0,mult(op_f,X1)) = mult(mult(X0,op_f),X1)) [negated conjecture 14]
+20. ? [X0,X1] : (mult(op_f,mult(X0,X1)) != mult(mult(op_f,X0),X1) | mult(X0,mult(X1,op_f)) != mult(mult(X0,X1),op_f) | mult(X0,mult(op_f,X1)) != mult(mult(X0,op_f),X1)) [ennf transformation 15]
+21. ? [X0,X1] : (mult(op_f,mult(X0,X1)) != mult(mult(op_f,X0),X1) | mult(X0,mult(X1,op_f)) != mult(mult(X0,X1),op_f) | mult(X0,mult(op_f,X1)) != mult(mult(X0,op_f),X1)) => (mult(op_f,mult(sK0,sK1)) != mult(mult(op_f,sK0),sK1) | mult(sK0,mult(sK1,op_f)) != mult(mult(sK0,sK1),op_f) | mult(sK0,mult(op_f,sK1)) != mult(mult(sK0,op_f),sK1)) [skolem symbol introduction]
+22. mult(op_f,mult(sK0,sK1)) != mult(mult(op_f,sK0),sK1) | mult(sK0,mult(sK1,op_f)) != mult(mult(sK0,sK1),op_f) | mult(sK0,mult(op_f,sK1)) != mult(mult(sK0,op_f),sK1) [skolemisation 20,21]
+23. mult(X1,ld(X1,X0)) = X0 [cnf transformation 1]
+28. mult(unit,X0) = X0 [cnf transformation 6]
+30. mult(op_c,mult(X1,X0)) = mult(mult(op_c,X1),X0) [cnf transformation 8]
+31. mult(X1,mult(X0,op_c)) = mult(mult(X1,X0),op_c) [cnf transformation 9]
+32. mult(X1,mult(op_c,X0)) = mult(mult(X1,op_c),X0) [cnf transformation 10]
+35. op_f = mult(X1,mult(X0,ld(mult(X1,X0),op_c))) [cnf transformation 13]
+36. mult(op_f,mult(sK0,sK1)) != mult(mult(op_f,sK0),sK1) | mult(sK0,mult(sK1,op_f)) != mult(mult(sK0,sK1),op_f) | mult(sK0,mult(op_f,sK1)) != mult(mult(sK0,op_f),sK1) [cnf transformation 22]
+42. 1 <=> mult(sK0,mult(op_f,sK1)) = mult(mult(sK0,op_f),sK1) [avatar definition]
+44. mult(sK0,mult(op_f,sK1)) != mult(mult(sK0,op_f),sK1) <- (~1) [avatar component clause 42]
+46. 2 <=> mult(sK0,mult(sK1,op_f)) = mult(mult(sK0,sK1),op_f) [avatar definition]
+48. mult(sK0,mult(sK1,op_f)) != mult(mult(sK0,sK1),op_f) <- (~2) [avatar component clause 46]
+50. 3 <=> mult(op_f,mult(sK0,sK1)) = mult(mult(op_f,sK0),sK1) [avatar definition]
+52. mult(op_f,mult(sK0,sK1)) != mult(mult(op_f,sK0),sK1) <- (~3) [avatar component clause 50]
+53. ~1 | ~2 | ~3 [avatar split clause 36,50,46,42]
+290. op_f = mult(X0,ld(mult(unit,X0),op_c)) [superposition 28,35]
+294. op_f = mult(X0,ld(X0,op_c)) [forward demodulation 290,28]
+316. op_c = op_f [forward demodulation 294,23]
+328. mult(sK0,mult(op_c,sK1)) != mult(mult(sK0,op_c),sK1) <- (~1) [superposition 44,316]
+329. $false <- (~1) [forward subsumption resolution 328,32]
+330. 1 [avatar contradiction clause 329]
+332. mult(sK0,mult(sK1,op_c)) != mult(mult(sK0,sK1),op_c) <- (~2) [forward demodulation 48,316]
+333. $false <- (~2) [forward subsumption resolution 332,31]
+334. 2 [avatar contradiction clause 333]
+336. mult(op_c,mult(sK0,sK1)) != mult(mult(op_c,sK0),sK1) <- (~3) [forward demodulation 52,316]
+337. $false <- (~3) [forward subsumption resolution 336,30]
+338. 3 [avatar contradiction clause 337]
+s1. ~3 | ~2 | ~1 [sat_conversion 53]
+s2. 1 [sat_conversion 330]
+s3. 2 [sat_conversion 334]
+s4. 3 [sat_conversion 338]
+s5. # [rat s1,s2,s3,s4]
+339. $false [avatar sat refutation s5]
+% SZS output end Proof for variant_0_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.005 s
+% Peak memory usage: 68 MB
+% Instructions burned: 15 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,60 @@
+{
+  "problem": "2026-01-28_21-53-40_GRP528-1",
+  "timestamp": "2026-01-28T21:55:22.646727",
+  "configuration": {
+    "timeout": 60,
+    "vampire_binary": "../build/vampire",
+    "total_variants": 5,
+    "variants_with_seeds": 4
+  },
+  "results": [
+    {
+      "name": "original",
+      "status": "PROVED",
+      "time": 0.011298418045043945,
+      "exit_code": 0,
+      "output_file": "output/2026-01-28_21-53-40_GRP528-1/results/original.out"
+    },
+    {
+      "name": "original_clausified",
+      "status": "PROVED",
+      "time": 0.01281118392944336,
+      "exit_code": 0,
+      "output_file": "output/2026-01-28_21-53-40_GRP528-1/results/original_clausified.out"
+    },
+    {
+      "name": "variant_1",
+      "status": "PROVED",
+      "time": 0.02465534210205078,
+      "exit_code": 0,
+      "output_file": "output/2026-01-28_21-53-40_GRP528-1/results/variant_1.out"
+    },
+    {
+      "name": "variant_1_original",
+      "status": "PROVED",
+      "time": 0.025450706481933594,
+      "exit_code": 0,
+      "output_file": "output/2026-01-28_21-53-40_GRP528-1/results/variant_1_original.out"
+    },
+    {
+      "name": "variant_2",
+      "status": "PROVED",
+      "time": 0.09976887702941895,
+      "exit_code": 0,
+      "output_file": "output/2026-01-28_21-53-40_GRP528-1/results/variant_2.out"
+    },
+    {
+      "name": "variant_2_original",
+      "status": "PROVED",
+      "time": 0.016773223876953125,
+      "exit_code": 0,
+      "output_file": "output/2026-01-28_21-53-40_GRP528-1/results/variant_2_original.out"
+    }
+  ],
+  "statistics": {
+    "total_runs": 6,
+    "proved": 6,
+    "timeout": 0,
+    "unknown": 0
+  }
+}

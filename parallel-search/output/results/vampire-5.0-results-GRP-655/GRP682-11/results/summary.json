@@ -1,0 +1,74 @@
+{
+  "problem": "2026-01-29_04-26-00_GRP682-11",
+  "timestamp": "2026-01-29T04:28:32.850629",
+  "configuration": {
+    "timeout": 60,
+    "vampire_binary": "../build/vampire",
+    "total_variants": 6,
+    "variants_with_seeds": 6
+  },
+  "results": [
+    {
+      "name": "original",
+      "status": "PROVED",
+      "time": 5.1389288902282715,
+      "exit_code": 0,
+      "output_file": "output/2026-01-29_04-26-00_GRP682-11/results/original.out"
+    },
+    {
+      "name": "original_clausified",
+      "status": "PROVED",
+      "time": 5.130607843399048,
+      "exit_code": 0,
+      "output_file": "output/2026-01-29_04-26-00_GRP682-11/results/original_clausified.out"
+    },
+    {
+      "name": "variant_0",
+      "status": "PROVED",
+      "time": 0.6381323337554932,
+      "exit_code": 0,
+      "output_file": "output/2026-01-29_04-26-00_GRP682-11/results/variant_0.out"
+    },
+    {
+      "name": "variant_0_original",
+      "status": "PROVED",
+      "time": 0.6926519870758057,
+      "exit_code": 0,
+      "output_file": "output/2026-01-29_04-26-00_GRP682-11/results/variant_0_original.out"
+    },
+    {
+      "name": "variant_1",
+      "status": "PROVED",
+      "time": 0.31087708473205566,
+      "exit_code": 0,
+      "output_file": "output/2026-01-29_04-26-00_GRP682-11/results/variant_1.out"
+    },
+    {
+      "name": "variant_1_original",
+      "status": "PROVED",
+      "time": 0.32059359550476074,
+      "exit_code": 0,
+      "output_file": "output/2026-01-29_04-26-00_GRP682-11/results/variant_1_original.out"
+    },
+    {
+      "name": "variant_2",
+      "status": "PROVED",
+      "time": 1.942627191543579,
+      "exit_code": 0,
+      "output_file": "output/2026-01-29_04-26-00_GRP682-11/results/variant_2.out"
+    },
+    {
+      "name": "variant_2_original",
+      "status": "PROVED",
+      "time": 1.97853422164917,
+      "exit_code": 0,
+      "output_file": "output/2026-01-29_04-26-00_GRP682-11/results/variant_2_original.out"
+    }
+  ],
+  "statistics": {
+    "total_runs": 8,
+    "proved": 8,
+    "timeout": 0,
+    "unknown": 0
+  }
+}

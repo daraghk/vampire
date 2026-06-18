@@ -1,0 +1,29 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+2. ld(X0,mult(X0,X1)) = X1 [input(axiom)]
+6. mult(unit,X0) = X0 [input(axiom)]
+7. mult(X0,mult(X1,mult(X0,X2))) = mult(mult(X0,mult(X1,X0)),X2) [input(axiom)]
+8. mult(op_c,X0) = mult(X0,op_c) [input(axiom)]
+14. mult(mult(op_c,op_c),a) != mult(a,mult(op_c,op_c)) [input(negated conjecture)]
+43. ld(op_c,mult(X0,op_c)) = X0 [superposition 2,8]
+48. mult(X0,mult(unit,mult(X0,X1))) = mult(mult(X0,X0),X1) [superposition 7,6]
+55. mult(op_c,mult(X0,mult(op_c,X1))) = mult(mult(op_c,mult(op_c,X0)),X1) [superposition 7,8]
+71. mult(mult(X0,X0),X1) = mult(X0,mult(X0,X1)) [forward demodulation 48,6]
+125. mult(a,mult(op_c,op_c)) != mult(op_c,mult(op_c,a)) [superposition 14,71]
+309. mult(op_c,mult(op_c,X0)) = ld(op_c,mult(op_c,mult(X0,mult(op_c,op_c)))) [superposition 43,55]
+312. mult(op_c,mult(op_c,X0)) = mult(X0,mult(op_c,op_c)) [forward demodulation 309,2]
+2169. mult(op_c,mult(op_c,a)) != mult(op_c,mult(op_c,a)) [superposition 125,312]
+2170. $false [trivial inequality removal 2169]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.042 s
+% Peak memory usage: 59 MB
+% Instructions burned: 128 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,58 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0
+% SZS output start Proof for variant_0
+1. mult(unit,X0) = X0 [input(axiom)]
+3. unit = mult(X0,i(X0)) [input(axiom)]
+5. i(mult(X0,X1)) = mult(i(X0),i(X1)) [input(axiom)]
+6. mult(i(X0),mult(X0,X1)) = X1 [input(axiom)]
+7. rd(mult(X0,X1),X1) = X0 [input(axiom)]
+10. mult(mult(X0,X1),X2) = mult(mult(X0,mult(X1,X2)),asoc(X0,X1,X2)) [input(axiom)]
+11. mult(X0,X1) = mult(mult(X1,X0),op_k(X0,X1)) [input(axiom)]
+18. unit = asoc(asoc(X0,X1,X2),X3,X4) [input(axiom)]
+19. unit = asoc(X0,X1,asoc(X2,X3,X4)) [input(axiom)]
+20. ! [X0] : rd(X0,unit) = X0 [input(assumption)]
+24. ! [X0] : mult(i(X0),X0) = unit [input(assumption)]
+25. unit != op_k(asoc(a,b,c),d) [input(negated conjecture)]
+26. rd(X0,unit) = X0 [cnf transformation 20]
+30. unit = mult(i(X0),X0) [cnf transformation 24]
+39. rd(unit,i(X0)) = X0 [superposition 7,3]
+40. i(X0) = rd(unit,X0) [superposition 7,30]
+43. i(i(X0)) = X0 [forward demodulation 39,40]
+94. i(mult(i(X0),X1)) = mult(X0,i(X1)) [superposition 5,43]
+103. i(X1) = mult(i(i(X0)),i(mult(X0,X1))) [superposition 6,5]
+105. i(X1) = i(mult(i(X0),mult(X0,X1))) [forward demodulation 103,5]
+112. i(X1) = mult(X0,i(mult(X0,X1))) [forward demodulation 105,94]
+139. op_k(X0,X1) = mult(i(mult(X1,X0)),mult(X0,X1)) [superposition 6,11]
+140. mult(X1,X0) = rd(mult(X0,X1),op_k(X0,X1)) [superposition 7,11]
+208. mult(mult(i(mult(X0,X1)),X0),X1) = mult(unit,asoc(i(mult(X0,X1)),X0,X1)) [superposition 10,30]
+227. mult(mult(i(mult(X0,X1)),X0),X1) = asoc(i(mult(X0,X1)),X0,X1) [forward demodulation 208,1]
+1971. i(op_k(X0,X1)) = mult(mult(X1,X0),i(mult(X0,X1))) [superposition 112,11]
+4436. mult(mult(i(i(X0)),X1),i(mult(X1,X0))) = asoc(i(i(X0)),X1,i(mult(X1,X0))) [superposition 227,112]
+4452. mult(mult(i(X0),i(X1)),mult(X1,X0)) = asoc(i(X0),i(X1),mult(X1,X0)) [superposition 227,6]
+4545. mult(i(mult(X0,X1)),mult(X1,X0)) = asoc(i(X0),i(X1),mult(X1,X0)) [forward demodulation 4452,5]
+4559. mult(mult(X0,X1),i(mult(X1,X0))) = asoc(X0,X1,i(mult(X1,X0))) [forward demodulation 4436,43]
+4581. op_k(X1,X0) = asoc(i(X0),i(X1),mult(X1,X0)) [forward demodulation 4545,139]
+4593. i(op_k(X1,X0)) = asoc(X0,X1,i(mult(X1,X0))) [forward demodulation 4559,1971]
+56202. op_k(i(mult(X1,X0)),mult(X0,X1)) = asoc(i(mult(X0,X1)),i(i(mult(X1,X0))),op_k(X0,X1)) [superposition 4581,139]
+56233. unit = asoc(X2,X3,op_k(X0,X1)) [superposition 19,4581]
+56265. unit = op_k(i(mult(X1,X0)),mult(X0,X1)) [forward demodulation 56202,56233]
+76797. mult(mult(X0,X1),i(mult(X1,X0))) = rd(mult(i(mult(X1,X0)),mult(X0,X1)),unit) [superposition 140,56265]
+76813. mult(i(mult(X1,X0)),mult(X0,X1)) = mult(mult(X0,X1),i(mult(X1,X0))) [forward demodulation 76797,26]
+76995. mult(i(mult(X1,X0)),mult(X0,X1)) = i(op_k(X1,X0)) [forward demodulation 76813,1971]
+77132. op_k(X0,X1) = i(op_k(X1,X0)) [forward demodulation 76995,139]
+148239. unit = i(op_k(X0,asoc(X1,X2,X3))) [superposition 18,4593]
+148242. unit = op_k(asoc(X1,X2,X3),X0) [forward demodulation 148239,77132]
+149029. unit != unit [superposition 25,148242]
+149092. $false [trivial inequality removal 149029]
+% SZS output end Proof for variant_0
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 3.829 s
+% Peak memory usage: 117 MB
+% Instructions burned: 11407 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,72 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2_original
+% SZS output start Proof for variant_2_original
+1. divide(divide(identity,divide(X0,X1)),divide(divide(X1,X2),X0)) = X2 [input(axiom)]
+2. multiply(X0,X1) = divide(X0,divide(identity,X1)) [input(axiom)]
+3. inverse(X0) = divide(identity,X0) [input(axiom)]
+5. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) | multiply(multiply(inverse(b2),b2),a2) != a2 | multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) | multiply(a4,b4) != multiply(b4,a4) [input(negated conjecture)]
+6. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) | a2 != multiply(multiply(inverse(b2),b2),a2) | multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) | multiply(a4,b4) != multiply(b4,a4) [reorient equations 5]
+7. ! [X0] : divide(X0,X0) = identity [input(assumption)]
+8. identity = divide(X0,X0) [cnf transformation 7]
+9. divide(divide(identity,a1),divide(identity,a1)) != divide(divide(identity,b1),divide(identity,b1)) | a2 != divide(divide(divide(identity,b2),divide(identity,b2)),divide(identity,a2)) | divide(divide(a3,divide(identity,b3)),divide(identity,c3)) != divide(a3,divide(identity,divide(b3,divide(identity,c3)))) | divide(a4,divide(identity,b4)) != divide(b4,divide(identity,a4)) [definition unfolding 6,2,3,2,3,2,2,3,2,2,2,2,2,2]
+10. identity != divide(divide(identity,a1),divide(identity,a1)) | a2 != divide(divide(divide(identity,b2),divide(identity,b2)),divide(identity,a2)) | divide(divide(a3,divide(identity,b3)),divide(identity,c3)) != divide(a3,divide(identity,divide(b3,divide(identity,c3)))) | divide(a4,divide(identity,b4)) != divide(b4,divide(identity,a4)) [forward demodulation 9,8]
+11. a2 != divide(divide(divide(identity,b2),divide(identity,b2)),divide(identity,a2)) | divide(divide(a3,divide(identity,b3)),divide(identity,c3)) != divide(a3,divide(identity,divide(b3,divide(identity,c3)))) | divide(a4,divide(identity,b4)) != divide(b4,divide(identity,a4)) [forward subsumption resolution 10,8]
+12. a2 != divide(identity,divide(identity,a2)) | divide(divide(a3,divide(identity,b3)),divide(identity,c3)) != divide(a3,divide(identity,divide(b3,divide(identity,c3)))) | divide(a4,divide(identity,b4)) != divide(b4,divide(identity,a4)) [forward demodulation 11,8]
+14. 1 <=> divide(a4,divide(identity,b4)) = divide(b4,divide(identity,a4)) [avatar definition]
+16. divide(a4,divide(identity,b4)) != divide(b4,divide(identity,a4)) <- (~1) [avatar component clause 14]
+18. 2 <=> divide(divide(a3,divide(identity,b3)),divide(identity,c3)) = divide(a3,divide(identity,divide(b3,divide(identity,c3)))) [avatar definition]
+20. divide(divide(a3,divide(identity,b3)),divide(identity,c3)) != divide(a3,divide(identity,divide(b3,divide(identity,c3)))) <- (~2) [avatar component clause 18]
+22. 3 <=> a2 = divide(identity,divide(identity,a2)) [avatar definition]
+24. a2 != divide(identity,divide(identity,a2)) <- (~3) [avatar component clause 22]
+25. ~1 | ~2 | ~3 [avatar split clause 12,22,18,14]
+26. divide(divide(identity,identity),divide(divide(X0,X1),X0)) = X1 [superposition 1,8]
+28. divide(divide(identity,divide(X0,X1)),divide(identity,X0)) = X1 [superposition 1,8]
+30. divide(X2,X1) = divide(divide(identity,divide(divide(divide(X1,X0),X2),identity)),X0) [superposition 1,1]
+32. divide(identity,divide(divide(X0,X1),X0)) = X1 [forward demodulation 26,8]
+33. divide(identity,divide(identity,X0)) = X0 [superposition 32,8]
+42. divide(identity,X0) = divide(identity,divide(X0,identity)) [superposition 32,33]
+46. divide(divide(X2,X0),X1) = divide(divide(identity,X0),divide(identity,divide(identity,divide(X1,X2)))) [superposition 28,1]
+50. divide(X0,divide(identity,divide(X1,X0))) = X1 [superposition 28,32]
+51. divide(X0,divide(identity,identity)) = X0 [superposition 28,33]
+63. divide(X0,identity) = X0 [forward demodulation 51,8]
+67. divide(divide(X2,X0),X1) = divide(divide(identity,X0),divide(X1,X2)) [forward demodulation 46,33]
+136. divide(identity,divide(X0,X1)) = divide(divide(identity,X0),divide(identity,X1)) [superposition 28,50]
+141. divide(X0,divide(divide(divide(X0,identity),X1),identity)) = X1 [superposition 1,50]
+146. divide(X0,divide(divide(X0,identity),X1)) = X1 [forward demodulation 141,63]
+149. divide(identity,divide(X0,X1)) = divide(divide(X1,X0),identity) [forward demodulation 136,67]
+155. divide(X0,divide(X0,X1)) = X1 [forward demodulation 146,63]
+156. divide(identity,divide(X0,X1)) = divide(X1,X0) [forward demodulation 149,63]
+164. divide(X2,divide(identity,divide(divide(divide(X1,X3),X0),identity))) = divide(divide(identity,divide(divide(divide(X0,X1),X2),identity)),X3) [superposition 30,30]
+184. divide(identity,divide(divide(divide(X1,X2),X0),identity)) = divide(X2,divide(identity,divide(X0,X1))) [superposition 50,30]
+187. divide(identity,divide(divide(divide(X1,X2),X0),identity)) = divide(X2,divide(X1,X0)) [forward demodulation 184,156]
+206. divide(X2,divide(identity,divide(divide(divide(X1,X3),X0),identity))) = divide(divide(identity,divide(divide(X0,X1),X2)),X3) [forward demodulation 164,42]
+213. divide(X2,divide(X1,X0)) = divide(identity,divide(divide(X1,X2),X0)) [forward demodulation 187,42]
+227. divide(X2,divide(identity,divide(divide(divide(X1,X3),X0),identity))) = divide(divide(X2,divide(X0,X1)),X3) [forward demodulation 206,156]
+233. divide(X0,divide(X1,X2)) = divide(X2,divide(X1,X0)) [forward demodulation 213,156]
+241. divide(divide(X2,divide(X0,X1)),X3) = divide(X2,divide(identity,divide(divide(X1,X3),X0))) [forward demodulation 227,42]
+250. divide(divide(X2,divide(X0,X1)),X3) = divide(X2,divide(X0,divide(X1,X3))) [forward demodulation 241,156]
+4692. divide(a4,divide(identity,b4)) != divide(a4,divide(identity,b4)) <- (~1) [superposition 16,233]
+4767. $false <- (~1) [trivial inequality removal 4692]
+4768. 1 [avatar contradiction clause 4767]
+5455. $false <- (~2) [forward subsumption resolution 20,250]
+5456. 2 [avatar contradiction clause 5455]
+5457. $false <- (~3) [forward subsumption resolution 24,155]
+5458. 3 [avatar contradiction clause 5457]
+s1. ~3 | ~2 | ~1 [sat_conversion 25]
+s3. 1 [sat_conversion 4768]
+s4. 2 [sat_conversion 5456]
+s5. 3 [sat_conversion 5458]
+s6. # [rat s1,s3,s4,s5]
+5459. $false [avatar sat refutation s6]
+% SZS output end Proof for variant_2_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.039 s
+% Peak memory usage: 68 MB
+% Instructions burned: 149 (million)
+% ------------------------------
+% ------------------------------

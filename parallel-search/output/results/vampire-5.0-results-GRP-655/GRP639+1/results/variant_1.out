@@ -1,0 +1,50 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+4. ~m1_subset_1(X0,k1_zfmisc_1(k2_zfmisc_1(X1,X2))) | v1_relat_1(X0) [input(axiom)]
+12. r1_tarski(X0,u1_struct_0(k5_group_4(X1,X0))) | ~v1_group_1(k5_group_4(X1,X0)) | ~m1_group_2(k5_group_4(X1,X0),X1) | ~m1_subset_1(X0,k1_zfmisc_1(u1_struct_0(X1))) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [input(axiom)]
+17. ~m1_subset_1(X1,k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | v1_group_1(k5_group_4(X0,X1)) [input(axiom)]
+18. ~m1_subset_1(X1,k1_zfmisc_1(u1_struct_0(X0))) | v3_struct_0(X0) | ~v3_group_1(X0) | ~v4_group_1(X0) | ~l1_group_1(X0) | m1_group_2(k5_group_4(X0,X1),X0) [input(axiom)]
+23. m1_subset_1(X0,k1_zfmisc_1(k2_zfmisc_1(X1,X2))) | ~m2_relset_1(X0,X1,X2) [input(axiom)]
+56. ~m1_relset_1(X2,X0,X1) | ~v1_funct_1(X2) | ~v1_funct_2(X2,X0,X1) | k2_funct_2(X0,X1,X2,X3) = k9_relat_1(X2,X3) [input(axiom)]
+58. ~m2_relset_1(X0,X1,X2) | m1_relset_1(X0,X1,X2) [input(axiom)]
+60. r1_tarski(k9_relat_1(X0,X1),k9_relat_1(X0,X2)) | ~r1_tarski(X1,X2) | ~v1_relat_1(X0) [input(axiom)]
+75. ~r1_tarski(k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,sK3),k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,u1_struct_0(k5_group_4(sK0,sK3)))) [input(negated conjecture)]
+76. m1_subset_1(sK3,k1_zfmisc_1(u1_struct_0(sK0))) [input(negated conjecture)]
+77. v1_funct_1(sK2) [input(negated conjecture)]
+78. v1_funct_2(sK2,u1_struct_0(sK0),u1_struct_0(sK1)) [input(negated conjecture)]
+79. m2_relset_1(sK2,u1_struct_0(sK0),u1_struct_0(sK1)) [input(negated conjecture)]
+84. ~v3_struct_0(sK0) [input(negated conjecture)]
+85. v3_group_1(sK0) [input(negated conjecture)]
+86. v4_group_1(sK0) [input(negated conjecture)]
+87. l1_group_1(sK0) [input(negated conjecture)]
+99. r1_tarski(X0,u1_struct_0(k5_group_4(X1,X0))) | ~m1_group_2(k5_group_4(X1,X0),X1) | ~m1_subset_1(X0,k1_zfmisc_1(u1_struct_0(X1))) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [forward subsumption resolution 12,17]
+101. r1_tarski(X0,u1_struct_0(k5_group_4(X1,X0))) | ~m1_subset_1(X0,k1_zfmisc_1(u1_struct_0(X1))) | v3_struct_0(X1) | ~v3_group_1(X1) | ~v4_group_1(X1) | ~l1_group_1(X1) [forward subsumption resolution 99,18]
+132. m1_relset_1(sK2,u1_struct_0(sK0),u1_struct_0(sK1)) [resolution 58,79]
+173. ~m2_relset_1(X0,X1,X2) | v1_relat_1(X0) [resolution 23,4]
+354. ~v1_funct_1(sK2) | ~v1_funct_2(sK2,u1_struct_0(sK0),u1_struct_0(sK1)) | k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,X0) = k9_relat_1(sK2,X0) [resolution 56,132]
+355. ~v1_funct_2(sK2,u1_struct_0(sK0),u1_struct_0(sK1)) | k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,X0) = k9_relat_1(sK2,X0) [forward subsumption resolution 354,77]
+358. k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,X0) = k9_relat_1(sK2,X0) [forward subsumption resolution 355,78]
+384. ~r1_tarski(k2_funct_2(u1_struct_0(sK0),u1_struct_0(sK1),sK2,sK3),k9_relat_1(sK2,u1_struct_0(k5_group_4(sK0,sK3)))) [superposition 75,358]
+387. ~r1_tarski(k9_relat_1(sK2,sK3),k9_relat_1(sK2,u1_struct_0(k5_group_4(sK0,sK3)))) [forward demodulation 384,358]
+483. v1_relat_1(sK2) [resolution 173,79]
+500. ~r1_tarski(sK3,u1_struct_0(k5_group_4(sK0,sK3))) | ~v1_relat_1(sK2) [resolution 387,60]
+501. ~r1_tarski(sK3,u1_struct_0(k5_group_4(sK0,sK3))) [forward subsumption resolution 500,483]
+511. ~m1_subset_1(sK3,k1_zfmisc_1(u1_struct_0(sK0))) | v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [resolution 501,101]
+512. v3_struct_0(sK0) | ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 511,76]
+513. ~v3_group_1(sK0) | ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 512,84]
+514. ~v4_group_1(sK0) | ~l1_group_1(sK0) [forward subsumption resolution 513,85]
+515. ~l1_group_1(sK0) [forward subsumption resolution 514,86]
+516. $false [forward subsumption resolution 515,87]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.006 s
+% Peak memory usage: 49 MB
+% Instructions burned: 22 (million)
+% ------------------------------
+% ------------------------------

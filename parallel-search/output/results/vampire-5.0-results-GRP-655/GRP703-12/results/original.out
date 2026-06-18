@@ -1,0 +1,26 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP703-12
+% SZS output start Proof for GRP703-12
+3. mult(rd(X0,X1),X1) = X0 [input(axiom)]
+5. mult(X0,unit) = X0 [input(axiom)]
+6. mult(unit,X0) = X0 [input(axiom)]
+10. mult(X0,mult(op_c,X1)) = mult(mult(X0,op_c),X1) [input(axiom)]
+12. op_e = mult(mult(rd(op_c,mult(X0,X1)),X1),X0) [input(axiom)]
+14. mult(x2,mult(op_e,x3)) != mult(mult(x2,op_e),x3) [input(negated conjecture)]
+151. op_e = mult(rd(op_c,mult(unit,X0)),X0) [superposition 5,12]
+155. op_e = mult(rd(op_c,X0),X0) [forward demodulation 151,6]
+168. op_c = op_e [forward demodulation 155,3]
+181. mult(x2,mult(op_c,x3)) != mult(mult(x2,op_c),x3) [superposition 14,168]
+182. $false [forward subsumption resolution 181,10]
+% SZS output end Proof for GRP703-12
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.002 s
+% Peak memory usage: 62 MB
+% Instructions burned: 8 (million)
+% ------------------------------
+% ------------------------------

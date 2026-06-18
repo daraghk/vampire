@@ -1,0 +1,35 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+1. multiply(multiply(multiply(X0,X1),X2),inverse(multiply(X0,X2))) = X1 [input(axiom)]
+2. multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [input(negated conjecture)]
+4. ! [X0,X1] : multiply(X0,X1) = multiply(X1,X0) [input(assumption)]
+6. multiply(X0,X1) = multiply(X1,X0) [cnf transformation 4]
+7. multiply(a3,multiply(b3,c3)) != multiply(c3,multiply(a3,b3)) [forward demodulation 2,6]
+8. multiply(inverse(multiply(X0,X2)),multiply(multiply(X0,X1),X2)) = X1 [forward demodulation 1,6]
+10. multiply(inverse(multiply(X0,X1)),multiply(multiply(X1,X2),X0)) = X2 [superposition 8,6]
+13. multiply(inverse(multiply(X1,X2)),multiply(multiply(X0,X1),X2)) = X0 [superposition 8,6]
+14. multiply(multiply(X1,X0),X2) = multiply(inverse(multiply(inverse(multiply(X1,X2)),X3)),multiply(X0,X3)) [superposition 8,8]
+16. multiply(inverse(multiply(X1,X0)),multiply(X0,multiply(X1,X2))) = X2 [superposition 8,6]
+42. multiply(inverse(multiply(X2,X0)),multiply(X0,multiply(X1,X2))) = X1 [superposition 13,6]
+60. multiply(multiply(X2,X0),X1) = multiply(inverse(multiply(inverse(multiply(X1,X2)),X3)),multiply(X3,X0)) [superposition 16,10]
+62. multiply(X2,multiply(X1,X0)) = multiply(inverse(multiply(inverse(multiply(X1,X2)),X3)),multiply(X3,X0)) [superposition 16,16]
+80. multiply(multiply(X2,X0),X1) = multiply(X2,multiply(X1,X0)) [forward demodulation 60,62]
+344. multiply(multiply(X0,multiply(inverse(multiply(X0,X1)),X2)),X1) = X2 [superposition 16,14]
+375. multiply(X1,multiply(X0,multiply(inverse(multiply(X0,X1)),X2))) = X2 [forward demodulation 344,6]
+610. multiply(X0,multiply(X1,X2)) = multiply(X1,multiply(X0,X2)) [superposition 6,80]
+2440. multiply(X1,multiply(X0,X2)) = multiply(X1,multiply(X2,X0)) [superposition 375,42]
+14678. multiply(a3,multiply(b3,c3)) != multiply(a3,multiply(c3,b3)) [superposition 7,610]
+14679. $false [forward subsumption resolution 14678,2440]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.109 s
+% Peak memory usage: 70 MB
+% Instructions burned: 494 (million)
+% ------------------------------
+% ------------------------------

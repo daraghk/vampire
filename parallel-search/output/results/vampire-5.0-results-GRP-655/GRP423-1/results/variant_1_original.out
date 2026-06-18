@@ -1,0 +1,48 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+1. inverse(multiply(inverse(multiply(X0,inverse(multiply(inverse(X1),multiply(inverse(X2),inverse(multiply(inverse(X2),X2))))))),multiply(X0,X2))) = X1 [input(axiom)]
+2. multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [input(negated conjecture)]
+3. ! [X0] : inverse(inverse(X0)) = X0 [input(assumption)]
+4. ! [X0,X1] : inverse(multiply(X0,X1)) = multiply(inverse(X1),inverse(X0)) [input(assumption)]
+5. ! [X0,X1] : multiply(inverse(X0),multiply(X0,X1)) = X1 [input(assumption)]
+6. ! [X0,X1] : multiply(multiply(X1,inverse(X0)),X0) = X1 [input(assumption)]
+7. inverse(inverse(X0)) = X0 [cnf transformation 3]
+8. inverse(multiply(X0,X1)) = multiply(inverse(X1),inverse(X0)) [cnf transformation 4]
+9. multiply(inverse(X0),multiply(X0,X1)) = X1 [cnf transformation 5]
+10. multiply(multiply(X1,inverse(X0)),X0) = X1 [cnf transformation 6]
+11. inverse(multiply(inverse(multiply(X0,inverse(multiply(inverse(X1),inverse(multiply(multiply(inverse(X2),X2),X2)))))),multiply(X0,X2))) = X1 [forward demodulation 1,8]
+12. inverse(multiply(inverse(multiply(X0,inverse(inverse(multiply(multiply(multiply(inverse(X2),X2),X2),X1))))),multiply(X0,X2))) = X1 [forward demodulation 11,8]
+13. inverse(multiply(inverse(multiply(X0,multiply(multiply(multiply(inverse(X2),X2),X2),X1))),multiply(X0,X2))) = X1 [forward demodulation 12,7]
+14. multiply(X0,multiply(inverse(X0),X1)) = X1 [superposition 9,7]
+16. multiply(multiply(X1,X0),inverse(X0)) = X1 [superposition 10,7]
+22. multiply(inverse(X1),X0) = inverse(multiply(inverse(X0),X1)) [superposition 8,7]
+43. inverse(multiply(inverse(X0),multiply(inverse(multiply(multiply(inverse(X1),X1),X1)),X1))) = X0 [superposition 13,9]
+44. inverse(multiply(inverse(X0),multiply(multiply(X0,inverse(multiply(multiply(multiply(inverse(X1),X1),X1),X2))),X1))) = X2 [superposition 13,10]
+63. multiply(inverse(multiply(multiply(X0,inverse(multiply(multiply(multiply(inverse(X1),X1),X1),X2))),X1)),X0) = X2 [forward demodulation 44,22]
+64. multiply(inverse(multiply(inverse(multiply(multiply(inverse(X1),X1),X1)),X1)),X0) = X0 [forward demodulation 43,22]
+74. multiply(multiply(inverse(X1),multiply(multiply(inverse(X1),X1),X1)),X0) = X0 [forward demodulation 64,22]
+233. inverse(multiply(multiply(inverse(X1),X0),X2)) = multiply(inverse(X2),multiply(inverse(X0),X1)) [superposition 8,22]
+267. inverse(X0) = inverse(multiply(multiply(inverse(X0),X0),X0)) [superposition 16,74]
+277. multiply(inverse(multiply(inverse(X0),multiply(multiply(inverse(X0),X0),X0))),X1) = X1 [superposition 14,74]
+280. multiply(multiply(inverse(multiply(multiply(inverse(X0),X0),X0)),X0),X1) = X1 [forward demodulation 277,22]
+287. inverse(X0) = multiply(inverse(X0),multiply(inverse(X0),X0)) [forward demodulation 267,233]
+294. multiply(multiply(multiply(inverse(X0),multiply(inverse(X0),X0)),X0),X1) = X1 [forward demodulation 280,233]
+304. multiply(multiply(inverse(X0),X0),X1) = X1 [forward demodulation 294,287]
+791. multiply(multiply(multiply(X1,inverse(multiply(multiply(multiply(inverse(X2),X2),X2),X0))),X2),X0) = X1 [superposition 14,63]
+820. multiply(multiply(multiply(X1,inverse(multiply(X2,X0))),X2),X0) = X1 [forward demodulation 791,304]
+5203. multiply(multiply(X0,X1),X2) = multiply(X0,multiply(X1,X2)) [superposition 820,16]
+6304. multiply(a3,multiply(b3,c3)) != multiply(a3,multiply(b3,c3)) [superposition 2,5203]
+6346. $false [trivial inequality removal 6304]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.071 s
+% Peak memory usage: 68 MB
+% Instructions burned: 182 (million)
+% ------------------------------
+% ------------------------------

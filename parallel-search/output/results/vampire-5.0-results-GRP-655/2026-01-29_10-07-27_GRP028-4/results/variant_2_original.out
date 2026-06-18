@@ -1,5 +1,0 @@
-% Running in auto input_syntax mode. Trying TPTP
-% Failed with
-% User error: input formula not in CNF: ! [X0,X1] : product(left_solution(X0,X1),X0,X1) (detected at or around line 55)
-% Trying SMTLIB2
-Parser exception: unmatched left parenthesis in line 57 at 

@@ -1,0 +1,41 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2_original
+% SZS output start Proof for variant_2_original
+2. multiply(X0,X1) = double_divide(double_divide(X1,X0),identity) [input(axiom)]
+5. multiply(a,b) != multiply(b,a) [input(negated conjecture)]
+6. ! [X0] : double_divide(X0,double_divide(X0,identity)) = identity [input(assumption)]
+7. ! [X0,X1] : double_divide(double_divide(X0,X1),X1) = X0 [input(assumption)]
+8. ! [X0] : double_divide(identity,identity) = identity [input(assumption)]
+9. ! [X0,X1,X2] : double_divide(double_divide(X0,double_divide(double_divide(X1,double_divide(X0,X2)),double_divide(identity,X2))),double_divide(identity,identity)) = X1 [input(assumption)]
+10. double_divide(identity,identity) = identity [rectify 8]
+11. identity = double_divide(X0,double_divide(X0,identity)) [cnf transformation 6]
+12. double_divide(double_divide(X0,X1),X1) = X0 [cnf transformation 7]
+13. identity = double_divide(identity,identity) [cnf transformation 10]
+14. double_divide(double_divide(X0,double_divide(double_divide(X1,double_divide(X0,X2)),double_divide(identity,X2))),double_divide(identity,identity)) = X1 [cnf transformation 9]
+16. double_divide(double_divide(b,a),identity) != double_divide(double_divide(a,b),identity) [definition unfolding 5,2,2]
+19. double_divide(identity,double_divide(X0,identity)) = X0 [superposition 12,11]
+22. double_divide(X0,identity) = double_divide(identity,X0) [superposition 19,12]
+32. double_divide(X0,double_divide(X1,X2)) = double_divide(double_divide(X1,double_divide(X0,double_divide(identity,X2))),double_divide(identity,identity)) [superposition 14,12]
+36. double_divide(double_divide(identity,X0),double_divide(identity,identity)) = X0 [superposition 14,12]
+41. double_divide(double_divide(identity,X0),identity) = X0 [forward demodulation 36,13]
+45. double_divide(X0,double_divide(X1,X2)) = double_divide(double_divide(X1,double_divide(X0,double_divide(identity,X2))),identity) [forward demodulation 32,13]
+55. double_divide(identity,double_divide(identity,X0)) = X0 [forward demodulation 41,22]
+59. double_divide(X0,double_divide(X1,X2)) = double_divide(identity,double_divide(X1,double_divide(X0,double_divide(identity,X2)))) [forward demodulation 45,22]
+100. identity = double_divide(X0,double_divide(identity,X0)) [superposition 12,55]
+301. double_divide(identity,double_divide(X1,identity)) = double_divide(X0,double_divide(X1,X0)) [superposition 59,100]
+339. double_divide(X0,double_divide(X1,X0)) = X1 [forward demodulation 301,19]
+364. double_divide(X1,X0) = double_divide(X0,X1) [superposition 339,12]
+506. double_divide(double_divide(a,b),identity) != double_divide(double_divide(a,b),identity) [superposition 16,364]
+507. $false [trivial inequality removal 506]
+% SZS output end Proof for variant_2_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.007 s
+% Peak memory usage: 59 MB
+% Instructions burned: 19 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,33 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2
+% SZS output start Proof for variant_2
+3. ~product(X2,X3,X5) | ~product(X1,X3,X4) | ~product(X0,X1,X2) | product(X0,X4,X5) [input(axiom)]
+4. ~product(X1,X3,X4) | ~product(X0,X1,X2) | ~product(X0,X4,X5) | product(X2,X3,X5) [input(axiom)]
+6. product(a,b,c) [input(assumption)]
+7. ! [X0] : product(identity,X0,X0) [input(assumption)]
+8. ! [X0] : product(X0,identity,X0) [input(assumption)]
+9. ! [X0] : product(X0,X0,identity) [input(assumption)]
+10. ~product(b,a,c) [input(negated conjecture)]
+11. product(identity,X0,X0) [cnf transformation 7]
+12. product(X0,identity,X0) [cnf transformation 8]
+13. product(X0,X0,identity) [cnf transformation 9]
+15. ~product(X3,X0,identity) | ~product(X0,X1,X2) | product(X3,X2,X1) [resolution 3,11]
+23. ~product(X0,identity,X3) | ~product(X0,X1,X2) | product(X2,X1,X3) [resolution 4,13]
+27. ~product(X0,X1,X2) | product(X0,X2,X1) [resolution 15,13]
+33. product(a,c,b) [resolution 27,6]
+65. ~product(X0,X1,X2) | product(X2,X1,X0) [resolution 23,12]
+85. product(b,c,a) [resolution 65,33]
+108. product(b,a,c) [resolution 85,27]
+110. $false [forward subsumption resolution 108,10]
+% SZS output end Proof for variant_2
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.001 s
+% Peak memory usage: 55 MB
+% Instructions burned: 3 (million)
+% ------------------------------
+% ------------------------------

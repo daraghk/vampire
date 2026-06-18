@@ -1,0 +1,32 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP011-4_clausified
+% SZS output start Proof for GRP011-4_clausified
+1. multiply(multiply(X0,X1),X2) = multiply(X0,multiply(X1,X2)) [input(axiom)]
+2. multiply(identity,X0) = X0 [input(axiom)]
+3. identity = multiply(inverse(X0),X0) [input(axiom)]
+4. multiply(b,c) = multiply(d,c) [input(assumption)]
+5. b != d [input(negated conjecture)]
+7. multiply(inverse(X0),multiply(X0,X1)) = multiply(identity,X1) [superposition 1,3]
+8. multiply(d,multiply(c,X0)) = multiply(multiply(b,c),X0) [superposition 1,4]
+11. multiply(d,multiply(c,X0)) = multiply(b,multiply(c,X0)) [forward demodulation 8,1]
+12. multiply(inverse(X0),multiply(X0,X1)) = X1 [forward demodulation 7,2]
+15. multiply(inverse(inverse(X0)),identity) = X0 [superposition 12,3]
+17. multiply(X1,X0) = multiply(inverse(inverse(X1)),X0) [superposition 12,12]
+21. multiply(X0,identity) = X0 [forward demodulation 15,17]
+52. identity = multiply(X0,inverse(X0)) [superposition 3,17]
+80. multiply(b,identity) = multiply(d,identity) [superposition 11,52]
+87. d = multiply(b,identity) [forward demodulation 80,21]
+90. b = d [forward demodulation 87,21]
+91. $false [forward subsumption resolution 90,5]
+% SZS output end Proof for GRP011-4_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.001 s
+% Peak memory usage: 62 MB
+% Instructions burned: 4 (million)
+% ------------------------------
+% ------------------------------

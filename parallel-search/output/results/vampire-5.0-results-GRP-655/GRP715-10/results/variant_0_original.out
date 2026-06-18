@@ -1,0 +1,50 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0_original
+% SZS output start Proof for variant_0_original
+7. mult(mult(mult(X0,X1),X2),X1) = mult(X0,mult(mult(X1,X2),X1)) [input(axiom)]
+8. mult(X0,mult(X1,X1)) = mult(mult(X0,X1),X1) [input(axiom)]
+9. mult(X0,unit) = X0 [input(axiom)]
+10. mult(unit,X0) = X0 [input(axiom)]
+11. mult(op_a,op_b) = unit [input(axiom)]
+12. unit = mult(op_a,op_b) [reorient equations 11]
+13. mult(op_b,op_a) = unit [input(axiom)]
+14. unit = mult(op_b,op_a) [reorient equations 13]
+15. mult(mult(x0,op_a),op_b) != x0 [input(negated conjecture)]
+16. x0 != mult(mult(x0,op_a),op_b) [reorient equations 15]
+20. ! [X0] : mult(mult(op_a,op_b),X0) = X0 [input(assumption)]
+21. ! [X0] : mult(X0,mult(op_b,op_a)) = X0 [input(assumption)]
+25. mult(mult(op_a,op_b),X0) = X0 [cnf transformation 20]
+26. mult(X0,mult(op_b,op_a)) = X0 [cnf transformation 21]
+128. op_b = mult(op_a,mult(op_b,op_b)) [superposition 25,8]
+185. mult(op_b,mult(mult(op_a,X0),op_a)) = mult(mult(unit,X0),op_a) [superposition 7,14]
+189. mult(mult(X0,X1),mult(mult(X2,X1),X2)) = mult(mult(X0,mult(mult(X1,X2),X1)),X2) [superposition 7,7]
+211. mult(op_b,mult(mult(op_a,X0),op_a)) = mult(X0,op_a) [forward demodulation 185,10]
+1293. mult(op_b,mult(op_b,op_a)) = mult(mult(op_b,op_b),op_a) [superposition 211,128]
+1313. op_b = mult(mult(op_b,op_b),op_a) [forward demodulation 1293,26]
+3065. mult(mult(X0,op_a),mult(mult(mult(op_b,op_b),op_a),mult(op_b,op_b))) = mult(mult(X0,mult(op_b,op_a)),mult(op_b,op_b)) [superposition 189,128]
+3070. mult(mult(X0,mult(op_b,op_b)),mult(mult(op_a,mult(op_b,op_b)),op_a)) = mult(mult(X0,mult(op_b,mult(op_b,op_b))),op_a) [superposition 189,1313]
+3158. mult(mult(X0,mult(op_b,mult(op_b,op_b))),op_a) = mult(mult(X0,mult(op_b,op_b)),mult(op_b,op_a)) [forward demodulation 3070,128]
+3162. mult(X0,mult(op_b,op_b)) = mult(mult(X0,op_a),mult(mult(mult(op_b,op_b),op_a),mult(op_b,op_b))) [forward demodulation 3065,26]
+3188. mult(X0,mult(op_b,op_b)) = mult(mult(X0,mult(op_b,mult(op_b,op_b))),op_a) [forward demodulation 3158,26]
+3191. mult(X0,mult(op_b,op_b)) = mult(mult(X0,op_a),mult(op_b,mult(op_b,op_b))) [forward demodulation 3162,1313]
+25603. mult(mult(X0,mult(op_b,op_b)),op_a) = mult(X0,mult(mult(op_a,mult(op_b,mult(op_b,op_b))),op_a)) [superposition 7,3191]
+25645. mult(mult(X0,mult(op_b,op_b)),op_a) = mult(X0,mult(op_a,mult(op_b,op_b))) [forward demodulation 25603,3188]
+25676. mult(X0,op_b) = mult(mult(X0,mult(op_b,op_b)),op_a) [forward demodulation 25645,128]
+35534. mult(mult(X0,op_a),op_b) = mult(X0,mult(mult(op_a,mult(op_b,op_b)),op_a)) [superposition 7,25676]
+35598. mult(mult(X0,op_a),op_b) = mult(X0,mult(op_a,op_b)) [forward demodulation 35534,25676]
+35632. mult(X0,unit) = mult(mult(X0,op_a),op_b) [forward demodulation 35598,12]
+35655. mult(mult(X0,op_a),op_b) = X0 [forward demodulation 35632,9]
+37402. x0 != x0 [superposition 16,35655]
+37444. $false [trivial inequality removal 37402]
+% SZS output end Proof for variant_0_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.359 s
+% Peak memory usage: 62 MB
+% Instructions burned: 1476 (million)
+% ------------------------------
+% ------------------------------

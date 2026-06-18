@@ -1,7 +1,0 @@
-% Running in auto input_syntax mode. Trying TPTP
-% Failed with
-% User error: input formula not in CNF: ! [X0,X1] : product(left_solution(X0,X1),X0,X1) (detected at or around line 9)
-% Trying SMTLIB2
-User error: Unexpected end of list at line 1 col 2
-%
-^

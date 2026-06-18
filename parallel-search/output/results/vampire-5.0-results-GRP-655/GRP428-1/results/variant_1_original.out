@@ -1,0 +1,71 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+2. multiply(multiply(inverse(b2),b2),a2) != a2 [input(negated conjecture)]
+3. a2 != multiply(multiply(inverse(b2),b2),a2) [reorient equations 2]
+4. ! [X0,X1,X2,X3] : multiply(X0,inverse(multiply(multiply(inverse(multiply(inverse(X1),multiply(inverse(X0),X2))),X3),inverse(multiply(X1,X3))))) = X2 [input(assumption)]
+5. ! [X0] : inverse(inverse(X0)) = X0 [input(assumption)]
+6. multiply(X0,inverse(multiply(multiply(inverse(multiply(inverse(X1),multiply(inverse(X0),X2))),X3),inverse(multiply(X1,X3))))) = X2 [cnf transformation 4]
+7. inverse(inverse(X0)) = X0 [cnf transformation 5]
+8. multiply(X1,inverse(multiply(multiply(inverse(multiply(X0,multiply(inverse(X1),X2))),X3),inverse(multiply(inverse(X0),X3))))) = X2 [superposition 6,7]
+9. multiply(inverse(X0),inverse(multiply(multiply(inverse(multiply(inverse(X1),multiply(X0,X2))),X3),inverse(multiply(X1,X3))))) = X2 [superposition 6,7]
+10. inverse(multiply(multiply(inverse(multiply(inverse(X3),multiply(inverse(inverse(X1)),X0))),X4),inverse(multiply(X3,X4)))) = multiply(X1,inverse(multiply(multiply(inverse(multiply(inverse(X2),X0)),X5),inverse(multiply(X2,X5))))) [superposition 6,6]
+11. multiply(X1,inverse(multiply(X0,inverse(multiply(X2,inverse(multiply(multiply(inverse(multiply(inverse(X4),multiply(inverse(inverse(multiply(inverse(X2),multiply(inverse(X1),X3)))),X0))),X5),inverse(multiply(X4,X5))))))))) = X3 [superposition 6,6]
+13. multiply(X1,inverse(multiply(X0,inverse(multiply(X2,inverse(multiply(multiply(inverse(multiply(inverse(X4),multiply(multiply(inverse(X2),multiply(inverse(X1),X3)),X0))),X5),inverse(multiply(X4,X5))))))))) = X3 [forward demodulation 11,7]
+14. multiply(X1,inverse(multiply(multiply(inverse(multiply(inverse(X2),X0)),X5),inverse(multiply(X2,X5))))) = inverse(multiply(multiply(inverse(multiply(inverse(X3),multiply(X1,X0))),X4),inverse(multiply(X3,X4)))) [forward demodulation 10,7]
+186. inverse(multiply(multiply(inverse(multiply(inverse(X0),multiply(inverse(X1),multiply(X1,X2)))),X3),inverse(multiply(X0,X3)))) = X2 [superposition 9,14]
+201. inverse(multiply(multiply(inverse(multiply(inverse(X0),multiply(X1,multiply(inverse(X1),X2)))),X3),inverse(multiply(X0,X3)))) = X2 [superposition 6,14]
+202. multiply(X2,inverse(multiply(X4,inverse(inverse(multiply(multiply(inverse(multiply(inverse(X0),multiply(X1,multiply(multiply(inverse(X1),multiply(inverse(X2),X3)),X4)))),X5),inverse(multiply(X0,X5)))))))) = X3 [superposition 13,14]
+208. multiply(X0,multiply(inverse(X0),inverse(multiply(multiply(inverse(multiply(inverse(X1),X2)),X3),inverse(multiply(X1,X3)))))) = X2 [superposition 6,14]
+229. multiply(X2,inverse(multiply(X4,multiply(multiply(inverse(multiply(inverse(X0),multiply(X1,multiply(multiply(inverse(X1),multiply(inverse(X2),X3)),X4)))),X5),inverse(multiply(X0,X5)))))) = X3 [forward demodulation 202,7]
+291. inverse(X0) = multiply(multiply(inverse(multiply(inverse(X1),multiply(inverse(X2),multiply(X2,X0)))),X3),inverse(multiply(X1,X3))) [superposition 7,186]
+477. inverse(X0) = multiply(multiply(inverse(multiply(inverse(X1),multiply(X2,multiply(inverse(X2),X0)))),X3),inverse(multiply(X1,X3))) [superposition 7,201]
+551. multiply(X1,multiply(inverse(X1),X0)) = multiply(X3,multiply(inverse(X3),X0)) [superposition 208,201]
+552. multiply(X1,multiply(inverse(X1),X0)) = multiply(inverse(X3),multiply(X3,X0)) [superposition 208,186]
+670. multiply(X2,multiply(inverse(X2),multiply(inverse(inverse(X3)),X1))) = multiply(X3,multiply(X0,multiply(inverse(X0),X1))) [superposition 551,551]
+823. multiply(X3,multiply(X0,multiply(inverse(X0),X1))) = multiply(X2,multiply(inverse(X2),multiply(X3,X1))) [forward demodulation 670,7]
+993. multiply(X2,multiply(X0,multiply(inverse(X0),X1))) = multiply(inverse(X3),multiply(X3,multiply(X2,X1))) [superposition 552,552]
+1041. multiply(X2,multiply(inverse(X2),multiply(inverse(inverse(X3)),X1))) = multiply(X3,multiply(inverse(X0),multiply(X0,X1))) [superposition 551,552]
+1055. multiply(X2,inverse(multiply(multiply(inverse(multiply(inverse(X0),multiply(X0,X1))),X3),inverse(multiply(inverse(X2),X3))))) = X1 [superposition 8,552]
+1159. multiply(X2,multiply(inverse(X2),multiply(X3,X1))) = multiply(X3,multiply(inverse(X0),multiply(X0,X1))) [forward demodulation 1041,7]
+1875. multiply(X0,multiply(X1,multiply(inverse(X1),X2))) = multiply(X0,multiply(X3,multiply(inverse(X3),X2))) [superposition 823,823]
+3246. multiply(X3,multiply(X0,multiply(X1,multiply(inverse(X1),X2)))) = multiply(X3,multiply(inverse(X4),multiply(X4,multiply(X0,X2)))) [superposition 1159,993]
+10183. multiply(multiply(inverse(multiply(inverse(X4),multiply(inverse(X1),multiply(X0,multiply(inverse(X0),multiply(X1,X2)))))),X5),inverse(multiply(X4,X5))) = inverse(multiply(X3,multiply(inverse(X3),X2))) [superposition 291,823]
+10204. multiply(multiply(inverse(multiply(inverse(X3),multiply(inverse(X0),multiply(X1,multiply(inverse(X1),X2))))),X4),inverse(multiply(X3,X4))) = inverse(multiply(inverse(X0),X2)) [superposition 291,1875]
+10224. inverse(X2) = multiply(multiply(inverse(multiply(X0,multiply(inverse(X0),multiply(inverse(X1),X2)))),X4),inverse(multiply(X1,X4))) [superposition 291,1159]
+10470. inverse(multiply(inverse(X1),multiply(X1,X2))) = inverse(multiply(X3,multiply(inverse(X3),X2))) [forward demodulation 10183,10204]
+11278. multiply(X2,multiply(inverse(X2),X3)) = multiply(inverse(multiply(X0,multiply(inverse(X0),X1))),multiply(multiply(inverse(X4),multiply(X4,X1)),X3)) [superposition 552,10470]
+226010. multiply(multiply(X2,multiply(inverse(X2),X3)),inverse(multiply(X1,multiply(multiply(inverse(multiply(inverse(X4),multiply(X0,multiply(inverse(X0),X1)))),X5),inverse(multiply(X4,X5)))))) = X3 [superposition 229,11278]
+226022. multiply(multiply(X2,multiply(inverse(X2),X3)),inverse(multiply(X1,inverse(X1)))) = X3 [forward demodulation 226010,477]
+229482. multiply(multiply(X1,multiply(inverse(X1),X2)),inverse(multiply(inverse(X0),X0))) = X2 [superposition 226022,7]
+236696. multiply(multiply(inverse(inverse(multiply(inverse(X1),multiply(X1,X2)))),X0),inverse(X0)) = X2 [superposition 1055,229482]
+236783. multiply(multiply(multiply(inverse(X1),multiply(X1,X2)),X0),inverse(X0)) = X2 [forward demodulation 236696,7]
+240111. multiply(X3,multiply(inverse(X3),X2)) = multiply(multiply(multiply(inverse(X0),multiply(inverse(X1),multiply(X1,multiply(X0,X2)))),X4),inverse(X4)) [superposition 236783,3246]
+240168. multiply(multiply(multiply(inverse(X1),multiply(X1,X2)),inverse(X0)),X0) = X2 [superposition 236783,7]
+240200. multiply(inverse(X1),multiply(X1,X0)) = X0 [superposition 229482,236783]
+240312. multiply(multiply(X2,inverse(X0)),X0) = X2 [forward demodulation 240168,240200]
+240368. multiply(X3,multiply(inverse(X3),X2)) = multiply(multiply(multiply(inverse(X0),multiply(X0,X2)),X4),inverse(X4)) [forward demodulation 240111,240200]
+240577. multiply(X3,multiply(inverse(X3),X2)) = X2 [forward demodulation 240368,236783]
+247797. multiply(X1,multiply(inverse(X1),X0)) = multiply(X0,multiply(inverse(X2),X2)) [superposition 240312,229482]
+247805. multiply(inverse(X0),multiply(X2,X3)) = multiply(inverse(multiply(X1,multiply(inverse(X1),multiply(inverse(X2),X0)))),X3) [superposition 240312,10224]
+248365. multiply(inverse(multiply(inverse(X2),X0)),X3) = multiply(inverse(X0),multiply(X2,X3)) [forward demodulation 247805,240577]
+248373. multiply(X0,multiply(inverse(X2),X2)) = X0 [forward demodulation 247797,240577]
+263713. multiply(X1,multiply(inverse(X1),X2)) = multiply(inverse(multiply(X3,multiply(inverse(X3),multiply(inverse(X4),X4)))),multiply(multiply(inverse(X0),X0),X2)) [superposition 11278,248373]
+263732. multiply(X1,multiply(inverse(X1),X2)) = multiply(inverse(multiply(inverse(X4),X4)),multiply(multiply(inverse(X0),X0),X2)) [forward demodulation 263713,240577]
+264410. multiply(X1,multiply(inverse(X1),X2)) = multiply(inverse(X4),multiply(X4,multiply(multiply(inverse(X0),X0),X2))) [forward demodulation 263732,248365]
+264898. multiply(X1,multiply(inverse(X1),X2)) = multiply(multiply(inverse(X0),X0),X2) [forward demodulation 264410,240200]
+265168. multiply(multiply(inverse(X0),X0),X2) = X2 [forward demodulation 264898,240577]
+268745. a2 != a2 [superposition 3,265168]
+269134. $false [trivial inequality removal 268745]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 6.467 s
+% Peak memory usage: 272 MB
+% Instructions burned: 30385 (million)
+% ------------------------------
+% ------------------------------

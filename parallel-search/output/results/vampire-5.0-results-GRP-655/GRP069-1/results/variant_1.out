@@ -1,0 +1,67 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+1. divide(X0,divide(divide(divide(divide(X0,X0),X1),X2),divide(divide(identity,X0),X2))) = X1 [input(axiom)]
+3. ! [X0] : divide(X0,X0) = identity [input(assumption)]
+4. ! [X0] : divide(divide(X0,identity),identity) = X0 [input(assumption)]
+5. identity != divide(divide(identity,a1),divide(identity,a1)) | a2 != divide(identity,divide(identity,a2)) | divide(divide(a3,divide(identity,b3)),divide(identity,c3)) != divide(a3,divide(identity,divide(b3,divide(identity,c3)))) [input(negated conjecture)]
+6. divide(X0,X0) = identity [cnf transformation 3]
+7. divide(divide(X0,identity),identity) = X0 [cnf transformation 4]
+9. 1 <=> divide(divide(a3,divide(identity,b3)),divide(identity,c3)) = divide(a3,divide(identity,divide(b3,divide(identity,c3)))) [avatar definition]
+11. divide(divide(a3,divide(identity,b3)),divide(identity,c3)) != divide(a3,divide(identity,divide(b3,divide(identity,c3)))) <- (~1) [avatar component clause 9]
+13. 2 <=> a2 = divide(identity,divide(identity,a2)) [avatar definition]
+15. a2 != divide(identity,divide(identity,a2)) <- (~2) [avatar component clause 13]
+17. 3 <=> identity = divide(divide(identity,a1),divide(identity,a1)) [avatar definition]
+19. identity != divide(divide(identity,a1),divide(identity,a1)) <- (~3) [avatar component clause 17]
+20. ~1 | ~2 | ~3 [avatar split clause 5,17,13,9]
+21. divide(X0,divide(divide(divide(identity,X1),X2),divide(divide(identity,X0),X2))) = X1 [forward demodulation 1,6]
+24. divide(divide(divide(identity,X0),X2),divide(divide(identity,identity),X2)) = divide(X1,divide(divide(X0,X3),divide(divide(identity,X1),X3))) [superposition 21,21]
+26. divide(X0,divide(identity,divide(divide(identity,X0),divide(identity,X1)))) = X1 [superposition 21,6]
+28. divide(identity,divide(divide(divide(identity,X0),X1),divide(identity,X1))) = X0 [superposition 21,6]
+30. divide(identity,divide(divide(divide(identity,X0),identity),identity)) = X0 [superposition 21,7]
+31. divide(X0,divide(divide(divide(identity,X1),divide(identity,X0)),identity)) = X1 [superposition 21,6]
+33. divide(X0,identity) = X0 [superposition 21,6]
+34. divide(X0,divide(divide(identity,X1),divide(identity,X0))) = X1 [forward demodulation 31,33]
+35. divide(identity,divide(identity,X0)) = X0 [forward demodulation 30,7]
+38. divide(X1,divide(divide(X0,X3),divide(divide(identity,X1),X3))) = divide(divide(divide(identity,X0),X2),divide(identity,X2)) [forward demodulation 24,6]
+55. divide(identity,X0) = divide(X1,divide(X0,divide(identity,X1))) [superposition 34,35]
+215. divide(identity,X0) = divide(X1,divide(identity,divide(divide(identity,X1),X0))) [superposition 26,35]
+230. divide(divide(divide(identity,divide(identity,X1)),divide(identity,X0)),X0) = X1 [superposition 34,26]
+255. divide(divide(X1,divide(identity,X0)),X0) = X1 [forward demodulation 230,35]
+297. divide(divide(X1,X0),divide(identity,X0)) = X1 [superposition 255,35]
+317. divide(X1,X0) = divide(identity,divide(X0,divide(identity,divide(identity,X1)))) [superposition 55,255]
+318. divide(X1,X0) = divide(identity,divide(X0,X1)) [forward demodulation 317,35]
+743. divide(divide(X2,divide(X1,X0)),divide(X0,X1)) = X2 [superposition 297,318]
+3452. divide(identity,divide(divide(X0,X2),divide(divide(identity,divide(identity,X3)),X2))) = divide(X3,divide(identity,divide(divide(divide(identity,X0),X1),divide(identity,X1)))) [superposition 215,38]
+3620. divide(identity,divide(divide(X0,X2),divide(divide(identity,divide(identity,X3)),X2))) = divide(X3,X0) [forward demodulation 3452,28]
+3708. divide(divide(divide(identity,divide(identity,X3)),X2),divide(X0,X2)) = divide(X3,X0) [forward demodulation 3620,318]
+3764. divide(X3,X0) = divide(divide(X3,X2),divide(X0,X2)) [forward demodulation 3708,35]
+3845. divide(divide(X1,X2),X0) = divide(X1,divide(X0,divide(identity,X2))) [superposition 3764,255]
+3848. divide(X1,divide(X0,divide(X2,X3))) = divide(divide(X1,divide(X3,X2)),X0) [superposition 3764,743]
+72956. divide(a3,divide(identity,divide(b3,divide(identity,c3)))) != divide(a3,divide(divide(identity,c3),divide(b3,identity))) <- (~1) [superposition 11,3848]
+73190. divide(a3,divide(identity,divide(b3,divide(identity,c3)))) != divide(a3,divide(divide(identity,c3),b3)) <- (~1) [forward demodulation 72956,33]
+73622. divide(a3,divide(divide(identity,c3),b3)) != divide(a3,divide(divide(identity,c3),b3)) <- (~1) [forward demodulation 73190,3845]
+73623. $false <- (~1) [trivial inequality removal 73622]
+73624. 1 [avatar contradiction clause 73623]
+74954. $false <- (~2) [forward subsumption resolution 15,35]
+74955. 2 [avatar contradiction clause 74954]
+74956. $false <- (~3) [forward subsumption resolution 19,297]
+74957. 3 [avatar contradiction clause 74956]
+s1. ~3 | ~2 | ~1 [sat_conversion 20]
+s2. 1 [sat_conversion 73624]
+s3. 2 [sat_conversion 74955]
+s4. 3 [sat_conversion 74957]
+s5. # [rat s1,s2,s3,s4]
+74958. $false [avatar sat refutation s5]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.547 s
+% Peak memory usage: 71 MB
+% Instructions burned: 2039 (million)
+% ------------------------------
+% ------------------------------

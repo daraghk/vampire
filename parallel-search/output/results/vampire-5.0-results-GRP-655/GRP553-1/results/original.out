@@ -1,0 +1,64 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP553-1
+% SZS output start Proof for GRP553-1
+1. divide(divide(X0,inverse(divide(X1,divide(X0,X2)))),X2) = X1 [input(axiom)]
+2. multiply(X0,X1) = divide(X0,inverse(X1)) [input(axiom)]
+3. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) [input(negated conjecture)]
+4. divide(inverse(a1),inverse(a1)) != divide(inverse(b1),inverse(b1)) [definition unfolding 3,2,2]
+5. divide(divide(divide(X1,inverse(divide(X0,divide(X1,X2)))),inverse(divide(X3,X0))),X2) = X3 [superposition 1,1]
+6. divide(X2,inverse(divide(X0,divide(X2,divide(X1,X3))))) = divide(divide(X1,inverse(X0)),X3) [superposition 1,1]
+11. divide(X4,inverse(divide(X0,divide(X4,X2)))) = divide(divide(divide(X1,inverse(divide(X2,divide(X1,X3)))),inverse(X0)),X3) [superposition 5,1]
+13. divide(X0,inverse(divide(X2,X0))) = X2 [superposition 5,1]
+15. divide(divide(X2,inverse(divide(X3,divide(X2,divide(X1,X4))))),inverse(divide(X0,X3))) = divide(divide(X1,inverse(X0)),X4) [superposition 1,5]
+16. divide(divide(X1,inverse(X0)),X4) = divide(divide(divide(X1,inverse(X3)),X4),inverse(divide(X0,X3))) [forward demodulation 15,6]
+28. divide(divide(divide(X0,inverse(X1)),X2),divide(X0,X2)) = X1 [superposition 1,6]
+40. divide(X1,inverse(X0)) = divide(X2,inverse(divide(X0,divide(X2,X1)))) [superposition 13,1]
+43. divide(inverse(divide(X0,X1)),inverse(X0)) = X1 [superposition 13,13]
+50. divide(X1,divide(X3,divide(X0,X2))) = divide(divide(divide(divide(X0,inverse(X1)),X2),X4),divide(X3,X4)) [superposition 28,6]
+51. divide(X0,X1) = divide(divide(X0,X2),divide(X1,X2)) [superposition 28,13]
+66. divide(divide(X1,inverse(X0)),X2) = divide(divide(X1,X2),inverse(X0)) [superposition 13,28]
+80. divide(X1,divide(X3,divide(X0,X2))) = divide(divide(divide(X0,inverse(X1)),X2),X3) [forward demodulation 50,51]
+97. inverse(divide(X1,X0)) = divide(inverse(X1),inverse(X0)) [superposition 13,43]
+98. divide(divide(divide(inverse(divide(X1,X0)),inverse(X2)),inverse(X1)),X0) = X2 [superposition 28,43]
+99. divide(X2,divide(X0,divide(inverse(divide(X1,X0)),inverse(X1)))) = X2 [forward demodulation 98,80]
+110. divide(X2,divide(X0,X0)) = X2 [forward demodulation 99,43]
+123. divide(divide(X1,inverse(X2)),X3) = divide(divide(X0,X3),inverse(divide(X2,divide(X0,X1)))) [superposition 16,13]
+239. divide(X3,inverse(divide(X4,divide(divide(X0,inverse(X1)),X2)))) = divide(divide(divide(X5,inverse(divide(inverse(divide(X1,divide(X3,divide(X0,X2)))),divide(X5,X6)))),inverse(X4)),X6) [superposition 11,6]
+241. divide(X1,inverse(divide(X2,X0))) = divide(divide(divide(X3,inverse(divide(inverse(divide(X0,X1)),divide(X3,X4)))),inverse(X2)),X4) [superposition 11,13]
+248. divide(X1,inverse(X0)) = divide(divide(divide(X2,inverse(divide(X1,divide(X2,X3)))),inverse(X0)),X3) [superposition 11,110]
+296. divide(divide(X0,inverse(divide(divide(X1,divide(divide(X2,inverse(divide(X3,divide(X2,inverse(divide(X4,X1)))))),X5)),divide(X0,X3)))),X5) = X4 [superposition 5,11]
+332. divide(divide(X0,X5),inverse(divide(divide(X1,divide(divide(X2,inverse(divide(X3,divide(X2,inverse(divide(X4,X1)))))),X5)),divide(X0,X3)))) = X4 [forward demodulation 296,66]
+377. divide(X1,inverse(X0)) = divide(divide(X1,divide(X2,X3)),divide(X3,divide(X2,inverse(X0)))) [forward demodulation 248,80]
+383. divide(X1,inverse(divide(X2,X0))) = divide(divide(inverse(divide(X0,X1)),divide(X3,X4)),divide(X4,divide(X3,inverse(X2)))) [forward demodulation 241,80]
+385. divide(X3,inverse(divide(X4,divide(divide(X0,inverse(X1)),X2)))) = divide(divide(inverse(divide(X1,divide(X3,divide(X0,X2)))),divide(X5,X6)),divide(X6,divide(X5,inverse(X4)))) [forward demodulation 239,80]
+405. divide(divide(X3,inverse(divide(X1,divide(divide(X2,inverse(divide(X3,divide(X2,inverse(divide(X4,X1)))))),X5)))),X5) = X4 [forward demodulation 332,123]
+448. divide(X1,inverse(divide(X2,X0))) = divide(inverse(divide(X0,X1)),inverse(X2)) [forward demodulation 383,377]
+450. divide(X3,inverse(divide(X4,divide(divide(X0,inverse(X1)),X2)))) = divide(inverse(divide(X1,divide(X3,divide(X0,X2)))),inverse(X4)) [forward demodulation 385,377]
+468. divide(divide(X3,X5),inverse(divide(X1,divide(divide(X2,inverse(divide(X3,divide(X2,inverse(divide(X4,X1)))))),X5)))) = X4 [forward demodulation 405,66]
+499. divide(X1,inverse(divide(X2,X0))) = inverse(divide(divide(X0,X1),X2)) [forward demodulation 448,97]
+501. divide(X3,inverse(divide(X4,divide(divide(X0,inverse(X1)),X2)))) = inverse(divide(divide(X1,divide(X3,divide(X0,X2))),X4)) [forward demodulation 450,97]
+515. divide(divide(X3,X5),inverse(divide(X1,divide(divide(inverse(divide(X4,X1)),inverse(X3)),X5)))) = X4 [forward demodulation 468,40]
+533. divide(X3,inverse(divide(X4,divide(divide(X0,inverse(X1)),X2)))) = divide(divide(X3,divide(X0,X2)),inverse(divide(X4,X1))) [forward demodulation 501,499]
+544. divide(divide(X3,X5),inverse(divide(X1,divide(inverse(divide(divide(X4,X1),X3)),X5)))) = X4 [forward demodulation 515,97]
+561. divide(divide(X3,X5),inverse(divide(X1,divide(divide(X1,inverse(divide(X3,X4))),X5)))) = X4 [forward demodulation 544,499]
+568. divide(divide(divide(X3,X5),divide(X1,X5)),inverse(divide(X1,divide(X3,X4)))) = X4 [forward demodulation 561,533]
+570. divide(divide(X3,X1),inverse(divide(X1,divide(X3,X4)))) = X4 [forward demodulation 568,51]
+571. divide(divide(X4,inverse(X1)),X1) = X4 [forward demodulation 570,123]
+572. divide(divide(X4,X1),inverse(X1)) = X4 [forward demodulation 571,66]
+594. divide(divide(X0,X2),divide(divide(X0,X1),X2)) = X1 [superposition 28,572]
+614. divide(X0,divide(X0,X1)) = X1 [forward demodulation 594,51]
+1931. divide(X0,X0) = divide(X1,X1) [superposition 614,110]
+3136. divide(inverse(a1),inverse(a1)) != divide(X0,X0) [superposition 4,1931]
+3209. $false [forward subsumption resolution 3136,1931]
+% SZS output end Proof for GRP553-1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.045 s
+% Peak memory usage: 69 MB
+% Instructions burned: 132 (million)
+% ------------------------------
+% ------------------------------

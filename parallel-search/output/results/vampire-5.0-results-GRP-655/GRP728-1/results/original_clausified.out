@@ -1,0 +1,65 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP728-1_clausified
+% SZS output start Proof for GRP728-1_clausified
+1. mult(unit,X0) = X0 [input(axiom)]
+2. mult(X0,unit) = X0 [input(axiom)]
+3. unit = mult(X0,i(X0)) [input(axiom)]
+4. unit = mult(i(X0),X0) [input(axiom)]
+5. i(mult(X0,X1)) = mult(i(X0),i(X1)) [input(axiom)]
+6. mult(i(X0),mult(X0,X1)) = X1 [input(axiom)]
+7. rd(mult(X0,X1),X1) = X0 [input(axiom)]
+10. mult(mult(X0,X1),X2) = mult(mult(X0,mult(X1,X2)),asoc(X0,X1,X2)) [input(axiom)]
+11. mult(X0,X1) = mult(mult(X1,X0),op_k(X0,X1)) [input(axiom)]
+18. unit = asoc(asoc(X0,X1,X2),X3,X4) [input(axiom)]
+19. unit = asoc(X0,X1,asoc(X2,X3,X4)) [input(axiom)]
+20. unit != op_k(op_k(a,b),c) [input(negated conjecture)]
+22. unit = i(unit) [superposition 1,3]
+28. rd(X0,unit) = X0 [superposition 7,2]
+29. rd(unit,i(X0)) = X0 [superposition 7,3]
+30. i(X0) = rd(unit,X0) [superposition 7,4]
+31. i(i(X0)) = X0 [forward demodulation 29,30]
+63. i(mult(i(X0),X1)) = mult(X0,i(X1)) [superposition 5,31]
+70. i(X1) = mult(i(i(X0)),i(mult(X0,X1))) [superposition 6,5]
+72. i(X1) = i(mult(i(X0),mult(X0,X1))) [forward demodulation 70,5]
+79. i(X1) = mult(X0,i(mult(X0,X1))) [forward demodulation 72,63]
+90. op_k(X0,X1) = mult(i(mult(X1,X0)),mult(X0,X1)) [superposition 6,11]
+91. mult(X1,X0) = rd(mult(X0,X1),op_k(X0,X1)) [superposition 7,11]
+155. mult(mult(i(mult(X0,X1)),X0),X1) = mult(unit,asoc(i(mult(X0,X1)),X0,X1)) [superposition 10,4]
+171. mult(mult(i(mult(X0,X1)),X0),X1) = asoc(i(mult(X0,X1)),X0,X1) [forward demodulation 155,1]
+2030. i(op_k(X0,X1)) = mult(mult(X1,X0),i(mult(X0,X1))) [superposition 79,11]
+2716. op_k(i(X0),i(X1)) = mult(i(mult(i(X1),i(X0))),i(mult(X0,X1))) [superposition 90,5]
+2791. op_k(i(X0),i(X1)) = i(mult(mult(i(X1),i(X0)),mult(X0,X1))) [forward demodulation 2716,5]
+2830. op_k(i(X0),i(X1)) = i(mult(i(mult(X1,X0)),mult(X0,X1))) [forward demodulation 2791,5]
+2850. mult(mult(X1,X0),i(mult(X0,X1))) = op_k(i(X0),i(X1)) [forward demodulation 2830,63]
+2860. i(op_k(X0,X1)) = op_k(i(X0),i(X1)) [forward demodulation 2850,2030]
+5437. mult(mult(i(X0),i(X1)),mult(X1,X0)) = asoc(i(X0),i(X1),mult(X1,X0)) [superposition 171,6]
+5544. mult(i(mult(X0,X1)),mult(X1,X0)) = asoc(i(X0),i(X1),mult(X1,X0)) [forward demodulation 5437,5]
+5584. op_k(X1,X0) = asoc(i(X0),i(X1),mult(X1,X0)) [forward demodulation 5544,90]
+18558. op_k(i(X1),X0) = i(op_k(X1,i(X0))) [superposition 2860,31]
+73701. op_k(X2,op_k(X0,i(X1))) = asoc(op_k(i(X0),X1),i(X2),mult(X2,op_k(X0,i(X1)))) [superposition 5584,18558]
+73798. op_k(i(mult(X1,X0)),mult(X0,X1)) = asoc(i(mult(X0,X1)),i(i(mult(X1,X0))),op_k(X0,X1)) [superposition 5584,90]
+73832. unit = asoc(op_k(X0,X1),X2,X3) [superposition 18,5584]
+73833. unit = asoc(X2,X3,op_k(X0,X1)) [superposition 19,5584]
+73871. unit = op_k(i(mult(X1,X0)),mult(X0,X1)) [forward demodulation 73798,73833]
+73944. unit = op_k(X2,op_k(X0,i(X1))) [forward demodulation 73701,73832]
+80149. unit = op_k(X1,op_k(X2,X0)) [superposition 73944,31]
+101546. mult(mult(X0,X1),i(mult(X1,X0))) = rd(mult(i(mult(X1,X0)),mult(X0,X1)),unit) [superposition 91,73871]
+101564. mult(i(mult(X1,X0)),mult(X0,X1)) = mult(mult(X0,X1),i(mult(X1,X0))) [forward demodulation 101546,28]
+101766. mult(i(mult(X1,X0)),mult(X0,X1)) = i(op_k(X1,X0)) [forward demodulation 101564,2030]
+101924. op_k(X0,X1) = i(op_k(X1,X0)) [forward demodulation 101766,90]
+103687. i(unit) = op_k(op_k(X0,X1),X2) [superposition 101924,80149]
+104011. unit = op_k(op_k(X0,X1),X2) [forward demodulation 103687,22]
+107296. unit != unit [superposition 20,104011]
+107324. $false [trivial inequality removal 107296]
+% SZS output end Proof for GRP728-1_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 3.100 s
+% Peak memory usage: 93 MB
+% Instructions burned: 8942 (million)
+% ------------------------------
+% ------------------------------

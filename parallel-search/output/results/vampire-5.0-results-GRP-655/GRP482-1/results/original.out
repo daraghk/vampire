@@ -1,0 +1,41 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP482-1
+% SZS output start Proof for GRP482-1
+1. double_divide(double_divide(double_divide(X0,double_divide(X1,identity)),double_divide(double_divide(X2,double_divide(X3,double_divide(X3,identity))),double_divide(X0,identity))),X1) = X2 [input(axiom)]
+2. multiply(X0,X1) = double_divide(double_divide(X1,X0),identity) [input(axiom)]
+3. inverse(X0) = double_divide(X0,identity) [input(axiom)]
+4. double_divide(X0,identity) = inverse(X0) [reorient equations 3]
+5. identity = double_divide(X0,inverse(X0)) [input(axiom)]
+6. multiply(identity,a2) != a2 [input(negated conjecture)]
+7. a2 != multiply(identity,a2) [reorient equations 6]
+8. identity = double_divide(X0,double_divide(X0,identity)) [definition unfolding 5,4]
+9. a2 != double_divide(double_divide(a2,identity),identity) [definition unfolding 7,2]
+10. double_divide(double_divide(double_divide(X0,double_divide(X1,identity)),double_divide(double_divide(X2,identity),double_divide(X0,identity))),X1) = X2 [forward demodulation 1,8]
+12. double_divide(double_divide(identity,double_divide(double_divide(X1,identity),double_divide(X0,identity))),X0) = X1 [superposition 10,8]
+16. double_divide(double_divide(double_divide(double_divide(X0,identity),double_divide(X1,identity)),identity),X1) = X0 [superposition 10,8]
+22. double_divide(double_divide(identity,identity),double_divide(X0,identity)) = X0 [superposition 12,8]
+30. double_divide(identity,double_divide(double_divide(X0,identity),double_divide(identity,identity))) = double_divide(double_divide(identity,identity),X0) [superposition 22,12]
+34. identity = double_divide(identity,identity) [superposition 8,22]
+36. double_divide(identity,X0) = double_divide(identity,double_divide(double_divide(X0,identity),identity)) [forward demodulation 30,34]
+54. double_divide(double_divide(X0,identity),double_divide(double_divide(X1,identity),identity)) = double_divide(double_divide(identity,X0),X1) [superposition 12,16]
+55. double_divide(double_divide(X0,identity),double_divide(double_divide(X1,identity),identity)) = double_divide(double_divide(double_divide(X1,double_divide(X2,identity)),X0),X2) [superposition 10,16]
+94. double_divide(double_divide(double_divide(identity,double_divide(X0,identity)),double_divide(double_divide(X1,identity),identity)),X0) = X1 [superposition 10,34]
+97. double_divide(double_divide(identity,double_divide(double_divide(X0,identity),identity)),identity) = X0 [superposition 12,34]
+102. double_divide(double_divide(identity,X0),identity) = X0 [forward demodulation 97,36]
+105. double_divide(double_divide(double_divide(double_divide(X1,identity),identity),identity),double_divide(double_divide(identity,identity),identity)) = X1 [forward demodulation 94,55]
+109. double_divide(double_divide(identity,double_divide(double_divide(X1,identity),identity)),identity) = X1 [forward demodulation 105,54]
+110. double_divide(double_divide(X1,identity),identity) = X1 [forward demodulation 109,102]
+3030. a2 != a2 [superposition 9,110]
+3066. $false [trivial inequality removal 3030]
+% SZS output end Proof for GRP482-1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.027 s
+% Peak memory usage: 62 MB
+% Instructions burned: 116 (million)
+% ------------------------------
+% ------------------------------

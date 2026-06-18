@@ -1,0 +1,32 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+5. an_element(a) [input(axiom)]
+9. ~an_element(identity) [input(negated conjecture)]
+12. ! [X0] : (an_element(X0) => an_element(identity)) [input(assumption)]
+13. ! [X0] : (an_element(identity) | ~an_element(X0)) [ennf transformation 12]
+16. an_element(identity) | ~an_element(X0) [cnf transformation 13]
+18. 1 <=> ! [X0] : ~an_element(X0) [avatar definition]
+19. ~an_element(X0) <- (1) [avatar component clause 18]
+21. 2 <=> an_element(identity) [avatar definition]
+24. 1 | 2 [avatar split clause 16,21,18]
+25. ~2 [avatar split clause 9,21]
+26. $false <- (1) [resolution 5,19]
+27. ~1 [avatar contradiction clause 26]
+s1. 1 | 2 [sat_conversion 24]
+s2. ~2 [sat_conversion 25]
+s3. ~1 [sat_conversion 27]
+s4. # [rat s1,s2,s3]
+28. $false [avatar sat refutation s4]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.001 s
+% Peak memory usage: 64 MB
+% Instructions burned: 1 (million)
+% ------------------------------
+% ------------------------------

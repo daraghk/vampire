@@ -1,0 +1,31 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+1. divide(divide(X0,divide(divide(X0,X1),X2)),X1) = X2 [input(axiom)]
+5. ! [X0] : divide(X0,X0) = identity [input(assumption)]
+7. ! [X0,X1] : multiply(X0,X1) = divide(X0,divide(divide(X1,X1),X1)) [input(assumption)]
+9. multiply(a,b) != multiply(b,a) [input(negated conjecture)]
+10. identity = divide(X0,X0) [cnf transformation 5]
+12. multiply(X0,X1) = divide(X0,divide(divide(X1,X1),X1)) [cnf transformation 7]
+17. divide(a,divide(divide(b,b),b)) != divide(b,divide(divide(a,a),a)) [definition unfolding 9,12,12]
+22. divide(divide(X0,divide(identity,X1)),X0) = X1 [superposition 1,10]
+27. divide(identity,divide(identity,X0)) = X0 [superposition 22,10]
+31. divide(divide(X1,X0),divide(identity,X0)) = X1 [superposition 1,22]
+53. divide(identity,X0) = divide(divide(X1,X0),X1) [superposition 22,27]
+278. divide(X0,divide(identity,X1)) = divide(X1,divide(identity,X0)) [superposition 31,22]
+444. divide(a,divide(divide(b,b),b)) != divide(b,divide(identity,a)) [superposition 17,53]
+445. divide(a,divide(divide(b,b),b)) != divide(a,divide(identity,b)) [forward demodulation 444,278]
+464. divide(a,divide(identity,b)) != divide(a,divide(identity,b)) [forward demodulation 445,53]
+465. $false [trivial inequality removal 464]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.005 s
+% Peak memory usage: 55 MB
+% Instructions burned: 17 (million)
+% ------------------------------
+% ------------------------------

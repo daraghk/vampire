@@ -1,0 +1,25 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP533-1_clausified
+% SZS output start Proof for GRP533-1_clausified
+2. multiply(X0,X1) = divide(X0,divide(divide(X2,X2),X1)) [input(axiom)]
+3. inverse(X0) = divide(divide(X1,X1),X0) [input(axiom)]
+4. identity = divide(X0,X0) [input(axiom)]
+5. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) [input(negated conjecture)]
+6. inverse(X0) = divide(identity,X0) [forward demodulation 3,4]
+7. multiply(X0,X1) = divide(X0,divide(identity,X1)) [forward demodulation 2,4]
+8. multiply(X0,X1) = divide(X0,inverse(X1)) [forward demodulation 7,6]
+13. identity = multiply(inverse(X0),X0) [superposition 4,8]
+34. identity != multiply(inverse(a1),a1) [superposition 5,13]
+35. $false [forward subsumption resolution 34,13]
+% SZS output end Proof for GRP533-1_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.001 s
+% Peak memory usage: 69 MB
+% Instructions burned: 2 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,66 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+1. multiply(X0,multiply(multiply(inverse(multiply(X0,X1)),X2),X1)) = X2 [input(axiom)]
+3. ! [X0,X1] : multiply(X0,multiply(multiply(inverse(multiply(X0,X1)),inverse(X1)),X1)) = inverse(X1) [input(assumption)]
+6. ! [X0,X1,X2] : multiply(X0,multiply(multiply(inverse(multiply(X0,inverse(X1))),X2),inverse(X1))) = X2 [input(assumption)]
+7. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) | a2 != multiply(multiply(inverse(b2),b2),a2) | multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) | multiply(a4,b4) != multiply(b4,a4) [input(negated conjecture)]
+9. inverse(X1) = multiply(X0,multiply(multiply(inverse(multiply(X0,X1)),inverse(X1)),X1)) [cnf transformation 3]
+12. multiply(X0,multiply(multiply(inverse(multiply(X0,inverse(X1))),X2),inverse(X1))) = X2 [cnf transformation 6]
+14. 1 <=> multiply(a4,b4) = multiply(b4,a4) [avatar definition]
+16. multiply(a4,b4) != multiply(b4,a4) <- (~1) [avatar component clause 14]
+18. 2 <=> multiply(multiply(a3,b3),c3) = multiply(a3,multiply(b3,c3)) [avatar definition]
+20. multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) <- (~2) [avatar component clause 18]
+22. 3 <=> a2 = multiply(multiply(inverse(b2),b2),a2) [avatar definition]
+24. a2 != multiply(multiply(inverse(b2),b2),a2) <- (~3) [avatar component clause 22]
+26. 4 <=> multiply(inverse(a1),a1) = multiply(inverse(b1),b1) [avatar definition]
+28. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) <- (~4) [avatar component clause 26]
+29. ~1 | ~2 | ~3 | ~4 [avatar split clause 7,26,22,18,14]
+34. multiply(X1,multiply(multiply(inverse(X0),X3),multiply(multiply(inverse(multiply(X1,X2)),X0),X2))) = X3 [superposition 1,1]
+37. multiply(multiply(inverse(multiply(inverse(multiply(X1,X2)),X3)),X0),X3) = multiply(X1,multiply(X0,X2)) [superposition 1,1]
+160. multiply(multiply(inverse(X0),X1),X0) = X1 [superposition 34,12]
+162. multiply(multiply(inverse(inverse(X0)),X1),inverse(X0)) = X1 [superposition 34,9]
+194. multiply(X0,X1) = multiply(multiply(inverse(multiply(inverse(X1),X2)),X0),X2) [superposition 160,1]
+200. multiply(X0,X1) = multiply(multiply(inverse(X2),X0),multiply(multiply(inverse(multiply(inverse(X1),X3)),X2),X3)) [superposition 160,34]
+219. multiply(multiply(inverse(multiply(inverse(X0),X2)),X3),X2) = multiply(multiply(inverse(X1),X0),multiply(X3,X1)) [superposition 37,160]
+226. multiply(X1,multiply(X3,X2)) = multiply(multiply(inverse(inverse(X0)),X3),multiply(multiply(inverse(multiply(inverse(multiply(X1,X2)),X0)),inverse(X0)),X0)) [superposition 37,9]
+245. multiply(inverse(multiply(X0,X2)),multiply(X0,multiply(X1,X2))) = X1 [superposition 12,37]
+272. multiply(X1,multiply(X3,X2)) = multiply(X3,multiply(X1,X2)) [forward demodulation 226,200]
+279. multiply(X3,X0) = multiply(multiply(inverse(X1),X0),multiply(X3,X1)) [forward demodulation 219,194]
+498. multiply(inverse(X0),multiply(multiply(inverse(inverse(X1)),X0),multiply(X2,inverse(X1)))) = X2 [superposition 245,162]
+581. multiply(inverse(X0),multiply(X2,X0)) = X2 [forward demodulation 498,279]
+664. multiply(X0,multiply(inverse(X1),X1)) = X0 [superposition 272,581]
+868. multiply(X1,X0) = multiply(X0,multiply(X1,multiply(inverse(X2),X2))) [superposition 272,664]
+896. multiply(inverse(X0),X0) = multiply(inverse(X1),X1) [superposition 160,664]
+923. multiply(X0,X1) = multiply(X1,X0) [forward demodulation 868,664]
+1239. multiply(a4,b4) != multiply(a4,b4) <- (~1) [superposition 16,923]
+1256. multiply(X2,multiply(X0,X1)) = multiply(X1,multiply(X2,X0)) [superposition 272,923]
+1302. $false <- (~1) [trivial inequality removal 1239]
+1303. 1 [avatar contradiction clause 1302]
+1496. multiply(a3,multiply(b3,c3)) != multiply(c3,multiply(a3,b3)) <- (~2) [forward demodulation 20,923]
+1497. $false <- (~2) [forward subsumption resolution 1496,1256]
+1498. 2 [avatar contradiction clause 1497]
+1500. a2 != multiply(a2,multiply(inverse(b2),b2)) <- (~3) [forward demodulation 24,923]
+1501. $false <- (~3) [forward subsumption resolution 1500,664]
+1502. 3 [avatar contradiction clause 1501]
+1504. $false <- (~4) [forward subsumption resolution 28,896]
+1505. 4 [avatar contradiction clause 1504]
+s1. ~4 | ~3 | ~2 | ~1 [sat_conversion 29]
+s3. 1 [sat_conversion 1303]
+s4. 2 [sat_conversion 1498]
+s5. 3 [sat_conversion 1502]
+s6. 4 [sat_conversion 1505]
+s7. # [rat s1,s3,s4,s5,s6]
+1506. $false [avatar sat refutation s7]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.027 s
+% Peak memory usage: 67 MB
+% Instructions burned: 66 (million)
+% ------------------------------
+% ------------------------------

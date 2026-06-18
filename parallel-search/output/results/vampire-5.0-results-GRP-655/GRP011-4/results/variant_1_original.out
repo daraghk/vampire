@@ -1,0 +1,23 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+5. multiply(b,c) = multiply(d,c) [input(assumption)]
+6. b != d [input(negated conjecture)]
+8. ! [X0,X1,X2] : (multiply(X0,X2) = multiply(X1,X2) => X0 = X1) [input(assumption)]
+12. ! [X0,X1,X2] : (X0 = X1 | multiply(X1,X2) != multiply(X0,X2)) [ennf transformation 8]
+16. multiply(X1,X2) != multiply(X0,X2) | X0 = X1 [cnf transformation 12]
+42. multiply(b,c) != multiply(X0,c) | d = X0 [superposition 16,5]
+158. b = d [equality resolution 42]
+159. $false [forward subsumption resolution 158,6]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.003 s
+% Peak memory usage: 62 MB
+% Instructions burned: 6 (million)
+% ------------------------------
+% ------------------------------

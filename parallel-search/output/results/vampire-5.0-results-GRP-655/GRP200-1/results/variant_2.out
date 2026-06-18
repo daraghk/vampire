@@ -1,0 +1,64 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2
+% SZS output start Proof for variant_2
+1. multiply(identity,X0) = X0 [input(axiom)]
+2. multiply(X0,identity) = X0 [input(axiom)]
+3. multiply(X0,left_division(X0,X1)) = X1 [input(axiom)]
+4. left_division(X0,multiply(X0,X1)) = X1 [input(axiom)]
+6. right_division(multiply(X0,X1),X1) = X0 [input(axiom)]
+7. identity = multiply(X0,right_inverse(X0)) [input(axiom)]
+8. identity = multiply(left_inverse(X0),X0) [input(axiom)]
+9. multiply(multiply(X0,multiply(X1,X2)),X0) = multiply(multiply(X0,X1),multiply(X2,X0)) [input(axiom)]
+12. ! [X0] : left_division(X0,X0) = identity [input(assumption)]
+15. multiply(multiply(multiply(a,b),c),b) != multiply(a,multiply(b,multiply(c,b))) [input(negated conjecture)]
+18. identity = left_division(X0,X0) [cnf transformation 12]
+37. right_inverse(X0) = left_division(X0,identity) [superposition 4,7]
+58. right_division(identity,right_inverse(X0)) = X0 [superposition 6,7]
+60. right_division(X0,left_division(X1,X0)) = X1 [superposition 6,3]
+62. left_inverse(X0) = right_division(identity,X0) [superposition 6,8]
+65. left_inverse(right_inverse(X0)) = X0 [forward demodulation 58,62]
+72. multiply(multiply(X1,X0),X1) = multiply(multiply(X1,X2),multiply(left_division(X2,X0),X1)) [superposition 9,3]
+73. multiply(multiply(X1,X0),X1) = multiply(multiply(X1,identity),multiply(X0,X1)) [superposition 9,1]
+80. multiply(multiply(left_inverse(multiply(X0,X1)),X0),multiply(X1,left_inverse(multiply(X0,X1)))) = multiply(identity,left_inverse(multiply(X0,X1))) [superposition 9,8]
+82. multiply(X0,multiply(X1,X2)) = right_division(multiply(multiply(X0,X1),multiply(X2,X0)),X0) [superposition 6,9]
+87. left_inverse(multiply(X0,X1)) = multiply(multiply(left_inverse(multiply(X0,X1)),X0),multiply(X1,left_inverse(multiply(X0,X1)))) [forward demodulation 80,1]
+91. multiply(multiply(X1,X0),X1) = multiply(X1,multiply(X0,X1)) [forward demodulation 73,2]
+125. multiply(identity,X0) = multiply(X0,multiply(right_inverse(X0),X0)) [superposition 91,7]
+146. multiply(X0,multiply(right_inverse(X0),X0)) = X0 [forward demodulation 125,1]
+202. left_division(X0,X0) = multiply(right_inverse(X0),X0) [superposition 4,146]
+205. identity = multiply(right_inverse(X0),X0) [forward demodulation 202,18]
+267. left_division(right_inverse(X0),identity) = X0 [superposition 4,205]
+273. right_inverse(right_inverse(X0)) = X0 [forward demodulation 267,37]
+307. multiply(left_division(X2,X1),X0) = left_division(multiply(X0,X2),multiply(multiply(X0,X1),X0)) [superposition 4,72]
+318. multiply(left_division(X2,X1),X0) = left_division(multiply(X0,X2),multiply(X0,multiply(X1,X0))) [forward demodulation 307,91]
+372. right_inverse(X0) = left_inverse(X0) [superposition 65,273]
+494. right_division(multiply(identity,multiply(X1,X0)),X0) = multiply(X0,multiply(right_inverse(X0),X1)) [superposition 82,7]
+557. right_division(multiply(X1,X0),X0) = multiply(X0,multiply(right_inverse(X0),X1)) [forward demodulation 494,1]
+576. multiply(X0,multiply(right_inverse(X0),X1)) = X1 [forward demodulation 557,6]
+1058. multiply(X1,X0) = left_division(right_inverse(X1),X0) [superposition 576,3]
+1064. left_division(X1,X0) = multiply(right_inverse(X1),X0) [superposition 4,576]
+1825. right_inverse(X0) = right_division(X1,multiply(X0,X1)) [superposition 60,1058]
+3111. right_inverse(multiply(left_inverse(multiply(X0,X1)),X0)) = right_division(multiply(X1,left_inverse(multiply(X0,X1))),left_inverse(multiply(X0,X1))) [superposition 1825,87]
+3141. right_inverse(multiply(left_inverse(multiply(X0,X1)),X0)) = X1 [forward demodulation 3111,6]
+3154. right_inverse(multiply(right_inverse(multiply(X0,X1)),X0)) = X1 [forward demodulation 3141,372]
+3159. right_inverse(left_division(multiply(X0,X1),X0)) = X1 [forward demodulation 3154,1064]
+3424. multiply(X1,left_inverse(multiply(X0,X1))) = right_inverse(left_division(left_inverse(multiply(X0,X1)),multiply(left_inverse(multiply(X0,X1)),X0))) [superposition 3159,87]
+3462. right_inverse(X0) = multiply(X1,left_inverse(multiply(X0,X1))) [forward demodulation 3424,4]
+3479. right_inverse(X0) = multiply(X1,right_inverse(multiply(X0,X1))) [forward demodulation 3462,372]
+12212. multiply(left_division(right_inverse(multiply(X0,X1)),X2),X1) = left_division(right_inverse(X0),multiply(X1,multiply(X2,X1))) [superposition 318,3479]
+12428. multiply(left_division(right_inverse(multiply(X0,X1)),X2),X1) = multiply(X0,multiply(X1,multiply(X2,X1))) [forward demodulation 12212,1058]
+12524. multiply(multiply(multiply(X0,X1),X2),X1) = multiply(X0,multiply(X1,multiply(X2,X1))) [forward demodulation 12428,1058]
+445822. multiply(a,multiply(b,multiply(c,b))) != multiply(a,multiply(b,multiply(c,b))) [superposition 15,12524]
+445862. $false [trivial inequality removal 445822]
+% SZS output end Proof for variant_2
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 7.336 s
+% Peak memory usage: 181 MB
+% Instructions burned: 24136 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,41 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0
+% SZS output start Proof for variant_0
+2. ~product(X2,X3,X5) | ~product(X1,X3,X4) | ~product(X0,X1,X2) | product(X0,X4,X5) [input(axiom)]
+3. ~product(X1,X3,X4) | ~product(X0,X1,X2) | ~product(X0,X4,X5) | product(X2,X3,X5) [input(axiom)]
+4. product(X0,inverse(X0),identity) [input(assumption)]
+5. product(X0,identity,X0) [input(assumption)]
+10. ! [X0,X1] : ? [X2] : product(X0,X1,X2) [input(assumption)]
+11. ~product(X0,a,identity) [input(negated conjecture)]
+14. ! [X0,X1] : (? [X2] : product(X0,X1,X2) => product(X0,X1,sK0(X0,X1))) [skolem symbol introduction]
+15. ! [X0,X1] : product(X0,X1,sK0(X0,X1)) [skolemisation 10,14]
+21. product(X0,X1,sK0(X0,X1)) [cnf transformation 15]
+42. ~product(X0,inverse(X1),X2) | ~product(X3,X0,X1) | product(X3,X2,identity) [resolution 2,4]
+43. ~product(X2,X0,X3) | ~product(X0,identity,X1) | product(X2,X1,X3) [resolution 2,5]
+49. ~product(X0,sK0(X1,X3),X4) | ~product(X0,X1,X2) | product(X2,X3,X4) [resolution 3,21]
+54. ~product(X0,identity,X3) | ~product(X0,X1,X2) | product(X2,inverse(X1),X3) [resolution 3,4]
+55. ~product(X0,X1,X3) | ~product(X0,X1,X2) | product(X2,identity,X3) [resolution 3,5]
+79. ~product(identity,identity,X0) | product(X1,X0,X1) [resolution 43,5]
+94. ~product(X0,identity,X1) | product(X1,identity,X0) [resolution 55,5]
+103. ~product(X0,X1,X1) | product(X0,identity,identity) [resolution 42,4]
+113. product(X2,inverse(X1),X0) | ~product(X0,X1,X2) [resolution 54,5]
+354. ~product(inverse(X0),X0,X1) | product(X1,identity,identity) [resolution 113,103]
+401. product(sK0(inverse(X0),X0),identity,identity) [resolution 354,21]
+627. product(identity,identity,sK0(inverse(X0),X0)) [resolution 401,94]
+724. product(X0,sK0(inverse(X1),X1),X0) [resolution 627,79]
+864. ~product(X0,inverse(X1),X2) | product(X2,X1,X0) [resolution 724,49]
+4976. product(identity,X0,X0) [resolution 864,4]
+5085. product(inverse(X0),X0,identity) [resolution 4976,864]
+5265. $false [resolution 5085,11]
+% SZS output end Proof for variant_0
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.078 s
+% Peak memory usage: 61 MB
+% Instructions burned: 368 (million)
+% ------------------------------
+% ------------------------------

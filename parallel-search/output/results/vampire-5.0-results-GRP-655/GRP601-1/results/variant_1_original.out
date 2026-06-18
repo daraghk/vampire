@@ -1,0 +1,51 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+1. inverse(double_divide(inverse(double_divide(X0,inverse(double_divide(X1,double_divide(X0,X2))))),X2)) = X1 [input(axiom)]
+2. multiply(X0,X1) = inverse(double_divide(X1,X0)) [input(axiom)]
+3. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) [input(negated conjecture)]
+4. ! [X0] : inverse(inverse(X0)) = X0 [input(assumption)]
+5. ! [X0,X1] : inverse(double_divide(X0,X1)) = double_divide(inverse(X0),inverse(X1)) [input(assumption)]
+6. ! [X0,X1] : double_divide(X0,X1) = double_divide(X1,X0) [input(assumption)]
+7. inverse(inverse(X0)) = X0 [cnf transformation 4]
+8. inverse(double_divide(X0,X1)) = double_divide(inverse(X0),inverse(X1)) [cnf transformation 5]
+9. double_divide(X1,X0) = double_divide(X0,X1) [cnf transformation 6]
+10. inverse(double_divide(a1,inverse(a1))) != inverse(double_divide(b1,inverse(b1))) [definition unfolding 3,2,2]
+11. inverse(double_divide(X2,inverse(double_divide(X0,inverse(double_divide(X1,double_divide(X0,X2))))))) = X1 [forward demodulation 1,9]
+12. inverse(double_divide(inverse(X0),X1)) = double_divide(X0,inverse(X1)) [superposition 8,7]
+13. inverse(double_divide(X1,inverse(X0))) = double_divide(inverse(X1),X0) [superposition 8,7]
+17. inverse(double_divide(X0,X1)) = double_divide(inverse(X1),inverse(X0)) [superposition 9,8]
+23. inverse(double_divide(X2,double_divide(inverse(X0),X1))) = double_divide(inverse(X2),double_divide(X0,inverse(X1))) [superposition 8,12]
+41. inverse(X0) = double_divide(X1,inverse(double_divide(X2,inverse(double_divide(X0,double_divide(X2,X1)))))) [superposition 7,11]
+42. inverse(X0) = double_divide(X1,double_divide(inverse(X2),double_divide(X0,double_divide(X2,X1)))) [forward demodulation 41,13]
+80. inverse(double_divide(a1,inverse(a1))) != double_divide(inverse(b1),b1) [superposition 10,13]
+91. inverse(double_divide(a1,inverse(a1))) != double_divide(b1,inverse(b1)) [forward demodulation 80,9]
+97. double_divide(b1,inverse(b1)) != double_divide(inverse(a1),a1) [forward demodulation 91,13]
+100. double_divide(a1,inverse(a1)) != double_divide(b1,inverse(b1)) [forward demodulation 97,9]
+152. inverse(inverse(X1)) = double_divide(double_divide(X1,inverse(X0)),inverse(X0)) [superposition 42,42]
+159. inverse(inverse(X1)) = double_divide(inverse(X0),double_divide(X1,inverse(X0))) [forward demodulation 152,9]
+168. inverse(inverse(X1)) = inverse(double_divide(X0,double_divide(inverse(X1),X0))) [forward demodulation 159,23]
+176. inverse(double_divide(X0,double_divide(inverse(X1),X0))) = X1 [forward demodulation 168,7]
+307. inverse(double_divide(inverse(X0),inverse(double_divide(X0,X1)))) = X1 [superposition 176,17]
+308. inverse(double_divide(inverse(X1),inverse(double_divide(X0,X1)))) = X0 [superposition 176,8]
+328. double_divide(inverse(inverse(X1)),double_divide(X0,X1)) = X0 [forward demodulation 308,13]
+329. double_divide(inverse(inverse(X0)),double_divide(X0,X1)) = X1 [forward demodulation 307,13]
+339. double_divide(X1,double_divide(X0,X1)) = X0 [forward demodulation 328,7]
+340. double_divide(X0,double_divide(X0,X1)) = X1 [forward demodulation 329,7]
+419. inverse(X1) = double_divide(X1,double_divide(inverse(X0),X0)) [superposition 42,339]
+436. inverse(X1) = double_divide(X1,double_divide(X0,inverse(X0))) [forward demodulation 419,9]
+1564. double_divide(X0,inverse(X0)) = double_divide(X1,inverse(X1)) [superposition 340,436]
+2813. double_divide(a1,inverse(a1)) != double_divide(X0,inverse(X0)) [superposition 100,1564]
+2816. $false [forward subsumption resolution 2813,1564]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.035 s
+% Peak memory usage: 60 MB
+% Instructions burned: 89 (million)
+% ------------------------------
+% ------------------------------

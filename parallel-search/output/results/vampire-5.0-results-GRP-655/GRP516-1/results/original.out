@@ -1,0 +1,32 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP516-1
+% SZS output start Proof for GRP516-1
+1. multiply(X0,multiply(multiply(X1,X2),inverse(multiply(X0,X2)))) = X1 [input(axiom)]
+2. multiply(a,b) != multiply(b,a) [input(negated conjecture)]
+3. multiply(X1,multiply(X0,inverse(multiply(X1,multiply(multiply(X0,X3),inverse(multiply(X2,X3))))))) = X2 [superposition 1,1]
+4. multiply(X1,multiply(multiply(X2,multiply(multiply(X0,X3),inverse(multiply(X1,X3)))),inverse(X0))) = X2 [superposition 1,1]
+9. multiply(X1,multiply(X0,inverse(X0))) = X1 [superposition 3,1]
+24. multiply(X0,multiply(X1,inverse(X0))) = X1 [superposition 3,9]
+63. multiply(X2,X1) = multiply(X2,multiply(multiply(X0,X1),inverse(X0))) [superposition 4,24]
+64. multiply(multiply(X2,X1),multiply(X0,inverse(multiply(X0,X1)))) = X2 [superposition 3,24]
+267. multiply(multiply(X1,multiply(X2,inverse(multiply(X2,X3)))),multiply(multiply(X0,X3),inverse(X0))) = X1 [superposition 64,64]
+272. multiply(X2,X1) = multiply(multiply(X0,X1),multiply(X2,inverse(X0))) [superposition 3,64]
+289. multiply(multiply(X1,multiply(X2,inverse(multiply(X2,X3)))),X3) = X1 [forward demodulation 267,63]
+465. multiply(multiply(X0,X1),X2) = multiply(multiply(X0,X2),X1) [superposition 63,272]
+1753. multiply(multiply(X1,inverse(X1)),X0) = X0 [superposition 4,289]
+2611. multiply(X0,X2) = multiply(multiply(multiply(X1,inverse(X1)),X2),X0) [superposition 465,1753]
+2708. multiply(X0,X2) = multiply(X2,X0) [forward demodulation 2611,1753]
+3736. multiply(a,b) != multiply(a,b) [superposition 2,2708]
+3820. $false [trivial inequality removal 3736]
+% SZS output end Proof for GRP516-1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.046 s
+% Peak memory usage: 59 MB
+% Instructions burned: 174 (million)
+% ------------------------------
+% ------------------------------

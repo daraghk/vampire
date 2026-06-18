@@ -1,0 +1,47 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP715-11_clausified
+% SZS output start Proof for GRP715-11_clausified
+6. mult(mult(mult(X0,X1),X2),X1) = mult(X0,mult(mult(X1,X2),X1)) [input(axiom)]
+7. mult(X0,mult(X1,X1)) = mult(mult(X0,X1),X1) [input(axiom)]
+8. mult(X0,unit) = X0 [input(axiom)]
+9. mult(unit,X0) = X0 [input(axiom)]
+10. unit = mult(op_a,op_b) [input(axiom)]
+11. unit = mult(op_b,op_a) [input(axiom)]
+12. x0 != mult(mult(x0,op_b),op_a) [input(negated conjecture)]
+45. mult(op_b,mult(op_a,op_a)) = mult(unit,op_a) [superposition 7,11]
+48. op_a = mult(op_b,mult(op_a,op_a)) [forward demodulation 45,9]
+82. mult(op_a,mult(mult(op_b,X0),op_b)) = mult(mult(unit,X0),op_b) [superposition 6,10]
+87. mult(mult(X0,X1),mult(mult(X2,X1),X2)) = mult(mult(X0,mult(mult(X1,X2),X1)),X2) [superposition 6,6]
+103. mult(op_a,mult(mult(op_b,X0),op_b)) = mult(X0,op_b) [forward demodulation 82,9]
+780. mult(mult(op_a,op_a),op_b) = mult(op_a,mult(op_a,op_b)) [superposition 103,48]
+800. mult(op_a,unit) = mult(mult(op_a,op_a),op_b) [forward demodulation 780,10]
+803. op_a = mult(mult(op_a,op_a),op_b) [forward demodulation 800,8]
+2130. mult(mult(X0,mult(op_a,op_a)),mult(mult(op_b,mult(op_a,op_a)),op_b)) = mult(mult(X0,mult(op_a,mult(op_a,op_a))),op_b) [superposition 87,803]
+2138. mult(mult(X0,op_b),mult(mult(mult(op_a,op_a),op_b),mult(op_a,op_a))) = mult(mult(X0,mult(op_a,op_b)),mult(op_a,op_a)) [superposition 87,48]
+2217. mult(mult(X0,op_b),mult(mult(mult(op_a,op_a),op_b),mult(op_a,op_a))) = mult(mult(X0,unit),mult(op_a,op_a)) [forward demodulation 2138,10]
+2223. mult(mult(X0,mult(op_a,mult(op_a,op_a))),op_b) = mult(mult(X0,mult(op_a,op_a)),mult(op_a,op_b)) [forward demodulation 2130,48]
+2239. mult(X0,mult(op_a,op_a)) = mult(mult(X0,op_b),mult(mult(mult(op_a,op_a),op_b),mult(op_a,op_a))) [forward demodulation 2217,8]
+2244. mult(mult(X0,mult(op_a,mult(op_a,op_a))),op_b) = mult(mult(X0,mult(op_a,op_a)),unit) [forward demodulation 2223,10]
+2256. mult(X0,mult(op_a,op_a)) = mult(mult(X0,op_b),mult(op_a,mult(op_a,op_a))) [forward demodulation 2239,803]
+2258. mult(X0,mult(op_a,op_a)) = mult(mult(X0,mult(op_a,mult(op_a,op_a))),op_b) [forward demodulation 2244,8]
+63141. mult(mult(X0,mult(op_a,op_a)),op_b) = mult(X0,mult(mult(op_b,mult(op_a,mult(op_a,op_a))),op_b)) [superposition 6,2256]
+63200. mult(mult(X0,mult(op_a,op_a)),op_b) = mult(X0,mult(op_b,mult(op_a,op_a))) [forward demodulation 63141,2258]
+63242. mult(X0,op_a) = mult(mult(X0,mult(op_a,op_a)),op_b) [forward demodulation 63200,48]
+63639. mult(mult(X0,op_b),op_a) = mult(X0,mult(mult(op_b,mult(op_a,op_a)),op_b)) [superposition 6,63242]
+63715. mult(mult(X0,op_b),op_a) = mult(X0,mult(op_b,op_a)) [forward demodulation 63639,63242]
+63753. mult(X0,unit) = mult(mult(X0,op_b),op_a) [forward demodulation 63715,11]
+63781. mult(mult(X0,op_b),op_a) = X0 [forward demodulation 63753,8]
+64112. x0 != x0 [superposition 12,63781]
+64163. $false [trivial inequality removal 64112]
+% SZS output end Proof for GRP715-11_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.690 s
+% Peak memory usage: 68 MB
+% Instructions burned: 2903 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,46 @@
+{
+  "problem": "2026-01-29_13-05-18_GRP742-1",
+  "timestamp": "2026-01-29T13:07:13.586962",
+  "configuration": {
+    "timeout": 60,
+    "vampire_binary": "../build/vampire",
+    "total_variants": 4,
+    "variants_with_seeds": 2
+  },
+  "results": [
+    {
+      "name": "original",
+      "status": "TIMEOUT",
+      "time": 60.06534218788147,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_13-05-18_GRP742-1/results/original.out"
+    },
+    {
+      "name": "original_clausified",
+      "status": "TIMEOUT",
+      "time": 60.06704115867615,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_13-05-18_GRP742-1/results/original_clausified.out"
+    },
+    {
+      "name": "variant_1",
+      "status": "TIMEOUT",
+      "time": 60.06482219696045,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_13-05-18_GRP742-1/results/variant_1.out"
+    },
+    {
+      "name": "variant_1_original",
+      "status": "TIMEOUT",
+      "time": 60.0651319026947,
+      "exit_code": 1,
+      "output_file": "output/2026-01-29_13-05-18_GRP742-1/results/variant_1_original.out"
+    }
+  ],
+  "statistics": {
+    "total_runs": 4,
+    "proved": 0,
+    "timeout": 4,
+    "unknown": 0
+  }
+}

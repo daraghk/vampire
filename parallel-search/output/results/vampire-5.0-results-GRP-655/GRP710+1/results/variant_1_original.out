@@ -1,0 +1,69 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Theorem for variant_1_original
+% SZS output start Proof for variant_1_original
+1. ! [X0] : mult(X0,unit) = X0 [input(axiom)]
+2. ! [X0] : mult(unit,X0) = X0 [input(axiom)]
+3. ! [X0,X1,X2] : mult(X2,mult(X1,mult(X1,X0))) = mult(mult(mult(X2,X1),X1),X0) [input(axiom)]
+5. ! [X0] : mult(i(X0),X0) = unit [input(axiom)]
+6. ! [X0,X1] : ? [X2] : mult(X0,X2) = X1 & ! [X3,X4] : ? [X5] : mult(X5,X4) = X3 [input(conjecture)]
+7. ~(! [X0,X1] : ? [X2] : mult(X0,X2) = X1 & ! [X3,X4] : ? [X5] : mult(X5,X4) = X3) [negated conjecture 6]
+8. ! [X0,X1] : mult(X0,mult(X0,X1)) = mult(mult(X0,X0),X1) [input(assumption)]
+9. ! [X0,X1] : mult(X0,mult(X1,X1)) = mult(mult(X0,X1),X1) [input(assumption)]
+12. ! [X0,X1] : mult(mult(X0,i(X0)),X1) = X1 [input(assumption)]
+13. ? [X0,X1] : ! [X2] : mult(X0,X2) != X1 | ? [X3,X4] : ! [X5] : mult(X5,X4) != X3 [ennf transformation 7]
+14. ? [X0,X1] : ! [X2] : mult(X0,X2) != X1 => ! [X2] : sK1 != mult(sK0,X2) [skolem symbol introduction]
+15. ? [X3,X4] : ! [X5] : mult(X5,X4) != X3 => ! [X5] : sK2 != mult(X5,sK3) [skolem symbol introduction]
+16. ! [X2] : sK1 != mult(sK0,X2) | ! [X5] : sK2 != mult(X5,sK3) [skolemisation 13,15,14]
+17. mult(X0,unit) = X0 [cnf transformation 1]
+18. mult(unit,X0) = X0 [cnf transformation 2]
+19. mult(X2,mult(X1,mult(X1,X0))) = mult(mult(mult(X2,X1),X1),X0) [cnf transformation 3]
+21. unit = mult(i(X0),X0) [cnf transformation 5]
+22. sK1 != mult(sK0,X2) | sK2 != mult(X5,sK3) [cnf transformation 16]
+23. mult(X0,mult(X0,X1)) = mult(mult(X0,X0),X1) [cnf transformation 8]
+24. mult(X0,mult(X1,X1)) = mult(mult(X0,X1),X1) [cnf transformation 9]
+27. mult(mult(X0,i(X0)),X1) = X1 [cnf transformation 12]
+29. 1 <=> ! [X5] : sK2 != mult(X5,sK3) [avatar definition]
+30. sK2 != mult(X5,sK3) <- (1) [avatar component clause 29]
+32. 2 <=> ! [X2] : sK1 != mult(sK0,X2) [avatar definition]
+33. sK1 != mult(sK0,X2) <- (2) [avatar component clause 32]
+34. 1 | 2 [avatar split clause 22,32,29]
+35. mult(X2,mult(X1,mult(X1,X0))) = mult(mult(X2,mult(X1,X1)),X0) [forward demodulation 19,24]
+82. mult(unit,X0) = mult(i(X0),mult(X0,X0)) [superposition 24,21]
+85. i(X0) = mult(X0,mult(i(X0),i(X0))) [superposition 27,24]
+87. mult(i(X0),mult(X0,X0)) = X0 [forward demodulation 82,18]
+112. mult(unit,X1) = mult(i(mult(X0,X0)),mult(X0,mult(X0,X1))) [superposition 35,21]
+130. mult(i(mult(X0,X0)),mult(X0,mult(X0,X1))) = X1 [forward demodulation 112,18]
+210. mult(i(X0),X1) = mult(X0,mult(i(X0),mult(i(X0),X1))) [superposition 35,85]
+240. mult(X0,X0) = mult(i(mult(i(X0),i(X0))),mult(i(X0),X0)) [superposition 130,87]
+252. mult(X0,X0) = mult(i(mult(i(X0),i(X0))),unit) [forward demodulation 240,21]
+270. mult(X0,X0) = i(mult(i(X0),i(X0))) [forward demodulation 252,17]
+401. mult(mult(X0,X0),mult(i(X0),mult(i(X0),X1))) = X1 [superposition 130,270]
+415. mult(X0,mult(X0,mult(i(X0),mult(i(X0),X1)))) = X1 [forward demodulation 401,23]
+424. mult(X0,mult(i(X0),X1)) = X1 [forward demodulation 415,210]
+526. sK1 != X0 <- (2) [superposition 33,424]
+623. $false <- (2) [equality resolution 526]
+624. ~2 [avatar contradiction clause 623]
+627. sK2 != mult(X0,mult(sK3,sK3)) <- (1) [superposition 30,24]
+655. sK2 != mult(X0,mult(X1,mult(X1,mult(sK3,sK3)))) <- (1) [superposition 627,35]
+3149. sK2 != mult(X0,mult(i(sK3),sK3)) <- (1) [superposition 655,87]
+3191. mult(X0,unit) != sK2 <- (1) [forward demodulation 3149,21]
+3205. sK2 != X0 <- (1) [forward demodulation 3191,17]
+3210. $false <- (1) [equality resolution 3205]
+3211. ~1 [avatar contradiction clause 3210]
+s1. 1 | 2 [sat_conversion 34]
+s2. ~2 [sat_conversion 624]
+s3. ~1 [sat_conversion 3211]
+s4. # [rat s1,s2,s3]
+3212. $false [avatar sat refutation s4]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.048 s
+% Peak memory usage: 65 MB
+% Instructions burned: 176 (million)
+% ------------------------------
+% ------------------------------

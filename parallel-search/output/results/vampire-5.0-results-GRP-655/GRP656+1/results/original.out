@@ -1,0 +1,48 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Theorem for GRP656+1
+% SZS output start Proof for GRP656+1
+1. ! [X0,X1] : mult(X1,ld(X1,X0)) = X0 [input(axiom)]
+2. ! [X0,X1] : ld(X1,mult(X1,X0)) = X0 [input(axiom)]
+3. ! [X0,X1] : mult(rd(X1,X0),X0) = X1 [input(axiom)]
+4. ! [X0,X1] : rd(mult(X1,X0),X0) = X1 [input(axiom)]
+5. ! [X0,X1,X2] : mult(mult(X2,X1),mult(X0,X2)) = mult(mult(X2,mult(X1,X0)),X2) [input(axiom)]
+6. ? [X0] : ! [X1] : (mult(X1,X0) = X1 & mult(X0,X1) = X1) [input(conjecture)]
+7. ~? [X0] : ! [X1] : (mult(X1,X0) = X1 & mult(X0,X1) = X1) [negated conjecture 6]
+8. ! [X0] : ? [X1] : (mult(X1,X0) != X1 | mult(X0,X1) != X1) [ennf transformation 7]
+9. ! [X0] : (? [X1] : (mult(X1,X0) != X1 | mult(X0,X1) != X1) => (sK0(X0) != mult(sK0(X0),X0) | sK0(X0) != mult(X0,sK0(X0)))) [skolem symbol introduction]
+10. ! [X0] : (sK0(X0) != mult(sK0(X0),X0) | sK0(X0) != mult(X0,sK0(X0))) [skolemisation 8,9]
+11. mult(X1,ld(X1,X0)) = X0 [cnf transformation 1]
+12. ld(X1,mult(X1,X0)) = X0 [cnf transformation 2]
+13. mult(rd(X1,X0),X0) = X1 [cnf transformation 3]
+14. rd(mult(X1,X0),X0) = X1 [cnf transformation 4]
+15. mult(mult(X2,X1),mult(X0,X2)) = mult(mult(X2,mult(X1,X0)),X2) [cnf transformation 5]
+16. sK0(X0) != mult(sK0(X0),X0) | sK0(X0) != mult(X0,sK0(X0)) [cnf transformation 10]
+19. mult(mult(X1,X2),mult(ld(X2,X0),X1)) = mult(mult(X1,X0),X1) [superposition 15,11]
+20. mult(mult(X1,X0),X1) = mult(mult(X1,rd(X0,X2)),mult(X2,X1)) [superposition 15,13]
+24. mult(X0,mult(X1,X2)) = rd(mult(mult(X0,X1),mult(X2,X0)),X0) [superposition 14,15]
+25. ld(mult(X0,mult(X1,X2)),mult(mult(X0,X1),mult(X2,X0))) = X0 [superposition 12,15]
+41. mult(ld(X2,X1),X0) = ld(mult(X0,X2),mult(mult(X0,X1),X0)) [superposition 12,19]
+100. ld(mult(X0,mult(rd(X1,X2),X2)),mult(mult(X0,X1),X0)) = X0 [superposition 25,20]
+105. mult(ld(mult(rd(X1,X2),X2),X1),X0) = X0 [forward demodulation 100,41]
+115. mult(ld(X1,X1),X0) = X0 [forward demodulation 105,13]
+121. mult(mult(ld(X1,X1),X2),ld(X1,X1)) = mult(X0,mult(ld(X0,X2),ld(X1,X1))) [superposition 19,115]
+124. rd(mult(mult(X0,X1),X0),X0) = mult(X0,mult(X1,ld(X2,X2))) [superposition 24,115]
+137. mult(X0,X1) = mult(X0,mult(X1,ld(X2,X2))) [forward demodulation 124,14]
+139. mult(X0,mult(ld(X0,X2),ld(X1,X1))) = mult(X2,ld(X1,X1)) [forward demodulation 121,115]
+141. mult(X2,ld(X1,X1)) = mult(X0,ld(X0,X2)) [forward demodulation 139,137]
+143. mult(X2,ld(X1,X1)) = X2 [forward demodulation 141,11]
+419. sK0(ld(X0,X0)) != sK0(ld(X0,X0)) | sK0(ld(X0,X0)) != mult(ld(X0,X0),sK0(ld(X0,X0))) [superposition 16,143]
+420. sK0(ld(X0,X0)) != mult(ld(X0,X0),sK0(ld(X0,X0))) [trivial inequality removal 419]
+421. $false [forward subsumption resolution 420,115]
+% SZS output end Proof for GRP656+1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.008 s
+% Peak memory usage: 61 MB
+% Instructions burned: 29 (million)
+% ------------------------------
+% ------------------------------

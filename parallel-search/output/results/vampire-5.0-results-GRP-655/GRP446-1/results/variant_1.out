@@ -1,0 +1,44 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1
+% SZS output start Proof for variant_1
+1. divide(X0,divide(divide(divide(divide(X0,X0),X1),X2),divide(divide(divide(X0,X0),X0),X2))) = X1 [input(axiom)]
+4. ! [X0,X1] : multiply(X0,X1) = divide(X0,inverse(X1)) [input(assumption)]
+5. ! [X0] : inverse(X0) = divide(divide(X0,X0),X0) [input(assumption)]
+7. ! [X0,X1,X2] : divide(divide(X0,X0),X2) = divide(divide(X1,X1),X2) [input(assumption)]
+8. ! [X0,X1,X2] : multiply(X0,X1) = divide(X0,divide(divide(X2,X2),X1)) [input(assumption)]
+9. a2 != multiply(multiply(inverse(b2),b2),a2) [input(negated conjecture)]
+10. multiply(X0,X1) = divide(X0,inverse(X1)) [cnf transformation 4]
+11. divide(divide(X0,X0),X0) = inverse(X0) [cnf transformation 5]
+13. divide(divide(X0,X0),X2) = divide(divide(X1,X1),X2) [cnf transformation 7]
+14. multiply(X0,X1) = divide(X0,divide(divide(X2,X2),X1)) [cnf transformation 8]
+15. multiply(X0,X1) = divide(X0,divide(divide(X1,X1),X1)) [definition unfolding 10,11]
+19. divide(X0,divide(divide(X2,X2),X1)) = divide(X0,divide(divide(X1,X1),X1)) [definition unfolding 14,15]
+20. a2 != divide(divide(divide(divide(b2,b2),b2),divide(divide(b2,b2),b2)),divide(divide(a2,a2),a2)) [definition unfolding 9,15,15,11]
+26. divide(divide(X2,X2),X3) = divide(divide(divide(X0,X0),divide(X1,X1)),X3) [superposition 13,13]
+32. a2 != divide(divide(X0,X0),divide(divide(a2,a2),a2)) [superposition 20,13]
+38. a2 != divide(divide(X1,X1),divide(divide(X0,X0),a2)) [superposition 32,13]
+97. divide(divide(divide(divide(divide(X1,X1),divide(X1,X1)),X0),X2),divide(divide(divide(divide(X1,X1),divide(X1,X1)),divide(X1,X1)),X2)) = divide(X1,divide(divide(X0,X3),divide(divide(divide(X1,X1),X1),X3))) [superposition 1,1]
+106. divide(divide(divide(X0,X0),X0),divide(divide(divide(divide(divide(divide(X0,X0),X0),divide(divide(X1,X1),X0)),X2),X3),divide(divide(divide(divide(divide(X0,X0),X0),divide(divide(X1,X1),X0)),divide(divide(X0,X0),X0)),X3))) = X2 [superposition 1,19]
+109. divide(divide(divide(X0,X0),X1),divide(divide(divide(divide(divide(divide(X0,X0),X1),divide(divide(X0,X0),X1)),X2),X3),divide(divide(divide(divide(divide(X0,X0),X1),divide(divide(X0,X0),X1)),divide(divide(X1,X1),X1)),X3))) = X2 [superposition 1,19]
+314. a2 != divide(divide(X3,X3),divide(divide(divide(X0,X0),divide(divide(X1,X1),divide(X2,X2))),a2)) [superposition 38,26]
+16703. divide(X1,divide(X0,X0)) = X1 [superposition 1,106]
+17646. divide(divide(divide(X0,X0),divide(X0,X0)),divide(divide(divide(divide(divide(divide(X0,X0),divide(X0,X0)),divide(divide(X0,X0),divide(X0,X0))),X2),divide(divide(divide(divide(X0,X0),divide(X0,X0)),divide(X0,X0)),divide(divide(divide(X0,X0),divide(X0,X0)),divide(X0,X0)))),divide(X0,divide(divide(divide(divide(X0,X0),divide(X0,X0)),X1),divide(divide(divide(X0,X0),X0),X1))))) = X2 [superposition 109,97]
+17887. divide(divide(divide(X0,X0),divide(X0,X0)),divide(divide(divide(divide(divide(divide(X0,X0),divide(X0,X0)),divide(divide(X0,X0),divide(X0,X0))),X2),divide(divide(divide(divide(X0,X0),divide(X0,X0)),divide(X0,X0)),divide(divide(divide(X0,X0),divide(X0,X0)),divide(X0,X0)))),divide(X0,X0))) = X2 [forward demodulation 17646,1]
+18013. divide(divide(divide(X0,X0),divide(X0,X0)),divide(divide(divide(divide(divide(X0,X0),divide(X0,X0)),divide(divide(X0,X0),divide(X0,X0))),X2),divide(divide(divide(divide(X0,X0),divide(X0,X0)),divide(X0,X0)),divide(divide(divide(X0,X0),divide(X0,X0)),divide(X0,X0))))) = X2 [forward demodulation 17887,16703]
+18049. divide(divide(divide(X0,X0),divide(X0,X0)),divide(divide(divide(divide(X0,X0),divide(X0,X0)),divide(divide(X0,X0),divide(X0,X0))),X2)) = X2 [forward demodulation 18013,16703]
+18067. divide(divide(divide(X0,X0),divide(X0,X0)),divide(divide(divide(X0,X0),divide(X0,X0)),X2)) = X2 [forward demodulation 18049,16703]
+18078. divide(divide(X0,X0),divide(divide(X0,X0),X2)) = X2 [forward demodulation 18067,16703]
+27922. a2 != a2 [superposition 314,18078]
+28080. $false [trivial inequality removal 27922]
+% SZS output end Proof for variant_1
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.682 s
+% Peak memory usage: 67 MB
+% Instructions burned: 2793 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,63 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0_original
+% SZS output start Proof for variant_0_original
+1. group_element(e_1) [input(axiom)]
+2. group_element(e_2) [input(axiom)]
+4. ~equalish(e_1,e_2) [input(axiom)]
+6. ~equalish(e_2,e_1) [input(axiom)]
+7. ~equalish(e_2,e_3) [input(axiom)]
+10. product(X0,X1,e_3) | ~group_element(X1) | product(X0,X1,e_1) | product(X0,X1,e_2) | ~group_element(X0) [input(axiom)]
+14. product(X0,X0,X0) [input(axiom)]
+15. ~product(X1,X0,X3) | ~product(X0,X1,X2) | product(X2,X3,X0) [input(negated conjecture)]
+17. ! [X0,X1,X2,X3] : ((product(X0,X1,X2) & product(X0,X1,X3)) => equalish(X2,X3)) [input(assumption)]
+18. ! [X0,X1,X2,X3] : ((product(X0,X1,X2) & product(X3,X1,X2)) => equalish(X0,X3)) [input(assumption)]
+19. ! [X0,X1,X2,X3] : ((product(X0,X1,X2) & product(X0,X3,X2)) => equalish(X1,X3)) [input(assumption)]
+21. ! [X0,X1,X2,X3] : (equalish(X2,X3) | (~product(X0,X1,X2) | ~product(X0,X1,X3))) [ennf transformation 17]
+22. ! [X0,X1,X2,X3] : (equalish(X2,X3) | ~product(X0,X1,X2) | ~product(X0,X1,X3)) [flattening 21]
+23. ! [X0,X1,X2,X3] : (equalish(X0,X3) | (~product(X0,X1,X2) | ~product(X3,X1,X2))) [ennf transformation 18]
+24. ! [X0,X1,X2,X3] : (equalish(X0,X3) | ~product(X0,X1,X2) | ~product(X3,X1,X2)) [flattening 23]
+25. ! [X0,X1,X2,X3] : (equalish(X1,X3) | (~product(X0,X1,X2) | ~product(X0,X3,X2))) [ennf transformation 19]
+26. ! [X0,X1,X2,X3] : (equalish(X1,X3) | ~product(X0,X1,X2) | ~product(X0,X3,X2)) [flattening 25]
+30. ~product(X0,X1,X3) | ~product(X0,X1,X2) | equalish(X2,X3) [cnf transformation 22]
+31. ~product(X3,X1,X2) | ~product(X0,X1,X2) | equalish(X0,X3) [cnf transformation 24]
+32. ~product(X0,X3,X2) | ~product(X0,X1,X2) | equalish(X1,X3) [cnf transformation 26]
+36. ~product(X0,X0,X1) | equalish(X1,X0) [resolution 30,14]
+38. ~product(X0,X1,X1) | equalish(X0,X1) [resolution 31,14]
+40. ~product(X0,X1,X0) | equalish(X1,X0) [resolution 32,14]
+45. ~product(X0,X1,X2) | product(X1,X0,e_1) | product(X1,X0,e_2) | ~group_element(X1) | ~group_element(X0) | product(X2,e_3,X0) [resolution 10,15]
+98. product(X0,X1,e_1) | product(X0,X1,e_2) | ~group_element(X0) | ~group_element(X1) | product(e_3,e_3,X1) | ~group_element(X0) | product(X1,X0,e_1) | product(X1,X0,e_2) | ~group_element(X1) [resolution 45,10]
+103. product(e_3,e_3,X1) | product(X1,X0,e_2) | product(X0,X1,e_2) | ~group_element(X1) | ~group_element(X0) | product(X1,X0,e_1) | product(X0,X1,e_1) [duplicate literal removal 98]
+139. 2 <=> product(e_3,e_3,e_2) [avatar definition]
+141. product(e_3,e_3,e_2) <- (2) [avatar component clause 139]
+303. product(e_3,e_3,e_2) | product(X0,e_2,e_2) | ~group_element(e_2) | ~group_element(X0) | product(e_2,X0,e_1) | product(X0,e_2,e_1) | equalish(X0,e_2) [resolution 103,40]
+335. product(e_3,e_3,e_2) | ~group_element(e_2) | ~group_element(X0) | product(e_2,X0,e_1) | product(X0,e_2,e_1) | equalish(X0,e_2) [forward subsumption resolution 303,38]
+338. product(e_3,e_3,e_2) | ~group_element(X0) | product(e_2,X0,e_1) | product(X0,e_2,e_1) | equalish(X0,e_2) [forward subsumption resolution 335,2]
+340. 8 <=> ! [X0] : (~group_element(X0) | equalish(X0,e_2) | product(X0,e_2,e_1) | product(e_2,X0,e_1)) [avatar definition]
+341. product(e_2,X0,e_1) | product(X0,e_2,e_1) | equalish(X0,e_2) | ~group_element(X0) <- (8) [avatar component clause 340]
+343. 8 | 2 [avatar split clause 338,139,340]
+351. equalish(e_2,e_3) <- (2) [resolution 141,36]
+356. $false <- (2) [forward subsumption resolution 351,7]
+357. ~2 [avatar contradiction clause 356]
+635. product(e_1,e_2,e_1) | equalish(e_1,e_2) | ~group_element(e_1) | equalish(e_2,e_1) <- (8) [resolution 341,38]
+663. equalish(e_1,e_2) | ~group_element(e_1) | equalish(e_2,e_1) <- (8) [forward subsumption resolution 635,40]
+665. ~group_element(e_1) | equalish(e_2,e_1) <- (8) [forward subsumption resolution 663,4]
+667. equalish(e_2,e_1) <- (8) [forward subsumption resolution 665,1]
+668. $false <- (8) [forward subsumption resolution 667,6]
+669. ~8 [avatar contradiction clause 668]
+s10. 2 | 8 [sat_conversion 343]
+s11. ~2 [sat_conversion 357]
+s17. ~8 [sat_conversion 669]
+s18. # [rat s10,s17,s11]
+670. $false [avatar sat refutation s18]
+% SZS output end Proof for variant_0_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.009 s
+% Peak memory usage: 62 MB
+% Instructions burned: 30 (million)
+% ------------------------------
+% ------------------------------

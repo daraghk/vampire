@@ -1,0 +1,61 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2
+% SZS output start Proof for variant_2
+15. group_element(e_1) [input(axiom)]
+16. group_element(e_2) [input(axiom)]
+17. group_element(e_3) [input(axiom)]
+22. ~equalish(e_3,e_1) [input(axiom)]
+23. ~equalish(e_3,e_2) [input(axiom)]
+28. product1(X0,X0,X0) [input(axiom)]
+30. ~product2(X0,X1,X3) | ~product2(X0,X1,X2) | equalish(X2,X3) [input(axiom)]
+31. ~product2(X0,X3,X2) | ~product2(X0,X1,X2) | equalish(X1,X3) [input(axiom)]
+33. product2(X0,X0,X0) [input(axiom)]
+36. ! [X0,X1,X2,X3] : ((product1(X0,X1,X2) & product1(X0,X3,X2)) => equalish(X1,X3)) [input(assumption)]
+38. ! [X0,X1] : ((group_element(X1) & group_element(X0)) => (product1(X0,X1,e_1) | product1(X0,X1,e_2) | product1(X0,X1,e_3))) [input(assumption)]
+39. ~product1(X2,X1,X3) | ~product1(X0,X1,X2) | product2(X3,X0,X1) [input(negated conjecture)]
+42. ! [X0,X1,X2,X3] : (equalish(X1,X3) | (~product1(X0,X1,X2) | ~product1(X0,X3,X2))) [ennf transformation 36]
+43. ! [X0,X1,X2,X3] : (equalish(X1,X3) | ~product1(X0,X1,X2) | ~product1(X0,X3,X2)) [flattening 42]
+46. ! [X0,X1] : ((product1(X0,X1,e_1) | product1(X0,X1,e_2) | product1(X0,X1,e_3)) | (~group_element(X1) | ~group_element(X0))) [ennf transformation 38]
+47. ! [X0,X1] : (product1(X0,X1,e_1) | product1(X0,X1,e_2) | product1(X0,X1,e_3) | ~group_element(X1) | ~group_element(X0)) [flattening 46]
+50. ~product1(X0,X3,X2) | ~product1(X0,X1,X2) | equalish(X1,X3) [cnf transformation 43]
+52. product1(X0,X1,e_3) | product1(X0,X1,e_2) | product1(X0,X1,e_1) | ~group_element(X1) | ~group_element(X0) [cnf transformation 47]
+53. ~product1(X0,X1,X1) | product2(X1,X0,X1) [resolution 28,39]
+58. ~product1(X0,X1,X0) | equalish(X1,X0) [resolution 50,28]
+65. ~product2(X0,X0,X1) | equalish(X1,X0) [resolution 30,33]
+76. product1(X0,e_3,e_2) | product1(X0,e_3,e_1) | ~group_element(e_3) | ~group_element(X0) | product2(e_3,X0,e_3) [resolution 52,53]
+81. product2(e_3,X0,e_3) | product1(X0,e_3,e_1) | ~group_element(X0) | product1(X0,e_3,e_2) [forward subsumption resolution 76,17]
+84. ~product2(e_3,X1,e_3) | ~group_element(X0) | product1(X0,e_3,e_2) | product1(X0,e_3,e_1) | equalish(X1,X0) [resolution 81,31]
+106. product1(X0,e_3,e_2) | ~group_element(X0) | product1(X0,e_3,e_1) | equalish(e_3,X0) [resolution 84,33]
+115. ~group_element(e_2) | product1(e_2,e_3,e_1) | equalish(e_3,e_2) | equalish(e_3,e_2) [resolution 106,58]
+117. ~group_element(e_2) | product1(e_2,e_3,e_1) | equalish(e_3,e_2) [duplicate literal removal 115]
+118. product1(e_2,e_3,e_1) | equalish(e_3,e_2) [forward subsumption resolution 117,16]
+119. product1(e_2,e_3,e_1) [forward subsumption resolution 118,23]
+130. ~product1(X0,e_3,e_2) | product2(e_1,X0,e_3) [resolution 119,39]
+138. 2 <=> product1(e_1,e_3,e_2) [avatar definition]
+139. ~product1(e_1,e_3,e_2) <- (~2) [avatar component clause 138]
+140. product1(e_1,e_3,e_2) <- (2) [avatar component clause 138]
+214. product2(e_1,e_1,e_3) <- (2) [resolution 130,140]
+228. equalish(e_3,e_1) <- (2) [resolution 214,65]
+230. $false <- (2) [forward subsumption resolution 228,22]
+231. ~2 [avatar contradiction clause 230]
+236. ~group_element(e_1) | product1(e_1,e_3,e_1) | equalish(e_3,e_1) <- (~2) [resolution 139,106]
+251. ~group_element(e_1) | equalish(e_3,e_1) <- (~2) [forward subsumption resolution 236,58]
+252. equalish(e_3,e_1) <- (~2) [forward subsumption resolution 251,15]
+253. $false <- (~2) [forward subsumption resolution 252,22]
+254. 2 [avatar contradiction clause 253]
+s4. ~2 [sat_conversion 231]
+s7. 2 [sat_conversion 254]
+s8. # [rat s4,s7]
+255. $false [avatar sat refutation s8]
+% SZS output end Proof for variant_2
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.004 s
+% Peak memory usage: 62 MB
+% Instructions burned: 9 (million)
+% ------------------------------
+% ------------------------------

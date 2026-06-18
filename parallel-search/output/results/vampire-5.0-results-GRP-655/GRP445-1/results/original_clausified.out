@@ -1,0 +1,40 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP445-1_clausified
+% SZS output start Proof for GRP445-1_clausified
+1. divide(X0,divide(divide(divide(divide(X0,X0),X1),X2),divide(divide(divide(X0,X0),X0),X2))) = X1 [input(axiom)]
+2. multiply(X0,X1) = divide(X0,divide(divide(X2,X2),X1)) [input(axiom)]
+3. inverse(X0) = divide(divide(X1,X1),X0) [input(axiom)]
+4. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) [input(negated conjecture)]
+5. multiply(X0,X1) = divide(X0,inverse(X1)) [forward demodulation 2,3]
+6. divide(X0,divide(divide(divide(divide(X0,X0),X1),X2),divide(inverse(X0),X2))) = X1 [forward demodulation 1,3]
+7. divide(X0,divide(divide(inverse(X1),X2),divide(inverse(X0),X2))) = X1 [forward demodulation 6,3]
+8. inverse(X1) = divide(inverse(divide(X0,X0)),X1) [superposition 3,3]
+11. multiply(divide(X0,X0),X1) = inverse(inverse(X1)) [superposition 3,5]
+13. divide(X1,divide(X0,divide(inverse(X1),divide(divide(inverse(X0),X3),divide(inverse(inverse(X2)),X3))))) = X2 [superposition 7,7]
+16. divide(X0,inverse(divide(inverse(X0),inverse(X1)))) = X1 [superposition 7,3]
+21. multiply(X0,divide(inverse(X0),inverse(X1))) = X1 [forward demodulation 16,5]
+26. multiply(X0,multiply(inverse(X0),X1)) = X1 [forward demodulation 21,5]
+27. multiply(inverse(inverse(X1)),X0) = multiply(X1,X0) [superposition 26,26]
+36. inverse(inverse(X0)) = multiply(inverse(divide(X1,X1)),X0) [superposition 5,8]
+55. inverse(inverse(multiply(inverse(divide(X0,X0)),X1))) = X1 [superposition 26,11]
+56. inverse(inverse(inverse(inverse(X1)))) = X1 [forward demodulation 55,36]
+60. multiply(inverse(inverse(inverse(X0))),multiply(X0,X1)) = X1 [superposition 26,56]
+64. multiply(inverse(X0),multiply(X0,X1)) = X1 [forward demodulation 60,27]
+168. divide(X1,divide(X0,X0)) = X1 [superposition 13,7]
+363. divide(X1,inverse(divide(X0,X0))) = X1 [superposition 168,3]
+402. multiply(X1,divide(X0,X0)) = X1 [forward demodulation 363,5]
+563. divide(X1,X1) = multiply(inverse(X0),X0) [superposition 64,402]
+2786. divide(X0,X0) != multiply(inverse(a1),a1) [superposition 4,563]
+2796. $false [forward subsumption resolution 2786,563]
+% SZS output end Proof for GRP445-1_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.024 s
+% Peak memory usage: 58 MB
+% Instructions burned: 82 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,41 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for GRP616-1_clausified
+% SZS output start Proof for GRP616-1_clausified
+1. double_divide(inverse(double_divide(inverse(double_divide(X0,inverse(X1))),X2)),double_divide(X0,X2)) = X1 [input(axiom)]
+2. inverse(double_divide(b,a)) != inverse(double_divide(a,b)) [input(negated conjecture)]
+3. double_divide(inverse(X0),double_divide(inverse(double_divide(X1,inverse(X0))),double_divide(X1,inverse(X2)))) = X2 [superposition 1,1]
+4. double_divide(inverse(double_divide(inverse(double_divide(inverse(double_divide(inverse(double_divide(X1,inverse(X0))),X2)),inverse(X3))),double_divide(X1,X2))),X0) = X3 [superposition 1,1]
+10. double_divide(inverse(double_divide(inverse(X0),double_divide(inverse(double_divide(inverse(double_divide(X1,inverse(inverse(X2)))),X3)),double_divide(X1,X3)))),X0) = X2 [superposition 4,4]
+16. double_divide(inverse(double_divide(inverse(X0),X4)),double_divide(inverse(double_divide(inverse(double_divide(inverse(double_divide(inverse(double_divide(X1,inverse(inverse(X2)))),X3)),inverse(X0))),double_divide(X1,X3))),X4)) = X2 [superposition 1,4]
+18. double_divide(inverse(double_divide(inverse(X0),inverse(X2))),X0) = X2 [forward demodulation 10,1]
+22. double_divide(inverse(X0),double_divide(inverse(X1),X1)) = X0 [superposition 1,18]
+48. double_divide(inverse(double_divide(inverse(X0),X0)),inverse(X1)) = X1 [superposition 18,22]
+91. double_divide(inverse(X1),double_divide(inverse(double_divide(inverse(double_divide(inverse(X2),X2)),inverse(X1))),X0)) = X0 [superposition 3,48]
+106. double_divide(inverse(X1),double_divide(inverse(X1),X0)) = X0 [forward demodulation 91,48]
+153. inverse(X0) = double_divide(inverse(double_divide(inverse(X1),X1)),X0) [superposition 106,48]
+154. double_divide(X1,X2) = double_divide(inverse(double_divide(inverse(double_divide(X1,inverse(X0))),X2)),X0) [superposition 106,1]
+157. double_divide(inverse(X1),X1) = double_divide(inverse(X0),X0) [superposition 106,22]
+318. double_divide(inverse(double_divide(inverse(X0),X0)),double_divide(inverse(double_divide(inverse(double_divide(inverse(double_divide(inverse(double_divide(X2,inverse(inverse(X3)))),X4)),inverse(X1))),double_divide(X2,X4))),X1)) = X3 [superposition 16,157]
+358. inverse(double_divide(inverse(double_divide(inverse(double_divide(inverse(double_divide(inverse(double_divide(X2,inverse(inverse(X3)))),X4)),inverse(X1))),double_divide(X2,X4))),X1)) = X3 [forward demodulation 318,153]
+394. inverse(double_divide(inverse(double_divide(inverse(double_divide(X2,inverse(inverse(X3)))),X4)),double_divide(X2,X4))) = X3 [forward demodulation 358,154]
+402. inverse(inverse(X3)) = X3 [forward demodulation 394,1]
+560. double_divide(X0,double_divide(X0,X1)) = X1 [superposition 106,402]
+562. double_divide(inverse(X1),X1) = double_divide(X0,inverse(X0)) [superposition 157,402]
+2440. double_divide(inverse(double_divide(inverse(double_divide(inverse(X0),X0)),X2)),double_divide(X1,X2)) = X1 [superposition 1,562]
+2559. double_divide(inverse(inverse(X2)),double_divide(X1,X2)) = X1 [forward demodulation 2440,153]
+2654. double_divide(X2,double_divide(X1,X2)) = X1 [forward demodulation 2559,402]
+2933. double_divide(X0,X1) = double_divide(X1,X0) [superposition 560,2654]
+4429. inverse(double_divide(b,a)) != inverse(double_divide(b,a)) [superposition 2,2933]
+4430. $false [trivial inequality removal 4429]
+% SZS output end Proof for GRP616-1_clausified
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.076 s
+% Peak memory usage: 67 MB
+% Instructions burned: 279 (million)
+% ------------------------------
+% ------------------------------

@@ -1,0 +1,35 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+1. multiply(X0,multiply(multiply(inverse(multiply(X0,X1)),X2),X1)) = X2 [input(axiom)]
+2. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) [input(negated conjecture)]
+5. ? [X0] : ! [X1] : multiply(X1,X0) = X1 [input(assumption)]
+6. ? [X0] : ! [X1] : multiply(X0,X1) = X1 [input(assumption)]
+7. ! [X0,X1] : multiply(X0,X1) = multiply(X1,X0) [input(assumption)]
+8. ? [X0] : ! [X1] : multiply(X1,X0) = X1 => ! [X1] : multiply(X1,sK0) = X1 [skolem symbol introduction]
+9. ! [X1] : multiply(X1,sK0) = X1 [skolemisation 5,8]
+10. ? [X0] : ! [X1] : multiply(X0,X1) = X1 => ! [X1] : multiply(sK1,X1) = X1 [skolem symbol introduction]
+11. ! [X1] : multiply(sK1,X1) = X1 [skolemisation 6,10]
+14. multiply(X1,sK0) = X1 [cnf transformation 9]
+15. multiply(sK1,X1) = X1 [cnf transformation 11]
+16. multiply(X0,X1) = multiply(X1,X0) [cnf transformation 7]
+17. multiply(inverse(a1),a1) != multiply(b1,inverse(b1)) [forward demodulation 2,16]
+18. multiply(X0,multiply(X1,multiply(inverse(multiply(X0,X1)),X2))) = X2 [forward demodulation 1,16]
+19. multiply(b1,inverse(b1)) != multiply(a1,inverse(a1)) [forward demodulation 17,16]
+78. multiply(X1,multiply(inverse(multiply(sK1,X1)),X0)) = X0 [superposition 15,18]
+79. multiply(X1,multiply(inverse(X1),X0)) = X0 [forward demodulation 78,15]
+123. sK0 = multiply(X0,inverse(X0)) [superposition 79,14]
+217. sK0 != multiply(a1,inverse(a1)) [superposition 19,123]
+221. $false [forward subsumption resolution 217,123]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.002 s
+% Peak memory usage: 62 MB
+% Instructions burned: 8 (million)
+% ------------------------------
+% ------------------------------

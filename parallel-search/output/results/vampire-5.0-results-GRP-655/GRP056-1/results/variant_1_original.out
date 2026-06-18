@@ -1,0 +1,67 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_1_original
+% SZS output start Proof for variant_1_original
+1. multiply(inverse(multiply(inverse(multiply(X0,inverse(multiply(inverse(X1),X2)))),multiply(X0,inverse(X2)))),inverse(multiply(inverse(X2),X2))) = X1 [input(axiom)]
+2. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) | multiply(multiply(inverse(b2),b2),a2) != a2 | multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [input(negated conjecture)]
+3. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) | a2 != multiply(multiply(inverse(b2),b2),a2) | multiply(multiply(a3,b3),c3) != multiply(a3,multiply(b3,c3)) [reorient equations 2]
+4. ! [X0] : inverse(inverse(X0)) = X0 [input(assumption)]
+5. ! [X0,X1] : multiply(multiply(X0,inverse(X0)),X1) = X1 [input(assumption)]
+6. ! [X0,X1,X2] : multiply(X0,multiply(X1,X2)) = multiply(multiply(X0,X1),X2) [input(assumption)]
+7. inverse(inverse(X0)) = X0 [cnf transformation 4]
+8. multiply(multiply(X0,inverse(X0)),X1) = X1 [cnf transformation 5]
+9. multiply(X0,multiply(X1,X2)) = multiply(multiply(X0,X1),X2) [cnf transformation 6]
+10. multiply(X0,multiply(inverse(X0),X1)) = X1 [forward demodulation 8,9]
+11. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) | a2 != multiply(multiply(inverse(b2),b2),a2) [forward subsumption resolution 3,9]
+12. a2 != multiply(inverse(b2),multiply(b2,a2)) | multiply(inverse(a1),a1) != multiply(inverse(b1),b1) [forward demodulation 11,9]
+14. 1 <=> multiply(inverse(a1),a1) = multiply(inverse(b1),b1) [avatar definition]
+16. multiply(inverse(a1),a1) != multiply(inverse(b1),b1) <- (~1) [avatar component clause 14]
+18. 2 <=> a2 = multiply(inverse(b2),multiply(b2,a2)) [avatar definition]
+20. a2 != multiply(inverse(b2),multiply(b2,a2)) <- (~2) [avatar component clause 18]
+21. ~1 | ~2 [avatar split clause 12,18,14]
+22. multiply(inverse(X0),multiply(X0,X1)) = X1 [superposition 10,7]
+27. multiply(X0,multiply(X1,multiply(inverse(multiply(X0,X1)),X2))) = X2 [superposition 10,9]
+36. inverse(X0) = multiply(inverse(multiply(inverse(multiply(X1,inverse(multiply(X0,X2)))),multiply(X1,inverse(X2)))),inverse(multiply(inverse(X2),X2))) [superposition 1,7]
+44. multiply(inverse(multiply(inverse(multiply(X1,inverse(multiply(inverse(X2),inverse(X0))))),multiply(X1,X0))),inverse(multiply(X0,inverse(X0)))) = X2 [superposition 1,7]
+45. inverse(multiply(inverse(X2),X2)) = multiply(multiply(inverse(multiply(X1,inverse(multiply(inverse(X0),X2)))),multiply(X1,inverse(X2))),X0) [superposition 10,1]
+47. multiply(inverse(multiply(inverse(multiply(X1,inverse(multiply(inverse(X0),X2)))),multiply(X1,inverse(X2)))),multiply(inverse(multiply(inverse(X2),X2)),X3)) = multiply(X0,X3) [superposition 9,1]
+49. inverse(multiply(inverse(X2),X2)) = multiply(inverse(multiply(X1,inverse(multiply(inverse(X0),X2)))),multiply(multiply(X1,inverse(X2)),X0)) [forward demodulation 45,9]
+55. inverse(multiply(inverse(X2),X2)) = multiply(inverse(multiply(X1,inverse(multiply(inverse(X0),X2)))),multiply(X1,multiply(inverse(X2),X0))) [forward demodulation 49,9]
+74. multiply(inverse(multiply(inverse(X1),X1)),X0) = X0 [superposition 22,27]
+77. multiply(inverse(multiply(X1,inverse(X1))),X0) = X0 [superposition 10,27]
+256. multiply(inverse(X0),X3) = multiply(inverse(multiply(inverse(multiply(X1,inverse(multiply(X0,X2)))),multiply(X1,inverse(X2)))),multiply(inverse(multiply(inverse(X2),X2)),X3)) [superposition 9,36]
+257. multiply(inverse(X0),X3) = multiply(inverse(multiply(inverse(multiply(X1,inverse(multiply(X0,X2)))),multiply(X1,inverse(X2)))),X3) [forward demodulation 256,74]
+439. multiply(inverse(multiply(inverse(multiply(X1,inverse(multiply(inverse(X2),inverse(inverse(multiply(inverse(X0),X0))))))),multiply(X1,inverse(multiply(inverse(X0),X0))))),inverse(inverse(inverse(multiply(inverse(X0),X0))))) = X2 [superposition 44,74]
+454. multiply(X0,X3) = multiply(inverse(multiply(inverse(multiply(X1,inverse(multiply(inverse(X0),inverse(X2))))),multiply(X1,X2))),multiply(inverse(multiply(X2,inverse(X2))),X3)) [superposition 9,44]
+455. multiply(X0,X3) = multiply(inverse(multiply(inverse(multiply(X1,inverse(multiply(inverse(X0),inverse(X2))))),multiply(X1,X2))),X3) [forward demodulation 454,77]
+470. multiply(inverse(multiply(inverse(multiply(X1,inverse(multiply(inverse(X2),inverse(inverse(multiply(inverse(X0),X0))))))),multiply(X1,inverse(multiply(inverse(X0),X0))))),inverse(multiply(inverse(X0),X0))) = X2 [forward demodulation 439,7]
+506. multiply(X2,inverse(multiply(inverse(X0),X0))) = X2 [forward demodulation 470,455]
+647. multiply(X2,multiply(inverse(inverse(multiply(inverse(X3),X0))),multiply(inverse(X0),X3))) = multiply(inverse(multiply(inverse(multiply(X1,inverse(multiply(inverse(X2),inverse(multiply(inverse(X3),X0)))))),multiply(X1,inverse(inverse(multiply(inverse(X3),X0)))))),inverse(multiply(inverse(X0),X0))) [superposition 47,55]
+684. multiply(X2,multiply(inverse(inverse(multiply(inverse(X3),X0))),multiply(inverse(X0),X3))) = multiply(inverse(inverse(X2)),inverse(multiply(inverse(X0),X0))) [forward demodulation 647,257]
+729. inverse(inverse(X2)) = multiply(X2,multiply(inverse(inverse(multiply(inverse(X3),X0))),multiply(inverse(X0),X3))) [forward demodulation 684,506]
+769. inverse(inverse(X2)) = multiply(X2,multiply(multiply(inverse(X3),X0),multiply(inverse(X0),X3))) [forward demodulation 729,7]
+795. inverse(inverse(X2)) = multiply(X2,multiply(inverse(X3),multiply(X0,multiply(inverse(X0),X3)))) [forward demodulation 769,9]
+808. inverse(inverse(X2)) = multiply(X2,multiply(inverse(X3),X3)) [forward demodulation 795,10]
+812. multiply(X2,multiply(inverse(X3),X3)) = X2 [forward demodulation 808,7]
+836. multiply(X0,inverse(X0)) = multiply(inverse(X1),X1) [superposition 10,812]
+6854. multiply(inverse(a1),a1) != multiply(X0,inverse(X0)) <- (~1) [superposition 16,836]
+6961. $false <- (~1) [forward subsumption resolution 6854,836]
+6962. 1 [avatar contradiction clause 6961]
+7435. $false <- (~2) [forward subsumption resolution 20,22]
+7436. 2 [avatar contradiction clause 7435]
+s1. ~2 | ~1 [sat_conversion 21]
+s2. 1 [sat_conversion 6962]
+s3. 2 [sat_conversion 7436]
+s4. # [rat s1,s2,s3]
+7437. $false [avatar sat refutation s4]
+% SZS output end Proof for variant_1_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.070 s
+% Peak memory usage: 59 MB
+% Instructions burned: 239 (million)
+% ------------------------------
+% ------------------------------

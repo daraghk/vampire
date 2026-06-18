@@ -1,0 +1,74 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_0
+% SZS output start Proof for variant_0
+3. product(X1,product(X0,X1)) != X1 | product(X0,product(X1,X0)) != X0 | d(X0,X1) [input(axiom)]
+4. ~d(X0,X1) | product(X0,product(X1,X0)) = X0 [input(axiom)]
+5. ~d(X1,X0) | product(X0,product(X1,X0)) = X0 [input(axiom)]
+6. ! [X0,X1,X2] : product(product(X0,X1),X2) = product(X0,product(X1,X2)) [input(axiom)]
+7. ! [X0] : product(X0,X0) = X0 [input(axiom)]
+8. ~d(product(sK0,sK2),product(sK1,sK3)) [input(negated conjecture)]
+9. d(sK0,sK1) [input(negated conjecture)]
+10. d(sK2,sK3) [input(negated conjecture)]
+11. product(product(X0,X1),X2) = product(X0,product(X1,X2)) [cnf transformation 6]
+12. product(X0,X0) = X0 [cnf transformation 7]
+13. sK0 = product(sK0,product(sK1,sK0)) [resolution 4,9]
+14. sK2 = product(sK2,product(sK3,sK2)) [resolution 4,10]
+15. sK1 = product(sK1,product(sK0,sK1)) [resolution 5,9]
+16. sK3 = product(sK3,product(sK2,sK3)) [resolution 5,10]
+17. product(X0,X1) = product(X0,product(X0,X1)) [superposition 11,12]
+18. product(sK0,product(product(sK1,sK0),X0)) = product(sK0,X0) [superposition 11,13]
+21. product(X0,X1) = product(X0,product(X1,product(X0,X1))) [superposition 12,11]
+23. product(sK0,X0) = product(sK0,product(sK1,product(sK0,X0))) [forward demodulation 18,11]
+25. product(sK2,product(product(sK3,sK2),X0)) = product(sK2,X0) [superposition 11,14]
+26. product(sK2,X0) = product(sK2,product(sK3,product(sK2,X0))) [forward demodulation 25,11]
+58. product(sK1,product(product(sK0,sK1),X0)) = product(sK1,X0) [superposition 11,15]
+60. product(sK1,X0) = product(sK1,product(sK0,product(sK1,X0))) [forward demodulation 58,11]
+71. product(sK3,product(product(sK2,sK3),X0)) = product(sK3,X0) [superposition 11,16]
+73. product(sK3,X0) = product(sK3,product(sK2,product(sK3,X0))) [forward demodulation 71,11]
+107. product(product(X0,X1),X2) = product(X0,product(X1,product(product(X0,X1),X2))) [superposition 11,17]
+109. product(X0,product(X1,X2)) = product(X0,product(X1,product(X0,product(X1,X2)))) [forward demodulation 107,11]
+131. product(X2,product(X0,X1)) = product(X2,product(X0,product(X1,product(X2,product(X0,X1))))) [superposition 21,11]
+136. product(X1,product(X0,X1)) != product(product(X1,product(X0,X1)),product(X0,X1)) | product(X0,product(product(X1,product(X0,X1)),X0)) != X0 | d(X0,product(X1,product(X0,X1))) [superposition 3,21]
+141. product(X1,product(X0,X1)) != product(X1,product(product(X0,X1),product(X0,X1))) | product(X0,product(product(X1,product(X0,X1)),X0)) != X0 | d(X0,product(X1,product(X0,X1))) [forward demodulation 136,11]
+152. product(X1,product(X0,X1)) != product(X1,product(X0,X1)) | product(X0,product(product(X1,product(X0,X1)),X0)) != X0 | d(X0,product(X1,product(X0,X1))) [forward demodulation 141,12]
+153. product(X0,product(product(X1,product(X0,X1)),X0)) != X0 | d(X0,product(X1,product(X0,X1))) [trivial inequality removal 152]
+159. product(X0,product(X1,product(product(X0,X1),X0))) != X0 | d(X0,product(X1,product(X0,X1))) [forward demodulation 153,11]
+160. product(X0,product(X1,product(X0,product(X1,X0)))) != X0 | d(X0,product(X1,product(X0,X1))) [forward demodulation 159,11]
+161. product(X0,product(X1,X0)) != X0 | d(X0,product(X1,product(X0,X1))) [forward demodulation 160,109]
+854. product(X2,product(X0,product(X1,X2))) != X2 | d(X2,product(product(X0,X1),product(X2,product(X0,X1)))) [superposition 161,11]
+887. product(X2,product(X0,product(X1,X2))) != X2 | d(X2,product(X0,product(X1,product(X2,product(X0,X1))))) [forward demodulation 854,11]
+1090. product(product(X0,X1),product(X2,X3)) = product(X0,product(X1,product(X2,product(product(X0,X1),product(X2,X3))))) [superposition 11,109]
+1095. product(X0,product(X1,product(X2,X3))) = product(X0,product(X1,product(X2,product(X0,product(X1,product(X2,X3)))))) [forward demodulation 1090,11]
+1228. product(X2,product(X3,product(X0,X1))) = product(X2,product(X3,product(X0,product(X1,product(X2,product(X3,product(X0,X1))))))) [superposition 131,11]
+15071. product(X0,X1) != product(X0,product(X1,product(X2,product(X3,product(X0,X1))))) | d(product(X0,X1),product(X2,product(X3,product(product(X0,X1),product(X2,X3))))) [superposition 887,11]
+15080. product(X0,X1) != product(X0,product(X1,product(X2,product(X3,product(X0,X1))))) | d(product(X0,X1),product(X2,product(X3,product(X0,product(X1,product(X2,X3)))))) [forward demodulation 15071,11]
+15621. product(X1,product(sK0,X0)) = product(X1,product(sK0,product(sK1,product(X1,product(sK0,X0))))) [superposition 1095,23]
+15623. product(X0,sK2) = product(X0,product(sK2,product(sK3,product(X0,sK2)))) [superposition 1095,14]
+15624. product(X1,product(sK2,X0)) = product(X1,product(sK2,product(sK3,product(X1,product(sK2,X0))))) [superposition 1095,26]
+15627. product(X1,product(sK1,X0)) = product(X1,product(sK1,product(sK0,product(X1,product(sK1,X0))))) [superposition 1095,60]
+15629. product(X0,sK3) = product(X0,product(sK3,product(sK2,product(X0,sK3)))) [superposition 1095,16]
+15630. product(X1,product(sK3,X0)) = product(X1,product(sK3,product(sK2,product(X1,product(sK3,X0))))) [superposition 1095,73]
+53477. product(X0,product(sK0,product(sK1,product(X0,product(sK0,X1))))) = product(X0,product(sK0,product(X1,product(sK1,product(X0,product(sK0,X1)))))) [superposition 15621,1228]
+54313. product(X0,product(sK0,X1)) = product(X0,product(sK0,product(X1,product(sK1,product(X0,product(sK0,X1)))))) [forward demodulation 53477,15621]
+59199. product(X0,product(sK1,product(sK0,product(X0,product(sK1,X1))))) = product(X0,product(sK1,product(X1,product(sK0,product(X0,product(sK1,X1)))))) [superposition 15627,1228]
+60041. product(X0,product(sK1,X1)) = product(X0,product(sK1,product(X1,product(sK0,product(X0,product(sK1,X1)))))) [forward demodulation 59199,15627]
+826228. product(sK0,product(sK2,product(sK3,product(sK0,sK2)))) = product(sK0,product(sK2,product(sK1,product(sK3,product(sK0,sK2))))) [superposition 15624,54313]
+826461. product(sK0,sK2) = product(sK0,product(sK2,product(sK1,product(sK3,product(sK0,sK2))))) [forward demodulation 826228,15623]
+838251. product(sK1,product(sK3,product(sK2,product(sK1,sK3)))) = product(sK1,product(sK3,product(sK0,product(sK2,product(sK1,sK3))))) [superposition 15630,60041]
+838883. product(sK1,sK3) = product(sK1,product(sK3,product(sK0,product(sK2,product(sK1,sK3))))) [forward demodulation 838251,15629]
+942734. product(sK0,sK2) != product(sK0,sK2) | d(product(sK0,sK2),product(sK1,product(sK3,product(sK0,product(sK2,product(sK1,sK3)))))) [superposition 15080,826461]
+943085. d(product(sK0,sK2),product(sK1,product(sK3,product(sK0,product(sK2,product(sK1,sK3)))))) [trivial inequality removal 942734]
+943385. d(product(sK0,sK2),product(sK1,sK3)) [forward demodulation 943085,838883]
+943877. $false [forward subsumption resolution 943385,8]
+% SZS output end Proof for variant_0
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 16.177 s
+% Peak memory usage: 178 MB
+% Instructions burned: 59428 (million)
+% ------------------------------
+% ------------------------------

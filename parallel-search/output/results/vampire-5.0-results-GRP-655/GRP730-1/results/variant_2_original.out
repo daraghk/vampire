@@ -1,0 +1,35 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Unsatisfiable for variant_2_original
+% SZS output start Proof for variant_2_original
+1. mult(unit,X0) = X0 [input(axiom)]
+7. i(mult(X0,X1)) = mult(i(X0),i(X1)) [input(axiom)]
+8. mult(i(X0),mult(X0,X1)) = X1 [input(axiom)]
+12. mult(mult(X0,X1),X2) = mult(mult(X0,mult(X1,X2)),asoc(X0,X1,X2)) [input(axiom)]
+13. mult(X0,X1) = mult(mult(X1,X0),op_k(X0,X1)) [input(axiom)]
+23. asoc(asoc(X0,X1,X2),X3,X4) = unit [input(axiom)]
+24. unit = asoc(asoc(X0,X1,X2),X3,X4) [reorient equations 23]
+27. asoc(op_k(a,b),c,d) != unit [input(negated conjecture)]
+28. unit != asoc(op_k(a,b),c,d) [reorient equations 27]
+29. ! [X0] : mult(i(X0),X0) = unit [input(assumption)]
+36. unit = mult(i(X0),X0) [cnf transformation 29]
+166. op_k(X0,X1) = mult(i(mult(X1,X0)),mult(X0,X1)) [superposition 8,13]
+242. mult(mult(i(mult(X0,X1)),X0),X1) = mult(unit,asoc(i(mult(X0,X1)),X0,X1)) [superposition 12,36]
+263. mult(mult(i(mult(X0,X1)),X0),X1) = asoc(i(mult(X0,X1)),X0,X1) [forward demodulation 242,1]
+5904. mult(mult(i(X0),i(X1)),mult(X1,X0)) = asoc(i(X0),i(X1),mult(X1,X0)) [superposition 263,8]
+6033. mult(i(mult(X0,X1)),mult(X1,X0)) = asoc(i(X0),i(X1),mult(X1,X0)) [forward demodulation 5904,7]
+6076. op_k(X1,X0) = asoc(i(X0),i(X1),mult(X1,X0)) [forward demodulation 6033,166]
+132192. unit = asoc(op_k(X0,X1),X2,X3) [superposition 24,6076]
+133141. unit != unit [superposition 28,132192]
+133170. $false [trivial inequality removal 133141]
+% SZS output end Proof for variant_2_original
+% ------------------------------
+% Version: Vampire 5.0.0 (Release build, commit 2e2c9b7b8 on 2026-01-17 12:24:14 +0100)
+% Linked with Z3 4.14.0.0 3c47fd96cf5645d0c42b2c819d9e9a84380aa721 z3-4.8.4-9178-g3c47fd96c
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 3.706 s
+% Peak memory usage: 112 MB
+% Instructions burned: 11748 (million)
+% ------------------------------
+% ------------------------------
