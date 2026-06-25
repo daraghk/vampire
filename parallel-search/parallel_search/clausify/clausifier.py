@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Clausification module for parallel Vampire search.
 
 Definitions:
@@ -12,7 +11,7 @@ Modes:
 - ``clausify``: CNF output — suitable for most CNF/FOF problems (default)
 - ``tclausify``: TFF output — preserves type information for arithmetic
 
-Used by ``main.py``. Also runnable standalone for batch clausification.
+Used by ``scripts/main.py``. Also runnable via ``scripts/clausify.py``.
 
 Usage:
     from parallel_search.clausify.clausifier import VampireClausifier

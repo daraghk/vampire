@@ -3,7 +3,7 @@
 
 from pathlib import Path
 
-from parallel_search.analysis.discovery import discover_problem_directories
+from analyze_results import discover_problem_directories
 
 
 def test_discover_flat_and_timestamped_layouts(tmp_path):

@@ -6,6 +6,10 @@ This dataset contains logs from the parallel-search framework running **Vampire 
 
 Runs used a **60-second timeout** per Vampire invocation.
 
+These runs were produced with the **pre-refactor pipeline**, which logged ``seed`` terminology
+(``VARIANT N SEED M``). The current codebase uses **lemma** terminology throughout; see
+the main [README.md](../../../README.md) for the updated CLI.
+
 ## Results summary
 
 - **463 / 655** problems had at least one successful proof
@@ -38,18 +42,18 @@ Each problem has its own directory (flat layout in this bundle):
 | Configuration | In paper | Description |
 |---------------|----------|-------------|
 | `original` | Yes | Unmodified TPTP problem |
-| `variant_N_original` | Yes | Original problem + verified LLM seed lemmas |
+| `variant_N_original` | Yes | Original problem + verified LLM lemmas |
 | `original_clausified` | No | Clausified C₀ (exploratory) |
-| `variant_N` | No | Clausified axioms + seeds + negated conjectures (exploratory) |
+| `variant_N` | No | Clausified axioms + lemmas + negated conjectures (exploratory) |
 
 The paper reports only `original` and `variant_N_original`.
 
 ## Variant generation
 
-- **3 variants** per problem (distinct LLM seed sets)
+- **3 variants** per problem (distinct LLM lemma sets)
 - Full axiom base (all axioms from C_ax)
-- **5 seeds** per variant from **gpt-5-mini** (`gpt-5-mini-2025-08-07`)
-- Entailment-verified before inclusion
+- **5 lemmas** per variant from **gpt-5-mini** (`gpt-5-mini-2025-08-07`)
+- Entailment-verified before inclusion (C_ax ⊨ s)
 
 ## Reproducibility
 
@@ -58,10 +62,26 @@ The paper reports only `original` and `variant_N_original`.
 - **Timeout:** 60 seconds per run
 - **Problem source:** TPTP v9.2.1, GRP domain
 
-Re-run with:
+Re-run with the current pipeline (from ``parallel-search/``):
 
 ```bash
-python3 main.py input/ -r -n 3 \
-  --generate-seeds 5 --check-entailment --run-vampire \
+python3 scripts/main.py input/ -r -n 3 \
+  --generate-lemmas 5 --run-vampire \
   --llm-model gpt-5-mini --vampire-timeout 60
+```
+
+Entailment checking is always performed when lemmas are generated; there is no
+``--check-entailment`` flag in the current CLI.
+
+Analyze this bundle:
+
+```bash
+python3 scripts/analyze_results.py \
+  --output-dir output/results/vampire-5.0-results-GRP-655 \
+  --output notes/evaluation_results.csv
+
+# Legacy log format only (seed terminology in logs)
+python3 scripts/analyze_seed_quality_logs.py \
+  --logs-root output/results/vampire-5.0-results-GRP-655 \
+  --output notes/seed_quality_results_strict.csv
 ```

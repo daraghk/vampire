@@ -1,4 +1,4 @@
-"""TPTP parsing utilities for Parallel Vampire Search.
+"""TPTP parsing utilities for parallel Vampire search.
 
 This module provides shared parsing utilities for handling TFF (Typed First-order
 Form) and CNF (Clause Normal Form) clauses from Vampire's clausify/tclausify modes.

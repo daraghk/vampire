@@ -14,7 +14,7 @@ native conjecture proving:
 
 Entailment is checked against C_ax (not C₀) to avoid vacuous truth.
 
-Used by ``lemma_pipeline.py`` during lemma verification.
+Used by ``parallel_search.lemmas.pipeline`` during lemma verification.
 
 Usage:
     from parallel_search.entailment.checker import EntailmentChecker

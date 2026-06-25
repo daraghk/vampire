@@ -18,7 +18,6 @@ def test_resolve_runnable_variants_from_manifest(tmp_path):
         [
             VariantManifestEntry(
                 index=0,
-                clausified="variant_0.tptp",
                 original="variant_0_original.tptp",
                 verified_lemma_count=1,
             )
@@ -26,7 +25,7 @@ def test_resolve_runnable_variants_from_manifest(tmp_path):
     )
 
     logger = MagicMock()
-    paths = _resolve_runnable_variants(variants_dir, False, logger)
+    paths = _resolve_runnable_variants(variants_dir, logger)
     assert len(paths) == 1
     assert paths[0].name == "variant_0_original.tptp"
 
@@ -41,7 +40,6 @@ def test_run_parallel_uses_manifest(tmp_path):
         [
             VariantManifestEntry(
                 index=0,
-                clausified="variant_0.tptp",
                 original="variant_0_original.tptp",
                 verified_lemma_count=1,
             )
@@ -84,7 +82,6 @@ def test_run_parallel_uses_manifest(tmp_path):
                 timeout=10,
                 max_workers=1,
                 original_problem=None,
-                include_clausified_runs=False,
             )
 
     assert summary["statistics"]["total_runs"] == 1

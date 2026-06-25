@@ -13,8 +13,7 @@ The script:
 CSV column structure:
 - Problem_Name: Extracted problem name (timestamp prefix removed)
 - Original_Status, Original_Time: Status and execution time (seconds) for original (non-clausified) problem
-- Original_Clausified_Status, Original_Clausified_Time: Status and execution time (seconds) for original clausified problem (C₀)
-- Variant_X_Status, Variant_X_Time: Status and execution time (seconds) for clausified variant X
+- Original_Clausified_Status, Original_Clausified_Time: Status and execution time (seconds) for original clausified problem (C₀; historical runs only)
 - Variant_X_Original_Status, Variant_X_Original_Time: Status and execution time (seconds) for original (non-clausified) variant X
 
 Status values: PROVED, TIMEOUT, UNKNOWN
@@ -22,14 +21,14 @@ Time values: Execution time in seconds (float)
 Missing data is represented as "N/A" in both Status and Time columns.
 
 Usage:
-    python analyze_results.py [--output OUTPUT.csv] [--output-dir OUTPUT_DIR]
+    python3 scripts/analyze_results.py [--output OUTPUT.csv] [--output-dir OUTPUT_DIR]
 
 Examples:
     # Analyze results in default output directory
-    python analyze_results.py
+    python3 scripts/analyze_results.py
 
     # Specify custom output directory and CSV file
-    python analyze_results.py --output-dir output --output results.csv
+    python3 scripts/analyze_results.py --output-dir output --output evaluation_results.csv
 """
 
 import argparse
@@ -39,7 +38,26 @@ import re
 from pathlib import Path
 from typing import Dict, List, Optional, Set
 
-from parallel_search.analysis.discovery import discover_problem_directories
+
+def discover_problem_directories(output_dir: Path) -> List[Path]:
+    """Find problem run directories containing results/summary.json.
+
+    Walks ``output_dir`` recursively and returns the parent of each
+    ``results/`` directory that contains ``summary.json``.
+
+    Supports timestamped runs (``output/2026-01-28_GRP029-2/...``) and
+    flat bundles (``output/results/.../GRP029-2/...``).
+
+    Args:
+        output_dir: Root directory to search (e.g. ``output/``).
+
+    Returns:
+        Sorted list of unique problem directory paths.
+    """
+    problem_dirs = []
+    for summary_path in output_dir.rglob("results/summary.json"):
+        problem_dirs.append(summary_path.parent.parent)
+    return sorted(set(problem_dirs), key=lambda path: path.name)
 
 
 def extract_problem_name(directory_name: str) -> str:
@@ -130,8 +148,6 @@ def variant_name_to_base_name(variant_name: str) -> str:
         return "Original"
     elif variant_name == "original_clausified":
         return "Original_Clausified"
-    elif variant_name.startswith("variant_") and not variant_name.endswith("_original"):
-        return variant_name.replace("variant_", "Variant_")
     elif variant_name.endswith("_original") and variant_name.startswith("variant_"):
         # Convert variant_0_original to Variant_0_Original
         parts = variant_name.replace("variant_", "Variant_").split("_")
@@ -163,15 +179,6 @@ def get_ordered_columns(variant_names: Set[str]) -> List[str]:
     if "original_clausified" in variant_names:
         special_variants.append("original_clausified")
 
-    # Regular variants (variant_0, variant_1, etc.)
-    regular_variants = sorted(
-        [
-            v
-            for v in variant_names
-            if v.startswith("variant_") and not v.endswith("_original")
-        ]
-    )
-
     # Original variants (variant_0_original, variant_1_original, etc.)
     original_variants = sorted(
         [
@@ -181,9 +188,8 @@ def get_ordered_columns(variant_names: Set[str]) -> List[str]:
         ]
     )
 
-    # Add columns: special, regular variants, original variants
-    # For each variant, add Status and Time columns
-    all_variants_ordered = special_variants + regular_variants + original_variants
+    # Add columns: special, then original variants
+    all_variants_ordered = special_variants + original_variants
 
     for variant_name in all_variants_ordered:
         base_name = variant_name_to_base_name(variant_name)
@@ -309,13 +315,13 @@ def main():
         epilog="""
 Examples:
   # Analyze results in default output directory
-  python analyze_results.py
+  python3 scripts/analyze_results.py
 
   # GRP-655 flat bundle layout
-  python analyze_results.py --output-dir output/results/vampire-5.0-results-GRP-655
+  python3 scripts/analyze_results.py --output-dir output/results/vampire-5.0-results-GRP-655
 
   # Specify custom output directory and CSV file
-  python analyze_results.py --output-dir output --output results.csv
+  python3 scripts/analyze_results.py --output-dir output --output evaluation_results.csv
         """,
     )
 

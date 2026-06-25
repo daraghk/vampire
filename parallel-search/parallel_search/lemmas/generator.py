@@ -2,27 +2,31 @@
 """Lemma generator (L_i) for parallel Vampire search.
 
 Definitions:
+- C₀ = Full clausified problem (Axioms ∪ negated_conjectures)
 - C_ax = Axioms-only version (negated_conjectures removed from C₀)
-- L_i = Verified lemmas (LLM suggestions filtered by ``entailment_checker.py``)
-- Variant = all axioms + verified lemmas + negated_conjectures
+- L_i = Verified lemmas (LLM suggestions filtered by ``parallel_search.entailment.checker``)
+- Variant = original (non-clausified) problem + verified lemmas
 
 This module generates LLM lemma suggestions using OpenAI function calling.
-Suggestions are unverified until ``lemma_pipeline.py`` confirms entailment (C_ax ⊨ s).
+Suggestions are unverified until ``parallel_search.lemmas.pipeline`` confirms
+entailment (C_ax ⊨ s).
 
 Workflow:
 1. Extract problem context (header comments only; conjecture excluded)
 2. Prompt LLM with axiom clauses from C_ax (format-matched CNF or TFF)
 3. Parse structured response into ``SuggestedLemma`` objects
-4. Return suggestions to ``lemma_pipeline.py`` for entailment verification
+4. Return suggestions to ``parallel_search.lemmas.pipeline`` for verification
 
 Requires:
 - ``openai>=1.0.0`` (see requirements.txt)
 - ``OPENAI_API_KEY`` environment variable
 
+Used by ``parallel_search.lemmas.pipeline``.
+
 Usage:
     from parallel_search.lemmas.generator import LemmaGenerator
 
-    generator = LemmaGenerator(logger, model="o4-mini")
+    generator = LemmaGenerator(logger, model="gpt-5.4-nano")
     lemmas = generator.generate_lemmas(context, base_clauses, num_lemmas=5)
 """
 
@@ -97,14 +101,14 @@ class LemmaGenerator:
         self,
         logger: logging.Logger,
         api_key: Optional[str] = None,
-        model: str = "o4-mini",
+        model: str = "gpt-5.4-nano",
     ):
         """Initialize the lemma generator.
 
         Args:
             logger: Logger instance for logging.
             api_key: OpenAI API key (defaults to OPENAI_API_KEY env var).
-            model: OpenAI model to use (default: o4-mini).
+            model: OpenAI model to use (default: gpt-5.4-nano).
 
         Raises:
             ValueError: If no API key is provided or found in environment.
@@ -201,7 +205,18 @@ class LemmaGenerator:
         domain_hint: Optional[str] = None,
         clause_format: str = "TFF",
     ) -> str:
-        """Build the prompt for lemma generation."""
+        """Build the prompt for lemma generation.
+
+        Args:
+            problem_context: Problem header comments (conjecture excluded).
+            base_clauses: Sample of axiom clauses for context.
+            num_lemmas: Number of lemmas to request.
+            domain_hint: Optional domain hint (e.g. ``group theory``).
+            clause_format: ``CNF`` or ``TFF``, matched to the clausified problem.
+
+        Returns:
+            Formatted prompt string for the LLM.
+        """
         domain_line = f"\nDomain: {domain_hint}\n" if domain_hint else ""
 
         clauses_context = "\n".join(base_clauses)
@@ -260,7 +275,14 @@ Please generate the {num_lemmas} lemmas now.
         return prompt
 
     def _parse_schema_response(self, function_args: Dict[str, Any]) -> List[SuggestedLemma]:
-        """Parse structured schema response from function call."""
+        """Parse structured schema response from an OpenAI function call.
+
+        Args:
+            function_args: Parsed JSON arguments from the function call.
+
+        Returns:
+            List of ``SuggestedLemma`` objects (may be empty).
+        """
         lemmas = []
         lemma_data_list = function_args.get("lemma_clauses", [])
 
@@ -281,7 +303,16 @@ Please generate the {num_lemmas} lemmas now.
         return lemmas
 
     def extract_problem_context(self, problem_file: Path) -> str:
-        """Extract problem context from TPTP file (header comments only)."""
+        """Extract problem context from a TPTP file (header comments only).
+
+        Deliberately excludes the conjecture to avoid biasing lemma generation.
+
+        Args:
+            problem_file: Path to the original TPTP problem.
+
+        Returns:
+            Concatenated header comment lines, or a fallback string if none found.
+        """
         context_lines = []
         with open(problem_file, "r") as handle:
             for line in handle:

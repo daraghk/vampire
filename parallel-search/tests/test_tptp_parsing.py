@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for tptp_parsing_utils."""
+"""Tests for parallel_search.parsing.tptp."""
 
 from parallel_search.parsing.tptp import (
     parse_cnf_clause,

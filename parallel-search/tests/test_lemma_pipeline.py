@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for lemma_pipeline axiom sampling."""
+"""Tests for parallel_search.lemmas.pipeline axiom sampling."""
 
 from parallel_search.lemmas.pipeline import sample_axioms_for_llm
 from parallel_search.parsing.tptp import parse_cnf_clause

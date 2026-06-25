@@ -5,8 +5,7 @@ Definitions:
 - C₀ = Full clausified problem (Axioms ∪ negated_conjectures)
 - C_ax = Axioms-only version (negated_conjectures removed from C₀)
 - L_i = Verified lemmas (LLM suggestions with C_ax ⊨ s)
-- Variant = all axioms + verified lemmas + negated_conjectures (clausified)
-- Original variant = original (non-clausified) problem + verified lemmas
+- Variant = original (non-clausified) problem + verified lemmas
 
 This script orchestrates the complete workflow:
 1. Clausify problems (Vampire clausify/tclausify mode) → C₀
@@ -14,18 +13,19 @@ This script orchestrates the complete workflow:
 3. Use the full axiom base from C_ax for each variant
 4. Generate lemma suggestions using LLM (default: 5 per variant)
 5. Verify entailment C_ax ⊨ s in parallel for every generated lemma
-6. Write clausified variants and original+lemmas variants
-7. Write variants/manifest.json recording verified lemma counts
-8. Optionally run Vampire in parallel (--run-vampire), when verified lemma variants exist
+6. Write original+lemmas variants and variants/manifest.json
+7. Optionally run Vampire in parallel (--run-vampire), when verified lemma variants exist
 
 Each problem gets its own timestamped output directory with a dedicated log file.
-See README.md for CLI reference and GRP-655 reproduction steps.
+See README.md for CLI reference.
 """
 
 import argparse
 import sys
 from datetime import datetime
 from pathlib import Path
+
+import _bootstrap  # noqa: F401
 
 from parallel_search.variants.axioms import create_axioms_file
 from parallel_search.variants.constructor import BaseClauseSetConstructor
@@ -34,7 +34,7 @@ from parallel_search.lemmas.pipeline import generate_and_verify_lemmas
 from parallel_search.utils.logging import setup_logger
 from parallel_search.evaluation.parallel import run_parallel_evaluation
 from parallel_search.variants.manifest import VariantManifestEntry, write_manifest
-from parallel_search.variants.writer import write_original_with_lemmas, write_variant_clause_set
+from parallel_search.variants.writer import write_original_with_lemmas
 
 DEFAULT_LEMMAS_PER_VARIANT = 5
 
@@ -105,13 +105,10 @@ def process_problem(problem_path: Path, base_output_dir: Path, args) -> bool:
         return False
 
     axiom_parser = BaseClauseSetConstructor(logger, axioms_only)
-    c0_parser = BaseClauseSetConstructor(logger, clausified)
     stats = axiom_parser.get_statistics()
-    negated_conjectures = c0_parser.negated_conjectures()
 
     logger.info(f"Constructing {args.num_variants} variant(s)")
     logger.info(f"C_ax (axioms only): {stats['total_clauses']} clauses")
-    logger.info(f"Negated conjectures: {len(negated_conjectures)} clause(s)")
 
     lemma_generator = initialize_lemma_generator(logger, args)
     manifest_entries = []
@@ -133,26 +130,19 @@ def process_problem(problem_path: Path, base_output_dir: Path, args) -> bool:
             logger,
         )
 
-        clausified_name = f"variant_{i}.tptp"
-        clausified_path = problem_output / "variants" / clausified_name
-        complete_clause_set = base + verified_lemmas + negated_conjectures
-        write_variant_clause_set(complete_clause_set, clausified_path, problem_path.name)
-        logger.info(f"  Written clausified variant: {clausified_path}")
-
         original_name = None
         if verified_lemmas:
             original_name = f"variant_{i}_original.tptp"
             original_path = problem_output / "variants" / original_name
             if write_original_with_lemmas(problem_path, verified_lemmas, original_path):
-                logger.info(f"  Written original variant: {original_path}")
+                logger.info(f"  Written variant: {original_path}")
             else:
-                logger.warning("  Failed to write original variant with lemmas")
+                logger.warning("  Failed to write variant with lemmas")
                 original_name = None
 
         manifest_entries.append(
             VariantManifestEntry(
                 index=i,
-                clausified=clausified_name,
                 original=original_name,
                 verified_lemma_count=len(verified_lemmas),
             )
@@ -174,14 +164,13 @@ def process_problem(problem_path: Path, base_output_dir: Path, args) -> bool:
             timeout=args.vampire_timeout,
             max_workers=args.max_workers,
             original_problem=problem_path,
-            include_clausified_runs=args.include_clausified_runs,
         )
 
     return True
 
 
 def build_parser() -> argparse.ArgumentParser:
-    """Build the CLI argument parser for ``main.py``."""
+    """Build the CLI argument parser for ``scripts/main.py``."""
     parser = argparse.ArgumentParser(description="Parallel Vampire search workflow")
     parser.add_argument("path", type=Path, help="Problem file or directory")
     parser.add_argument("-n", "--num-variants", type=int, default=3)
@@ -204,8 +193,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--llm-model",
         type=str,
-        default="o4-mini",
-        help="OpenAI model for lemma generation (default: o4-mini)",
+        default="gpt-5.4-nano",
+        help="OpenAI model for lemma generation (default: gpt-5.4-nano)",
     )
     parser.add_argument(
         "--entailment-timeout",
@@ -217,11 +206,6 @@ def build_parser() -> argparse.ArgumentParser:
         "--run-vampire",
         action="store_true",
         help="Run Vampire in parallel on original (baseline) and original+lemmas variants; skipped if no verified lemmas",
-    )
-    parser.add_argument(
-        "--include-clausified-runs",
-        action="store_true",
-        help="Also run clausified original and clausified lemma variants (exploratory)",
     )
     parser.add_argument(
         "--clausify-mode",

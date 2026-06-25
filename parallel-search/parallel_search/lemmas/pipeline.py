@@ -11,7 +11,7 @@ This module handles:
 
 Every LLM-generated lemma is verified (C_ax ⊨ s) before inclusion in variants.
 
-Used by ``main.py`` via ``generate_and_verify_lemmas()``.
+Used by ``scripts/main.py`` via ``generate_and_verify_lemmas()``.
 """
 
 import io

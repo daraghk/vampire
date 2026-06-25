@@ -1,9 +1,18 @@
 #!/usr/bin/env python3
-"""Standalone CLI for batch clausification of TPTP problems."""
+"""Standalone CLI for batch clausification of TPTP problems.
+
+Wraps ``parallel_search.clausify.clausifier.VampireClausifier``. Run from the
+``parallel-search/`` directory.
+
+Usage:
+    python3 scripts/clausify.py problem.tptp -o output/clausified
+"""
 
 import argparse
 import sys
 from pathlib import Path
+
+import _bootstrap  # noqa: F401
 
 from parallel_search.clausify.clausifier import VampireClausifier
 from parallel_search.utils.logging import setup_logger

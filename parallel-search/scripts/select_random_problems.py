@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Problem Selection Utility for Parallel Vampire Search.
+"""Problem selection utility for parallel Vampire search.
 
-This utility script selects random TPTP problems from the Problems/all-problems/
-directory and copies them to the input/ folder for batch processing with main.py.
+This utility selects random TPTP problems from the Problems/all-problems/
+directory and copies them to the input/ folder for batch processing with
+``scripts/main.py``.
 
 The script supports:
 - Random selection of N problems from the complete TPTP problem set (26,000+ problems)
@@ -19,11 +20,11 @@ different strategies, configurations, or parameter sweeps.
 
 Typical workflow:
     1. Use this script to select random problems → input/
-    2. Run main.py on input/ directory to process all problems
+    2. Run ``scripts/main.py`` on input/ directory to process all problems
     3. Analyze results in output/ directory
 
-Usage (command-line):
-    python select_random_problems.py <num_problems> [--clear] [--seed SEED]
+Usage (run from ``parallel-search/``):
+    python3 scripts/select_random_problems.py <num_problems> [--clear] [--seed SEED]
 
 Arguments:
     num_problems: Number of random problems to select
@@ -36,19 +37,19 @@ Arguments:
 
 Examples:
     # Select 10 random problems from all domains (max 1500 lines each)
-    python select_random_problems.py 10
+    python3 scripts/select_random_problems.py 10
 
     # Select 20 arithmetic problems only
-    python select_random_problems.py 20 --type ARI
+    python3 scripts/select_random_problems.py 20 --type ARI
 
     # Select 50 boolean algebra problems, clearing input folder first
-    python select_random_problems.py 50 --type BOO --clear
+    python3 scripts/select_random_problems.py 50 --type BOO --clear
 
     # Select 100 problems with reproducible seed for experiments
-    python select_random_problems.py 100 --seed 42
+    python3 scripts/select_random_problems.py 100 --seed 42
 
     # Select 15 group theory problems, allowing larger files
-    python select_random_problems.py 15 --type GRP --max-lines 5000
+    python3 scripts/select_random_problems.py 15 --type GRP --max-lines 5000
 """
 
 import argparse
@@ -268,7 +269,7 @@ def main():
     """Main entry point for the problem selection utility.
 
     Parses command-line arguments, selects random problems from all-problems/,
-    and copies them to the input/ directory for batch processing with main.py.
+    and copies them to the input/ directory for batch processing with ``scripts/main.py``.
 
     Returns:
         Exit code: 0 on success, 1 on error.
@@ -279,19 +280,19 @@ def main():
         epilog="""
 Examples:
   Select 10 random problems from all domains (max 1500 lines each):
-    python select_random_problems.py 10
+    python3 scripts/select_random_problems.py 10
   
   Select 20 arithmetic problems only:
-    python select_random_problems.py 20 --type ARI
+    python3 scripts/select_random_problems.py 20 --type ARI
   
   Select 50 boolean algebra problems, clearing input folder first:
-    python select_random_problems.py 50 --type BOO --clear
+    python3 scripts/select_random_problems.py 50 --type BOO --clear
   
   Select 100 problems with reproducible seed:
-    python select_random_problems.py 100 --seed 42
+    python3 scripts/select_random_problems.py 100 --seed 42
   
   Select 15 group theory problems, allowing larger files:
-    python select_random_problems.py 15 --type GRP --max-lines 5000
+    python3 scripts/select_random_problems.py 15 --type GRP --max-lines 5000
         """,
     )
 

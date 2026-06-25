@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Logging utilities for parallel Vampire search.
 
-Provides a shared logger setup used by ``main.py``, ``clausify_problems.py``,
+Provides a shared logger setup used by ``scripts/main.py``, ``scripts/clausify.py``,
 and analysis scripts. Each problem run gets its own log file under the
 timestamped output directory; DEBUG goes to the file and INFO+ to the console
 by default.

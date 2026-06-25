@@ -9,10 +9,8 @@ test_variants/
 *_clausified.tptp
 *_clausified.smt2
 
-# Generated run artifacts (keep published summaries in notes/)
+# Generated run artifacts
 output/
-!notes/evaluation_results.csv
-!notes/seed_quality_results_strict.csv
 
 # Ignore generated variants
 variants/

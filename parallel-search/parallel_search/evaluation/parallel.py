@@ -7,16 +7,13 @@ lemma-augmented variants; if no variants qualify, nothing is run.
 
 When variants exist, this module runs Vampire in parallel on:
 - The original (non-clausified) problem (baseline)
-- Optionally the clausified C₀ baseline (``--include-clausified-runs``)
-- Each variant with verified lemmas (``variant_N_original.tptp`` by default)
+- Each variant with verified lemmas (``variant_N_original.tptp``)
 
-Variant selection uses ``variants/manifest.json`` when present (preferred).
-A deprecated log-regex fallback exists for legacy GRP output directories without
-a manifest (parses old ``VARIANT N SEED M`` log format).
+Variant selection uses ``variants/manifest.json`` (only variants with verified lemmas).
 
 Results are written to ``results/*.out`` and summarized in ``results/summary.json``.
 
-Used by ``main.py`` when ``--run-vampire`` is set.
+Used by ``scripts/main.py`` when ``--run-vampire`` is set.
 """
 
 import json
@@ -136,78 +133,27 @@ def _run_vampire_worker(
         }
 
 
-def _legacy_has_verified_lemmas(variant_path: Path, log_file: Path) -> bool:
-    """Deprecated fallback: infer verified lemmas from legacy GRP log format.
-
-    Scans the main run log for ``VARIANT N SEED M`` blocks (historical format)
-    and checks whether any entry for variant N has ``✓ Entailment verified``.
-    Used only when ``manifest.json`` is absent.
-    """
-    import re
-
-    variant_name = variant_path.stem
-    if not variant_name.startswith("variant_"):
-        return False
-    parts = variant_name.split("_")
-    if len(parts) < 2 or not parts[1].isdigit():
-        return False
-    variant_num = parts[1]
-
-    with open(log_file, "r", encoding="utf-8", errors="replace") as handle:
-        content = handle.read()
-
-    pattern = rf"VARIANT {variant_num} SEED \d+.*?(?:✓ Entailment verified|✗ Entailment check failed)"
-    for match in re.findall(pattern, content, re.DOTALL):
-        if "✓ Entailment verified" in match:
-            return True
-    return False
-
-
 def _resolve_runnable_variants(
     variants_dir: Path,
-    include_clausified: bool,
     logger,
 ) -> List[Path]:
     """Determine which variant problem files should be run.
 
-    Prefers ``manifest.json`` (only variants with ``verified_lemma_count > 0``).
-    Falls back to log-regex verification, then to globbing all matching files.
+    Uses ``manifest.json`` to select only variants with ``verified_lemma_count > 0``.
 
     Args:
         variants_dir: Directory containing variant TPTP files and manifest.
-        include_clausified: If True, include clausified variants (``variant_N.tptp``).
-        logger: Logger for warnings about fallback behaviour.
+        logger: Logger for warnings when manifest is missing.
 
     Returns:
         Sorted list of variant file paths to execute.
     """
     manifest = read_manifest(variants_dir)
-    if manifest:
-        return get_runnable_variant_paths(
-            variants_dir, include_clausified=include_clausified, manifest=manifest
-        )
+    if not manifest:
+        logger.warning("No manifest.json; no variants selected for parallel evaluation")
+        return []
 
-    log_files = sorted(variants_dir.parent.glob("*.log"))
-    if not log_files:
-        logger.warning("No manifest.json or log file; using *_original.tptp variants")
-        if include_clausified:
-            return sorted(variants_dir.glob("variant_*.tptp"))
-        return sorted(variants_dir.glob("variant_*_original.tptp"))
-
-    log_file = log_files[0]
-    logger.warning("Using deprecated log-based lemma verification fallback (GRP format)")
-    candidates = sorted(variants_dir.glob("variant_*.tptp"))
-    if include_clausified:
-        verified = [v for v in candidates if _legacy_has_verified_lemmas(v, log_file)]
-    else:
-        verified = [
-            v
-            for v in variants_dir.glob("variant_*_original.tptp")
-            if _legacy_has_verified_lemmas(
-                variants_dir / v.name.replace("_original.tptp", ".tptp"), log_file
-            )
-        ]
-    return verified
+    return get_runnable_variant_paths(variants_dir, manifest=manifest)
 
 
 def run_parallel_evaluation(
@@ -217,7 +163,6 @@ def run_parallel_evaluation(
     timeout: int = 60,
     max_workers: Optional[int] = None,
     original_problem: Optional[Path] = None,
-    include_clausified_runs: bool = False,
 ) -> Dict:
     """Run Vampire in parallel on original and lemma-augmented variants.
 
@@ -232,16 +177,13 @@ def run_parallel_evaluation(
         timeout: Per-run timeout in seconds.
         max_workers: Process pool size (None = default executor sizing).
         original_problem: Path to the original input problem file.
-        include_clausified_runs: Also run C₀ and clausified lemma variants.
 
     Returns:
         Summary dict (also written to ``results/summary.json``) with keys:
         problem, timestamp, configuration, results, statistics.
     """
     variants_dir = problem_output_dir / "variants"
-    runnable_variants = _resolve_runnable_variants(
-        variants_dir, include_clausified_runs, logger
-    )
+    runnable_variants = _resolve_runnable_variants(variants_dir, logger)
 
     logger.info("")
     logger.info("=" * 80)
@@ -250,7 +192,6 @@ def run_parallel_evaluation(
     if original_problem and original_problem.exists():
         logger.info(f"Original problem: {original_problem.name}")
     logger.info(f"Runnable variants: {len(runnable_variants)}")
-    logger.info(f"Include clausified runs: {include_clausified_runs}")
 
     if not runnable_variants:
         logger.info("")
@@ -270,18 +211,6 @@ def run_parallel_evaluation(
 
     if original_problem and original_problem.exists():
         runs.append((original_problem, results_dir / "original.out", "original"))
-
-    if include_clausified_runs:
-        clausified_dir = problem_output_dir / "clausified"
-        clausified_files = list(clausified_dir.glob("*_clausified.*"))
-        if clausified_files:
-            runs.append(
-                (
-                    clausified_files[0],
-                    results_dir / "original_clausified.out",
-                    "original_clausified",
-                )
-            )
 
     for variant in runnable_variants:
         runs.append((variant, results_dir / f"{variant.stem}.out", variant.stem))
@@ -312,9 +241,7 @@ def run_parallel_evaluation(
     def sort_key(item: Dict) -> tuple:
         if item["name"] == "original":
             return (0, item["name"])
-        if item["name"] == "original_clausified":
-            return (1, item["name"])
-        return (2, item["name"])
+        return (1, item["name"])
 
     results.sort(key=sort_key)
 
@@ -350,7 +277,6 @@ def run_parallel_evaluation(
         "configuration": {
             "timeout": timeout,
             "vampire_binary": vampire_binary,
-            "include_clausified_runs": include_clausified_runs,
             "runnable_variants": len(runnable_variants),
         },
         "results": results,
