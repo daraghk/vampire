@@ -39,6 +39,8 @@ import re
 from pathlib import Path
 from typing import Dict, List, Optional, Set
 
+from parallel_search.analysis.discovery import discover_problem_directories
+
 
 def extract_problem_name(directory_name: str) -> str:
     """Extract problem name from timestamped directory name.
@@ -106,14 +108,8 @@ def collect_all_variant_names(output_dir: Path) -> Set[str]:
     """
     variant_names = set()
 
-    for problem_dir in output_dir.iterdir():
-        if not problem_dir.is_dir():
-            continue
-
+    for problem_dir in discover_problem_directories(output_dir):
         summary_path = problem_dir / "results" / "summary.json"
-        if not summary_path.exists():
-            continue
-
         data = parse_summary_json(summary_path)
         if data:
             variant_names.update(data["results"].keys())
@@ -220,20 +216,18 @@ def analyze_results(output_dir: Path, output_file: Path):
     # Collect all problem data
     all_problems = []
 
-    for problem_dir in sorted(output_dir.iterdir()):
-        if not problem_dir.is_dir():
-            continue
-
+    for problem_dir in discover_problem_directories(output_dir):
         summary_path = problem_dir / "results" / "summary.json"
-
-        if summary_path.exists():
-            data = parse_summary_json(summary_path)
-            if data:
-                all_problems.append(data)
+        data = parse_summary_json(summary_path)
+        if data:
+            all_problems.append(data)
         else:
-            # Problem without results - still include it
-            problem_name = extract_problem_name(problem_dir.name)
-            all_problems.append({"problem_name": problem_name, "results": {}})
+            all_problems.append(
+                {
+                    "problem_name": extract_problem_name(problem_dir.name),
+                    "results": {},
+                }
+            )
 
     print(f"Found {len(all_problems)} problems")
 
@@ -316,6 +310,9 @@ def main():
 Examples:
   # Analyze results in default output directory
   python analyze_results.py
+
+  # GRP-655 flat bundle layout
+  python analyze_results.py --output-dir output/results/vampire-5.0-results-GRP-655
 
   # Specify custom output directory and CSV file
   python analyze_results.py --output-dir output --output results.csv

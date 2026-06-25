@@ -1,204 +1,130 @@
 # Parallel Search for Vampire
 
-This directory contains work on parallelizing Vampire via semantically entailed starting clause sets.
+Parallelize Vampire by running independent proof searches from the original problem plus LLM-generated, entailment-verified lemmas. See [docs/parallelizing_vampire_semantic_starting_sets.md](docs/parallelizing_vampire_semantic_starting_sets.md) for the theory.
 
-## Contents
+## Layout
 
-- **`main.py`** - Main entry point for the workflow
-- **`clausify_problems.py`** - VampireClausifier class for clausification (CNF via clausify, or TFF via tclausify)
-- **`base_clause_set_constructor.py`** - BaseClauseSetConstructor class for B_i selection
-- **`seed_clause_set_constructor.py`** - SeedClauseGenerator class for S_i generation (requires `openai` package)
-- **`entailment_checker.py`** - EntailmentChecker class for verifying C_ax ⊨ s (where C_ax is the axioms-only version with negated_conjectures removed, and s is an LLM-generated seed clause)
-- **`run_parallel.py`** - Parallel Vampire execution module for running the original problem and verified variants
-- **`tptp_parsing_utils.py`** - Shared TPTP parsing utilities (CNF and TFF clause parsing, quantifier/parentheses handling)
-- **`logging_utils.py`** - Logging utilities
-- **`examples/`** - Example TPTP problems
-- **`docs/`** - Design documents
+```
+parallel-search/
+├── scripts/                  # Runnable entry points
+│   main.py                   # Full pipeline
+│   clausify.py               # Batch clausification only
+│   analyze_results.py        # Evaluation results → CSV
+│   analyze_seed_quality_logs.py  # Legacy GRP log analysis
+│   select_random_problems.py
+├── parallel_search/          # Importable library
+│   clausify/                 # C₀ clausification
+│   parsing/                  # TPTP parsing utilities
+│   variants/                 # C_ax, manifest, variant files
+│   lemmas/                   # LLM generation + entailment pipeline
+│   entailment/               # C_ax ⊨ s checking
+│   evaluation/               # Parallel Vampire runs
+│   analysis/                 # Result discovery helpers
+│   utils/                    # Logging
+├── tests/
+├── docs/
+└── notes/                    # Historical GRP analysis notes/CSV
+```
 
 ## Requirements
 
-**Core requirements:**
 - Python 3.8+
-- Vampire theorem prover (built at `../build/vampire`)
+- Vampire built at `../build/vampire`
+- `pip install -r requirements.txt` and `OPENAI_API_KEY` (lemma generation runs by default)
 
-**Optional (for seed generation):**
-- `openai` package: `pip install openai>=1.0.0`
-- OpenAI API key (set `OPENAI_API_KEY` environment variable)
-- Default LLM model: `o4-mini` (configurable via `--llm-model` flag)
+Run commands from the `parallel-search/` directory.
 
-The workflow functions without the `openai` package but seed generation will be disabled.
-
-## Quick Start
-
-Run the complete workflow using `main.py`:
+## Quick start
 
 ```bash
-# Process a single problem with 3 random variants
-python3 main.py examples/group_theory.tptp -n 3
+# Default pipeline (3 variants, 5 lemmas each, entailment-verified)
+python3 scripts/main.py examples/group_theory.tptp
 
-# Use priority strategy (keeps conjectures and unit clauses)
-python3 main.py examples/PUZ001+1.p -s priority -n 4
+# Full evaluation
+python3 scripts/main.py examples/group_theory.tptp --run-vampire --vampire-timeout 60
 
-# Use stratified strategy (divides clauses into non-overlapping strata)
-python3 main.py examples/group_theory.tptp -s stratified -n 5
-
-# Process all examples in a directory
-python3 main.py examples/ -n 3 --recursive
-
-# Generate seed clauses using LLM (requires OPENAI_API_KEY)
-python3 main.py examples/group_theory.tptp -n 3 --generate-seeds 5
-
-# Generate seeds with domain hint
-python3 main.py examples/group_theory.tptp --generate-seeds 5 --domain-hint "group theory"
-
-# Generate seeds with specific LLM model
-python3 main.py examples/group_theory.tptp --generate-seeds 5 --llm-model gpt-4o
-
-# Generate seeds with entailment checking (verifies C_ax ⊨ s)
-python3 main.py examples/group_theory.tptp --generate-seeds 5 --check-entailment
-
-# Full workflow: generate, verify, and run Vampire in parallel
-python3 main.py examples/group_theory.tptp --generate-seeds 5 --check-entailment --run-vampire
-
-# Run Vampire with custom timeout (default 60s)
-python3 main.py examples/PLA046_1.p -n 5 --run-vampire --vampire-timeout 120
-
-# Use TFF clausification mode (preserves types, for arithmetic problems)
-python3 main.py examples/ARI045_1.p -n 3 --clausify-mode tclausify
+# TFF clausification (arithmetic)
+python3 scripts/main.py examples/ARI045_1.p --clausify-mode tclausify
 ```
 
-**Output structure**:
+## Default parallel evaluation scope
+
+With `--run-vampire`, parallel evaluation runs **only when at least one variant has verified lemmas**. The goal is to compare lemma-augmented variants against the original baseline — if no variants qualify, nothing is run.
+
+When evaluation proceeds, the default runs are:
+
+- `original` — unmodified problem (baseline for comparison)
+- `variant_N_original` — original problem + verified lemmas
+
+Clausified runs (`original_clausified`, clausified `variant_N`) are opt-in via `--include-clausified-runs`.
+
+Lemma generation (default 5 per variant) always runs entailment verification (C_ax ⊨ s) before lemmas are included in variants.
+
+## Output layout
+
 ```
-output/
-└── {timestamp}_{problem}/             # One directory per problem per run
-    ├── {timestamp}_{problem}.log      # Single log file (HH:MM timestamps)
-    ├── clausified/                    # Clausified problems (CNF or TFF format)
-    │   └── {problem}_clausified.tptp
-    ├── variants/                      # Generated clause set variants
-    │   ├── variant_0.tptp             # Variant = B_i + verified seeds + negated_conjectures
-    │   ├── variant_0_original.tptp    # Original (non-clausified) problem + verified seeds (if seeds exist)
-    │   ├── variant_1.tptp
-    │   ├── variant_1_original.tptp    # Original (non-clausified) problem + verified seeds (if seeds exist)
-    │   └── ...
-    └── results/                       # Vampire execution results (only if --run-vampire used and variants with verified seeds exist)
-        ├── original.out               # Vampire output for original problem (non-clausified)
-        ├── original_clausified.out    # Vampire output for original clausified problem (C₀)
-        ├── variant_0.out              # Vampire output for variant_0
-        ├── variant_0_original.out     # Vampire output for variant_0_original (if seeds exist)
-        ├── variant_1.out              # Vampire output for variant_1
-        ├── variant_1_original.out     # Vampire output for variant_1_original (if seeds exist)
-        ├── ...
-        └── summary.json               # Execution summary with statistics
+output/{timestamp}_{problem}/
+├── {timestamp}_{problem}.log
+├── clausified/
+│   ├── {problem}_clausified.p
+│   └── {problem}_clausified_axioms.p
+├── variants/
+│   ├── manifest.json
+│   ├── variant_0.tptp
+│   └── variant_0_original.tptp
+└── results/          # when --run-vampire and verified lemmas exist
+    ├── summary.json
+    ├── original.out
+    └── variant_0_original.out
 ```
 
-Each run creates a timestamped directory containing everything: the log file and all artifacts.
-Log timestamps show only HH:MM since the date is in the directory name.
+## CLI reference
 
-## Workflow
+| Flag | Default | Description |
+|------|---------|-------------|
+| `-n` | 3 | Number of variants (distinct LLM lemma sets) |
+| `--generate-lemmas N` | 5 | LLM lemmas per variant (entailment-verified) |
+| `--run-vampire` | off | Parallel proof runs |
+| `--include-clausified-runs` | off | Also run clausified configurations |
+| `--llm-model` | o4-mini | OpenAI model |
+| `--llm-axiom-cap` | 30 | Max axioms in LLM context |
+| `--sample-seed` | none | RNG seed for axiom sampling |
+| `--vampire-timeout` | 60 | Per-run timeout (seconds) |
+| `--entailment-timeout` | 10 | Per-lemma entailment check timeout |
 
-The workflow performs up to six main steps:
+## GRP-655 reproduction
 
-**Definitions:**
-- **C₀** = Full clausified problem (Axioms ∪ negated_conjectures)
-- **C_ax** = Axioms-only version (negated_conjecture formulas removed from C₀)
+```bash
+python3 scripts/main.py input/ -r \
+  --run-vampire --llm-model gpt-5-mini --vampire-timeout 60
+```
 
-**Steps:**
+Published results: [output/results/vampire-5.0-results-GRP-655/README.md](output/results/vampire-5.0-results-GRP-655/README.md)
 
-1. **Clausification**: Convert the input problem to CNF (default) or TFF using Vampire's `--mode clausify` or `--mode tclausify`
-   - Default (`clausify`): Produces **C₀** in CNF format - suitable for most CNF/FOF problems
-   - Optional (`tclausify`): Produces **C₀** in TFF format - preserves type information for arithmetic problems
-   - Use `--clausify-mode tclausify` if you need type preservation
-2. **Create C_ax**: Filter out `negated_conjecture` formulas from C₀ to create **C_ax** (axioms only)
-   - Used for base clause selection and entailment checking
-   - Avoids vacuous truth problem in entailment verification
-3. **Base Clause Set Construction (B_i)**: Generate N different base clause sets from **C_ax** using the selected strategy:
-   - `all`: Use all axioms (B_i = C_ax)
-   - `random`: Randomly select a subset of axioms
-   - `priority`: Keep unit clauses, sample others
-   - `stratified`: Divide axioms into non-overlapping strata
-4. **Seed Clause Generation (S_i)** (optional): Use LLM to generate helpful lemmas for each variant
-   - Seeds are problem-specific and based on variant context
-   - Each seed includes an explanation and confidence score
-5. **Entailment Checking** (optional): Verify each seed clause using Vampire in parallel
-   - All seed clauses for a variant are checked in parallel for performance
-   - Checks **C_ax ⊨ s** (verifies seed follows from axioms only)
-   - This avoids vacuous truth: if C₀ is UNSAT, all seeds would trivially entail
-   - Only verified seeds (proved by Vampire) are added to variants
-   - Ensures soundness: UNSAT(variant) ⟹ UNSAT(C₀)
-6. **Variant Writing**: Write two types of variants for each base clause set:
-   - **Clausified variant**: B_i + verified seeds + negated_conjectures (clausified format)
-   - **Original variant**: Original (non-clausified) problem + verified seeds as lemmas (only if verified seeds exist)
-   - Original variants preserve the original problem structure while adding verified lemmas
-7. **Parallel Execution** (optional, requires `--run-vampire`): Run Vampire in parallel on:
-   - The original problem (non-clausified)
-   - The original clausified problem (C₀)
-   - All clausified variants: **B_i + verified seeds + negated_conjectures**
-   - All original variants: **Original (non-clausified) problem + verified seeds** (if seeds exist)
-   - Skipped entirely if no variants have verified seeds (no point comparing original alone)
-   - Captures execution time, exit status, and full Vampire output
-   - Generates summary with statistics and identifies which runs proved the problem
+Regenerate CSV:
 
-Each clausified variant consists of: B_i (selected axioms) + verified seeds + negated_conjectures (to prove).
-Each original variant consists of: Original (non-clausified) problem + verified seeds (as lemmas).
+```bash
+python3 scripts/analyze_results.py \
+  --output-dir output/results/vampire-5.0-results-GRP-655 \
+  --output notes/evaluation_results.csv
 
-All operations are logged with structured output. Log timestamps show HH:MM format for
-readability (full date is in the directory name). Visual separators clearly mark each variant.
+# Historical GRP logs use legacy "seed" terminology in log format
+python3 scripts/analyze_seed_quality_logs.py \
+  --logs-root output/results/vampire-5.0-results-GRP-655
+```
 
-## Example Problems
+## Soundness
 
-The `examples/` directory contains test problems across multiple domains:
-- `group_theory.tptp` - Group theory (order-2 implies commutativity)
-- `PUZ001+1.p` - "Who killed Aunt Agatha?" logic puzzle
-- `PUZ139_1.p` - Coffee/syrup puzzle (typed logic)
-- `ARI045_1.p` - Integer arithmetic
-- `NUM919_1.p` - Number theory (harder problem)
-- `PLA046_1.p` - Planning problem (hardest, rating 1.00)
+Sound proof transfer (UNSAT variant ⟹ UNSAT original) holds when the axiom base is the full C_ax (all axioms). The pipeline always uses all axioms; lemmas must pass entailment checking before use.
 
-## Approach Overview
+## Tests
 
-The parallel search strategy works as follows:
+```bash
+pip install -r requirements-dev.txt
+pytest
+```
 
-1. **Extract C₀**: Use `--mode clausify` (default, CNF) or `--mode tclausify` (TFF) to get the full clausified problem (Axioms ∪ negated_conjectures)
-2. **Create C_ax**: Filter out negated_conjectures to get axioms-only version
-3. **Generate variants**: Create alternative starting sets where each variant = Bᵢ + Sᵢ + negated_conjectures
-   - Bᵢ ⊆ C_ax (base clauses selected from axioms using strategy: random, priority, stratified, etc.)
-   - Sᵢ (seed clauses - lemmas that are entailed by C_ax)
-   - negated_conjectures (the negated conjectures to prove)
-   - Variant = Bᵢ + Sᵢ + negated_conjectures
-4. **Verify entailment**: Check that **C_ax ⊨ s** for each seed clause s using Vampire
-5. **Write variants**: Create two types of variants for each base clause set:
-   - **Clausified variant**: Bᵢ + Sᵢ + negated_conjectures (clausified format)
-   - **Original variant**: Original (non-clausified) problem + Sᵢ as lemmas (only if Sᵢ exists)
-6. **Run in parallel**: Launch independent Vampire instances on the original problem (non-clausified), the original clausified problem (C₀), and each variant (both clausified and original variants)
-7. **First to finish wins**: If any proves UNSAT(variant), then UNSAT(C₀) follows
+## Status
 
-## Key Properties
-
-- **Sound by construction**: All seed clauses are verified to be entailed by C_ax (axioms only)
-- **Embarrassingly parallel**: No shared state between workers
-- **Semantic reachability**: Uses logical entailment rather than operational reachability
-- **Heuristic generation**: LLMs can propose seed clauses, but Vampire verifies them
-- **Avoids vacuous truth**: Entailment checked against C_ax (without negated_conjectures), not full C₀
-
-## Current Status
-
-- ✅ Clausification (C₀ extraction via `clausify` (CNF, default) or `tclausify` (TFF))
-- ✅ Base clause set construction (B_i selection with multiple strategies)
-- ✅ CNF and TFF format support (configurable via `--clausify-mode`)
-- ✅ Shared TPTP parsing utilities (`tptp_parsing_utils.py` for quantifier/parentheses handling)
-- ✅ LLM interface for seed clause suggestions (S_i generation via `seed_clause_set_constructor.py`)
-- ✅ Seed generation (LLM generates clauses matching the clausification format)
-- ✅ Parallel entailment checking (all seed clauses checked in parallel for performance)
-- ✅ Entailment checking via conjecture proving (C_ax ⊨ s verification using `entailment_checker.py`)
-- ✅ Native Vampire conjecture handling (cleaner than manual clause negation)
-- ✅ Axioms-only filtering (C_ax creation to avoid vacuous truth in entailment)
-- ✅ Variant file generation (clausified variants: B_i + verified seeds + negated_conjectures; original variants: original problem + verified seeds as lemmas)
-- ✅ Structured logging with timestamped outputs
-- ✅ Parallel execution framework (running original problem, original clausified problem, and variants via `run_parallel.py`)
-- ✅ Results capture (execution time, status, full Vampire output, JSON summary)
-- ⏳ Large-scale evaluation on TPTP benchmark problems
-
-## References
-
-See `docs/parallelizing_vampire_semantic_starting_sets.md` for the complete technical description.
-
+- GRP-655 evaluation complete (655 problems)
+- Default pipeline matches validated benchmark configuration

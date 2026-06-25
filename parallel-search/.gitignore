@@ -2,14 +2,17 @@
 clausified_examples/
 demo/
 # input/
-# output/
 Problems/
 test_out/
 test_variants/
-docs/
 *_clausified.p
 *_clausified.tptp
 *_clausified.smt2
+
+# Generated run artifacts (keep published summaries in notes/)
+output/
+!notes/evaluation_results.csv
+!notes/seed_quality_results_strict.csv
 
 # Ignore generated variants
 variants/
@@ -22,6 +25,7 @@ __pycache__/
 *$py.class
 *.so
 .Python
+.pytest_cache/
 
 # Environment variables and secrets
 .env
@@ -43,4 +47,3 @@ ENV/
 # Testing artifacts
 *.log
 test_output/
-

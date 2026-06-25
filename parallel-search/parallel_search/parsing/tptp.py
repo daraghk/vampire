@@ -6,7 +6,7 @@ These utilities are used by multiple modules to parse, manipulate, and transform
 TPTP clauses.
 
 Typical usage:
-    from tptp_parsing_utils import parse_tff_clause, parse_cnf_clause, Clause, ClauseRole
+    from parallel_search.parsing.tptp import parse_tff_clause, parse_cnf_clause, Clause, ClauseRole
 
     clause = parse_tff_clause("tff(u1, axiom, p(X)).", logger)
     clause = parse_cnf_clause("cnf(c1, axiom, p(X) | q(Y)).", logger)
@@ -238,3 +238,26 @@ def parse_cnf_clause(
         if logger:
             logger.warning(f"Failed to parse CNF clause: {line[:50]}... ({e})")
         return None
+
+
+_TPTP_ROLE_PATTERN = re.compile(
+    r"((?:tff|cnf)\([^,]+,)\s*[^,]+(\s*,)", re.IGNORECASE
+)
+
+
+def set_tptp_role(formula: str, new_role: str) -> str:
+    """Replace the TPTP role in a cnf/tff formula declaration.
+
+    Matches the second argument of ``cnf(name, role, ...)`` or
+    ``tff(name, role, ...)`` and substitutes ``new_role``. Used when writing
+    verified lemmas as ``lemma`` in original+lemmas variants and when converting
+    CNF lemmas to conjecture role for entailment checking.
+
+    Args:
+        formula: A single TPTP formula line (cnf or tff).
+        new_role: New role string (e.g. ``lemma``, ``conjecture``).
+
+    Returns:
+        The formula with the role field replaced.
+    """
+    return _TPTP_ROLE_PATTERN.sub(rf"\1 {new_role}\2", formula, count=1)
